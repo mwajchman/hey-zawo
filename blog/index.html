@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog | Hey Zawo</title>
+<meta name="description" content="The research behind the daily call: real data on loneliness, elder fraud, and family, and what actually helps aging parents.">
+<style>
+:root{--bg:#FBF6EC;--surface:#FFFDF7;--ink:#123330;--ink-soft:#51655F;--line:#E7DECB;--pine:#0B5F5D;--pine-2:#0E7C7B;--amber-2:#E6AE55;--clay:#B4623F;--slate:#0E7C7B;--sage:#2E6E52;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;}
+@media(prefers-color-scheme:dark){:root{--bg:#0F1917;--surface:#15211E;--ink:#EEE7D8;--ink-soft:#9FB0AA;--line:#28352F;--pine-2:#3FB0AC;--clay:#D08A63;--sage:#5FA080;}}
+*{box-sizing:border-box;} body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+a{color:var(--pine-2);}
+.nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav .in{max-width:860px;margin:0 auto;padding:0 22px;height:66px;display:flex;align-items:center;justify-content:space-between;}
+.brand{font-family:var(--serif);font-weight:600;font-size:1.45rem;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;}
+.brand .dot{width:8px;height:8px;border-radius:999px;background:var(--amber-2);display:inline-block;}
+.nav a.cta{background:var(--pine);color:#FBF6EC;text-decoration:none;font-family:var(--sans);font-weight:600;font-size:.92rem;padding:10px 18px;border-radius:9px;}
+.wrap{max-width:860px;margin:0 auto;padding:0 22px;}
+.head{padding:56px 0 20px;text-align:center;}
+.head .ey{font-family:var(--sans);text-transform:uppercase;letter-spacing:.16em;font-size:12px;font-weight:700;color:var(--pine-2);}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2rem,5vw,2.8rem);margin:12px 0 8px;letter-spacing:-.01em;}
+.head p{color:var(--ink-soft);max-width:52ch;margin:0 auto;}
+.blist{display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:30px 0 40px;}
+.bc{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;transition:transform .2s ease,box-shadow .2s ease;}
+.bc:hover{transform:translateY(-5px);box-shadow:0 24px 48px -30px rgba(10,30,25,.5);}
+.bc .top{height:6px;} .bc.c1 .top{background:var(--clay);} .bc.c2 .top{background:var(--slate);} .bc.c3 .top{background:var(--sage);}
+.bc .bd{padding:26px;display:flex;flex-direction:column;gap:10px;height:100%;}
+.bc .cat{font-family:var(--sans);text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:700;color:var(--pine-2);}
+.bc h2{font-family:var(--serif);font-size:1.35rem;line-height:1.2;margin:0;}
+.bc p{color:var(--ink-soft);font-size:.96rem;margin:0;}
+.bc .read{margin-top:auto;color:var(--pine-2);font-weight:600;font-size:.9rem;}
+footer{padding:34px 22px 54px;text-align:center;color:var(--ink-soft);font-size:.85rem;border-top:1px solid var(--line);}
+footer a{color:var(--ink-soft);}
+@media(max-width:720px){.blist{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="nav"><div class="in"><a class="brand" href="/">Hey Zawo<span class="dot"></span></a><a class="cta" href="/#demo">Try a free call</a></div></div>
+<div class="wrap">
+  <div class="head">
+    <p class="ey">The Hey Zawo blog</p>
+    <h1>The research behind the daily call.</h1>
+    <p>Real numbers on loneliness, fraud, and family, and what actually helps aging parents. No fear, no fluff.</p>
+  </div>
+  <div class="blist">
+    <a class="bc c1" href="/blog/loneliness"><div class="top"></div><div class="bd"><span class="cat">Loneliness</span><h2>Why isolation raises dementia risk by 50%</h2><p>What the U.S. Surgeon General found about loneliness in older adults, and why a daily call helps.</p><span class="read">Read the article</span></div></a>
+    <a class="bc c2" href="/blog/elder-fraud"><div class="top"></div><div class="bd"><span class="cat">Scams</span><h2>$7.75 billion lost, and the new voice-clone threat</h2><p>The FBI's 2025 elder fraud numbers, and how a simple family safe word fights back.</p><span class="read">Read the article</span></div></a>
+    <a class="bc c3" href="/blog/why-daily-call"><div class="top"></div><div class="bd"><span class="cat">Family</span><h2>Why they will not tell you, but they will tell the call</h2><p>The quiet reason a daily check in catches what a weekly phone call misses.</p><span class="read">Read the article</span></div></a>
+  </div>
+</div>
+<footer><a href="/">Back to heyzawo.com</a> &nbsp;·&nbsp; Hey Zawo is a concept in development.</footer>
+</body>
+</html>
