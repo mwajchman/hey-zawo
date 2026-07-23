@@ -2,6 +2,10 @@
 <title>Hey Zawo | Care for aging parents in body, mind, and money</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Hey Zawo calls your aging parents every day to keep them company, watch over their wellbeing, and help protect them from scams. They get a brighter day. You get peace of mind.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#FBF6EC; --surface:#FFFDF7; --raise:#FFFFFF;
@@ -42,8 +46,9 @@
 
   header.nav{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:72px;}
-  .brand{display:flex;align-items:center;gap:8px;font-family:var(--font-serif);font-weight:600;font-size:1.55rem;text-decoration:none;color:var(--ink);letter-spacing:-.02em;}
-  .brand .dot{width:9px;height:9px;border-radius:999px;background:var(--amber-2);display:inline-block;margin-bottom:-1px;animation:glow 2.6s ease-in-out infinite;}
+  .brand{display:inline-flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);}
+  .brand .bmark{width:31px;height:31px;display:block;flex:none;}
+  .brand .bname{font-family:"Plus Jakarta Sans",var(--font-sans);font-weight:700;font-size:1.4rem;letter-spacing:-.03em;color:inherit;}
   @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(230,174,85,.5);}50%{box-shadow:0 0 0 6px rgba(230,174,85,0);}}
   .nav-links{display:flex;gap:30px;}
   .nav-links a{text-decoration:none;color:var(--ink-soft);font-weight:500;font-size:.96rem;transition:color .2s;}
@@ -259,7 +264,7 @@
 </style>
 
 <header class="nav"><div class="wrap nav-in">
-  <a class="brand" href="#top">Hey Zawo<span class="dot"></span></a>
+  <a class="brand" href="#top" aria-label="Hey Zawo home"><svg class="bmark" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="3" width="42" height="42" rx="13" fill="#0E7C7B"/><circle cx="34" cy="15" r="5.4" fill="#E6AE55"/></svg><span class="bname">Hey Zawo</span></a>
   <nav class="nav-links" aria-label="Primary">
     <a href="#pillars">What it covers</a><a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#blog">Blog</a>
   </nav>
@@ -518,7 +523,7 @@
 
 <footer><div class="wrap">
   <div style="max-width:280px;">
-    <div class="brand" style="font-size:1.55rem;">Hey Zawo<span class="dot"></span></div>
+    <div class="brand"><svg class="bmark" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="3" width="42" height="42" rx="13" fill="#0E7C7B"/><circle cx="34" cy="15" r="5.4" fill="#E6AE55"/></svg><span class="bname">Hey Zawo</span></div>
     <p style="margin-top:14px;font-size:.94rem;line-height:1.55;">Wholehearted care for the people who raised you. Body, mind, and money, one daily call. heyzawo.com</p>
   </div>
   <div style="display:flex;gap:44px;flex-wrap:wrap;">

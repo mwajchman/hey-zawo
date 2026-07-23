@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blog | Hey Zawo</title>
 <meta name="description" content="The research behind the daily call: real data on loneliness, elder fraud, and family, and what actually helps aging parents.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#FBF6EC;--surface:#FFFDF7;--ink:#123330;--ink-soft:#51655F;--line:#E7DECB;--pine:#0B5F5D;--pine-2:#0E7C7B;--amber-2:#E6AE55;--clay:#B4623F;--slate:#0E7C7B;--sage:#2E6E52;--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;--sans:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;}
 @media(prefers-color-scheme:dark){:root{--bg:#0F1917;--surface:#15211E;--ink:#EEE7D8;--ink-soft:#9FB0AA;--line:#28352F;--pine-2:#3FB0AC;--clay:#D08A63;--sage:#5FA080;}}
@@ -12,8 +16,8 @@
 a{color:var(--pine-2);}
 .nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
 .nav .in{max-width:860px;margin:0 auto;padding:0 22px;height:66px;display:flex;align-items:center;justify-content:space-between;}
-.brand{font-family:var(--serif);font-weight:600;font-size:1.45rem;text-decoration:none;color:var(--ink);display:flex;align-items:center;gap:8px;}
-.brand .dot{width:8px;height:8px;border-radius:999px;background:var(--amber-2);display:inline-block;}
+.brand{font-family:"Plus Jakarta Sans",var(--sans);font-weight:700;font-size:1.3rem;letter-spacing:-.03em;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;gap:9px;}
+.brand .bmark{width:27px;height:27px;display:block;flex:none;}
 .nav a.cta{background:var(--pine);color:#FBF6EC;text-decoration:none;font-family:var(--sans);font-weight:600;font-size:.92rem;padding:10px 18px;border-radius:9px;}
 .wrap{max-width:860px;margin:0 auto;padding:0 22px;}
 .head{padding:56px 0 20px;text-align:center;}
@@ -35,7 +39,7 @@ footer a{color:var(--ink-soft);}
 </style>
 </head>
 <body>
-<div class="nav"><div class="in"><a class="brand" href="/">Hey Zawo<span class="dot"></span></a><a class="cta" href="/#demo">Try a free call</a></div></div>
+<div class="nav"><div class="in"><a class="brand" href="/" aria-label="Hey Zawo home"><svg class="bmark" viewBox="0 0 48 48" aria-hidden="true"><rect x="3" y="3" width="42" height="42" rx="13" fill="#0E7C7B"/><circle cx="34" cy="15" r="5.4" fill="#E6AE55"/></svg>Hey Zawo</a><a class="cta" href="/#demo">Try a free call</a></div></div>
 <div class="wrap">
   <div class="head">
     <p class="ey">The Hey Zawo blog</p>
