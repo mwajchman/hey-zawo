@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in · Elderly</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
+<style>
+  :root{
+    --ground:#EEF0EA;--surface:#FBFCF9;--surface-2:#F4F6F1;
+    --ink:#16211C;--ink-soft:#3B4842;--muted:#67756C;--line:#DBDFD6;
+    --rail:#173B31;--primary:#1D4A3E;--primary-ink:#F1ECDE;--accent:#E07E39;
+    --crit:#C4553B;
+    --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-display:"Plus Jakarta Sans",var(--font-sans);
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1512;--surface:#16211C;--surface-2:#1B2A24;
+    --ink:#EAE7DC;--ink-soft:#C3CCC4;--muted:#8C9A90;--line:#26362E;
+    --rail:#0C1B16;--primary:#4FA587;--primary-ink:#0E1512;--accent:#EA8C4B;--crit:#E07B60;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:var(--font-sans);color:var(--ink);
+    display:grid;place-items:center;padding:24px;
+    background:radial-gradient(120% 90% at 50% -10%, #1f5344 0%, var(--rail) 55%, #0c211b 100%);
+    -webkit-font-smoothing:antialiased;line-height:1.5}
+  .card{width:100%;max-width:420px;background:var(--surface);border-radius:20px;
+    box-shadow:0 30px 80px rgba(0,0,0,.35);border:1px solid var(--line);overflow:hidden}
+  .head{padding:32px 34px 4px;text-align:center;position:relative}
+  .brand{display:inline-flex;align-items:center;gap:11px;margin-bottom:18px}
+  .brand svg{width:30px;height:30px}
+  .brand .word{font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:-.03em}
+  .brand .word b{color:var(--accent)}
+  h1{margin:0;font-family:var(--font-display);font-weight:800;font-size:21px;letter-spacing:-.02em}
+  .sub{color:var(--muted);font-size:14px;margin:7px 0 0}
+  .body{padding:24px 34px 30px}
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;
+    text-transform:uppercase;letter-spacing:.05em}
+  .field input{width:100%;padding:12px 13px;border:1px solid var(--line);background:var(--surface-2);
+    color:var(--ink);border-radius:10px;font-size:14.5px;font-family:inherit;transition:.15s}
+  .field input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+  .btn{width:100%;border:0;background:var(--primary);color:var(--primary-ink);font-weight:700;font-size:15px;
+    font-family:var(--font-display);padding:13px;border-radius:11px;cursor:pointer;transition:.15s;margin-top:4px}
+  .btn:hover{filter:brightness(1.06)}
+  .btn:active{transform:translateY(1px)}
+  .err{color:var(--crit);font-size:13px;margin:0 0 12px;min-height:18px;font-weight:600}
+  .switch{text-align:center;font-size:13px;color:var(--muted);margin:16px 0 0}
+  .switch a{color:var(--primary);font-weight:700;text-decoration:none;cursor:pointer}
+  .switch a:hover{text-decoration:underline}
+  .done{text-align:center;padding:6px 2px}
+  .done .ic{width:52px;height:52px;border-radius:50%;background:var(--primary);display:grid;place-items:center;margin:6px auto 16px}
+  .done .ic svg{width:26px;height:26px;color:var(--primary-ink)}
+  .done b{display:block;font-family:var(--font-display);font-size:18px;margin-bottom:8px}
+  .done p{color:var(--muted);font-size:14px;margin:0}
+  .foot{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-top:1px solid var(--line)}
+  .foot a,.foot button{background:none;border:0;font-family:inherit;color:var(--muted);font-size:13px;font-weight:600;
+    text-decoration:none;cursor:pointer;padding:6px 8px;border-radius:8px;transition:.15s}
+  .foot a:hover,.foot button:hover{color:var(--ink)}
+  .toprow{position:absolute;top:18px;right:16px;display:flex;gap:4px}
+  .toprow button{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px;
+    font-family:inherit;font-size:12.5px;font-weight:700;display:grid;place-items:center}
+  .toprow button:hover{color:var(--ink);background:var(--surface-2)}
+  .toprow button svg{width:17px;height:17px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="head">
+      <div class="toprow">
+        <button id="langBtn" title="Language">ES</button>
+        <button id="themeBtn" aria-label="Theme"></button>
+      </div>
+      <div class="brand">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg>
+        <span class="word">Elder<b>ly</b></span>
+      </div>
+      <h1 id="title">Welcome back</h1>
+      <p class="sub" id="sub">Sign in to your family portal</p>
+    </div>
+    <div class="body">
+      <!-- LOGIN -->
+      <div id="login">
+        <p class="err" id="err1"></p>
+        <div class="field"><label id="l-email">Email</label><input type="email" id="email" autocomplete="username"></div>
+        <div class="field"><label id="l-pass">Password</label><input type="password" id="pass" autocomplete="current-password"></div>
+        <button class="btn" id="loginBtn">Sign in</button>
+        <p class="switch" id="sw1"></p>
+      </div>
+      <!-- SIGNUP -->
+      <div id="signup" hidden>
+        <p class="err" id="err2"></p>
+        <div class="field"><label id="l-name">Your name</label><input type="text" id="suName"></div>
+        <div class="field"><label id="l-email2">Email</label><input type="email" id="suEmail"></div>
+        <div class="field"><label id="l-pass2">Password</label><input type="password" id="suPass"></div>
+        <button class="btn" id="signupBtn">Create account</button>
+        <p class="switch" id="sw2"></p>
+      </div>
+      <!-- DONE -->
+      <div id="done" class="done" hidden>
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div>
+        <b id="doneTitle">Thank you!</b>
+        <p id="doneMsg"></p>
+      </div>
+    </div>
+    <div class="foot">
+      <a href="/" id="backHome">← Back to home</a>
+      <span style="font-size:12px;color:var(--muted)" id="footNote">Elderly</span>
+    </div>
+  </div>
+
+<script>
+(function(){
+  var el=function(id){return document.getElementById(id)};
+  var root=document.documentElement;
+  function setTheme(t){root.setAttribute('data-theme',t);try{localStorage.setItem('theme',t)}catch(e){}
+    el('themeBtn').innerHTML=t==='dark'
+      ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg>'
+      :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  }
+  var t0='light';try{t0=localStorage.getItem('theme')||'light'}catch(e){}
+  setTheme(t0);
+  el('themeBtn').onclick=function(){setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark')};
+
+  var STR={
+    en:{title:'Welcome back',sub:'Sign in to your family portal',email:'Email',pass:'Password',login:'Sign in',
+      sw1:'New here? <a id="toSignup">Create a free account</a>',name:'Your name',signup:'Create account',
+      suTitle:'Create your account',suSub:'Start bringing Elderly to your family',
+      sw2:'Already have an account? <a id="toLogin">Sign in</a>',
+      doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
+      back:'← Back to home',needEmail:'Please enter your email.',needAll:'Please add your name and email.',lang:'ES'},
+    es:{title:'Hola de nuevo',sub:'Ingresá al portal de tu familia',email:'Email',pass:'Contraseña',login:'Iniciar sesión',
+      sw1:'¿Nuevo por acá? <a id="toSignup">Creá una cuenta gratis</a>',name:'Tu nombre',signup:'Crear cuenta',
+      suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
+      sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
+      doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te vamos a escribir apenas tu portal esté listo.',
+      back:'← Volver al inicio',needEmail:'Poné tu email.',needAll:'Completá tu nombre y email.',lang:'EN'}
+  };
+  var lang=(new URLSearchParams(location.search).get('lang')==='es')?'es':'en';
+
+  function applyLang(){
+    var s=STR[lang];
+    root.setAttribute('lang',lang);
+    document.title=(lang==='es'?'Ingresar':'Sign in')+' · Elderly';
+    el('title').textContent=s.title; el('sub').textContent=s.sub;
+    el('l-email').textContent=s.email; el('l-pass').textContent=s.pass;
+    el('loginBtn').textContent=s.login; el('sw1').innerHTML=s.sw1;
+    el('l-name').textContent=s.name; el('l-email2').textContent=s.email; el('l-pass2').textContent=s.pass;
+    el('signupBtn').textContent=s.signup; el('sw2').innerHTML=s.sw2;
+    el('doneTitle').textContent=s.doneTitle; el('doneMsg').textContent=s.doneMsg;
+    el('backHome').textContent=s.back; el('langBtn').textContent=s.lang;
+    el('backHome').setAttribute('href', lang==='es'?'/es':'/');
+    bindSwitch();
+  }
+  function bindSwitch(){
+    var a=document.getElementById('toSignup'); if(a)a.onclick=function(e){e.preventDefault();show('signup')};
+    var b=document.getElementById('toLogin'); if(b)b.onclick=function(e){e.preventDefault();show('login')};
+  }
+  function show(which){
+    el('login').hidden=which!=='login';
+    el('signup').hidden=which!=='signup';
+    el('done').hidden=which!=='done';
+    var s=STR[lang];
+    if(which==='signup'){el('title').textContent=s.suTitle;el('sub').textContent=s.suSub;}
+    else if(which==='login'){el('title').textContent=s.title;el('sub').textContent=s.sub;}
+    else{el('title').textContent='';el('sub').textContent='';}
+  }
+  el('langBtn').onclick=function(){
+    lang=lang==='es'?'en':'es';
+    var u=new URL(location.href); if(lang==='es')u.searchParams.set('lang','es'); else u.searchParams.delete('lang');
+    history.replaceState(null,'',u); applyLang();
+  };
+  el('loginBtn').onclick=function(){
+    if(!el('email').value.trim()){el('err1').textContent=STR[lang].needEmail;return}
+    el('err1').textContent=''; show('done');
+  };
+  el('signupBtn').onclick=function(){
+    if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=STR[lang].needAll;return}
+    el('err2').textContent=''; show('done');
+  };
+  applyLang();
+})();
+</script>
+</body>
+</html>
