@@ -139,7 +139,7 @@
 (function(){
   var el=function(id){return document.getElementById(id)};
   var root=document.documentElement;
-  var PORTAL_URL="https://claude.ai/code/artifact/7d466173-b5b2-4312-b4fa-b291fb4c74ac";
+  var PORTAL_URL="/portal";
 
   /* accounts (solo hash, nunca texto plano) */
   var ACCOUNTS={
@@ -147,6 +147,7 @@
     "pablo@heyzawo.com":"435b3265482ba13e8e83e2bab79724f04ee8e8edad9841d47d51e2bcbb0091f6",
     "belen@heyzawo.com":"952e1cce5a5f3bddc35fe0d965a2e6b7c284a320b8850a86d29e10dc01c21ff6"
   };
+  var NAMES={"matias@heyzawo.com":"Matías","pablo@heyzawo.com":"Pablo","belen@heyzawo.com":"Belén"};
   function sha256hex(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
     return Array.prototype.map.call(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
 
@@ -230,7 +231,9 @@
     if(!h){el('errT').textContent=s().noAccess;return}
     sha256hex(el('passT').value).then(function(x){
       if(x!==h){el('errT').textContent=s().badPass;return}
-      el('errT').textContent=''; el('teamBtn').textContent='...'; location.href=PORTAL_URL;
+      el('errT').textContent=''; el('teamBtn').textContent='...';
+      try{sessionStorage.setItem('elderly_sess',NAMES[m]||m)}catch(e){}
+      location.href=PORTAL_URL;
     }).catch(function(){el('errT').textContent=s().badPass});
   };
 
