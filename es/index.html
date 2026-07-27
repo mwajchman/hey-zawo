@@ -502,9 +502,16 @@
         <a class="btn btn-ghost" href="#demo">Reservá la llamada gratis</a>
       </div>
       <div class="plan feat reveal d1">
-        <span class="tag">Prevención, educación y conexión</span>
-        <div class="name">Elderly Familia</div><div class="price">$39 <small>/ mes</small></div>
-        <p class="anchor">Menos de $1,30 por día por compañía diaria, cuidado atento, y tranquilidad de verdad.</p>
+        <span class="tag">Armá tu plan</span>
+        <div class="name">Elderly Familia</div><div class="price"><span id="pb-price">$39</span> <small>/ mes</small></div>
+        <p class="anchor" id="pb-anchor">Una llamada diaria a la medida de tu familia. Elegís cuántas veces, de cuántos minutos, y de qué hablan. Los tópicos van siempre incluidos.</p>
+        <div class="pb-controls">
+          <div class="pb-ctl"><span class="pb-lbl">Llamadas por día</span>
+            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="c" aria-label="Menos llamadas">–</button><b id="pb-c">1</b><button type="button" class="pb-b" data-a="inc" data-t="c" aria-label="Más llamadas">+</button></div></div>
+          <div class="pb-ctl"><span class="pb-lbl">Minutos por llamada</span>
+            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="m" aria-label="Menos minutos">–</button><b id="pb-m">10</b><button type="button" class="pb-b" data-a="inc" data-t="m" aria-label="Más minutos">+</button></div></div>
+        </div>
+        <div class="pb-topics" id="pb-topics"></div>
         <ul>
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Llamadas diarias con compañía, chequeos y recordatorios</li>
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> El baúl completo de historias de vida, en su propia voz</li>
@@ -517,6 +524,46 @@
     </div>
     <p class="keep reveal">El Recuerdo convierte sus historias en un libro encuadernado y grabaciones, desde $99. Un regalo para cada nieto.</p>
   </div></section>
+
+  <style>
+    .pb-controls{display:flex;gap:14px;margin:16px 0 4px;flex-wrap:wrap}
+    .pb-ctl{flex:1;min-width:130px;display:flex;flex-direction:column;gap:7px}
+    .pb-lbl{font-family:var(--font-sans);font-size:11.5px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.09em}
+    .pb-step{display:inline-flex;align-items:center;gap:12px;background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:6px 10px;align-self:flex-start}
+    .pb-step b{font-family:var(--font-serif);font-size:1.25rem;min-width:32px;text-align:center;color:var(--ink)}
+    .pb-b{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--pine);font-size:18px;line-height:1;cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
+    .pb-b:hover{border-color:var(--pine);transform:translateY(-1px)}
+    .pb-topics{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px}
+    .pb-topic{font-family:var(--font-sans);font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;color:var(--ink-soft);user-select:none;transition:all .15s}
+    .pb-topic:hover{border-color:var(--ink-soft)}
+    .pb-topic.on{background:var(--pine);color:#FBF6EC;border-color:var(--pine)}
+  </style>
+  <script>
+  (function(){
+    var TOPICS=["Compañía y charla diaria","Historias de vida","Algo nuevo","Alerta de estafas","Fe y gratitud","Chequeo de salud","Música y hobbies","Los nietos"];
+    var st={c:1,m:10,topics:{}}, LIM={c:[1,5],m:[5,30]};
+    var $=function(id){return document.getElementById(id)};
+    // Misma fórmula que el backend (ver PRICING.md): BASE 18 + 0.07/min x (llamadas x min x 30).
+    function calcPrice(c,m){return Math.round(18 + 0.07*c*m*30)}
+    function render(){
+      if($("pb-c"))$("pb-c").textContent=st.c;
+      if($("pb-m"))$("pb-m").textContent=st.m;
+      if($("pb-price"))$("pb-price").textContent="$"+calcPrice(st.c,st.m);
+    }
+    var tw=$("pb-topics");
+    if(tw){ TOPICS.forEach(function(t,i){
+      var e=document.createElement("span"); e.className="pb-topic"+(i<2?" on":""); e.textContent=t;
+      if(i<2) st.topics[t]=1;
+      e.onclick=function(){ if(st.topics[t]){delete st.topics[t];e.classList.remove("on")} else {st.topics[t]=1;e.classList.add("on")} };
+      tw.appendChild(e);
+    }); }
+    document.querySelectorAll(".pb-b").forEach(function(b){
+      b.onclick=function(){ var t=b.getAttribute("data-t"),a=b.getAttribute("data-a"),lo=LIM[t][0],hi=LIM[t][1];
+        st[t]=Math.max(lo,Math.min(hi,st[t]+(a==="inc"?1:-1))); render(); };
+    });
+    render();
+  })();
+  </script>
 
   <section id="faq" style="background:var(--surface);border-top:1px solid var(--line);"><div class="wrap">
     <div class="sec-head reveal" style="margin-bottom:32px;"><p class="eyebrow">Buenas preguntas</p><h2>Lo que las familias preguntan primero.</h2></div>
