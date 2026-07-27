@@ -1,6 +1,10 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/portal", "destination": "/ingresar", "permanent": false },
+    { "source": "/portal/:path*", "destination": "/ingresar", "permanent": false }
+  ],
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://web-production-0134d.up.railway.app/api/:path*" },
     { "source": "/app", "destination": "https://web-production-0134d.up.railway.app/app" },
