@@ -224,26 +224,36 @@
     var u=new URL(location.href); if(lang==='es')u.searchParams.set('lang','es'); else u.searchParams.delete('lang');
     history.replaceState(null,'',u); applyLang();
   };
-  el('loginBtn').onclick=function(){ if(!el('email').value.trim()){el('err1').textContent=s().needEmail;return} el('err1').textContent=''; famShow('done'); };
-  el('signupBtn').onclick=function(){ if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=s().needAll;return} el('err2').textContent=''; famShow('done'); };
-  var BACKEND="https://web-production-0134d.up.railway.app";
+  /* Login unificado contra el backend real (mismo dominio via proxy de Vercel). */
+  function authAndGo(path, body, tokenKey, dest, errEl, btn, btnText){
+    errEl.textContent=''; if(btn) btn.textContent='...';
+    fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+      .then(function(r){ return r.json().then(function(d){ if(!r.ok) throw {detail:(d&&d.detail)}; return d; }); })
+      .then(function(d){ try{localStorage.setItem(tokenKey, d.token)}catch(e){} location.href=dest; })
+      .catch(function(e){ if(btn) btn.textContent=btnText; errEl.textContent=(e&&e.detail)?e.detail:s().badPass; });
+  }
+  el('loginBtn').onclick=function(){
+    if(!el('email').value.trim()){el('err1').textContent=s().needEmail;return}
+    authAndGo("/api/login",{email:el('email').value.trim(),password:el('pass').value},
+      "elderly_token","/app",el('err1'),el('loginBtn'),s().login);
+  };
+  el('signupBtn').onclick=function(){
+    if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=s().needAll;return}
+    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim()},
+      "elderly_token","/app",el('err2'),el('signupBtn'),s().signup);
+  };
   el('teamBtn').onclick=function(){
     var email=el('emailT').value.trim().toLowerCase(), pass=el('passT').value;
     if(!email){el('errT').textContent=s().noAccess;return}
     el('errT').textContent=''; el('teamBtn').textContent='...';
-    fetch(BACKEND+"/api/login",{method:"POST",headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email:email,password:pass})})
+    fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,password:pass})})
       .then(function(r){ if(!r.ok) throw {bad:true}; return r.json(); })
       .then(function(d){
-        // validar que la cuenta sea del equipo (rol team)
-        return fetch(BACKEND+"/api/admin/overview",{headers:{Authorization:"Bearer "+d.token}})
+        return fetch("/api/admin/overview",{headers:{Authorization:"Bearer "+d.token}})
           .then(function(r2){ if(r2.status===403) throw {team:false}; if(!r2.ok) throw {bad:true}; return d.token; });
       })
-      .then(function(token){ location.href=BACKEND+"/admin#t="+encodeURIComponent(token); })
-      .catch(function(e){
-        el('teamBtn').textContent=s().teamBtn;
-        el('errT').textContent = (e&&e.team===false) ? s().noAccess : s().badPass;
-      });
+      .then(function(token){ try{localStorage.setItem("elderly_admin_token",token)}catch(e){} location.href="/admin"; })
+      .catch(function(e){ el('teamBtn').textContent=s().teamBtn; el('errT').textContent=(e&&e.team===false)?s().noAccess:s().badPass; });
   };
 
   applyLang();
