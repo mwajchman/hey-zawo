@@ -226,15 +226,24 @@
   };
   el('loginBtn').onclick=function(){ if(!el('email').value.trim()){el('err1').textContent=s().needEmail;return} el('err1').textContent=''; famShow('done'); };
   el('signupBtn').onclick=function(){ if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=s().needAll;return} el('err2').textContent=''; famShow('done'); };
+  var BACKEND="https://web-production-0134d.up.railway.app";
   el('teamBtn').onclick=function(){
-    var m=el('emailT').value.trim().toLowerCase(), h=ACCOUNTS[m];
-    if(!h){el('errT').textContent=s().noAccess;return}
-    sha256hex(el('passT').value).then(function(x){
-      if(x!==h){el('errT').textContent=s().badPass;return}
-      el('errT').textContent=''; el('teamBtn').textContent='...';
-      try{sessionStorage.setItem('elderly_sess',NAMES[m]||m)}catch(e){}
-      location.href=PORTAL_URL;
-    }).catch(function(){el('errT').textContent=s().badPass});
+    var email=el('emailT').value.trim().toLowerCase(), pass=el('passT').value;
+    if(!email){el('errT').textContent=s().noAccess;return}
+    el('errT').textContent=''; el('teamBtn').textContent='...';
+    fetch(BACKEND+"/api/login",{method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({email:email,password:pass})})
+      .then(function(r){ if(!r.ok) throw {bad:true}; return r.json(); })
+      .then(function(d){
+        // validar que la cuenta sea del equipo (rol team)
+        return fetch(BACKEND+"/api/admin/overview",{headers:{Authorization:"Bearer "+d.token}})
+          .then(function(r2){ if(r2.status===403) throw {team:false}; if(!r2.ok) throw {bad:true}; return d.token; });
+      })
+      .then(function(token){ location.href=BACKEND+"/admin#t="+encodeURIComponent(token); })
+      .catch(function(e){
+        el('teamBtn').textContent=s().teamBtn;
+        el('errT').textContent = (e&&e.team===false) ? s().noAccess : s().badPass;
+      });
   };
 
   applyLang();
