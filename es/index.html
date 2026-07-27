@@ -272,7 +272,7 @@
   <div class="nav-cta"><a href="/" style="font-family:var(--font-sans);font-weight:700;font-size:.9rem;color:var(--ink-soft);text-decoration:none;padding:6px 8px;">EN</a>
     <button class="theme-toggle" id="themeBtn" aria-label="Switch theme" title="Switch theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
     <a href="/ingresar?lang=es" style="font-family:var(--font-sans);font-weight:700;font-size:.9rem;color:var(--ink-soft);text-decoration:none;padding:6px 10px;">Ingresar</a>
-    <a class="btn btn-primary" href="#demo">Probá una llamada gratis</a>
+    <a class="btn btn-primary" href="/ingresar">Probá una llamada gratis</a>
   </div>
 </div></header>
 
@@ -283,7 +283,7 @@
       <h1 class="reveal d1">Cuidá a quienes <span class="it">te criaron</span>.<span class="sub">Prevención, educación y conexión.</span></h1>
       <p class="lead reveal d2">Todos los días, Elderly llama a tu mamá o papá para una charla cálida. Compañía de verdad, una mente más despierta, y un ojo atento sobre su salud y su seguridad. Una capa extra de protección, además de todo lo que ya hacés.</p>
       <div class="hero-actions reveal d2">
-        <a class="btn btn-primary" href="#demo">Probá una llamada gratis
+        <a class="btn btn-primary" href="/ingresar">Probá una llamada gratis
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="#pillars">Mirá qué incluye</a>
       </div>
@@ -429,27 +429,42 @@
     
   </div></section>
 
-  <section class="demo" id="demo"><div class="wrap">
-    <div class="demo-grid">
-      <div class="reveal">
-        <span class="badge"><span class="pulse"></span>El acceso anticipado está abierto</span>
-        <h2>Sé el primero en probar Elderly.</h2>
-        <p class="lead">Dejá tu nombre y número. Coordinamos una llamada de muestra corta, para que sientas exactamente lo que va a sentir tu mamá o papá.</p>
-        <ul class="demo-pts">
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Una llamada de muestra real a tu teléfono, en el lanzamiento</li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Gratis, sin tarjeta, y nunca compartimos tu número</li>
-          <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg> Primero en la fila, sin compromiso</li>
+  <section id="pricing"><div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Precios simples</p><h2>Un plan. Los tres, juntos.</h2><p>Empezá con una llamada gratis esta semana. Si se vuelve parte de la familia, seguís. Cancelás cuando quieras.</p></div>
+    <div class="price-grid">
+      <div class="plan reveal">
+        <div class="name">La primera llamada</div><div class="price">Gratis</div>
+        <p class="sub">Una conversación real con tu mamá o papá, y su primera historia guardada, invitación nuestra. Sin tarjeta.</p>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Una llamada completa, agendada por vos</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Su primera historia, guardada para siempre</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Mirá cómo lo reciben, sin presión</li>
         </ul>
+        <a class="btn btn-ghost" href="/ingresar">Reservá la llamada gratis</a>
       </div>
-      <form class="demo-card reveal d1" id="demoForm" novalidate>
-        <input type="text" name="_honey" class="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <label>Tu nombre<input name="name" required autocomplete="name" placeholder="María"></label>
-        <label>Tu teléfono<input name="phone" type="tel" required autocomplete="tel" placeholder="+54 11 1234 5678"></label>
-        <button class="btn btn-primary" type="submit">Sumate a la lista
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <p class="fine">Toma 10 segundos. Solo usamos tu número para contactarte sobre Elderly. Sin spam.</p>
-      </form>
+      <div class="plan feat reveal d1">
+        <span class="tag">Armá tu plan</span>
+        <div class="name">Elderly Familia</div><div class="price"><span id="pb-price">$39</span> <small>/ mes</small></div>
+        <p class="anchor" id="pb-anchor">Una llamada diaria a la medida de tu familia. Elegís cuántas veces, de cuántos minutos, y de qué hablan. Los tópicos van siempre incluidos.</p>
+        <div class="pb-controls">
+          <div class="pb-ctl"><span class="pb-lbl">Llamadas por día</span>
+            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="c" aria-label="Menos llamadas">–</button><b id="pb-c">1</b><button type="button" class="pb-b" data-a="inc" data-t="c" aria-label="Más llamadas">+</button></div></div>
+          <div class="pb-ctl"><span class="pb-lbl">Minutos por llamada</span>
+            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="m" aria-label="Menos minutos">–</button><b id="pb-m">10</b><button type="button" class="pb-b" data-a="inc" data-t="m" aria-label="Más minutos">+</button></div></div>
+        </div>
+        <div class="pb-topics" id="pb-topics"></div>
+        <ul>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Llamadas diarias con compañía, chequeos y recordatorios</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> El baúl completo de historias de vida, en su propia voz</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Alerta temprana de estafas y la palabra segura familiar</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> App familiar con notas de bienestar y alertas el mismo día</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Inglés o español, familiares ilimitados</li>
+        </ul>
+        <a class="btn btn-primary" href="/ingresar">Empezá Elderly Familia</a>
+      </div>
     </div>
+    <p class="reveal" style="text-align:center;color:var(--ink-soft);font-size:13.5px;margin-top:18px;">Pagos seguros en USD, con <a href="https://stripe.com" target="_blank" rel="noopener" style="color:var(--pine-2);text-decoration:underline;">Stripe</a>.</p>
+    <p class="keep reveal">El Recuerdo convierte sus historias en un libro encuadernado y grabaciones, desde $99. Un regalo para cada nieto.</p>
   </div></section>
 
   <section class="split"><div class="wrap">
@@ -488,43 +503,6 @@
     </div>
   </div></section>
 
-  <section id="pricing"><div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow">Precios simples</p><h2>Un plan. Los tres, juntos.</h2><p>Empezá con una llamada gratis esta semana. Si se vuelve parte de la familia, seguís. Cancelás cuando quieras.</p></div>
-    <div class="price-grid">
-      <div class="plan reveal">
-        <div class="name">La primera llamada</div><div class="price">Gratis</div>
-        <p class="sub">Una conversación real con tu mamá o papá, y su primera historia guardada, invitación nuestra. Sin tarjeta.</p>
-        <ul>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Una llamada completa, agendada por vos</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Su primera historia, guardada para siempre</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Mirá cómo lo reciben, sin presión</li>
-        </ul>
-        <a class="btn btn-ghost" href="#demo">Reservá la llamada gratis</a>
-      </div>
-      <div class="plan feat reveal d1">
-        <span class="tag">Armá tu plan</span>
-        <div class="name">Elderly Familia</div><div class="price"><span id="pb-price">$39</span> <small>/ mes</small></div>
-        <p class="anchor" id="pb-anchor">Una llamada diaria a la medida de tu familia. Elegís cuántas veces, de cuántos minutos, y de qué hablan. Los tópicos van siempre incluidos.</p>
-        <div class="pb-controls">
-          <div class="pb-ctl"><span class="pb-lbl">Llamadas por día</span>
-            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="c" aria-label="Menos llamadas">–</button><b id="pb-c">1</b><button type="button" class="pb-b" data-a="inc" data-t="c" aria-label="Más llamadas">+</button></div></div>
-          <div class="pb-ctl"><span class="pb-lbl">Minutos por llamada</span>
-            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="m" aria-label="Menos minutos">–</button><b id="pb-m">10</b><button type="button" class="pb-b" data-a="inc" data-t="m" aria-label="Más minutos">+</button></div></div>
-        </div>
-        <div class="pb-topics" id="pb-topics"></div>
-        <ul>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Llamadas diarias con compañía, chequeos y recordatorios</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> El baúl completo de historias de vida, en su propia voz</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Alerta temprana de estafas y la palabra segura familiar</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> App familiar con notas de bienestar y alertas el mismo día</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Inglés o español, familiares ilimitados</li>
-        </ul>
-        <a class="btn btn-primary" href="#demo">Empezá Elderly Familia</a>
-      </div>
-    </div>
-    <p class="reveal" style="text-align:center;color:var(--ink-soft);font-size:13.5px;margin-top:18px;">Pagos seguros en USD, con <a href="https://stripe.com" target="_blank" rel="noopener" style="color:var(--pine-2);text-decoration:underline;">Stripe</a>.</p>
-    <p class="keep reveal">El Recuerdo convierte sus historias en un libro encuadernado y grabaciones, desde $99. Un regalo para cada nieto.</p>
-  </div></section>
 
   <style>
     .pb-controls{display:flex;gap:14px;margin:16px 0 4px;flex-wrap:wrap}
@@ -581,7 +559,7 @@
     <div class="sec-head reveal"><p class="eyebrow">From our blog</p><h2>The research behind the daily call.</h2><p>Real numbers on loneliness, fraud, and family, and what actually helps.</p></div>
     <div class="cards">
       <a class="bcard c1 reveal" href="/blog/loneliness"><div class="top"></div><div class="bd"><span class="cat">Loneliness</span><h3>Why isolation raises dementia risk by 50%</h3><p>What the U.S. Surgeon General found about loneliness in older adults, and why a daily call helps.</p><span class="read">Read the article</span></div></a>
-      <a class="bcard c2 reveal d1" href="/blog/elder-fraud"><div class="top"></div><div class="bd"><span class="cat">Scams</span><h3>$7.75 billion lost, and the new voice-clone threat</h3><p>The FBI's 2025 elder fraud numbers, and how a family safe word fights back.</p><span class="read">Read the article</span></div></a>
+      <a class="bcard c2 reveal d1" href="/blog/elder-fraud"><div class="top"></div><div class="bd"><span class="cat">Scams</span><h3>$4.9 billion lost, and the new voice-clone threat</h3><p>The FBI's 2024 elder fraud numbers, and how a family safe word fights back.</p><span class="read">Read the article</span></div></a>
       <a class="bcard c3 reveal d2" href="/blog/why-daily-call"><div class="top"></div><div class="bd"><span class="cat">Family</span><h3>Why they will not tell you, but they will tell the call</h3><p>The quiet reason a daily check in catches what a weekly phone call misses.</p><span class="read">Read the article</span></div></a>
     </div>
     <div style="text-align:center;margin-top:28px;"><a class="btn btn-ghost" href="/blog">See all articles</a></div>
@@ -592,7 +570,7 @@
   <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16.04 4C9.9 4 4.92 8.98 4.92 15.12c0 2.13.6 4.12 1.62 5.82L4.8 27.2l6.43-1.69a11.1 11.1 0 0 0 4.8 1.1h.01c6.14 0 11.12-4.98 11.12-11.12S22.18 4 16.04 4zm0 20.35h-.01a9.2 9.2 0 0 1-4.68-1.28l-.34-.2-3.82 1 1.02-3.72-.22-.38a9.16 9.16 0 0 1-1.4-4.86c0-5.08 4.14-9.22 9.23-9.22 2.46 0 4.78.96 6.52 2.7a9.16 9.16 0 0 1 2.7 6.52c0 5.09-4.14 9.22-9.22 9.22zm5.06-6.9c-.28-.14-1.64-.81-1.9-.9-.25-.09-.44-.14-.62.14-.18.28-.71.9-.87 1.08-.16.18-.32.2-.6.07-.28-.14-1.17-.43-2.23-1.38-.82-.73-1.38-1.64-1.54-1.92-.16-.28-.02-.43.12-.57.13-.13.28-.32.42-.48.14-.16.18-.28.28-.46.09-.18.05-.35-.02-.49-.07-.14-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47l-.53-.01c-.18 0-.48.07-.73.35-.25.28-.96.94-.96 2.3 0 1.35.98 2.66 1.12 2.84.14.18 1.93 2.95 4.68 4.14.65.28 1.16.45 1.56.58.66.21 1.25.18 1.72.11.53-.08 1.64-.67 1.87-1.32.23-.65.23-1.2.16-1.32-.07-.12-.25-.19-.53-.33z"/></svg>
 </a>
 
-<div class="mcta"><a class="btn btn-primary" href="#demo">Probá una llamada gratis</a></div>
+<div class="mcta"><a class="btn btn-primary" href="/ingresar">Probá una llamada gratis</a></div>
 
 <footer><div class="wrap">
   <div style="max-width:280px;">
@@ -643,7 +621,7 @@
   } else { counts.forEach(function(el){var d=parseInt(el.getAttribute('data-dec')||'0',10);var t=parseFloat(el.getAttribute('data-to'));el.textContent=d>0?t.toFixed(d):t.toLocaleString('en-US');}); }
 
   // Form: send to matias@, hello@, pablo@ via FormSubmit, keep in-page confirmation
-  var f=document.getElementById('demoForm');
+  var f=document.getElementById('demoForm'); if(!f)return;
   var ICON='<div class="okk"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg></div>';
   var IST='font-family:inherit;font-size:1rem;padding:12px 13px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);';
   var LST='display:flex;flex-direction:column;gap:6px;font-size:.82rem;font-weight:700;text-align:left;';
