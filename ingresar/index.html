@@ -8,7 +8,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('theme')||'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
 <style>
   :root{
@@ -16,8 +16,9 @@
     --ink:#16211C;--ink-soft:#3B4842;--muted:#67756C;--line:#DBDFD6;
     --rail:#173B31;--primary:#1D4A3E;--primary-ink:#F1ECDE;--accent:#E07E39;
     --crit:#C4553B;
-    --font-sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    --font-display:"Plus Jakarta Sans",var(--font-sans);
+    --font-sans:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-display:"Plus Jakarta Sans",system-ui,sans-serif;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
   }
   :root[data-theme="dark"]{
     --ground:#0E1512;--surface:#16211C;--surface-2:#1B2A24;
@@ -29,15 +30,38 @@
     display:grid;place-items:center;padding:24px;
     background:radial-gradient(120% 90% at 50% -10%, #1f5344 0%, var(--rail) 55%, #0c211b 100%);
     -webkit-font-smoothing:antialiased;line-height:1.5}
-  .card{width:100%;max-width:420px;background:var(--surface);border-radius:20px;
-    box-shadow:0 30px 80px rgba(0,0,0,.35);border:1px solid var(--line);overflow:hidden}
+  .split{display:flex;width:100%;max-width:940px;border-radius:26px;overflow:hidden;
+    box-shadow:0 50px 120px -20px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.06)}
+  /* left brand panel */
+  .brandside{flex:1 1 45%;position:relative;overflow:hidden;color:#f3eee0;padding:46px 42px 40px;
+    background:linear-gradient(158deg,#22604d 0%,#173d31 55%,#0f2c24 100%);
+    display:flex;flex-direction:column;justify-content:space-between}
+  .brandside::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;
+    background:radial-gradient(circle,rgba(224,126,57,.26),transparent 70%);top:-130px;right:-110px;pointer-events:none}
+  .brandside::after{content:"\201C";position:absolute;font-family:var(--serif);font-size:200px;line-height:1;
+    color:rgba(243,238,224,.06);top:120px;left:24px;pointer-events:none}
+  .bs-brand{display:inline-flex;align-items:center;gap:11px;position:relative}
+  .bs-brand svg{width:30px;height:30px}
+  .bs-brand .word{font-family:var(--serif);font-weight:600;font-size:22px}
+  .bs-brand .word b{color:var(--accent);font-weight:600}
+  .bs-pitch{font-family:var(--serif);font-style:italic;font-weight:500;font-size:29px;line-height:1.2;
+    letter-spacing:-.01em;margin:0;position:relative}
+  .bs-sub{color:rgba(243,238,224,.74);font-size:15px;line-height:1.55;margin:16px 0 0;position:relative}
+  .bs-trust{color:rgba(243,238,224,.6);font-size:12.5px;font-weight:600;letter-spacing:.02em;position:relative}
+  /* right form panel */
+  .card{flex:1 1 55%;min-width:0;background:var(--surface);border:0;border-radius:0;overflow:hidden}
+  @media(max-width:800px){
+    .split{display:block;max-width:420px;border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.4)}
+    .brandside{display:none}
+  }
+  @media(min-width:801px){ .card .head .brand{display:none} .card .head{padding-top:34px} }
   .head{padding:30px 34px 2px;text-align:center;position:relative}
   .brand{display:inline-flex;align-items:center;gap:11px;margin-bottom:16px}
   .brand svg{width:30px;height:30px}
-  .brand .word{font-family:var(--font-display);font-weight:800;font-size:22px;letter-spacing:-.03em}
-  .brand .word b{color:var(--accent)}
-  h1{margin:0;font-family:var(--font-display);font-weight:800;font-size:20px;letter-spacing:-.02em}
-  .sub{color:var(--muted);font-size:13.5px;margin:6px 0 0}
+  .brand .word{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:-.01em}
+  .brand .word b{color:var(--accent);font-weight:600}
+  h1{margin:0;font-family:var(--serif);font-optical-sizing:auto;font-weight:600;font-size:27px;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:14px;margin:7px 0 0}
   .seg{display:flex;gap:6px;background:var(--surface-2);padding:5px;border-radius:12px;margin:20px 34px 0}
   .seg button{flex:1;border:0;background:transparent;color:var(--muted);font-weight:700;font-size:13.5px;
     font-family:var(--font-display);padding:9px;border-radius:8px;cursor:pointer;transition:.15s}
@@ -61,7 +85,7 @@
   .done{text-align:center;padding:6px 2px}
   .done .ic{width:52px;height:52px;border-radius:50%;background:var(--primary);display:grid;place-items:center;margin:6px auto 16px}
   .done .ic svg{width:26px;height:26px;color:var(--primary-ink)}
-  .done b{display:block;font-family:var(--font-display);font-size:18px;margin-bottom:8px}
+  .done b{display:block;font-family:var(--serif);font-weight:600;font-size:20px;margin-bottom:8px}
   .done p{color:var(--muted);font-size:14px;margin:0}
   .foot{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-top:1px solid var(--line)}
   .foot a{color:var(--muted);font-size:13px;font-weight:600;text-decoration:none;padding:6px 8px;border-radius:8px;transition:.15s}
@@ -75,8 +99,20 @@
 </style>
 </head>
 <body>
-  <div class="card">
-    <div class="head">
+  <div class="split">
+    <aside class="brandside">
+      <div class="bs-brand">
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg>
+        <span class="word">Elder<b>ly</b></span>
+      </div>
+      <div class="bs-mid">
+        <p class="bs-pitch" id="bsPitch">A warm call every day, and a note for you after each one.</p>
+        <p class="bs-sub" id="bsSub">Elderly checks in on the people you love, and keeps you close, wherever you are.</p>
+      </div>
+      <p class="bs-trust" id="bsTrust">Real phone calls. Real voices. Real peace of mind.</p>
+    </aside>
+    <div class="card">
+      <div class="head">
       <div class="toprow">
         <button id="langBtn" title="Language">ES</button>
         <button id="themeBtn" aria-label="Theme"></button>
@@ -133,6 +169,7 @@
       <a href="/" id="backHome">← Back to home</a>
       <span style="font-size:12px;color:var(--muted)">Elderly</span>
     </div>
+    </div>
   </div>
 
 <script>
@@ -170,7 +207,10 @@
       sw2:'Already have an account? <a id="toLogin">Sign in</a>',
       doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
       back:'← Back to home',needEmail:'Please enter your email.',needAll:'Please add your name and email.',
-      noAccess:'This email is not on the team.',badPass:'Wrong password.',lang:'ES'},
+      noAccess:'This email is not on the team.',badPass:'Wrong password.',lang:'ES',
+      pitch:'A warm call every day, and a note for you after each one.',
+      pitchSub:'Elderly checks in on the people you love, and keeps you close, wherever you are.',
+      trust:'Real phone calls. Real voices. Real peace of mind.'},
     es:{tabFamily:'Familias',tabTeam:'Equipo',
       famTitle:'Hola de nuevo',famSub:'Ingresá al portal de tu familia',
       suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
@@ -181,7 +221,10 @@
       sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
       doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te vamos a escribir apenas tu portal esté listo.',
       back:'← Volver al inicio',needEmail:'Poné tu email.',needAll:'Completá tu nombre y email.',
-      noAccess:'Ese email no es del equipo.',badPass:'Contraseña incorrecta.',lang:'EN'}
+      noAccess:'Ese email no es del equipo.',badPass:'Contraseña incorrecta.',lang:'EN',
+      pitch:'Una llamada cálida cada día, y una nota para vos después de cada una.',
+      pitchSub:'Elderly acompaña a quienes querés y te mantiene cerca, estés donde estés.',
+      trust:'Llamadas de verdad. Voces de verdad. Tranquilidad de verdad.'}
   };
   var lang=(new URLSearchParams(location.search).get('lang')==='es')?'es':'en';
   var tab='family', famView='login';
@@ -198,6 +241,9 @@
     el('doneTitle').textContent=s().doneTitle; el('doneMsg').textContent=s().doneMsg;
     el('backHome').textContent=s().back; el('backHome').setAttribute('href',lang==='es'?'/es':'/');
     el('langBtn').textContent=s().lang;
+    var bp=el('bsPitch'); if(bp)bp.textContent=s().pitch;
+    var bsu=el('bsSub'); if(bsu)bsu.textContent=s().pitchSub;
+    var bt=el('bsTrust'); if(bt)bt.textContent=s().trust;
     bindSwitch(); syncTitle();
   }
   function bindSwitch(){
