@@ -142,11 +142,26 @@
       <!-- ============ FAMILIES ============ -->
       <div data-pane="family">
         <div id="login">
+          <p id="verifiedNote" hidden style="color:#2f8563;font-weight:600;margin:0 0 10px;font-size:14px"></p>
           <p class="err" id="err1"></p>
           <div class="field"><label id="l-email">Email</label><input type="email" id="email" autocomplete="username"></div>
           <div class="field"><label id="l-pass">Password</label><input type="password" id="pass" autocomplete="current-password"></div>
           <button class="btn" id="loginBtn">Sign in</button>
+          <p class="switch" style="margin-top:12px"><a id="toForgot" href="#">Forgot your password?</a></p>
           <p class="switch" id="sw1"></p>
+        </div>
+        <div id="forgot" hidden>
+          <p class="err" id="err3"></p>
+          <p class="sub" id="fgIntro" style="margin:0 0 14px">Enter your email and we'll send you a link to set a new password.</p>
+          <div class="field"><label id="l-fgEmail">Email</label><input type="email" id="fgEmail" autocomplete="username"></div>
+          <button class="btn" id="forgotBtn">Send reset link</button>
+          <p class="switch"><a id="toLogin2" href="#">Back to sign in</a></p>
+        </div>
+        <div id="reset" hidden>
+          <p class="err" id="err4"></p>
+          <p class="sub" id="rsIntro" style="margin:0 0 14px">Choose a new password for your account.</p>
+          <div class="field"><label id="l-rsPass">New password</label><input type="password" id="rsPass" autocomplete="new-password"></div>
+          <button class="btn" id="resetBtn">Save new password</button>
         </div>
         <div id="signup" hidden>
           <p class="err" id="err2"></p>
@@ -224,6 +239,10 @@
       suTitle:'Create your account',suSub:'Start bringing Elderly to your family',
       teamTitle:'Team portal',teamSub:'Sign in with your account',
       email:'Email',pass:'Password',login:'Sign in',name:'Your name',country:'Country',signup:'Create account',
+      forgot:'Forgot your password?',fgTitle:'Reset password',fgIntro:"Enter your email and we'll send you a link to set a new password.",
+      fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
+      rsTitle:'New password',rsIntro:'Choose a new password for your account.',rsSave:'Save new password',
+      minPass:'Password must be at least 8 characters.',
       teamBtn:'Enter the panel',teamNote:'Private access for the Elderly team only.',
       sw1:'New here? <a id="toSignup">Create a free account</a>',
       sw2:'Already have an account? <a id="toLogin">Sign in</a>',
@@ -238,6 +257,10 @@
       suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
       teamTitle:'Portal del equipo',teamSub:'Ingresá con tu cuenta',
       email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',country:'País',signup:'Crear cuenta',
+      forgot:'¿Olvidaste tu contraseña?',fgTitle:'Recuperar contraseña',fgIntro:'Poné tu email y te mandamos un link para crear una nueva.',
+      fgSend:'Enviar link',backLogin:'Volver a iniciar sesión',fgSent:'Revisá tu correo. Si ese email tiene cuenta, el link ya va en camino.',
+      rsTitle:'Contraseña nueva',rsIntro:'Elegí una contraseña nueva para tu cuenta.',rsSave:'Guardar contraseña',
+      minPass:'La contraseña debe tener al menos 8 caracteres.',
       teamBtn:'Entrar al panel',teamNote:'Acceso privado, solo para el equipo de Elderly.',
       sw1:'¿Nuevo por acá? <a id="toSignup">Creá una cuenta gratis</a>',
       sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
@@ -259,6 +282,9 @@
     el('l-email').textContent=s().email; el('l-pass').textContent=s().pass; el('loginBtn').textContent=s().login;
     el('l-name').textContent=s().name; el('l-country').textContent=s().country; el('l-email2').textContent=s().email; el('l-pass2').textContent=s().pass; el('signupBtn').textContent=s().signup;
     el('l-emailT').textContent=s().email; el('l-passT').textContent=s().pass; el('teamBtn').textContent=s().teamBtn; el('teamNote').textContent=s().teamNote;
+    el('toForgot').textContent=s().forgot; el('fgIntro').textContent=s().fgIntro; el('l-fgEmail').textContent=s().email;
+    el('forgotBtn').textContent=s().fgSend; el('toLogin2').textContent=s().backLogin;
+    el('rsIntro').textContent=s().rsIntro; el('l-rsPass').textContent=s().rsTitle; el('resetBtn').textContent=s().rsSave;
     el('sw1').innerHTML=s().sw1; el('sw2').innerHTML=s().sw2;
     el('doneTitle').textContent=s().doneTitle; el('doneMsg').textContent=s().doneMsg;
     el('backHome').textContent=s().back; el('backHome').setAttribute('href',lang==='es'?'/es':'/');
@@ -276,10 +302,13 @@
     if(tab==='team'){el('title').textContent=s().teamTitle;el('sub').textContent=s().teamSub;return}
     if(famView==='signup'){el('title').textContent=s().suTitle;el('sub').textContent=s().suSub;}
     else if(famView==='login'){el('title').textContent=s().famTitle;el('sub').textContent=s().famSub;}
+    else if(famView==='forgot'){el('title').textContent=s().fgTitle;el('sub').textContent='';}
+    else if(famView==='reset'){el('title').textContent=s().rsTitle;el('sub').textContent='';}
     else{el('title').textContent='';el('sub').textContent='';}
   }
   function famShow(v){famView=v;
-    el('login').hidden=v!=='login'; el('signup').hidden=v!=='signup'; el('done').hidden=v!=='done'; syncTitle();}
+    el('login').hidden=v!=='login'; el('signup').hidden=v!=='signup'; el('done').hidden=v!=='done';
+    el('forgot').hidden=v!=='forgot'; el('reset').hidden=v!=='reset'; syncTitle();}
   function setTab(t){tab=t;
     document.querySelectorAll('.seg button').forEach(function(x){x.setAttribute('aria-selected',x.dataset.tab===t)});
     document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==t});
@@ -323,6 +352,38 @@
       .then(function(token){ try{localStorage.setItem("elderly_admin_token",token)}catch(e){} location.href="/admin"; })
       .catch(function(e){ el('teamBtn').textContent=s().teamBtn; el('errT').textContent=(e&&e.team===false)?s().noAccess:s().badPass; });
   };
+
+  /* Olvidé mi contraseña */
+  var RESET_TOKEN='';
+  el('toForgot').onclick=function(e){e.preventDefault();el('err3').textContent='';el('fgEmail').value=el('email').value;famShow('forgot')};
+  el('toLogin2').onclick=function(e){e.preventDefault();famShow('login')};
+  el('forgotBtn').onclick=function(){
+    var email=el('fgEmail').value.trim();
+    if(!email){el('err3').textContent=s().needEmail;return}
+    el('err3').textContent='';el('forgotBtn').textContent='...';
+    fetch("/api/password/forgot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})})
+      .then(function(){ el('title').textContent=s().fgTitle; el('sub').textContent='';
+        el('forgot').innerHTML='<div class="done"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div><p>'+s().fgSent+'</p></div>'; })
+      .catch(function(){ el('forgotBtn').textContent=s().fgSend; el('err3').textContent=s().badPass; });
+  };
+  el('resetBtn').onclick=function(){
+    var pw=el('rsPass').value;
+    if((pw||'').length<8){el('err4').textContent=s().minPass;return}
+    authAndGo("/api/password/reset",{token:RESET_TOKEN,password:pw},"elderly_token","/app",el('err4'),el('resetBtn'),s().rsSave);
+  };
+  // Aviso de verificación de email (?verified=1 ok, =0 expiró).
+  (function(){ var q=new URLSearchParams(location.search); var v=q.get('verified');
+    if(v!==null){ var n=el('verifiedNote');
+      if(v==='1'){ n.textContent=(lang==='es')?'¡Tu email quedó verificado! Ya podés iniciar sesión.':'Your email is verified! You can sign in now.'; n.style.color='#2f8563'; }
+      else{ n.textContent=(lang==='es')?'El link de verificación expiró. Reenvialo desde tu portal.':'That verification link expired. Resend it from your portal.'; n.style.color='#b8402e'; }
+      n.hidden=false;
+      var u=new URL(location.href); u.searchParams.delete('verified'); history.replaceState(null,'',u);
+    } })();
+
+  // Si el link del email trae #reset=<token>, mostramos el form de nueva contraseña.
+  (function(){ var m=location.hash.match(/[#&]reset=([^&]+)/);
+    if(m){ RESET_TOKEN=decodeURIComponent(m[1]); history.replaceState(null,'',location.pathname+location.search);
+      setTab('family'); famShow('reset'); } })();
 
   applyLang();
 })();
