@@ -75,9 +75,12 @@
   .field{margin-bottom:14px}
   .field label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;
     text-transform:uppercase;letter-spacing:.05em}
-  .field input{width:100%;padding:12px 13px;border:1px solid var(--line);background:var(--surface-2);
+  .field input,.field select{width:100%;padding:12px 13px;border:1px solid var(--line);background:var(--surface-2);
     color:var(--ink);border-radius:10px;font-size:14.5px;font-family:inherit;transition:.15s}
-  .field input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
+  .field select{appearance:none;-webkit-appearance:none;cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%23888' stroke-width='1.7'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 13px center;padding-right:34px}
+  .field input:focus,.field select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px color-mix(in srgb,var(--primary) 22%,transparent)}
   .btn{width:100%;border:0;background:var(--primary);color:var(--primary-ink);font-weight:700;font-size:15px;
     font-family:var(--font-display);padding:13px;border-radius:11px;cursor:pointer;transition:.15s;margin-top:4px}
   .btn:hover{filter:brightness(1.06)}
@@ -148,6 +151,20 @@
         <div id="signup" hidden>
           <p class="err" id="err2"></p>
           <div class="field"><label id="l-name">Your name</label><input type="text" id="suName"></div>
+          <div class="field"><label id="l-country">Country</label>
+            <select id="suCountry">
+              <option value="US">United States</option>
+              <option value="CA">Canada</option>
+              <option value="AR">Argentina</option>
+              <option value="MX">México</option>
+              <option value="CL">Chile</option>
+              <option value="CO">Colombia</option>
+              <option value="PE">Perú</option>
+              <option value="UY">Uruguay</option>
+              <option value="ES">España</option>
+              <option value="OTHER">Other / Otro</option>
+            </select>
+          </div>
           <div class="field"><label id="l-email2">Email</label><input type="email" id="suEmail"></div>
           <div class="field"><label id="l-pass2">Password</label><input type="password" id="suPass"></div>
           <button class="btn" id="signupBtn">Create account</button>
@@ -206,7 +223,7 @@
       famTitle:'Welcome back',famSub:'Sign in to your family portal',
       suTitle:'Create your account',suSub:'Start bringing Elderly to your family',
       teamTitle:'Team portal',teamSub:'Sign in with your account',
-      email:'Email',pass:'Password',login:'Sign in',name:'Your name',signup:'Create account',
+      email:'Email',pass:'Password',login:'Sign in',name:'Your name',country:'Country',signup:'Create account',
       teamBtn:'Enter the panel',teamNote:'Private access for the Elderly team only.',
       sw1:'New here? <a id="toSignup">Create a free account</a>',
       sw2:'Already have an account? <a id="toLogin">Sign in</a>',
@@ -220,7 +237,7 @@
       famTitle:'Hola de nuevo',famSub:'Ingresá al portal de tu familia',
       suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
       teamTitle:'Portal del equipo',teamSub:'Ingresá con tu cuenta',
-      email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',signup:'Crear cuenta',
+      email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',country:'País',signup:'Crear cuenta',
       teamBtn:'Entrar al panel',teamNote:'Acceso privado, solo para el equipo de Elderly.',
       sw1:'¿Nuevo por acá? <a id="toSignup">Creá una cuenta gratis</a>',
       sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
@@ -240,7 +257,7 @@
     document.title=(lang==='es'?'Ingresar':'Sign in')+' · Elderly';
     el('tabFamily').textContent=s().tabFamily; el('tabTeam').textContent=s().tabTeam;
     el('l-email').textContent=s().email; el('l-pass').textContent=s().pass; el('loginBtn').textContent=s().login;
-    el('l-name').textContent=s().name; el('l-email2').textContent=s().email; el('l-pass2').textContent=s().pass; el('signupBtn').textContent=s().signup;
+    el('l-name').textContent=s().name; el('l-country').textContent=s().country; el('l-email2').textContent=s().email; el('l-pass2').textContent=s().pass; el('signupBtn').textContent=s().signup;
     el('l-emailT').textContent=s().email; el('l-passT').textContent=s().pass; el('teamBtn').textContent=s().teamBtn; el('teamNote').textContent=s().teamNote;
     el('sw1').innerHTML=s().sw1; el('sw2').innerHTML=s().sw2;
     el('doneTitle').textContent=s().doneTitle; el('doneMsg').textContent=s().doneMsg;
@@ -290,7 +307,7 @@
   };
   el('signupBtn').onclick=function(){
     if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=s().needAll;return}
-    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim()},
+    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:el('suCountry').value},
       "elderly_token","/app",el('err2'),el('signupBtn'),s().signup);
   };
   el('teamBtn').onclick=function(){
