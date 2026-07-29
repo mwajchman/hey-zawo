@@ -386,7 +386,7 @@
           <tr><th>Reporte diario a la familia</th><td class="us"><span class="yes">Sí</span></td><td><span class="yes">Sí</span></td><td><span class="part">Algo</span></td><td><span class="no">No</span></td><td><span class="no">No</span></td></tr>
           <tr><th>Guarda sus historias de vida, en su voz</th><td class="us"><span class="yes">Sí</span></td><td><span class="part">Algo</span></td><td><span class="no">No</span></td><td><span class="no">No</span></td><td><span class="no">No</span></td></tr>
           <tr><th>Realmente bilingüe, inglés y español</th><td class="us"><span class="yes">Sí</span></td><td><span class="part">Traducido</span></td><td><span class="no">No</span></td><td><span class="part">Algo</span></td><td><span class="yes">Sí</span></td></tr>
-          <tr><th>Costo mensual</th><td class="us hz">$39</td><td>$30 a $40</td><td>$50 a $60 + dispositivo</td><td>Gratis, lo armás vos</td><td>Gratis, si tenés tiempo</td></tr>
+          <tr><th>Costo mensual</th><td class="us hz">$42</td><td>$30 a $40</td><td>$50 a $60 + dispositivo</td><td>Gratis, lo armás vos</td><td>Gratis, si tenés tiempo</td></tr>
         </tbody>
       </table>
     </div>
@@ -444,7 +444,7 @@
       </div>
       <div class="plan feat reveal d1">
         <span class="tag">Armá tu plan</span>
-        <div class="name">Elderly Familia</div><div class="price"><span id="pb-price">$39</span> <small>/ mes</small></div>
+        <div class="name">Elderly Familia</div><div class="price"><span id="pb-price">$42</span> <small>/ mes</small></div>
         <p class="anchor" id="pb-anchor">Una llamada diaria a la medida de tu familia. Elegís cuántas veces, de cuántos minutos, y de qué hablan. Los tópicos van siempre incluidos.</p>
         <div class="pb-controls">
           <div class="pb-ctl"><span class="pb-lbl">Llamadas por día</span>
@@ -522,8 +522,8 @@
     var TOPICS=["Compañía y charla diaria","Historias de vida","Algo nuevo","Alerta de estafas","Fe y gratitud","Chequeo de salud","Música y hobbies","Los nietos"];
     var st={c:1,m:10,topics:{}}, LIM={c:[1,5],m:[5,30]};
     var $=function(id){return document.getElementById(id)};
-    // Misma fórmula que el backend (ver PRICING.md): BASE 18 + 0.07/min x (llamadas x min x 30).
-    function calcPrice(c,m){return Math.round(18 + 0.07*c*m*30)}
+    // Misma fórmula que el backend (pricing.py): BASE 18 + (0.07 charla + 0.01 grabación)/min x (llamadas x min x 30).
+    function calcPrice(c,m){return Math.round(18 + 0.08*c*m*30)}
     function render(){
       if($("pb-c"))$("pb-c").textContent=st.c;
       if($("pb-m"))$("pb-m").textContent=st.m;
