@@ -385,6 +385,10 @@
     if(m){ RESET_TOKEN=decodeURIComponent(m[1]); history.replaceState(null,'',location.pathname+location.search);
       setTab('family'); famShow('reset'); } })();
 
+  // CTA público "Crear mi cuenta": /ingresar?signup=1 abre el alta de familia directo
+  // (no la vista de login, que confundía como si fuera para clientes existentes).
+  (function(){ if(new URLSearchParams(location.search).get('signup')!=null){ setTab('family'); famShow('signup'); } })();
+
   applyLang();
 })();
 </script>
