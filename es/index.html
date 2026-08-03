@@ -40,7 +40,8 @@
   a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--amber-2);outline-offset:2px;border-radius:8px;}
 
   /* Scroll reveal + effects */
-  .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
+  html.js-anim .reveal{opacity:0;transform:translateY(26px);}
   .reveal.in{opacity:1;transform:none;}
   .reveal.d1{transition-delay:.08s;} .reveal.d2{transition-delay:.16s;} .reveal.d3{transition-delay:.24s;}
   @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto;}.reveal{opacity:1;transform:none;transition:none;}*{animation:none!important;}}
@@ -588,7 +589,13 @@
 <script>
 (function(){
   var root=document.documentElement;
-  document.getElementById('themeBtn').addEventListener('click',function(){
+  // El contenido es visible por defecto. Solo activamos las animaciones si el JS
+  // arrancó bien: así, si algo falla más abajo, la página nunca queda en blanco.
+  // Respaldo: si el observer no dispara, revelamos todo igual en 1,6s.
+  root.classList.add('js-anim');
+  setTimeout(function(){try{document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('in');});}catch(e){}},1600);
+  var themeBtn=document.getElementById('themeBtn');
+  if(themeBtn)themeBtn.addEventListener('click',function(){
     var c=root.getAttribute('data-theme')||'light';
     
     var n=c==='dark'?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('theme',n);}catch(e){}
