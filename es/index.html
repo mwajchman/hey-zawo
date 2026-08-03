@@ -175,7 +175,8 @@
   .testi .who{margin-top:16px;font-family:var(--font-sans);color:var(--ink-soft);font-size:.96rem;}
   @media(max-width:640px){.testi .wrap{grid-template-columns:1fr;}.testi img{width:110px;height:110px;}}
 
-  .price-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:24px;max-width:840px;margin:0 auto;align-items:center;}
+  .price-grid{display:grid;grid-template-columns:1fr 1.12fr;gap:24px;max-width:840px;margin:0 auto;align-items:start;}
+  .plan .note{margin-top:8px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.92rem;}
   .plan{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:34px;display:flex;flex-direction:column;gap:8px;transition:transform .25s ease,box-shadow .25s ease;}
   .plan:hover{transform:translateY(-5px);box-shadow:0 28px 54px -32px rgba(10,30,25,.5);}
   .plan.feat{border-color:var(--pine);border-width:2px;position:relative;}
@@ -421,7 +422,9 @@
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Una llamada completa, agendada por vos</li>
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Su primera historia, guardada para siempre</li>
           <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Mirá cómo lo reciben, sin presión</li>
+          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Elegís juntos la voz y los temas</li>
         </ul>
+        <p class="note">Cuando estés listo, el plan completo es $42 por mes. Cancelás en un clic, cuando quieras.</p>
         <a class="btn btn-ghost" href="/ingresar?signup=1">Crear cuenta</a>
       </div>
       <div class="plan feat reveal d1">
