@@ -269,12 +269,12 @@
 <header class="nav"><div class="wrap nav-in">
   <a class="brand" href="#top" aria-label="Elderly home"><svg class="bmark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg><span class="bname">Elderly</span></a>
   <nav class="nav-links" aria-label="Primary">
-    <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+    <a href="#how">How it works</a><a href="#early">Early access</a><a href="#faq">FAQ</a>
   </nav>
   <div class="nav-cta"><a href="/es" style="font-family:var(--font-sans);font-weight:700;font-size:.9rem;color:var(--ink-soft);text-decoration:none;padding:6px 8px;">ES</a>
     <button class="theme-toggle" id="themeBtn" aria-label="Switch theme" title="Switch theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg></button>
     <a href="/ingresar" style="font-family:var(--font-sans);font-weight:700;font-size:.9rem;color:var(--ink-soft);text-decoration:none;padding:6px 10px;">Sign in</a>
-    <a class="btn btn-primary" href="/ingresar?signup=1">Create account</a>
+    <a class="btn btn-primary" href="#early">Request access</a>
   </div>
 </div></header>
 
@@ -285,7 +285,7 @@
       <h1 class="reveal d1">A daily call to keep your mom or dad <span class="it">company</span>.<span class="sub">And a note for you after every chat.</span></h1>
       <p class="lead reveal d2">A warm voice calls their usual phone, talks with patience, and afterward tells you how they are. No apps, no gadgets, nothing new for them to learn. Unlike an emergency button, it does not wait for something to go wrong.</p>
       <div class="hero-actions reveal d2">
-        <a class="btn btn-primary" href="/ingresar?signup=1">Create account
+        <a class="btn btn-primary" href="#early">Request early access
           <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="btn btn-ghost" href="#pillars">See what it covers</a>
       </div>
@@ -412,44 +412,25 @@
     
   </div></section>
 
-  <section id="pricing"><div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow">Simple pricing</p><h2>One plan. All three, together.</h2><p>Start today. If it becomes part of the family, keep going. Cancel any time.</p></div>
-    <div class="price-grid">
-      <div class="plan reveal">
-        <div class="name">Try it out</div><div class="price">Risk-free</div>
-        <p class="sub">Start the daily calls and see how they take to it. No setup fee, and you can cancel in one click if it's not for you.</p>
-        <ul>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> A full call, scheduled by you</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Their first story, kept forever</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> See how they take to it, no pressure</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Set the voice and the topics together</li>
-        </ul>
-        <p class="note">When you are ready, the full plan is $42 a month. Cancel in one click, any time.</p>
-        <a class="btn btn-ghost" href="/ingresar?signup=1">Create account</a>
-      </div>
-      <div class="plan feat reveal d1">
-        <span class="tag">Build your plan</span>
-        <div class="name">Elderly Family</div><div class="price"><span id="pb-price">$42</span> <small>/ month</small></div>
-        <p class="anchor" id="pb-anchor">A daily call, tuned to your family. You choose how often, how long, and what they talk about. Topics are always included.</p>
-        <div class="pb-controls">
-          <div class="pb-ctl"><span class="pb-lbl">Calls per day</span>
-            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="c" aria-label="Fewer calls">–</button><b id="pb-c">1</b><button type="button" class="pb-b" data-a="inc" data-t="c" aria-label="More calls">+</button></div></div>
-          <div class="pb-ctl"><span class="pb-lbl">Minutes per call</span>
-            <div class="pb-step"><button type="button" class="pb-b" data-a="dec" data-t="m" aria-label="Fewer minutes">–</button><b id="pb-m">10</b><button type="button" class="pb-b" data-a="inc" data-t="m" aria-label="More minutes">+</button></div></div>
+  <section id="early"><div class="wrap">
+    <div class="sec-head reveal"><p class="eyebrow">Early access</p><h2>We are opening Elderly to a few families at a time.</h2><p>We are still shaping the plan and the price with our first families, so new accounts are on an early-access list for now. Leave your details and we will reach out to set up the first call.</p></div>
+    <div class="ea-card reveal">
+      <form id="ea-form" class="ea-form" novalidate>
+        <div class="ea-row">
+          <label class="ea-field"><span>Your name</span><input name="name" type="text" autocomplete="name" required></label>
+          <label class="ea-field"><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
         </div>
-        <div class="pb-topics" id="pb-topics"></div>
-        <ul>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Daily calls with companionship, wellbeing checks, and stories</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> The full life story vault, in their own voice</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Scam early warning and the family safe word</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> Family app with wellbeing notes and same day alerts</li>
-          <li><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg> English or Spanish, unlimited family members</li>
-        </ul>
-        <a class="btn btn-primary" href="/ingresar">Start Elderly Family</a>
-      </div>
+        <div class="ea-row">
+          <label class="ea-field"><span>Phone (with country code)</span><input name="phone" type="tel" autocomplete="tel" placeholder="+1 555 123 4567" required></label>
+          <label class="ea-field"><span>Country</span><input name="country" type="text" autocomplete="country-name"></label>
+        </div>
+        <label class="ea-field"><span>Who is it for?</span><input name="note" type="text" placeholder="My mom and my aunt, both in Rosario"></label>
+        <label class="ea-consent"><input type="checkbox" name="consent" required><span>You can contact me about early access and keep my details for that purpose.</span></label>
+        <button type="submit" class="btn btn-primary ea-submit">Join the early-access list</button>
+        <p class="ea-msg" id="ea-msg" role="status" aria-live="polite"></p>
+      </form>
+      <p class="ea-foot">Already have an account? <a href="/ingresar">Sign in here</a>.</p>
     </div>
-    <p class="reveal" style="text-align:center;color:var(--ink-soft);font-size:13.5px;margin-top:18px;">Secure payments in USD, powered by <a href="https://stripe.com" target="_blank" rel="noopener" style="color:var(--pine-2);text-decoration:underline;">Stripe</a>.</p>
-    <p class="keep reveal">The Keepsake turns their stories into a bound book and a set of recordings, from $99. A gift for every grandchild.</p>
   </div></section>
 
   <section class="split"><div class="wrap">
@@ -473,44 +454,51 @@
 
 
   <style>
-    .pb-controls{display:flex;gap:14px;margin:16px 0 4px;flex-wrap:wrap}
-    .pb-ctl{flex:1;min-width:130px;display:flex;flex-direction:column;gap:7px}
-    .pb-lbl{font-family:var(--font-sans);font-size:11.5px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.09em}
-    .pb-step{display:inline-flex;align-items:center;gap:12px;background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:6px 10px;align-self:flex-start}
-    .pb-step b{font-family:var(--font-serif);font-size:1.25rem;min-width:32px;text-align:center;color:var(--ink)}
-    .pb-b{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--pine);font-size:18px;line-height:1;cursor:pointer;font-weight:700;transition:border-color .15s,transform .15s}
-    .pb-b:hover{border-color:var(--pine);transform:translateY(-1px)}
-    .pb-topics{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0 4px}
-    .pb-topic{font-family:var(--font-sans);font-size:12.5px;border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;color:var(--ink-soft);user-select:none;transition:all .15s}
-    .pb-topic:hover{border-color:var(--ink-soft)}
-    .pb-topic.on{background:var(--pine);color:#FBF6EC;border-color:var(--pine)}
+    .ea-card{max-width:660px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:30px 30px 26px;box-shadow:0 22px 60px -40px rgba(20,40,32,.5)}
+    .ea-form{display:flex;flex-direction:column;gap:16px}
+    .ea-row{display:flex;gap:14px;flex-wrap:wrap}
+    .ea-field{flex:1;min-width:200px;display:flex;flex-direction:column;gap:7px}
+    .ea-field>span{font-family:var(--font-sans);font-size:11.5px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.09em}
+    .ea-field input{font-family:var(--font-sans);font-size:15px;color:var(--ink);background:var(--raise);border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .15s,box-shadow .15s}
+    .ea-field input:focus{outline:none;border-color:var(--pine);box-shadow:0 0 0 3px rgba(29,74,62,.12)}
+    .ea-consent{display:flex;align-items:flex-start;gap:10px;font-family:var(--font-sans);font-size:13.5px;color:var(--ink-soft);line-height:1.5;cursor:pointer}
+    .ea-consent input{margin-top:2px;width:17px;height:17px;flex-shrink:0;accent-color:var(--pine)}
+    .ea-submit{margin-top:4px;width:100%;justify-content:center}
+    .ea-msg{margin:2px 0 0;font-family:var(--font-sans);font-size:14px;min-height:1px}
+    .ea-msg.ok{color:var(--pine-2)}
+    .ea-msg.err{color:#b3402e}
+    .ea-foot{text-align:center;font-family:var(--font-sans);font-size:13.5px;color:var(--ink-soft);margin:16px 0 0}
+    .ea-foot a{color:var(--pine-2);text-decoration:underline}
   </style>
   <script>
   (function(){
-    var API="https://web-production-0134d.up.railway.app/api/quote";
-    var TOPICS=["Company & daily chat","Life stories","Something new","Scam awareness","Faith & gratitude","Health check-ins","Music & hobbies","The grandkids"];
-    var st={c:1,m:10,topics:{}}, LIM={c:[1,5],m:[5,30]};
-    var $=function(id){return document.getElementById(id)};
-    // Misma fórmula que el backend (pricing.py): BASE 18 + (0.07 charla + 0.01 grabación)/min x (llamadas x min x 30).
-    // Si los founders cambian los números en pricing.py, actualizar acá también.
-    function calcPrice(c,m){return Math.round(18 + 0.08*c*m*30)}
-    function render(){
-      if($("pb-c"))$("pb-c").textContent=st.c;
-      if($("pb-m"))$("pb-m").textContent=st.m;
-      if($("pb-price"))$("pb-price").textContent="$"+calcPrice(st.c,st.m);
-    }
-    var tw=$("pb-topics");
-    if(tw){ TOPICS.forEach(function(t,i){
-      var e=document.createElement("span"); e.className="pb-topic"+(i<2?" on":""); e.textContent=t;
-      if(i<2) st.topics[t]=1;
-      e.onclick=function(){ if(st.topics[t]){delete st.topics[t];e.classList.remove("on")} else {st.topics[t]=1;e.classList.add("on")} };
-      tw.appendChild(e);
-    }); }
-    document.querySelectorAll(".pb-b").forEach(function(b){
-      b.onclick=function(){ var t=b.getAttribute("data-t"),a=b.getAttribute("data-a"),lo=LIM[t][0],hi=LIM[t][1];
-        st[t]=Math.max(lo,Math.min(hi,st[t]+(a==="inc"?1:-1))); render(); };
+    var API="/api/waitlist";
+    var form=document.getElementById("ea-form");
+    if(!form) return;
+    var msg=document.getElementById("ea-msg");
+    form.addEventListener("submit",function(ev){
+      ev.preventDefault();
+      var data=new FormData(form);
+      var consent=form.querySelector('input[name="consent"]');
+      if(consent && !consent.checked){ msg.className="ea-msg err"; msg.textContent="Please tick the box so we can contact you."; return; }
+      var btn=form.querySelector(".ea-submit"); var label=btn.textContent;
+      btn.disabled=true; btn.textContent="Sending...";
+      msg.className="ea-msg"; msg.textContent="";
+      fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({
+        name:(data.get("name")||"").trim(),
+        email:(data.get("email")||"").trim(),
+        phone:(data.get("phone")||"").trim(),
+        country:(data.get("country")||"").trim(),
+        note:(data.get("note")||"").trim(),
+        language:"en",
+        consent:true
+      })}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});})
+      .then(function(res){
+        btn.textContent=label; btn.disabled=false;
+        if(res.ok){ form.reset(); msg.className="ea-msg ok"; msg.textContent="You are on the list. We will be in touch soon to set up the first call."; }
+        else { msg.className="ea-msg err"; msg.textContent=(res.j&&res.j.detail)?res.j.detail:"Something went wrong. Please try again."; }
+      }).catch(function(){ btn.textContent=label; btn.disabled=false; msg.className="ea-msg err"; msg.textContent="Network error. Please try again."; });
     });
-    render();
   })();
   </script>
 
@@ -537,7 +525,7 @@
 </main>
 
 
-<div class="mcta"><a class="btn btn-primary" href="/ingresar?signup=1">Create account</a></div>
+<div class="mcta"><a class="btn btn-primary" href="#early">Request access</a></div>
 
 <footer><div class="wrap">
   <div style="max-width:280px;">
@@ -545,7 +533,7 @@
     <p style="margin-top:14px;font-size:.94rem;line-height:1.55;">Wholehearted care for the people who raised you. Prevention, education, and connection, one daily call. callelderly.com</p>
   </div>
   <div style="display:flex;gap:44px;flex-wrap:wrap;">
-    <div class="fcol"><b>Product</b><a href="#pillars">What it covers</a><a href="#week">Your week</a><a href="#how">How it works</a><a href="#pricing">Pricing</a></div>
+    <div class="fcol"><b>Product</b><a href="#pillars">What it covers</a><a href="#week">Your week</a><a href="#how">How it works</a><a href="#early">Early access</a></div>
     <div class="fcol"><b>Company</b><a href="#top">About</a><a href="#top">Privacy and trust</a></div>
     <div class="fcol"><b>Support</b><a href="mailto:hello@callelderly.com">hello@callelderly.com</a><a href="tel:+13852838809">+1 (385) 283-8809</a></div>
   </div>

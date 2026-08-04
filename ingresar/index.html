@@ -244,7 +244,7 @@
       rsTitle:'New password',rsIntro:'Choose a new password for your account.',rsSave:'Save new password',
       minPass:'Password must be at least 8 characters.',
       teamBtn:'Enter the panel',teamNote:'Private access for the Elderly team only.',
-      sw1:'New here? <a id="toSignup">Create a free account</a>',
+      sw1:'New here? <a href="/#early">Join the early-access list</a>',
       sw2:'Already have an account? <a id="toLogin">Sign in</a>',
       doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
       back:'← Back to home',needEmail:'Please enter your email.',needAll:'Please add your name and email.',
@@ -262,7 +262,7 @@
       rsTitle:'Contraseña nueva',rsIntro:'Elegí una contraseña nueva para tu cuenta.',rsSave:'Guardar contraseña',
       minPass:'La contraseña debe tener al menos 8 caracteres.',
       teamBtn:'Entrar al panel',teamNote:'Acceso privado, solo para el equipo de Elderly.',
-      sw1:'¿Nuevo por acá? <a id="toSignup">Creá una cuenta gratis</a>',
+      sw1:'¿Nuevo por acá? <a href="/es#early">Sumate al acceso temprano</a>',
       sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
       doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te vamos a escribir apenas tu portal esté listo.',
       back:'← Volver al inicio',needEmail:'Poné tu email.',needAll:'Completá tu nombre y email.',
@@ -385,9 +385,9 @@
     if(m){ RESET_TOKEN=decodeURIComponent(m[1]); history.replaceState(null,'',location.pathname+location.search);
       setTab('family'); famShow('reset'); } })();
 
-  // CTA público "Crear mi cuenta": /ingresar?signup=1 abre el alta de familia directo
-  // (no la vista de login, que confundía como si fuera para clientes existentes).
-  (function(){ if(new URLSearchParams(location.search).get('signup')!=null){ setTab('family'); famShow('signup'); } })();
+  // Alta de cuentas nuevas en pausa: por ahora vamos a lista de acceso temprano.
+  // Cualquier /ingresar?signup=1 (links viejos, guardados) redirige a la lista en la web.
+  (function(){ if(new URLSearchParams(location.search).get('signup')!=null){ location.replace(lang==='es'?'/es#early':'/#early'); } })();
 
   applyLang();
 })();
