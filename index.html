@@ -101,6 +101,10 @@
 
   .pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;}
   .pillar{padding:22px 22px 4px;border-top:3px solid var(--sage);border-radius:0 0 16px 16px;transition:transform .25s ease,box-shadow .25s ease,background .25s ease;}
+  .pillar.mind{border-top-color:var(--amber);}
+  .pillar.money{border-top-color:var(--clay);}
+  .pillar.mind .tag{color:var(--amber);}
+  .pillar.money .tag{color:var(--clay);}
   .pillar.mind{border-color:var(--clay);} .pillar.money{border-color:var(--slate);}
   .pillar:hover{transform:translateY(-6px);background:var(--surface);box-shadow:0 26px 50px -30px rgba(10,30,25,.5);}
   .pillar .ic{color:var(--sage);margin-bottom:14px;} .pillar.mind .ic{color:var(--clay);} .pillar.money .ic{color:var(--slate);}
@@ -157,7 +161,7 @@
   .split .quote{margin-top:22px;padding-left:18px;border-left:3px solid var(--amber-2);font-family:var(--font-serif);font-style:italic;font-size:1.25rem;color:var(--ink);}
   @media(max-width:820px){.split .wrap{grid-template-columns:1fr;gap:28px;}.split img{height:300px;order:-1;}}
 
-  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:34px;}
+  .steps{display:grid;grid-template-columns:repeat(2,1fr);gap:28px 34px;}
   .step .n{font-family:var(--font-serif);font-size:1.4rem;color:var(--pine-2);border-bottom:2px solid var(--line);padding-bottom:10px;margin-bottom:12px;}
   .step h3{font-size:1.3rem;margin-bottom:8px;} .step p{color:var(--ink-soft);}
   @media(max-width:760px){.steps{grid-template-columns:1fr;gap:22px;}}
@@ -282,7 +286,7 @@
   <section class="hero"><div class="wrap hero-grid">
     <div>
       <p class="eyebrow reveal">For the daughters and sons who can't be there every day</p>
-      <h1 class="reveal d1">A daily call to keep your mom or dad <span class="it">company</span>.<span class="sub">And a note for you after every chat.</span></h1>
+      <h1 class="reveal d1">A daily call to keep the ones you love <span class="it">company</span>.<span class="sub">And a note for you after each call.</span></h1>
       <p class="lead reveal d2">A warm voice calls their usual phone, talks with patience, and afterward tells you how they are. No apps, no gadgets, nothing new for them to learn. Unlike an emergency button, it does not wait for something to go wrong.</p>
       <div class="hero-actions reveal d2">
         <a class="btn btn-primary" href="#early">Request early access
@@ -306,11 +310,12 @@
   </div></section>
 
   <section id="how"><div class="wrap">
-    <div class="sec-head reveal"><p class="eyebrow">How it works</p><h2>Nothing to set up on their end.</h2><p>Most tools ask the wrong person to learn something new. Elderly asks your parent only to pick up the phone. The caller is an AI voice assistant: it says so up front, and you set a family safe word together.</p></div>
+    <div class="sec-head reveal"><p class="eyebrow">How it works</p><h2>Nothing to set up on their end.</h2><p>Most tools ask the wrong person to learn something new. Elderly asks the person you love only to pick up the phone. The caller is an AI voice assistant, and it says so up front.</p></div>
     <div class="steps">
-      <div class="step reveal"><div class="n">01</div><h3>The phone rings</h3><p>At the times you choose, Elderly calls your parent's regular landline or cell. No app, no gadget, no Wi Fi.</p></div>
-      <div class="step reveal d1"><div class="n">02</div><h3>They just talk</h3><p>A warm voice keeps them company, checks how they are doing, gently nudges good habits, and listens to their stories.</p></div>
-      <div class="step reveal d2"><div class="n">03</div><h3>You stay in the loop</h3><p>Open the family app for a plain note after each call. How they sounded, and anything worth your attention.</p></div>
+      <div class="step reveal"><div class="n">01</div><h3>You tell us about them</h3><p>A few minutes: their name, the best time to call, and the things they love to talk about. The setup is on you, never on them.</p></div>
+      <div class="step reveal d1"><div class="n">02</div><h3>The phone rings</h3><p>At the times you choose, Elderly calls their regular landline or cell. No app, no gadget, no Wi Fi.</p></div>
+      <div class="step reveal d2"><div class="n">03</div><h3>They just talk</h3><p>A warm voice keeps them company, checks how they are doing, gently nudges good habits, and listens to their stories.</p></div>
+      <div class="step reveal d3"><div class="n">04</div><h3>You stay in the loop</h3><p>Open the family app for a plain note after each call. How they sounded, and anything worth your attention.</p></div>
     </div>
   </div></section>
 
@@ -376,27 +381,6 @@
     
   </div></section>
 
-  <section style="padding:74px 0;background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
-    <div class="wrap reveal" style="text-align:center;">
-      <p class="eyebrow">You, plus a little more</p>
-      <h2 style="max-width:22ch;margin:8px auto 14px;">You are their greatest protection. Elderly is the extra layer.</h2>
-      <p class="lead" style="margin:0 auto 32px;max-width:50ch;">You call, you visit, you love them. Elderly does not change any of that. It just keeps watch on the days in between, and notices what is hard to see from far away.</p>
-      <div style="display:flex;gap:18px;flex-wrap:wrap;justify-content:center;text-align:left;">
-        <div style="flex:1;min-width:220px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:22px 20px;">
-          <b style="display:block;font-family:var(--font-serif);font-size:1.18rem;font-weight:600;margin-bottom:6px;color:var(--pine-2);">Everything you already do</b>
-          <span style="color:var(--ink-soft);font-size:.96rem;line-height:1.55;">Your calls, your visits, your love. Nothing here replaces a single moment of it.</span>
-        </div>
-        <div style="flex:1;min-width:220px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:22px 20px;">
-          <b style="display:block;font-family:var(--font-serif);font-size:1.18rem;font-weight:600;margin-bottom:6px;color:var(--pine-2);">The hours in between</b>
-          <span style="color:var(--ink-soft);font-size:.96rem;line-height:1.55;">A warm daily call keeps them company, so no ordinary day goes unwatched.</span>
-        </div>
-        <div style="flex:1;min-width:220px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:22px 20px;">
-          <b style="display:block;font-family:var(--font-serif);font-size:1.18rem;font-weight:600;margin-bottom:6px;color:var(--pine-2);">The quiet things</b>
-          <span style="color:var(--ink-soft);font-size:.96rem;line-height:1.55;">A gentle heads up on what is hard to notice from far away, before it grows.</span>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <section class="week" id="week"><div class="wrap">
     <div class="sec-head reveal"><p class="eyebrow">You are in control</p><h2>You know them best. You choose what they talk about.</h2><p>Set the rhythm and the topics you know they will love. Elderly brings them to life, one call at a time.</p></div>
@@ -508,7 +492,7 @@
       <details open><summary>Does my parent need a smartphone or the internet? <span class="pm">+</span></summary><p>No. Elderly calls the regular telephone they already use, landline or cell. Nothing to download, charge, or learn. If they can answer the phone, they can use it.</p></details>
       <details><summary>Would Mom or Dad really talk to an AI? <span class="pm">+</span></summary><p>Almost everyone warms up within the first few seconds. The call feels like a natural, unhurried chat with someone genuinely interested, and Elderly always says who it is. No pressure, no rush.</p></details>
       <details><summary>Does this replace my own calls and visits? <span class="pm">+</span></summary><p>Never. It is an extra layer for the hours you cannot be there, so your own calls can be about love, not logistics. You stay their family, we just make sure nothing slips through in between.</p></details>
-      <details><summary>How does the scam protection work? <span class="pm">+</span></summary><p>Elderly talks with your parent every day, so it is the first to notice when a new friend starts asking for money, and it tells you that day. It also keeps your family safe word fresh, so a cloned voice cannot fool them.</p></details>
+      <details><summary>How does the scam protection work? <span class="pm">+</span></summary><p>Elderly talks with them every day, so it is the first to notice when a new friend starts asking for money, and it tells you that day. It also keeps your family safe word fresh, so a cloned voice cannot fool them.</p></details>
       <details><summary>What language does it speak? <span class="pm">+</span></summary><p>English or Spanish. You choose per parent, warm and patient in both.</p></details>
       <details><summary>Who can see the stories and reports? <span class="pm">+</span></summary><p>Only the family members you invite. Everything is private by default and belongs to your family, to keep, download, or turn into a book whenever you like.</p></details>
     </div>
