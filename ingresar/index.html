@@ -122,7 +122,6 @@
     <div class="card">
       <div class="head">
       <div class="toprow">
-        <button id="langBtn" title="Language">ES</button>
         <button id="themeBtn" aria-label="Theme"></button>
       </div>
       <div class="brand">
@@ -271,7 +270,7 @@
       pitchSub:'Elderly acompaña a quienes querés y te mantiene cerca, estés donde estés.',
       trust:'Llamadas de verdad. Voces de verdad. Tranquilidad de verdad.'}
   };
-  var lang=(new URLSearchParams(location.search).get('lang')==='es')?'es':'en';
+  var lang='en';
   var tab='family', famView='login';
 
   function s(){return STR[lang]}
@@ -287,8 +286,7 @@
     el('rsIntro').textContent=s().rsIntro; el('l-rsPass').textContent=s().rsTitle; el('resetBtn').textContent=s().rsSave;
     el('sw1').innerHTML=s().sw1; el('sw2').innerHTML=s().sw2;
     el('doneTitle').textContent=s().doneTitle; el('doneMsg').textContent=s().doneMsg;
-    el('backHome').textContent=s().back; el('backHome').setAttribute('href',lang==='es'?'/es':'/');
-    el('langBtn').textContent=s().lang;
+    el('backHome').textContent=s().back; el('backHome').setAttribute('href','/');
     var bp=el('bsPitch'); if(bp)bp.textContent=s().pitch;
     var bsu=el('bsSub'); if(bsu)bsu.textContent=s().pitchSub;
     var bt=el('bsTrust'); if(bt)bt.textContent=s().trust;
@@ -316,11 +314,6 @@
   }
   document.querySelectorAll('.seg button').forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
 
-  el('langBtn').onclick=function(){
-    lang=lang==='es'?'en':'es';
-    var u=new URL(location.href); if(lang==='es')u.searchParams.set('lang','es'); else u.searchParams.delete('lang');
-    history.replaceState(null,'',u); applyLang();
-  };
   /* Login unificado contra el backend real (mismo dominio via proxy de Vercel). */
   function authAndGo(path, body, tokenKey, dest, errEl, btn, btnText){
     errEl.textContent=''; if(btn) btn.textContent='...';
