@@ -465,6 +465,71 @@
     
   </div></section>
 
+  <section id="agents" class="agents"><div class="wrap">
+    <style>
+      .agents{background:var(--surface);border-top:1px solid var(--line);}
+      .agent-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:40px;}
+      .agent-card{background:var(--raise);border:1px solid var(--line);border-radius:18px;padding:26px 24px;
+        display:flex;flex-direction:column;gap:10px;transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease;}
+      .agent-card:hover{transform:translateY(-5px);box-shadow:0 26px 50px -30px rgba(10,30,25,.5);}
+      .agent-card .ag-ic{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;
+        background:rgba(29,74,62,.08);}
+      .agent-card h3{font-family:var(--font-serif);font-size:1.35rem;margin:2px 0 0;color:var(--ink);}
+      .agent-card .ag-kick{font-family:var(--font-sans);font-size:.74rem;font-weight:700;letter-spacing:.09em;
+        text-transform:uppercase;color:var(--pine-2);}
+      .agent-card p{color:var(--ink-soft);font-size:.98rem;line-height:1.55;margin:0;}
+      .agent-card.feat{border-color:var(--pine);}
+      .agent-card.span2{grid-column:span 2;}
+      .agent-card.guardian{background:var(--pine);border-color:var(--pine);}
+      .agent-card.guardian h3,.agent-card.guardian .ag-ic{color:#F5F0E2;}
+      .agent-card.guardian .ag-ic{background:rgba(255,255,255,.12);}
+      .agent-card.guardian p{color:#D7DED2;}
+      .agent-card.guardian .ag-kick{color:var(--amber-2);}
+      .ag-foot{margin:30px 0 0;text-align:center;color:var(--ink-soft);font-size:.96rem;}
+      .ag-foot a{color:var(--amber);font-weight:600;text-decoration:none;}
+      @media(max-width:860px){.agent-grid{grid-template-columns:1fr 1fr;}.agent-card.span2{grid-column:auto;}}
+      @media(max-width:560px){.agent-grid{grid-template-columns:1fr;}}
+    </style>
+    <div class="sec-head reveal">
+      <p class="eyebrow">Choose her agent</p>
+      <h2>Every agent is a companion first.</h2>
+      <p>The specialty is simply what it listens for. It is the same warm daily call. You choose what it gently keeps an eye on, and the note after each call tells you what it heard.</p>
+    </div>
+    <div class="agent-grid reveal">
+      <article class="agent-card feat">
+        <div class="ag-ic">💛</div>
+        <p class="ag-kick">In every plan</p>
+        <h3>Companionship</h3>
+        <p>A warm, friendly call every day for the mom who eats dinner alone. Real company, a gentle check on how she is doing, and the stories of a lifetime saved for her family.</p>
+      </article>
+      <article class="agent-card">
+        <div class="ag-ic">🛡️</div>
+        <p class="ag-kick">Add a focus</p>
+        <h3>Scam Shield</h3>
+        <p>For the mom who answers every call. It listens for anyone asking her for money or a prize, or rushing her, helps her pause, and reminds her of the family safe word.</p>
+      </article>
+      <article class="agent-card">
+        <div class="ag-ic">🩺</div>
+        <p class="ag-kick">Add a focus</p>
+        <h3>Health Signals</h3>
+        <p>For a chronic condition, or after a fall. It gently notices how she slept, whether she is eating, any pain, and if she is taking her medication. Softly, never clinical.</p>
+      </article>
+      <article class="agent-card">
+        <div class="ag-ic">🧠</div>
+        <p class="ag-kick">Add a focus</p>
+        <h3>Mind &amp; Memory</h3>
+        <p>For the first repeated stories. It keeps her mind engaged, and warmly notices if she repeats a story, seems confused, or searches for a word.</p>
+      </article>
+      <article class="agent-card guardian span2">
+        <div class="ag-ic">✨</div>
+        <p class="ag-kick">All three, together</p>
+        <h3>Guardian</h3>
+        <p>For when you cannot choose what to worry about. Scam Shield, Health Signals, and Mind &amp; Memory, all woven into the same daily call.</p>
+      </article>
+    </div>
+    <p class="ag-foot reveal">You pick her focus when you set up her calls, and you can turn any of them on or off anytime. <a href="#top">Hear a real call word for word</a> in the demo above.</p>
+  </div></section>
+
   <section id="early"><div class="wrap">
     <div class="sec-head reveal"><p class="eyebrow">Early access</p><h2>We are opening Elderly to a few families at a time.</h2><p>We are still shaping the plan and the price with our first families, so new accounts are on an early-access list for now. Leave your details and we will reach out to set up the first call.</p></div>
     <div class="ea-card reveal">
