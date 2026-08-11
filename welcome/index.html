@@ -1087,5 +1087,10 @@
     if(ELDER && phone){ api("PATCH","/api/elders/"+ELDER.id,{phone_number:phone}).then(toStripe).catch(toStripe); }
     else { toStripe(); }
   }, true);
+  // En el flujo real (con token), salir del onboarding va al dashboard REAL (/app).
+  document.addEventListener("click", function(e){
+    var g = e.target.closest ? e.target.closest('[data-goto="9"]') : null;
+    if(g && TOKEN){ e.preventDefault(); e.stopImmediatePropagation(); window.location.href="/app"; }
+  }, true);
 })();
 </script>

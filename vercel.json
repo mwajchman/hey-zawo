@@ -8,12 +8,13 @@
   "rewrites": [
     { "source": "/api/:path*", "destination": "https://web-production-0134d.up.railway.app/api/:path*" },
     { "source": "/app", "destination": "https://web-production-0134d.up.railway.app/app" },
+    { "source": "/manage", "destination": "https://web-production-0134d.up.railway.app/manage" },
     { "source": "/admin", "destination": "https://web-production-0134d.up.railway.app/admin" },
     { "source": "/plan", "destination": "https://web-production-0134d.up.railway.app/plan" }
   ],
   "headers": [
     {
-      "source": "/(app|admin|plan)",
+      "source": "/(app|manage|admin|plan)",
       "headers": [
         { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
       ]

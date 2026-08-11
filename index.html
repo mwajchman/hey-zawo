@@ -908,7 +908,7 @@ $("cta").addEventListener("click", ()=>{
     .then(res => {
       if(res.ok && res.j && res.j.token){
         try{ localStorage.setItem("elderly_token", res.j.token); }catch(e){}
-        window.location.href = "/app";
+        window.location.href = "/welcome";
       } else {
         btn.disabled = false; btn.textContent = label;
         $("confirm").classList.add("show");
