@@ -532,7 +532,7 @@
     <div class="fullcall">
       <p class="kicker">Don't take our word for it</p>
       <h3>Listen to a whole call — unedited</h3>
-      <p class="fc-sub">Mari, 78, and her companion. Eight minutes, exactly as it happened. Drag anywhere — or jump straight to the moments worth judging us on.</p>
+      <p class="fc-sub">Mari, 78, and her companion. Seven minutes, exactly as it happened. Drag anywhere — or jump straight to the moments worth judging us on.</p>
       <div class="fc-player">
         <button class="fc-play" id="fcPlay" aria-label="Play the full call">▶</button>
         <div class="fc-track" id="fcTrack"><div class="fc-fill" id="fcFill"></div></div>
@@ -1068,13 +1068,13 @@ function render(){
 }
 /* ---- full call player ---- */
 const FC_MOMENTS = [
-  {t:12,  label:"The hello",                title:"She picks up to a voice that remembers yesterday", note:"It says it's her Elderly companion — always — and asks how the bread turned out. No introductions, no scripts."},
-  {t:108, label:"The story",                title:"Aunt Marta's dress, at her own pace",              note:"Four uninterrupted minutes. Nobody hurries her, nobody changes the subject. This is what the archive keeps."},
-  {t:271, label:"The scam question",        title:"Woven in, never an interrogation",                 note:"\"Anyone new call you this week?\" — one gentle question inside the conversation. This is how Scam Shield actually sounds."},
-  {t:365, label:"She laughs",               title:"The moment daughters ask us about",                note:"Not politeness — a real laugh. Judge it yourself: this is the answer to \"will she actually like it?\""},
-  {t:478, label:"The goodbye ritual",       title:"\"Save me that story for Thursday\"",            note:"Every call ends with something to look forward to. The ritual is the medicine."}
+  {t:15,  label:"The safe word",     title:"\"The keyword is sunflower\"",       note:"Fifteen seconds in, before anything else, she hears the word only her family chose — so she knows the call is safe. That's Scam Shield, in her own call."},
+  {t:97,  label:"The birthday",      title:"The whole family, for a birthday",   note:"\"This Sunday I got together with the whole family for a grandson's birthday — I had a really good time.\" She brings it up herself, and takes her time."},
+  {t:213, label:"Drawn on her face", title:"The grandkids got the markers out",  note:"She dozed off after lunch; the little ones drew all over her face. Her son-in-law caught it on camera before she noticed — the way she tells it is the whole point."},
+  {t:334, label:"\"I'll miss you\"",  title:"The littlest one at the door",       note:"\"Grandma, I'm gonna miss you so much\" — and the grandson who cooked her an omelette, one each, for lunch. \"Those things are very lovely.\""},
+  {t:388, label:"The lemon pie",     title:"The one that's never missing",       note:"A cooking class, lemon pie for the grandson who visits from the States, cream biscuits for whoever gives her a ride. \"I love giving to people.\""}
 ];
-let FC_DUR = 504, fcCur = 0, fcPlaying = false, fcTimer = null;
+let FC_DUR = 426, fcCur = 0, fcPlaying = false, fcTimer = null;
 const fcAudio = $("fcAudio"), fcTrack = $("fcTrack"), fcFill = $("fcFill"), fcTimeEl = $("fcTime"), fcNote = $("fcNote"), fcChips = $("fcChips"), fcPlayBtn = $("fcPlay");
 const fmt = s => Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0");
 const fcReal = () => fcAudio.src && !isNaN(fcAudio.duration) && fcAudio.duration > 0;
