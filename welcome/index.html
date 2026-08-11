@@ -439,14 +439,14 @@
     <div class="field">
       <label>Tell us {her} story</label>
       <p class="hint">Where {she} grew up, the work {she} did, the love of {her} life, what {she}'s most proud of. Write like you're bragging about {herO} — because you are.</p>
-      <textarea placeholder="{Rel} grew up on a farm in Idaho, raised five kids, taught piano for 30 years…"></textarea>
+      <textarea id="ob-story" placeholder="{Rel} grew up on a farm in Idaho, raised five kids, taught piano for 30 years…"></textarea>
       <button class="voice-note-btn">🎙 Or record it — tell us in your own voice (easier, and richer)</button>
     </div>
 
     <div class="field">
       <label>What lights {herO} up?</label>
       <p class="hint">Topics {she} can talk about for an hour. {Her} garden, the Jazz game, the grandkids, family history, the ward.</p>
-      <input type="text" placeholder="e.g. {her} garden, BYU football, the grandkids, the ward">
+      <input id="ob-loves" type="text" placeholder="e.g. {her} garden, BYU football, the grandkids, the ward">
     </div>
 
     <h3 style="font-size:18px; margin:26px 0 4px">Memories worth bringing up</h3>
@@ -466,7 +466,7 @@
     <div class="field">
       <label>Anything we should handle gently — or never bring up?</label>
       <p class="hint">A loss that's still raw, a family topic to avoid, health matters {she}'s private about. We'll honor this completely.</p>
-      <textarea placeholder="A loss that's still fresh, a topic that brings {herO} down…" style="min-height:70px"></textarea>
+      <textarea id="ob-gently" placeholder="A loss that's still fresh, a topic that brings {herO} down…" style="min-height:70px"></textarea>
     </div>
 
     <div class="nav-row">
@@ -1092,7 +1092,15 @@
         else { window.location.href="/app"; }
       }).catch(function(){ window.location.href="/app"; });
     }
-    if(ELDER && phone){ api("PATCH","/api/elders/"+ELDER.id,{phone_number:phone}).then(toStripe).catch(toStripe); }
+    var story=((document.getElementById("ob-story")||{}).value||"").trim();
+    var loves=((document.getElementById("ob-loves")||{}).value||"").trim();
+    var gently=((document.getElementById("ob-gently")||{}).value||"").trim();
+    var context=[story, loves?("Loves: "+loves):""].filter(Boolean).join(" \u2014 ");
+    var patch={};
+    if(phone) patch.phone_number=phone;
+    if(context) patch.context=context;
+    if(gently) patch.report_focus=gently;
+    if(ELDER && Object.keys(patch).length){ api("PATCH","/api/elders/"+ELDER.id,patch).then(toStripe).catch(toStripe); }
     else { toStripe(); }
   }, true);
   // En el flujo real (con token), salir del onboarding va al dashboard REAL (/app).
