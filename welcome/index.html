@@ -1074,6 +1074,13 @@
       var elders=Array.isArray(res.j)?res.j:[];
       ELDER=elders[0]||null;
       var ph=document.getElementById("ob-phone"); if(ph && ELDER && ELDER.phone_number){ ph.value=ELDER.phone_number; }
+      try{
+        if(ELDER && ELDER.call_days && typeof state!=="undefined"){
+          state.dayOn=new Set(String(ELDER.call_days).split(",").map(function(x){return parseInt(x,10);}).filter(function(n){return n>=0&&n<=6;}));
+          if(typeof renderPlan==="function") renderPlan();
+        }
+      }catch(e){}
+      renderVoices();
     }).catch(function(){});
   }
   function digits(x){ return (x||"").replace(/[^0-9]/g,""); }
@@ -1085,6 +1092,7 @@
     var ph=document.getElementById("ob-phone"); var phone=ph?ph.value.trim():"";
     if(phone && digits(phone).length < 7){ ph.focus(); return; }
     sec.disabled=true; sec.textContent="Securing\u2026";
+    try{ saveSchedule(); }catch(e){}
     function toStripe(){
       if(!TOKEN){ window.location.href="/app"; return; }
       api("POST","/api/billing/checkout",{}).then(function(res){
@@ -1108,5 +1116,59 @@
     var g = e.target.closest ? e.target.closest('[data-goto="9"]') : null;
     if(g && TOKEN){ e.preventDefault(); e.stopImmediatePropagation(); window.location.href="/app"; }
   }, true);
+
+  // ---- Voz real (2 del agente) ----
+  var _vAudio=null, _vCat=null;
+  function renderVoices(){
+    var box=document.getElementById("voices"); if(!box || !ELDER) return;
+    var pair=ELDER.voices||{}; var slugs=[pair.female, pair.male].filter(Boolean);
+    if(!slugs.length) return;
+    function paint(list){
+      var byId={}; (Array.isArray(list)?list:[]).forEach(function(v){ byId[v.slug]=v; });
+      var current=(ELDER.voice_id||"").trim();
+      box.innerHTML = slugs.map(function(slug){
+        var v=byId[slug]||{name:(slug.split("-").pop()||slug), tagline:""};
+        var on=(slug===current)?" on":"";
+        return '<button type="button" class="voice'+on+'" data-vid="'+slug+'" data-sample="'+esc(v.sample_url||"")+'">'+
+          '<span class="play">\u25B6</span>'+
+          '<span><b>'+esc(v.name||slug)+'</b><span>'+esc(v.tagline||"")+'</span></span>'+
+          '<span class="pick">CHOSEN \u2713</span></button>';
+      }).join("");
+    }
+    if(_vCat){ paint(_vCat); }
+    else { fetch("/api/voices").then(function(r){return r.json();}).then(function(list){ _vCat=list; paint(list); }).catch(function(){ paint([]); }); }
+  }
+  document.addEventListener("click", function(e){
+    if(!e.target.closest) return;
+    var vc=e.target.closest('.voice[data-vid]'); if(!vc) return;
+    if(e.target.closest('.play')){
+      e.preventDefault(); e.stopImmediatePropagation();
+      var src=vc.getAttribute("data-sample");
+      if(src){ try{ if(_vAudio) _vAudio.pause(); _vAudio=new Audio(src); _vAudio.play().catch(function(){}); }catch(_e){} }
+      return;
+    }
+    var box=document.getElementById("voices");
+    if(box) box.querySelectorAll('.voice').forEach(function(b){ b.classList.remove("on"); });
+    vc.classList.add("on");
+    var vid=vc.getAttribute("data-vid");
+    if(ELDER && vid){ ELDER.voice_id=vid; api("PATCH","/api/elders/"+ELDER.id,{voice_id:vid}).catch(function(){}); }
+  }, true);
+
+  // ---- Guardar agenda (dia + hora) ----
+  function parseTime(str){
+    var m=String(str||"").trim().match(/(\d{1,2}):(\d{2})\s*(am|pm)?/i);
+    if(!m) return null;
+    var h=parseInt(m[1],10), min=parseInt(m[2],10), ap=(m[3]||"").toLowerCase();
+    if(ap==="pm" && h<12) h+=12; if(ap==="am" && h===12) h=0;
+    return {hour:h, minute:min};
+  }
+  function saveSchedule(){
+    if(!ELDER) return;
+    var t=parseTime((document.getElementById("callTime")||{}).value)||{hour:10,minute:0};
+    var days="0,2,4";
+    try{ if(typeof state!=="undefined" && state.dayOn && state.dayOn.size) days=[...state.dayOn].sort(function(a,b){return a-b;}).join(","); }
+    catch(e){ if(ELDER.call_days) days=ELDER.call_days; }
+    api("PUT","/api/elders/"+ELDER.id+"/schedule",{hour:t.hour, minute:t.minute, days_of_week:days, active:true}).catch(function(){});
+  }
 })();
 </script>
