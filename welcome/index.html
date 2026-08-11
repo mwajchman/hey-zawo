@@ -1,0 +1,1068 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Elderly — Welcome</title>
+<style>
+  :root{
+    --bg:#FAF5EB; --bg2:#F3ECDC; --card:#FFFFFF; --ink:#1C332D; --muted:#6B786D;
+    --line:#E7DECA; --brand:#175045; --brand-deep:#0F3A31; --brand-ink:#FDFBF5; --accent:#2E7D6B;
+    --alert:#A9682B; --alert-bg:#FBF1E1; --chip:#EFE8D6; --wa:#E9F4E4;
+    --shadow:0 1px 2px rgba(28,51,45,.05), 0 10px 30px rgba(28,51,45,.08);
+  }
+  @media (prefers-color-scheme: dark) and (min-width:100000px){
+    :root{
+      --bg:#0F1E1A; --bg2:#132622; --card:#17302A; --ink:#EFE9DA; --muted:#98AB9F;
+      --line:#26463D; --brand:#2E7D6B; --brand-deep:#0C1F1A; --brand-ink:#F5F1E6; --accent:#7FC2AF;
+      --alert:#D89A55; --alert-bg:#2C2315; --chip:#1D3A33; --wa:#1B3A2C;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0F1E1A; --bg2:#132622; --card:#17302A; --ink:#EFE9DA; --muted:#98AB9F;
+    --line:#26463D; --brand:#2E7D6B; --brand-deep:#0C1F1A; --brand-ink:#F5F1E6; --accent:#7FC2AF;
+    --alert:#D89A55; --alert-bg:#2C2315; --chip:#1D3A33; --wa:#1B3A2C;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#FAF5EB; --bg2:#F3ECDC; --card:#FFFFFF; --ink:#1C332D; --muted:#6B786D;
+    --line:#E7DECA; --brand:#175045; --brand-deep:#0F3A31; --brand-ink:#FDFBF5; --accent:#2E7D6B;
+    --alert:#A9682B; --alert-bg:#FBF1E1; --chip:#EFE8D6; --wa:#E9F4E4;
+    --shadow:0 1px 2px rgba(28,51,45,.05), 0 10px 30px rgba(28,51,45,.08);
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif; margin:0; text-wrap:balance; font-weight:600}
+  button{font:inherit; cursor:pointer; color:inherit}
+  input,textarea,select{font:inherit; color:inherit}
+  button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+  .wrap{max-width:640px; margin:0 auto; padding:0 20px}
+
+  header{padding:18px 0; border-bottom:1px solid var(--line); background:var(--bg)}
+  header .wrap{display:flex; justify-content:space-between; align-items:center}
+  .logo{display:flex; align-items:center; gap:9px; font-weight:700; font-size:18px}
+  .logo .dot{width:26px;height:26px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-size:12px}
+  header .help{color:var(--accent); font-size:14px; font-weight:600; text-decoration:none}
+
+  /* progress */
+  .progress{padding:22px 0 6px}
+  .steps{display:flex; gap:6px}
+  .steps i{flex:1; height:4px; border-radius:99px; background:var(--line); transition:background .3s}
+  .steps i.done{background:var(--accent)}
+  .steps i.now{background:var(--brand)}
+  .step-label{font-size:11.5px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--accent); margin-top:14px}
+
+  main{padding:10px 0 60px}
+  .screen{display:none}
+  .screen.active{display:block; animation:rise .35s ease}
+  @keyframes rise{from{opacity:0; transform:translateY(10px)}to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion: reduce){ .screen.active{animation:none} }
+
+  .screen h1{font-size:clamp(26px,5vw,34px); line-height:1.15; margin:6px 0 10px}
+  .screen h1 em{color:var(--accent); font-style:italic}
+  .lede{color:var(--muted); font-size:16.5px; margin:0 0 26px; max-width:52ch}
+  .linklike{background:none; border:none; color:var(--accent); font-size:13.5px; font-weight:600; text-decoration:underline; padding:0}
+  .edit-link{margin:-16px 0 26px}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px; box-shadow:var(--shadow); margin-bottom:14px}
+  .card h3{font-size:17px; margin-bottom:6px}
+  .card .sub{color:var(--muted); font-size:13.5px; margin:0}
+
+  .btn{background:var(--brand); color:var(--brand-ink); border:none; border-radius:999px; padding:14px 28px; font-weight:600; font-size:15.5px; width:100%}
+  .btn:hover{filter:brightness(1.08)}
+  .btn.ghost{background:transparent; color:var(--accent); border:1.5px solid var(--line); width:auto; padding:12px 22px}
+  .nav-row{display:flex; gap:10px; margin-top:24px; align-items:center}
+  .nav-row .btn{flex:1}
+
+  /* ---------- STEP 0: who this is for ---------- */
+  .prod-note{background:var(--alert-bg); border-radius:14px; padding:13px 16px; font-size:13.5px; line-height:1.55; margin-bottom:22px}
+  .prod-note b{color:var(--alert)}
+  .rel-chips{display:flex; gap:8px}
+  .rel-chips .chip{flex:1; padding:13px 0; font-size:15px}
+
+  /* ---------- STEP 1: welcome ---------- */
+  .welcome-mark{width:64px; height:64px; border-radius:50%; background:var(--brand); color:var(--brand-ink); display:grid; place-items:center; font-size:26px; margin-bottom:18px}
+  .timeline{margin:4px 0 8px}
+  .t-row{display:flex; gap:14px; padding:10px 0}
+  .t-row .n{width:28px; height:28px; border-radius:50%; background:var(--chip); display:grid; place-items:center; font-size:12.5px; font-weight:700; color:var(--accent); flex-shrink:0}
+  .t-row div p{margin:0; font-size:14.5px}
+  .t-row div p b{display:block; font-size:15px}
+  .t-row div p span{color:var(--muted); font-size:13.5px}
+  .community{background:var(--wa); border:1px solid var(--line); border-radius:16px; padding:18px; display:flex; gap:14px; align-items:center; margin:18px 0 4px}
+  .community .fb{width:44px; height:44px; border-radius:12px; background:var(--brand); color:var(--brand-ink); display:grid; place-items:center; font-family:Georgia,serif; font-size:22px; flex-shrink:0}
+  .community b{font-size:15px}
+  .community p{margin:2px 0 0; font-size:13.5px; color:var(--muted)}
+  .community a{color:var(--accent); font-weight:600; font-size:14px; text-decoration:none; white-space:nowrap}
+
+  /* ---------- STEP 2: plan ---------- */
+  .plan-head{display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--line); padding-bottom:12px; margin-bottom:12px}
+  .plan-head .price{font-family:Georgia,serif; font-size:26px}
+  .plan-head .price small{font-size:13px; color:var(--muted); font-family:-apple-system,sans-serif}
+  .plan-row{display:flex; justify-content:space-between; gap:10px; padding:9px 0; font-size:14.5px; border-bottom:1px dashed var(--line)}
+  .plan-row:last-child{border-bottom:none}
+  .plan-row span:last-child{color:var(--muted); font-variant-numeric:tabular-nums}
+  .edit-block{margin-top:16px}
+  .edit-block h4{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); margin:0 0 10px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chip{border:1.5px solid var(--line); background:var(--card); border-radius:999px; padding:8px 15px; font-size:14px; font-weight:600; transition:all .15s}
+  .chip.on{background:var(--brand); border-color:var(--brand); color:var(--brand-ink)}
+  .chip small{font-weight:400; opacity:.75}
+  .lock-note{font-size:13px; color:var(--muted); margin-top:14px}
+
+  /* science of the plan */
+  .ears{display:flex; flex-direction:column; align-items:center; gap:0; margin:18px 0 6px}
+  .ears .call-node{background:var(--brand); color:var(--brand-ink); border-radius:999px; padding:10px 22px; font-weight:600; font-size:14.5px; display:flex; align-items:center; gap:8px}
+  .ears .stem{width:2px; height:16px; background:var(--line)}
+  .ear-row{display:flex; flex-wrap:wrap; justify-content:center; gap:8px}
+  .ear{border:1.5px solid var(--line); border-radius:999px; padding:7px 14px; font-size:13px; font-weight:600; color:var(--muted); background:var(--card); transition:all .2s}
+  .ear.live{border-color:var(--accent); color:var(--accent); background:var(--wa)}
+  .ears-note{font-size:12.5px; color:var(--muted); text-align:center; margin:10px 0 0; max-width:40ch}
+  details.sci{border:1px solid var(--line); border-radius:14px; background:var(--card); margin-bottom:10px}
+  details.sci summary{list-style:none; cursor:pointer; padding:14px 16px; display:flex; align-items:center; gap:10px; font-size:14.5px}
+  details.sci summary::after{content:"+"; color:var(--accent); font-size:18px; font-weight:400; margin-left:auto}
+  details.sci[open] summary::after{content:"–"}
+  details.sci summary b{font-weight:600}
+  .sci-badge{font-size:10.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; border-radius:999px; padding:3px 9px; white-space:nowrap}
+  .sci-badge.in{background:var(--wa); color:var(--accent)}
+  .sci-badge.out{background:var(--chip); color:var(--muted)}
+  details.sci .sci-body{padding:0 16px 15px; font-size:14px; color:var(--muted); line-height:1.6}
+  details.sci .sci-body b{color:var(--ink)}
+  .sci-fact{background:var(--bg2); border-radius:10px; padding:9px 12px; font-size:13px; margin:10px 0; font-style:italic}
+  .sci-add{background:var(--brand); color:var(--brand-ink); border:none; border-radius:999px; padding:8px 18px; font-size:13.5px; font-weight:600; margin-top:4px}
+
+  /* ---------- STEP 3: about her ---------- */
+  .sacred{background:var(--bg2); border-radius:18px; padding:22px; margin-bottom:18px; border:1px solid var(--line)}
+  .sacred p{margin:0; font-family:Georgia,serif; font-style:italic; font-size:16.5px; line-height:1.6}
+  .field{margin-bottom:18px}
+  .field label{display:block; font-weight:600; font-size:15px; margin-bottom:4px}
+  .field .hint{font-size:13px; color:var(--muted); margin:0 0 8px}
+  .field input[type=text], .field textarea, .field select{
+    width:100%; border:1.5px solid var(--line); background:var(--card); border-radius:12px;
+    padding:12px 14px; font-size:15px;
+  }
+  .field textarea{min-height:96px; resize:vertical; line-height:1.5}
+  .voice-note-btn{display:flex; align-items:center; gap:10px; width:100%; background:var(--wa); border:1.5px dashed var(--accent); border-radius:12px; padding:13px 16px; font-size:14.5px; font-weight:600; color:var(--accent); margin-top:8px}
+  .prompt-cards{display:grid; gap:10px; margin-bottom:18px}
+  .prompt-cards .card{margin:0; cursor:pointer}
+  .prompt-cards .card.filled{border-color:var(--accent)}
+  .prompt-cards .card .q{font-family:Georgia,serif; font-size:16px; font-style:italic; margin-bottom:2px}
+  .prompt-cards .add-own{border-style:dashed; border-color:var(--accent)}
+  .prompt-cards .add-own .q{color:var(--accent); font-style:normal}
+  .own-editor input{width:100%; border:1.5px solid var(--line); background:var(--bg2); border-radius:10px; padding:11px 13px; font-size:14.5px}
+  .own-editor .btn{width:auto; padding:10px 20px; font-size:14px; margin-top:10px}
+
+  /* ---------- STEP 4: schedule & voice ---------- */
+  .day-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-bottom:6px}
+  .day{border:1.5px solid var(--line); background:var(--card); border-radius:12px; padding:10px 0; text-align:center; font-size:13.5px; font-weight:600}
+  .day.on{background:var(--brand); border-color:var(--brand); color:var(--brand-ink)}
+  .day-note{font-size:13px; color:var(--muted); margin:6px 0 18px}
+  .retry-ladder .rt{display:flex; align-items:baseline; gap:10px; padding:7px 0; border-bottom:1px dashed var(--line); font-size:14px}
+  .retry-ladder .rt:last-child{border-bottom:none}
+  .retry-ladder .rt b{min-width:64px; font-weight:600}
+  .retry-ladder .rt span{color:var(--muted); flex:1}
+  .retry-ladder .rt i{font-style:normal; font-variant-numeric:tabular-nums; font-weight:600; color:var(--accent)}
+  .recip{display:flex; align-items:baseline; gap:10px; padding:9px 0; border-bottom:1px dashed var(--line); font-size:14.5px}
+  .recip:last-child{border-bottom:none}
+  .recip b{font-weight:600; min-width:44px}
+  .recip span{color:var(--muted); flex:1}
+  .recip i{font-style:normal; font-size:12.5px; font-weight:700; color:var(--accent); font-variant-numeric:tabular-nums}
+  .recip button{background:none; border:none; color:var(--muted); font-size:16px; padding:0 2px}
+  .pay-grid{display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:12px}
+  @media (max-width:520px){ .pay-grid{grid-template-columns:1fr 1fr 1fr; gap:8px} }
+
+  /* dashboard to-dos */
+  .todo{display:flex; gap:14px; align-items:flex-start; padding:16px 2px; border-bottom:1px solid var(--line)}
+  .todo:last-child{border-bottom:none}
+  .todo > div{flex:1}
+  .todo .td-check{width:30px; height:30px; border-radius:50%; background:var(--chip); display:grid; place-items:center; font-weight:700; font-size:13px; color:var(--accent); flex-shrink:0}
+  .todo.done-todo .td-check{background:var(--brand); color:var(--brand-ink)}
+  .todo b{font-size:15.5px}
+  .todo .td-sub{margin:2px 0 0; font-size:13.5px; color:var(--muted); line-height:1.5}
+  .todo .td-cta{width:auto; padding:10px 20px; font-size:14px; flex-shrink:0; align-self:center}
+  .todo .td-link{color:var(--accent); font-weight:600; text-decoration:none; align-self:center; white-space:nowrap; font-size:14px}
+  .todo.primary{background:var(--wa); border:1px solid var(--line); border-radius:14px; padding:16px; margin:6px 0 10px}
+  .two-col{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media (max-width:520px){ .two-col{grid-template-columns:1fr} }
+  .voices{display:grid; gap:10px; margin-top:8px}
+  .voice{display:flex; align-items:center; gap:14px; border:1.5px solid var(--line); background:var(--card); border-radius:14px; padding:14px 16px; text-align:left; width:100%}
+  .voice.on{border-color:var(--brand); box-shadow:0 0 0 1px var(--brand)}
+  .voice .play{width:38px; height:38px; border-radius:50%; background:var(--chip); display:grid; place-items:center; font-size:13px; flex-shrink:0; border:none}
+  .voice b{font-size:15px; display:block}
+  .voice span{font-size:13px; color:var(--muted)}
+  .voice .pick{margin-left:auto; font-size:12px; font-weight:700; color:var(--accent); visibility:hidden}
+  .voice.on .pick{visibility:visible}
+
+  /* ---------- STEP 5: first call ---------- */
+  .big-choice{display:grid; gap:12px; margin:6px 0 18px}
+  .choice{border:1.5px solid var(--line); background:var(--card); border-radius:16px; padding:18px; text-align:left; width:100%; transition:all .15s}
+  .choice.on{border-color:var(--brand); box-shadow:0 0 0 1px var(--brand)}
+  .choice .ico{font-size:22px; margin-bottom:8px}
+  .choice b{font-size:16px; font-family:Georgia,serif; display:block; margin-bottom:4px}
+  .choice p{margin:0; font-size:13.5px; color:var(--muted); line-height:1.5}
+  .why{background:var(--alert-bg); border-radius:14px; padding:14px 16px; font-size:14px; line-height:1.55; margin-bottom:18px}
+  .why b{color:var(--alert)}
+  .script{border-left:3px solid var(--accent); padding:2px 0 2px 16px; margin:16px 0}
+  .script p{margin:0 0 8px; font-size:14.5px; color:var(--muted)}
+  .script p b{color:var(--ink)}
+
+  /* ---------- STEP 6: expectations ---------- */
+  .weeks .t-row .n{background:var(--wa)}
+  details{border:1px solid var(--line); border-radius:14px; background:var(--card); margin-bottom:10px}
+  details summary{list-style:none; cursor:pointer; padding:15px 18px; font-weight:600; font-size:14.5px; display:flex; justify-content:space-between; align-items:center; gap:10px}
+  details summary::after{content:"+"; color:var(--accent); font-size:18px; font-weight:400}
+  details[open] summary::after{content:"–"}
+  details .a{padding:0 18px 15px; font-size:14px; color:var(--muted); line-height:1.6}
+  details .a b{color:var(--ink)}
+
+  /* ---------- done ---------- */
+  .done-mark{width:72px; height:72px; border-radius:50%; background:var(--brand); color:var(--brand-ink); display:grid; place-items:center; font-size:30px; margin:30px auto 20px}
+  .done-card{text-align:center; padding:10px 0 0}
+  .done-card h1{margin-bottom:10px}
+  .summary-line{font-size:15px; color:var(--muted); max-width:44ch; margin:0 auto 24px}
+  .summary-line b{color:var(--ink)}
+</style>
+
+<header>
+  <div class="wrap">
+    <div class="logo"><span class="dot">☎</span> Elderly</div>
+    <a class="help" href="#">Need help? Text us</a>
+  </div>
+</header>
+
+<div class="wrap progress">
+  <div class="steps" id="steps"><i></i><i></i><i></i><i></i><i></i></div>
+  <p class="step-label" id="stepLabel">Welcome</p>
+</div>
+
+<main class="wrap">
+
+  <!-- ============ STEP 0 — WHO THIS IS FOR (fallback when signup didn't pass it) ============ -->
+  <section class="screen" data-label="Who this is for" data-bar="0">
+    <h1>First things first — <em>who</em> are we setting up?</h1>
+    <p class="lede">Tell us once, and every screen from here on speaks their name.</p>
+
+    <div class="prod-note"><b>Prototype note:</b> in the real product this screen almost never appears — these details arrive automatically from the signup on the homepage. It only shows when we don't have them.</div>
+
+    <div class="field">
+      <label>Your first name</label>
+      <input type="text" id="f-you" value="Sarah" placeholder="e.g. Sarah">
+    </div>
+
+    <div class="field">
+      <label>Who is this for?</label>
+      <div class="chips rel-chips" id="relChips">
+        <button class="chip on" data-rel="mom">My mom</button>
+        <button class="chip" data-rel="dad">My dad</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label id="f-name-label">Mom's first name</label>
+      <input type="text" id="f-name" value="Margaret" placeholder="e.g. Margaret">
+    </div>
+
+    <div class="nav-row"><button class="btn" data-next>Continue →</button></div>
+  </section>
+
+  <!-- ============ STEP 1 — WELCOME ============ -->
+  <section class="screen" data-label="Welcome · Step 1 of 5" data-bar="1">
+    <div class="welcome-mark">🤍</div>
+    <h1>Welcome, {you}. Your {rel} is in <em>good company</em> now.</h1>
+    <p class="lede">You just did something most people only think about. Over the next few minutes we'll get everything ready for {name}'s first call — together, at your pace.</p>
+    <p class="edit-link"><button class="linklike" data-goto="0">Not {name}? Edit who this is for</button></p>
+
+    <div class="card">
+      <h3>What happens next</h3>
+      <div class="timeline">
+        <div class="t-row"><span class="n">1</span><div><p><b>Review {her} plan</b><span>Make sure it's exactly what you meant to choose.</span></p></div></div>
+        <div class="t-row"><span class="n">2</span><div><p><b>Tell us about {herO}</b><span>The stories and details that make {name} <i>{name}</i>.</span></p></div></div>
+        <div class="t-row"><span class="n">3</span><div><p><b>Pick days, times and a voice</b><span>When we call, and who {she}'ll hear.</span></p></div></div>
+        <div class="t-row"><span class="n">4</span><div><p><b>Know what to expect</b><span>The first weeks, plainly. Then {her} first call — scheduled from your dashboard, whenever you're both ready.</span></p></div></div>
+      </div>
+    </div>
+
+    <div class="community">
+      <div class="fb">f</div>
+      <div>
+        <b>You're not doing this alone.</b>
+        <p>2,400 daughters and sons share what's working in our private community. Come say hi — tell us about your {rel}.</p>
+      </div>
+      <a href="#">Join →</a>
+    </div>
+
+    <div class="nav-row"><button class="btn" data-next>Let's get {name} set up →</button></div>
+  </section>
+
+  <!-- ============ STEP 2 — PLAN REVIEW ============ -->
+  <section class="screen" data-label="{Her} plan · Step 2 of 5" data-bar="2">
+    <h1>Here's the plan you built for {herO}.</h1>
+    <p class="lede">Take a second look. You can change any of this now — or anytime later, no phone calls, no fees.</p>
+
+    <div class="card">
+      <div class="plan-head">
+        <h3>{name}'s plan</h3>
+        <div class="price" id="price">$46<small>/mo</small></div>
+      </div>
+      <div id="planRows">
+        <div class="plan-row"><span>Companionship — real conversation, every visit</span><span>included</span></div>
+        <div class="plan-row" id="rowDays"><span>4 calls a week</span><span>$36 base</span></div>
+        <div class="plan-row" id="rowLen"><span>Check-in calls — 5 to 10 minutes</span><span>included</span></div>
+        <div class="plan-row" id="rowMem" hidden><span>{Her} voice, kept — story archive</span><span>+$6</span></div>
+        <div class="plan-row" id="rowRecips" hidden><span>Family in the loop</span><span>+$0.99</span></div>
+        <div class="plan-row" id="rowSpecs"><span>Health check-ins</span><span>+$10</span></div>
+      </div>
+
+      <div class="nav-row" style="margin-top:14px"><button class="btn ghost" id="editPlanBtn" style="width:100%; flex:1">Edit plan</button></div>
+
+      <div id="planEdit" hidden>
+      <div class="edit-block">
+        <h4>Days per week</h4>
+        <div class="chips" id="freqChips">
+          <button class="chip" data-days="3">3 days <small>· $29 base</small></button>
+          <button class="chip on" data-days="4">4 days <small>· +$7</small></button>
+          <button class="chip" data-days="5">5 days <small>· +$14</small></button>
+          <button class="chip" data-days="6">6 days <small>· +$21</small></button>
+          <button class="chip" data-days="7">Every day <small>· +$28</small></button>
+        </div>
+        <p class="lock-note" style="margin-top:10px">Each extra day is just +$7 — and one more day of company changes {her} week more than anything else on this page.</p>
+      </div>
+
+      <div class="edit-block">
+        <h4>How long should each call be?</h4>
+        <div class="chips" id="lenChips">
+          <button class="chip on" data-len="std">Check-in <small>· 5–10 min · included</small></button>
+          <button class="chip" data-len="quick">Quick visit <small>· 10–15 min · +$8</small></button>
+          <button class="chip" data-len="full">Full visit <small>· 15–30 min · +$16</small></button>
+        </div>
+        <p class="lock-note" style="margin-top:10px">Minutes are a guide, never a meter — we never cut {herO} off mid-story. And if you're choosing between longer calls and one more day: choose the day. The ritual is what {she} comes to count on.</p>
+      </div>
+
+      <div class="edit-block">
+        <h4>{Her} voice, kept</h4>
+        <div class="chips" id="memChips">
+          <button class="chip" data-mem>Keep {her} stories in {her} own voice <small>· +$6</small></button>
+        </div>
+        <p class="lock-note" id="memNote" style="margin-top:10px"></p>
+      </div>
+
+      <div class="edit-block">
+        <h4>What {she}'s watched over for</h4>
+        <div class="chips" id="specChips">
+          <button class="chip" data-spec="scam" data-fee="10">Scam shield <small>· +$10</small></button>
+          <button class="chip on" data-spec="health" data-fee="10">Health check-ins <small>· +$10</small></button>
+          <button class="chip" data-spec="mind" data-fee="10">Mind &amp; memory <small>· +$10</small></button>
+          <button class="chip" data-spec="guardian" data-fee="20">Guardian — all three <small>· +$20</small></button>
+        </div>
+      </div>
+      <p class="lock-note">Nothing is locked in. Change {her} plan any month from your dashboard.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>How {her} plan works — one conversation, many ears</h3>
+      <p class="sub">{name} never gets a quiz. Every layer listens to the same warm visit — the call is just a call. The work happens quietly, underneath.</p>
+
+      <div class="ears">
+        <div class="call-node">☎ One conversation with {name}</div>
+        <div class="stem"></div>
+        <div class="ear-row">
+          <span class="ear live" data-ear="comp">💬 Companionship</span>
+          <span class="ear" data-ear="scam">🛡 Scam shield</span>
+          <span class="ear" data-ear="health">❤️ Health</span>
+          <span class="ear" data-ear="mind">🧠 Mind</span>
+        </div>
+        <p class="ears-note" id="earsNote">Layers in {her} plan light up. Adding one never adds questions to {her} call — only ears.</p>
+      </div>
+
+      <details class="sci" data-sci="comp">
+        <summary>💬 <b>Companionship — the science of loneliness</b> <span class="sci-badge in">In every plan</span></summary>
+        <div class="sci-body">
+          Chronic loneliness raises the risk of early death about as much as <b>smoking 15 cigarettes a day</b> — that's from a meta-analysis of 300,000+ people, and it's why doctors now treat isolation as a health condition, not a mood.
+          <div class="sci-fact">The mechanism isn't the hour of company. It's <b>anticipation</b>: a visit {she} can count on gives the week structure — and structured weeks protect mood, sleep and appetite.</div>
+          <b>What you see:</b> a short note after every call — {her} mood, what {she} talked about, anything worth knowing.
+        </div>
+      </details>
+
+      <details class="sci" data-sci="scam">
+        <summary>🛡 <b>Scam shield — the science of fraud</b> <span class="sci-badge out" data-badge="scam">Not in {her} plan</span></summary>
+        <div class="sci-body">
+          Americans over 60 lost <b>$4.9 billion to fraud in one year</b> (FBI). Here's the useful part: scams surface in conversation <b>weeks before they surface in a bank account</b> — a new "friend," a prize, a grandchild in sudden trouble, an urgent fee.
+          <div class="sci-fact">Because the companion talks with {name} every visit, it hears the pattern forming: the repeated caller, the new urgency, the request for secrecy — the three tells of elder fraud.</div>
+          <b>What you see:</b> a flag with the exact words that raised it, and a suggested script for the conversation. {name} is never lectured or embarrassed.
+        </div>
+      </details>
+
+      <details class="sci" data-sci="health">
+        <summary>❤️ <b>Health check-ins — the science of early signals</b> <span class="sci-badge out" data-badge="health">Not in {her} plan</span></summary>
+        <div class="sci-body">
+          Voice, sleep and routine drift measurably <b>weeks before a doctor's visit catches decline</b> — slower speech, shorter answers, meals skipped, nights interrupted. Daily check-in calls are a validated tool in heart-failure care and post-fall recovery for exactly this reason.
+          <div class="sci-fact">The questions are neighborly — "how did you sleep?" — never clinical. One answer is chit-chat; forty answers are a trend line.</div>
+          <b>What you see:</b> trends over weeks, with a plain next step: <i>"3-week trend: interrupted sleep + ankle swelling — worth mentioning at {her} next appointment."</i> A sensor for you. Never a doctor for {herO}.
+        </div>
+      </details>
+
+      <details class="sci" data-sci="mind">
+        <summary>🧠 <b>Mind &amp; memory — the science of early change</b> <span class="sci-badge out" data-badge="mind">Not in {her} plan</span></summary>
+        <div class="sci-body">
+          The earliest signs of cognitive change are <b>conversational</b>, not clinical: the same story returning too soon, word-finding pauses, dates that slip. Families miss them because visits are far apart; annual checkups miss them because they're one snapshot.
+          <div class="sci-fact">A companion who remembers every previous call can notice <b>"too soon" precisely</b> — that the wedding story came back after four days, not four months.</div>
+          <b>What you see:</b> a gentle trend line, months earlier than an annual visit would catch it — worth a conversation with {her} doctor, never a diagnosis.
+        </div>
+      </details>
+
+      <p class="lock-note">Together, all three are <b>Guardian</b> — three ears on the same call, still just one warm visit for {name}.</p>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-back>← Back</button>
+      <button class="btn" data-next>This is right →</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 3 — ABOUT HER/HIM ============ -->
+  <section class="screen" data-label="About {herO} · Step 3 of 5" data-bar="3">
+    <h1>Now, tell us about <em>{name}</em>.</h1>
+    <p class="lede">This is the most important part of setup. Everything you share here is what turns a phone call into a visit from someone who truly knows {herO}.</p>
+
+    <div class="sacred">
+      <p>"Think of this as introducing your {rel} to a new friend — one who will never forget a single thing you say about {herO}."</p>
+    </div>
+
+    <div class="field">
+      <label>What does {she} like to be called?</label>
+      <p class="hint">The name {her} closest friends use — nicknames count.</p>
+      <input type="text" placeholder="e.g. Maggie">
+    </div>
+
+    <div class="field">
+      <label>Tell us {her} story</label>
+      <p class="hint">Where {she} grew up, the work {she} did, the love of {her} life, what {she}'s most proud of. Write like you're bragging about {herO} — because you are.</p>
+      <textarea placeholder="{Rel} grew up on a farm in Idaho, raised five kids, taught piano for 30 years…"></textarea>
+      <button class="voice-note-btn">🎙 Or record it — tell us in your own voice (easier, and richer)</button>
+    </div>
+
+    <div class="field">
+      <label>What lights {herO} up?</label>
+      <p class="hint">Topics {she} can talk about for an hour. {Her} garden, the Jazz game, the grandkids, family history, the ward.</p>
+      <input type="text" placeholder="e.g. {her} garden, BYU football, the grandkids, the ward">
+    </div>
+
+    <h3 style="font-size:18px; margin:26px 0 4px">Memories worth bringing up</h3>
+    <p class="hint" style="font-size:13.5px; color:var(--muted); margin:0 0 12px">Tap any that you'd like to answer. Each one gives {her} companion something real to reminisce about. Answer three now, add more anytime.</p>
+    <div class="prompt-cards" id="promptCards">
+      <button class="card mem-q"><span class="q">"What's a family story {she} loves to retell?"</span><p class="sub">Tap to answer</p></button>
+      <button class="card mem-q"><span class="q">"What was the happiest day of {her} life?"</span><p class="sub">Tap to answer</p></button>
+      <button class="card mem-q"><span class="q">"What song or hymn means the most to {herO}?"</span><p class="sub">Tap to answer</p></button>
+      <button class="card mem-q"><span class="q">"What does {she} always cook when family comes over?"</span><p class="sub">Tap to answer</p></button>
+      <button class="card add-own" id="addOwn"><span class="q">+ Add your own</span><p class="sub">A memory or question only your family knows</p></button>
+      <div class="card own-editor" id="ownEditor" hidden>
+        <input type="text" id="ownInput" placeholder='e.g. "Ask about the summer the car broke down outside Mendoza"'>
+        <button class="btn" id="ownSave">Add it to {her} story</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Anything we should handle gently — or never bring up?</label>
+      <p class="hint">A loss that's still raw, a family topic to avoid, health matters {she}'s private about. We'll honor this completely.</p>
+      <textarea placeholder="A loss that's still fresh, a topic that brings {herO} down…" style="min-height:70px"></textarea>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-back>← Back</button>
+      <button class="btn" data-next>{She}'s going to love this →</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 4 — SCHEDULE & VOICE ============ -->
+  <section class="screen" data-label="Days, times & voice · Step 4 of 5" data-bar="4">
+    <h1>When should we visit, and who should {she} hear?</h1>
+    <p class="lede">Consistency is the magic. When Tuesday means company, the whole week has shape.</p>
+
+    <div class="card">
+      <h3>{Her} call days</h3>
+      <p class="sub" id="daysSub" style="margin-bottom:12px">Pick 4 days — {her} plan includes 4 calls a week.</p>
+      <div class="day-grid" id="dayGrid">
+        <button class="day">Su</button><button class="day">Mo</button><button class="day">Tu</button>
+        <button class="day">We</button><button class="day">Th</button><button class="day">Fr</button><button class="day">Sa</button>
+      </div>
+      <p class="day-note" id="dayNote">4 of 4 days chosen</p>
+
+      <div class="two-col">
+        <div class="field" style="margin:0">
+          <label>Exact call time</label>
+          <select id="callTime">
+            <option>8:00 am</option><option>8:30 am</option>
+            <option>9:00 am</option><option>9:30 am</option>
+            <option>10:00 am</option><option selected>10:30 am</option>
+            <option>11:00 am</option><option>11:30 am</option>
+            <option>12:00 pm</option><option>12:30 pm</option>
+            <option>1:00 pm</option><option>1:30 pm</option>
+            <option>2:00 pm</option><option>2:30 pm</option>
+            <option>3:00 pm</option><option>3:30 pm</option>
+            <option>4:00 pm</option><option>4:30 pm</option>
+            <option>5:00 pm</option><option>5:30 pm</option>
+            <option>6:00 pm</option><option>6:30 pm</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>{Her} timezone</label>
+          <select>
+            <option>Pacific</option>
+            <option selected>Mountain — Utah</option>
+            <option>Central</option>
+            <option>Eastern</option>
+          </select>
+        </div>
+      </div>
+      <p class="lock-note" style="margin-top:12px">The exact minute matters. {She}'ll come to wait for it — that's the habit forming, and the habit is the product.</p>
+
+      <details style="margin-top:18px">
+        <summary>What if {she} doesn't pick up?</summary>
+        <div class="a">
+          We don't give up after one ring — we call again, three more times, the way family would:
+          <div class="retry-ladder" id="retryLadder" style="margin-top:8px">
+            <div class="rt"><b>The call</b><span>{her} time</span><i data-rt="0">10:30 am</i></div>
+            <div class="rt"><b>2nd try</b><span>5 minutes later</span><i data-rt="5">10:35 am</i></div>
+            <div class="rt"><b>3rd try</b><span>10 minutes after that</span><i data-rt="15">10:45 am</i></div>
+            <div class="rt"><b>4th try</b><span>20 minutes after that</span><i data-rt="35">11:05 am</i></div>
+          </div>
+          <p style="margin:10px 0 0">Only after all four go unanswered does the day count as missed — it shows in your note, and two missed days in a row means we text you right away.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <h3>The voice {she}'ll get to know</h3>
+      <p class="sub" style="margin-bottom:6px">Tap play and pick the one that feels like a friend. {She} can always change {her} mind after a call or two.</p>
+      <div class="voices" id="voices">
+        <button class="voice on">
+          <span class="play">▶</span>
+          <span><b>Ruth</b><span>Warm and unhurried, like a longtime neighbor</span></span>
+          <span class="pick">CHOSEN ✓</span>
+        </button>
+        <button class="voice">
+          <span class="play">▶</span>
+          <span><b>June</b><span>Bright and cheerful, quick to laugh</span></span>
+          <span class="pick">CHOSEN ✓</span>
+        </button>
+        <button class="voice">
+          <span class="play">▶</span>
+          <span><b>Samuel</b><span>Gentle and steady, a good listener</span></span>
+          <span class="pick">CHOSEN ✓</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-back>← Back</button>
+      <button class="btn" data-goto="6">Almost done →</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 5 — FIRST CALL ============ -->
+  <section class="screen" data-label="The first call">
+    <h1>The first call — <em>with you there.</em></h1>
+    <p class="lede">This is the one call we don't make without you. You introduce <span class="vname">Ruth</span> to {name} the way you'd introduce any new friend — and then, whenever you're ready, you step back.</p>
+
+    <div class="why">
+      <b>Why we need you on the first call:</b> your voice is {her} trust. When you say "{Rel}, this is <span class="vname">Ruth</span> — I set this up for you," {she} relaxes. First calls with family on the line go beautifully. First calls without them start cold. This is the single biggest thing you can do for {her} experience.
+    </div>
+
+    <div class="big-choice" id="firstCallChoice">
+      <button class="choice on">
+        <span class="ico">🏠</span>
+        <b>I'll be with {herO}, in person</b>
+        <p>You're at {her} house when the call comes in. You put it on speaker, make the introduction, and stay as long as you like.</p>
+      </button>
+      <button class="choice">
+        <span class="ico">📞</span>
+        <b>Join by three-way call</b>
+        <p>You're in another city — no problem. We ring you first, then bring {name} in. You introduce <span class="vname">Ruth</span>, chat a few minutes, then drop off when it feels right.</p>
+      </button>
+    </div>
+
+    <div class="card">
+      <h3>How the first call goes</h3>
+      <div class="script">
+        <p><b>You open it.</b> "{Rel}, I want you to meet someone…"</p>
+        <p><b><span class="vname">Ruth</span> is honest.</b> <span class="vpro">She</span> says what <span class="vpro-low">she</span> is, plainly — no pretending. Then the conversation turns to {name}: {her} garden, {her} week, {her} stories.</p>
+        <p><b>You step back when ready.</b> Most families stay 5–10 minutes. Some stay the whole call. Both are perfect.</p>
+      </div>
+      <div class="two-col">
+        <div class="field" style="margin:0">
+          <label>Pick the day</label>
+          <select id="fcDay">
+            <option>This Wednesday, Aug 12</option>
+            <option selected>This Saturday, Aug 15</option>
+            <option>Monday, Aug 17</option>
+            <option>Wednesday, Aug 19</option>
+          </select>
+        </div>
+        <div class="field" style="margin:0">
+          <label>Time (Mountain)</label>
+          <select id="fcTime">
+            <option>10:00 am</option>
+            <option selected>10:30 am</option>
+            <option>11:00 am</option>
+            <option>1:00 pm</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Lock in {her} spot</h3>
+      <p class="sub" style="margin-bottom:14px"><b style="color:var(--ink)">$0 due today.</b> {Her} first week is free — the card is only charged when the free week ends, at <b style="color:var(--ink)" id="payMonthly">$46/mo</b>. Cancel with one tap, no phone calls.</p>
+      <div class="field" style="margin-bottom:12px">
+        <label>Card number</label>
+        <input type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
+      </div>
+      <div class="pay-grid">
+        <div class="field" style="margin:0"><label>Expires</label><input type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY"></div>
+        <div class="field" style="margin:0"><label>CVC</label><input type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123"></div>
+        <div class="field" style="margin:0"><label>ZIP</label><input type="text" inputmode="numeric" autocomplete="postal-code" placeholder="84604"></div>
+      </div>
+      <p class="lock-note" style="margin-top:12px">🔒 Secured by Stripe · we never see your card · cancel anytime from your dashboard</p>
+    </div>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-goto="9">← Dashboard</button>
+      <button class="btn" data-goto="7" data-secure>Secure {her} first call — $0 today →</button>
+    </div>
+  </section>
+
+  <!-- ============ STEP 6 — WHAT TO EXPECT ============ -->
+  <section class="screen" data-label="The first weeks · Step 5 of 5" data-bar="5">
+    <h1>What the first month looks like.</h1>
+    <p class="lede">Handing us someone you love is a big deal. Here's exactly what to expect while <span class="vname">Ruth</span> and {name} get to know each other — and how we keep you in the loop the whole way.</p>
+
+    <div class="card weeks">
+      <div class="timeline">
+        <div class="t-row"><span class="n">W1</span><div><p><b>Getting acquainted</b><span>Short, gentle calls. <span class="vname">Ruth</span> uses what you shared — the stories, the garden, the grandkids. You get a note after every call.</span></p></div></div>
+        <div class="t-row"><span class="n">W2</span><div><p><b>Finding the rhythm</b><span>Calls get longer as {she} warms up. Most {rels} start telling stories <span class="vname">Ruth</span> "hasn't heard yet" — that's the turn.</span></p></div></div>
+        <div class="t-row"><span class="n">W3</span><div><p><b>It's {her} routine now</b><span>{She} starts expecting the call. Many answer on the first ring. Health check-ins run quietly in the background.</span></p></div></div>
+        <div class="t-row"><span class="n">M1</span><div><p><b>Your first monthly picture</b><span>A full report: {her} mood, {her} stories, and anything worth a closer look — with a plain next step, never a scare.</span></p></div></div>
+      </div>
+    </div>
+
+    <h3 style="font-size:18px; margin:24px 0 12px">The questions every family asks us</h3>
+    <details>
+      <summary>What if {she} doesn't answer a call?</summary>
+      <div class="a">We try again a little later — never in a way that feels like pestering. If {she} misses <b>two calls in a row</b>, you get a text right away. A missed call is information, and it always reaches you.</div>
+    </details>
+    <details>
+      <summary>What if {she} doesn't like it, or feels confused?</summary>
+      <div class="a"><span class="vname">Ruth</span> is honest about being a voice assistant on every call, and never argues or pushes. If {name} isn't enjoying it, we'll tell you honestly — and you can pause or cancel with one tap. About 1 in 10 {rels} takes 2–3 calls to warm up. We'll tell you which kind of start {she}'s having.</div>
+    </details>
+    <details>
+      <summary>Can I see what they talk about?</summary>
+      <div class="a">You get a note after every call and a monthly report. You'll see <b>how {she}'s doing</b>, not a transcript of {her} private conversations — {she} deserves a friendship of {her} own. If anything ever needs your attention, that reaches you immediately and specifically.</div>
+    </details>
+    <details>
+      <summary>What happens if <span class="vname">Ruth</span> notices something wrong?</summary>
+      <div class="a">Health check-ins listen for changes in voice, sleep, and routine. If something shifts, you get a plain-language note with a suggested next step — "worth mentioning to {her} doctor" — never a diagnosis, never an alarm at 2 am for something small.</div>
+    </details>
+    <details>
+      <summary>Can I change the schedule, the voice, or the plan later?</summary>
+      <div class="a">Anytime, from your dashboard, effective the next call. No phone menus, no retention scripts. This should bend around {her} life, not the other way.</div>
+    </details>
+    <details>
+      <summary>Is my {rel}'s information safe?</summary>
+      <div class="a">Everything you shared in setup is used for one purpose: making {her} calls warmer. It's never sold, never used for ads, and you can export or delete all of it whenever you choose.</div>
+    </details>
+
+    <div class="nav-row">
+      <button class="btn ghost" data-goto="4">← Back</button>
+      <button class="btn" data-goto="8">Finish — we're ready ✓</button>
+    </div>
+  </section>
+
+  <!-- ============ DONE ============ -->
+  <section class="screen" data-label="All set">
+    <div class="done-card">
+      <div class="done-mark">✓</div>
+      <h1>Congratulations, {you} — {name}'s first call is set.</h1>
+      <p class="summary-line" id="doneLine"><b>Saturday, Aug 15 at 10:30 am</b>.</p>
+      <p class="summary-line">Welcome to the family. From the first hello to every note after, the checking-in is ours to carry now — you get to just be {her} family again.</p>
+      <div class="nav-row"><button class="btn" data-goto="9">Back to {her} dashboard →</button></div>
+    </div>
+  </section>
+
+  <!-- ============ ONBOARDING COMPLETE ============ -->
+  <section class="screen" data-label="Onboarding complete" data-bar="done">
+    <div class="done-card">
+      <div class="done-mark">✓</div>
+      <h1>You're in, {you}.</h1>
+      <p class="summary-line">{name}'s profile is complete, {her} plan is built, and <span class="vname">Ruth</span> is already reading {her} story. Nothing has been charged.</p>
+      <p class="summary-line">One thing left — and it's the best part: <b>{her} first call</b>. It's waiting on your dashboard, for whenever you and {name} are ready.</p>
+      <div class="nav-row"><button class="btn" data-goto="9">Go to {her} dashboard →</button></div>
+    </div>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section class="screen" data-label="Dashboard">
+    <h1>Welcome home, {you}.</h1>
+    <p class="lede">This is where {name}'s world will live — every note, every report. For now, the list is short.</p>
+    <div class="card">
+      <h3>Your to-dos</h3>
+      <div class="todo done-todo"><span class="td-check">✓</span><div><b>Tell {her} story</b><p class="td-sub">Done — the memories you shared are already shaping {her} first conversation.</p></div></div>
+      <div class="todo primary" id="todo1"><span class="td-check">1</span><div><b>Schedule {her} first call</b><p class="td-sub">{Her} plan starts here — nothing is charged until this is set. We hold {her} spot and <span class="vname">Ruth</span>'s voice for 14 days.</p></div><button class="btn td-cta" data-goto="5">Schedule</button></div>
+      <div class="todo" id="todo2"><span class="td-check">2</span><div><b>Share the news with the family</b><p class="td-sub">99¢/mo per number — the notes just arrive. No more "how's {rel}?" texts.</p></div><button class="btn ghost td-cta" data-goto="10">Add</button></div>
+      <div class="todo" id="todo3"><span class="td-check">3</span><div><b>Say hi in the community</b><p class="td-sub">2,400 daughters and sons — the "first call stories" thread is everyone's favorite.</p></div><a class="td-link" href="#">Join →</a></div>
+    </div>
+  </section>
+
+  <!-- ============ SHARE WITH FAMILY (to-do #2) ============ -->
+  <section class="screen" data-label="Family in the loop">
+    <h1>Who else should get the news?</h1>
+    <p class="lede">After every call, a short note lands on your phone. Add anyone who worries like you do — the same notes and monthly report reach them automatically.</p>
+    <div class="card">
+      <div id="recipList">
+        <div class="recip"><b>You</b><span>{you} — every note, every report</span><i>included</i></div>
+      </div>
+      <button class="card add-own" id="addRecip" style="width:100%; margin-top:10px"><span class="q">+ Add a phone number</span><p class="sub">99¢/mo each — they just start receiving the news</p></button>
+      <div class="card own-editor" id="recipEditor" hidden style="margin-top:10px">
+        <input type="text" id="recipInput" placeholder="(801) 555-0123 — your brother's cell">
+        <button class="btn" id="recipSave">Add them in</button>
+      </div>
+      <p class="lock-note" style="margin-top:12px">News only — if they ever want to be <i>in</i> the calls with voice notes, that's a Family seat, anytime later.</p>
+    </div>
+    <div class="nav-row"><button class="btn" data-goto="9">Done — back to the dashboard →</button></div>
+  </section>
+
+</main>
+
+<script>
+  const qs=s=>document.querySelector(s), qsa=s=>[...document.querySelectorAll(s)];
+  const mainEl=document.querySelector('main');
+  const TPL=mainEl.innerHTML;
+
+  const PRON={
+    mom:{rel:'mom',Rel:'Mom',rels:'moms',she:'she',She:'She',her:'her',Her:'Her',herO:'her',hers:'hers'},
+    dad:{rel:'dad',Rel:'Dad',rels:'dads',she:'he',She:'He',her:'his',Her:'His',herO:'him',hers:'his'}
+  };
+  // {She2}/{she2} refer to the companion voice, not the parent
+  const params=new URLSearchParams(location.search);
+  const data={
+    you:params.get('you')||'Sarah',
+    name:params.get('parent')||'Margaret',
+    rel:params.get('rel')==='dad'?'dad':'mom'
+  };
+  const fromSignup=!!(params.get('you')&&params.get('parent'));
+
+  const state={idx:fromSignup?1:0, days:4, specs:{health:10},
+               len:['std','quick','full'].includes(params.get('len'))?params.get('len'):'std',
+               mem:params.get('mem')==='1',
+               editOpen:false, dayOn:new Set([1,3,5,6]), voiceName:'Ruth', choice:0, prompts:new Set(), custom:[], recips:[], callSet:false};
+  const basePrices={3:29,4:36,5:43,6:50,7:57};
+  const specNames={scam:'Scam shield',health:'Health check-ins',mind:'Mind & memory',guardian:'Guardian — all three'};
+
+  function fill(){
+    const map={...PRON[data.rel], you:data.you, name:data.name};
+    // preserve anything typed into inputs across a re-render
+    const saved=qsa('main input, main textarea, main select').map(el=>el.value);
+    mainEl.innerHTML=TPL.replace(/\{(you|name|rel|Rel|rels|she|She|her|Her|herO|hers)\}/g,(m,k)=>map[k]);
+    qsa('main input, main textarea, main select').forEach((el,i)=>{ if(saved[i]!==undefined && saved[i]!=='') el.value=saved[i]; });
+    restore();
+  }
+
+  const screens=()=>qsa('.screen');
+  function show(i){
+    const ss=screens();
+    state.idx=Math.max(0,Math.min(i,ss.length-1));
+    ss.forEach((s,k)=>s.classList.toggle('active',k===state.idx));
+    // data-bar: "0".."5" = onboarding progress position, "done" = all complete, absent = platform screen (no bar)
+    const barSpec=ss[state.idx].dataset.bar;
+    qs('.progress').style.display=barSpec===undefined?'none':'';
+    const n=barSpec==='done'?99:(+barSpec||0);
+    qsa('#steps i').forEach((b,j)=>{
+      b.classList.toggle('done', barSpec==='done' || j<n-1);
+      b.classList.toggle('now', j===n-1 && barSpec!=='done');
+    });
+    qs('#stepLabel').textContent=ss[state.idx].dataset.label;
+    if(state.idx===7) syncDone();
+    if(state.idx===9) syncDash();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+  function syncDash(){
+    const P=PRON[data.rel];
+    if(state.callSet){
+      const t1=qs('#todo1');
+      t1.classList.add('done-todo');
+      t1.querySelector('.td-check').textContent='✓';
+      t1.querySelector('.td-sub').textContent=qs('#fcDay').value+' at '+qs('#fcTime').value+' — '
+        +(state.choice===0?'you’ll be at '+P.her+' side':'by three-way call')+'. '+P.Her+' plan is active.';
+      t1.querySelector('.td-cta').textContent='Change';
+    }
+    if(state.recips.length){
+      const t2=qs('#todo2');
+      t2.classList.add('done-todo');
+      t2.querySelector('.td-check').textContent='✓';
+      t2.querySelector('.td-sub').textContent=state.recips.length+(state.recips.length===1?' number is':' numbers are')
+        +' getting the news — add more anytime.';
+      t2.querySelector('.td-cta').textContent='Manage';
+    }
+  }
+
+  function renderPlan(){
+    const P=PRON[data.rel];
+    let specFee=state.specs.guardian!==undefined?20:Object.values(state.specs).reduce((a,b)=>a+b,0);
+    const lenFee={std:0,quick:8,full:16}[state.len]||0;
+    const memFee=state.mem?6:0;
+    const recipFee=state.recips.length*0.99;
+    const total=basePrices[state.days]+specFee+lenFee+memFee+recipFee;
+    qs('#price').innerHTML='$'+(total%1?total.toFixed(2):total)+'<small>/mo</small>';
+    const rr=qs('#rowRecips');
+    rr.hidden=!state.recips.length;
+    if(state.recips.length) rr.innerHTML='<span>Family in the loop — '+state.recips.length+
+      (state.recips.length===1?' number':' numbers')+'</span><span>+$'+recipFee.toFixed(2)+'</span>';
+    qs('#payMonthly').textContent='$'+(total%1?total.toFixed(2):total)+'/mo';
+    qs('#rowDays').innerHTML='<span>'+(state.days===7?'A call every day':state.days+' calls a week')+'</span><span>$'+basePrices[state.days]+' base</span>';
+    qs('#rowLen').innerHTML={
+      std:'<span>Check-in calls — 5 to 10 minutes</span><span>included</span>',
+      quick:'<span>Quick visits — 10 to 15 minutes</span><span>+$8</span>',
+      full:'<span>Full visits — 15 to 30 minutes</span><span>+$16</span>'
+    }[state.len];
+    const rm=qs('#rowMem');
+    rm.hidden=false;
+    rm.innerHTML=state.mem
+      ?'<span>'+PRON[data.rel].Her+' voice, kept — story archive</span><span>+$6</span>'
+      :'<span style="color:var(--muted)">'+PRON[data.rel].Her+' voice, kept — story archive</span><span style="color:var(--accent); font-weight:600">not added — reconsider?</span>';
+    rm.style.cursor=state.mem?'':'pointer';
+    qs('#memNote').innerHTML=state.mem
+      ?'Every visit adds to '+P.her+' archive — the stories in '+P.her+' own voice, saved for the grandkids. 40+ hours a year.'
+      :'You passed on this at checkout — worth one more thought. Parents freeze up when asked to "record their story," so we never ask: the stories surface mid-conversation and are saved in '+P.her+' own voice. 40+ hours a year, yours whatever comes.';
+    const names=state.specs.guardian!==undefined?['Guardian — scam, health, mind']:Object.keys(state.specs).map(k=>specNames[k]);
+    qs('#rowSpecs').innerHTML=names.length
+      ?'<span>'+names.join(', ')+'</span><span>+$'+specFee+'</span>'
+      :'<span style="color:var(--muted)">No specialty layers</span><span>—</span>';
+    qs('#daysSub').textContent=state.days===7
+      ?'A call every day — that’s '+P.her+' plan.'
+      :'Pick '+state.days+' days — '+P.her+' plan includes '+state.days+' calls a week.';
+    dayNoteUpdate();
+    syncScience();
+  }
+  function syncScience(){
+    const has=k=>state.specs.guardian!==undefined||state.specs[k]!==undefined;
+    ['scam','health','mind'].forEach(k=>{
+      const on=has(k);
+      const ear=qs('[data-ear='+k+']'); if(ear) ear.classList.toggle('live',on);
+      const badge=qs('[data-badge='+k+']');
+      if(badge){ badge.textContent=(on?'In ':'Not in ')+PRON[data.rel].her+' plan'+(on?' ✓':''); badge.classList.toggle('in',on); badge.classList.toggle('out',!on); }
+    });
+  }
+  function dayNoteUpdate(){
+    const on=state.dayOn.size;
+    qs('#dayNote').textContent=state.days===7?'Every day it is.':on+' of '+state.days+' days chosen'+(on>state.days?' — that’s more than the plan; we’ll bump it up automatically':'');
+  }
+
+  function syncVoice(){
+    const male=state.voiceName==='Samuel';
+    qsa('.vname').forEach(el=>el.textContent=state.voiceName);
+    qsa('.vpro').forEach(el=>el.textContent=male?'He':'She');
+    qsa('.vpro-low').forEach(el=>el.textContent=male?'he':'she');
+  }
+  function renderRecips(){
+    qsa('.recip-row').forEach(el=>el.remove());
+    const list=qs('#recipList');
+    state.recips.forEach((num,i)=>{
+      const d=document.createElement('div');
+      d.className='recip recip-row';
+      d.innerHTML='<b>#'+(i+2)+'</b><span></span><i>99¢/mo</i><button data-rm="'+i+'" aria-label="Remove number">✕</button>';
+      d.querySelector('span').textContent=num;
+      list.appendChild(d);
+    });
+    renderPlan();
+  }
+  function renderCustom(){
+    qsa('.own-card').forEach(el=>el.remove());
+    const anchor=qs('#addOwn');
+    state.custom.forEach((txt,i)=>{
+      const b=document.createElement('button');
+      b.className='card own-card filled';
+      b.dataset.own=i;
+      b.innerHTML='<span class="q"></span><p class="sub">Yours ✓ — tap to remove</p>';
+      b.querySelector('.q').textContent='"'+txt+'"';
+      anchor.parentNode.insertBefore(b,anchor);
+    });
+  }
+  function updateRetries(){
+    const v=qs('#callTime').value;                       // e.g. "10:30 am"
+    const m=v.match(/(\d+):(\d+)\s*(am|pm)/i); if(!m) return;
+    let mins=(+m[1]%12)*60+ +m[2]+(m[3].toLowerCase()==='pm'?720:0);
+    qsa('#retryLadder [data-rt]').forEach(el=>{
+      const t=mins+ +el.dataset.rt;
+      let h=Math.floor(t/60)%24, mm=t%60;
+      const ap=h>=12?'pm':'am'; h=h%12||12;
+      el.textContent=h+':'+String(mm).padStart(2,'0')+' '+ap;
+    });
+  }
+  function applyEdit(){
+    qs('#planEdit').hidden=!state.editOpen;
+    qs('#editPlanBtn').textContent=state.editOpen?'Done — looks right ✓':'Edit plan';
+  }
+  function syncDone(){
+    const P=PRON[data.rel];
+    const mode=state.choice===0
+      ?'you’ll be at '+P.her+' side and introduce '+state.voiceName
+      :'you’ll join by three-way call and introduce '+state.voiceName;
+    qs('#doneLine').innerHTML='<b>'+qs('#fcDay').value+' at '+qs('#fcTime').value+'</b> — '+mode+'. We’ll text you a reminder the night before and 15 minutes ahead. Nothing was charged today — '+P.her+' free week starts with this call.';
+  }
+
+  function restore(){
+    // step 0 fields reflect current data
+    qs('#f-you').value=data.you; qs('#f-name').value=data.name;
+    qsa('#relChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.rel===data.rel));
+    qs('#f-name-label').textContent=(data.rel==='dad'?"Dad's":"Mom's")+' first name';
+    // plan chips
+    qsa('#freqChips .chip').forEach(c=>c.classList.toggle('on',+c.dataset.days===state.days));
+    qsa('#specChips .chip').forEach(c=>c.classList.toggle('on',state.specs[c.dataset.spec]!==undefined));
+    qsa('#lenChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.len===state.len));
+    qs('#memChips .chip').classList.toggle('on',state.mem);
+    applyEdit();
+    // days, voice, choice, prompts
+    qsa('#dayGrid .day').forEach((d,i)=>d.classList.toggle('on',state.dayOn.has(i)));
+    qsa('#voices .voice').forEach(v=>v.classList.toggle('on',v.querySelector('b').textContent===state.voiceName));
+    qsa('#firstCallChoice .choice').forEach((c,i)=>c.classList.toggle('on',i===state.choice));
+    qsa('.prompt-cards .card.mem-q').forEach((c,i)=>{
+      c.classList.toggle('filled',state.prompts.has(i));
+      c.querySelector('.sub').textContent=state.prompts.has(i)?'Answered ✓ — tap to edit':'Tap to answer';
+    });
+    renderCustom();
+    renderRecips();
+    syncVoice();
+    renderPlan();
+    updateRetries();
+    show(state.idx);
+  }
+
+  document.addEventListener('click',e=>{
+    const t=e.target;
+    if(t.closest('[data-next]')){
+      if(state.idx===0){
+        data.you=qs('#f-you').value.trim()||'Sarah';
+        data.name=qs('#f-name').value.trim()||'Margaret';
+        data.rel=qs('#relChips .chip.on')?.dataset.rel||'mom';
+        state.idx=1; fill(); return;
+      }
+      show(state.idx+1); return;
+    }
+    if(t.closest('[data-back]')){ show(state.idx-1); return; }
+    const go=t.closest('[data-goto]');
+    if(go){
+      if(go.dataset.secure!==undefined) state.callSet=true;
+      show(+go.dataset.goto); return;
+    }
+
+    const rc=t.closest('#relChips .chip');
+    if(rc){
+      qsa('#relChips .chip').forEach(x=>x.classList.remove('on')); rc.classList.add('on');
+      qs('#f-name-label').textContent=(rc.dataset.rel==='dad'?"Dad's":"Mom's")+' first name';
+      qs('#f-name').placeholder=rc.dataset.rel==='dad'?'e.g. Robert':'e.g. Margaret';
+      // if the sample name is untouched, keep the sample matching the choice
+      if(['Margaret','Robert'].includes(qs('#f-name').value.trim()))
+        qs('#f-name').value=rc.dataset.rel==='dad'?'Robert':'Margaret';
+      return;
+    }
+    const ln=t.closest('#lenChips .chip');
+    if(ln){
+      qsa('#lenChips .chip').forEach(x=>x.classList.remove('on')); ln.classList.add('on');
+      state.len=ln.dataset.len; renderPlan(); return;
+    }
+    const mm=t.closest('#memChips .chip');
+    if(mm){ state.mem=!state.mem; mm.classList.toggle('on',state.mem); renderPlan(); return; }
+    if(t.closest('#editPlanBtn')){ state.editOpen=!state.editOpen; applyEdit(); return; }
+    if(t.closest('#rowMem') && !state.mem){
+      state.editOpen=true; applyEdit();
+      qs('#memChips').scrollIntoView({block:'center', behavior:'smooth'});
+      return;
+    }
+    const fq=t.closest('#freqChips .chip');
+    if(fq){
+      qsa('#freqChips .chip').forEach(x=>x.classList.remove('on')); fq.classList.add('on');
+      state.days=+fq.dataset.days; renderPlan(); return;
+    }
+    const sp=t.closest('#specChips .chip');
+    if(sp){
+      const k=sp.dataset.spec, fee=+sp.dataset.fee;
+      if(k==='guardian'){
+        const turningOn=!sp.classList.contains('on');
+        qsa('#specChips .chip').forEach(x=>x.classList.remove('on'));
+        state.specs={};
+        if(turningOn){ sp.classList.add('on'); state.specs={guardian:20}; }
+      }else{
+        qs('#specChips [data-spec=guardian]').classList.remove('on');
+        delete state.specs.guardian;
+        sp.classList.toggle('on');
+        if(sp.classList.contains('on')) state.specs[k]=fee; else delete state.specs[k];
+      }
+      renderPlan(); return;
+    }
+    const d=t.closest('#dayGrid .day');
+    if(d){
+      const i=qsa('#dayGrid .day').indexOf(d);
+      state.dayOn.has(i)?state.dayOn.delete(i):state.dayOn.add(i);
+      d.classList.toggle('on'); dayNoteUpdate(); return;
+    }
+    const v=t.closest('#voices .voice');
+    if(v){
+      qsa('#voices .voice').forEach(x=>x.classList.remove('on')); v.classList.add('on');
+      state.voiceName=v.querySelector('b').textContent;
+      syncVoice();
+      return;
+    }
+    const ch=t.closest('#firstCallChoice .choice');
+    if(ch){
+      const i=qsa('#firstCallChoice .choice').indexOf(ch);
+      state.choice=i;
+      qsa('#firstCallChoice .choice').forEach((x,j)=>x.classList.toggle('on',j===i));
+      return;
+    }
+    if(t.closest('#addOwn')){
+      qs('#addOwn').hidden=true; qs('#ownEditor').hidden=false; qs('#ownInput').focus();
+      return;
+    }
+    if(t.closest('#ownSave')){
+      const txt=qs('#ownInput').value.trim();
+      if(txt){ state.custom.push(txt); qs('#ownInput').value=''; renderCustom(); }
+      qs('#ownEditor').hidden=true; qs('#addOwn').hidden=false;
+      return;
+    }
+    if(t.closest('#ownEditor')) return;
+    if(t.closest('#addRecip')){
+      qs('#addRecip').hidden=true; qs('#recipEditor').hidden=false; qs('#recipInput').focus();
+      return;
+    }
+    if(t.closest('#recipSave')){
+      const num=qs('#recipInput').value.trim();
+      if(num){ state.recips.push(num); qs('#recipInput').value=''; renderRecips(); }
+      qs('#recipEditor').hidden=true; qs('#addRecip').hidden=false;
+      return;
+    }
+    if(t.closest('#recipEditor')) return;
+    const rm=t.closest('[data-rm]');
+    if(rm){ state.recips.splice(+rm.dataset.rm,1); renderRecips(); return; }
+    const oc=t.closest('.own-card');
+    if(oc){ state.custom.splice(+oc.dataset.own,1); renderCustom(); return; }
+    const pc=t.closest('.prompt-cards .card.mem-q');
+    if(pc){
+      const i=qsa('.prompt-cards .card.mem-q').indexOf(pc);
+      state.prompts.has(i)?state.prompts.delete(i):state.prompts.add(i);
+      pc.classList.toggle('filled',state.prompts.has(i));
+      pc.querySelector('.sub').textContent=state.prompts.has(i)?'Answered ✓ — tap to edit':'Tap to answer';
+      return;
+    }
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter' && e.target.id==='ownInput'){ e.preventDefault(); qs('#ownSave').click(); }
+    if(e.key==='Enter' && e.target.id==='recipInput'){ e.preventDefault(); qs('#recipSave').click(); }
+  });
+  document.addEventListener('change',e=>{
+    if(e.target.id==='callTime') updateRetries();
+  });
+
+  fill();
+</script>
