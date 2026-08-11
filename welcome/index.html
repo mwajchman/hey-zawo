@@ -1067,7 +1067,19 @@
   var TOKEN=null; try{ TOKEN=localStorage.getItem("elderly_token"); }catch(e){}
   var ELDER=null;
   function api(m,p,b){ return fetch(p,{method:m,headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:b?JSON.stringify(b):undefined}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});}); }
-  if(TOKEN){ api("GET","/api/elders").then(function(res){ if(res.ok && Array.isArray(res.j) && res.j.length){ ELDER=res.j[0]; var ph=document.getElementById("ob-phone"); if(ph && ELDER.phone_number) ph.value=ELDER.phone_number; } }).catch(function(){}); }
+  if(TOKEN){
+    Promise.all([api("GET","/api/me"), api("GET","/api/elders")]).then(function(res){
+      var me=(res[0]&&res[0].j&&res[0].j.user)||{};
+      var elders=Array.isArray(res[1]&&res[1].j)?res[1].j:[];
+      ELDER=elders[0]||null;
+      try{
+        if(me.full_name){ data.you=(me.full_name.trim().split(" ")[0])||data.you; }
+        if(ELDER && ELDER.name){ data.name=ELDER.name; }
+        if(typeof fill==="function"){ fill(); }
+      }catch(e){}
+      var ph=document.getElementById("ob-phone"); if(ph && ELDER && ELDER.phone_number){ ph.value=ELDER.phone_number; }
+    }).catch(function(){});
+  }
   function digits(x){ return (x||"").replace(/[^0-9]/g,""); }
   // "Secure her first call" -> guarda telefono + va a Stripe (o al portal si no hay Stripe).
   document.addEventListener("click", function(e){
