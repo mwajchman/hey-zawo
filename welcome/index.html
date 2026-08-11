@@ -748,7 +748,9 @@
   };
   const fromSignup=!!(params.get('you')&&params.get('parent'));
 
-  const state={idx:fromSignup?1:0, days:4, specs:{health:10},
+  var _pdays=parseInt(params.get('days'),10); _pdays=(_pdays>=3&&_pdays<=7)?_pdays:4;
+  var _pspecs=(function(){var raw=(params.get('specs')||'').split(',').filter(Boolean);if(raw.indexOf('guardian')>=0||(raw.indexOf('scam')>=0&&raw.indexOf('health')>=0&&(raw.indexOf('mind')>=0||raw.indexOf('memory')>=0)))return {guardian:20};var o={};raw.forEach(function(k){if(k==='memory')k='mind';if(['scam','health','mind'].indexOf(k)>=0)o[k]=10;});return Object.keys(o).length?o:(params.get('specs')!==null?{}:{health:10});})();
+  const state={idx:fromSignup?1:0, days:_pdays, specs:_pspecs,
                len:['std','quick','full'].includes(params.get('len'))?params.get('len'):'std',
                mem:params.get('mem')==='1',
                editOpen:false, dayOn:new Set([1,3,5,6]), voiceName:'Ruth', choice:0, prompts:new Set(), custom:[], recips:[], callSet:false};
@@ -1068,15 +1070,9 @@
   var ELDER=null;
   function api(m,p,b){ return fetch(p,{method:m,headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:b?JSON.stringify(b):undefined}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});}); }
   if(TOKEN){
-    Promise.all([api("GET","/api/me"), api("GET","/api/elders")]).then(function(res){
-      var me=(res[0]&&res[0].j&&res[0].j.user)||{};
-      var elders=Array.isArray(res[1]&&res[1].j)?res[1].j:[];
+    api("GET","/api/elders").then(function(res){
+      var elders=Array.isArray(res.j)?res.j:[];
       ELDER=elders[0]||null;
-      try{
-        if(me.full_name){ data.you=(me.full_name.trim().split(" ")[0])||data.you; }
-        if(ELDER && ELDER.name){ data.name=ELDER.name; }
-        if(typeof fill==="function"){ fill(); }
-      }catch(e){}
       var ph=document.getElementById("ob-phone"); if(ph && ELDER && ELDER.phone_number){ ph.value=ELDER.phone_number; }
     }).catch(function(){});
   }

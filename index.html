@@ -908,7 +908,16 @@ $("cta").addEventListener("click", ()=>{
     .then(res => {
       if(res.ok && res.j && res.j.token){
         try{ localStorage.setItem("elderly_token", res.j.token); }catch(e){}
-        window.location.href = "/welcome";
+        var lenMap={checkin:"std",quick:"quick",full:"full"};
+        var relV=(forSel && /dad|grandpa|father|abuelo|papa/i.test(forSel.value))?"dad":"mom";
+        var qp="?you="+encodeURIComponent(nm.value.trim().split(" ")[0])
+              +"&parent="+encodeURIComponent(hr.value.trim())
+              +"&rel="+relV
+              +"&days="+state.calls
+              +"&len="+(lenMap[state.pack]||"std")
+              +"&mem="+(state.memory?"1":"0")
+              +"&specs="+encodeURIComponent(AGENT_SPEC[state.agent]||"");
+        window.location.href = "/welcome"+qp;
       } else {
         btn.disabled = false; btn.textContent = label;
         $("confirm").classList.add("show");
