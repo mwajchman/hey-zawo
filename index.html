@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Elderly — Build her plan</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
   :root{
     --bg:#FAF5EB; --bg2:#F3ECDC; --card:#FFFFFF; --ink:#1C332D; --muted:#6B786D;
@@ -424,8 +425,8 @@
 
 <header>
   <div class="wide">
-    <div class="logo"><span class="dot">☎</span> Elderly</div>
-    <div class="nav-right" style="display:flex;align-items:center;gap:14px"><button id="themeToggle" type="button" aria-label="Switch light / dark" title="Light / dark" style="background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:15px;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex:none">🌙</button><a href="#builder">Build her plan →</a></div>
+    <div class="logo"><svg class="logomark" viewBox="0 0 48 48" width="26" height="26" aria-hidden="true" style="flex:none"><circle cx="24" cy="24" r="24" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg> Elderly</div>
+    <div class="nav-right" style="display:flex;align-items:center;gap:14px"><button id="themeToggle" type="button" aria-label="Switch light / dark" title="Light / dark" style="background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;width:36px;height:36px;cursor:pointer;font-size:15px;line-height:1;display:inline-flex;align-items:center;justify-content:center;flex:none">🌙</button><a href="/ingresar" class="nav-login">Log in</a><a href="#builder">Build her plan →</a></div>
   </div>
 </header>
 
@@ -509,9 +510,10 @@
       <h2>"Will my mom actually like talking to an AI?"</h2>
       <p class="sub">Fair question. We don't ask you to take it on faith — here are the three honest answers:</p>
       <div class="proof">
-        <div class="ic">▶</div>
+        <div class="ic" id="proofPlay" role="button" tabindex="0" aria-label="Play a real call excerpt" style="cursor:pointer">▶</div>
         <div><h3>Hear it yourself, right now</h3>
         <p>Every companion below has a real call excerpt — what it asks, how she answers, and the note you'd receive. <a href="#builder">Listen before you choose →</a></p></div>
+        <audio id="proofAudio" preload="none" src="audio/en2.mp3"></audio>
       </div>
       <div class="proof">
         <div class="ic">🤝</div>
@@ -1138,4 +1140,21 @@ FC_MOMENTS.forEach((m,i)=>{
 fcPins(); fcRender();
 
 openStep(1); booted = true;
+
+// ---- Play chico de prueba ("Hear it yourself, right now") ----
+(function(){
+  var btn=document.getElementById("proofPlay"), au=document.getElementById("proofAudio");
+  if(!btn||!au) return;
+  function toggle(){
+    // pausar el reproductor de "whole call" si esta sonando, para no solaparse
+    try{ var fc=document.getElementById("fcAudio"); if(fc && !fc.paused){ fc.pause(); } }catch(e){}
+    if(au.paused){ au.play().then(function(){ btn.textContent="⏸"; }).catch(function(){}); }
+    else { au.pause(); btn.textContent="▶"; }
+  }
+  btn.addEventListener("click", toggle);
+  btn.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); toggle(); } });
+  au.addEventListener("ended", function(){ btn.textContent="▶"; });
+  au.addEventListener("pause", function(){ btn.textContent="▶"; });
+  au.addEventListener("play",  function(){ btn.textContent="⏸"; });
+})();
 </script>
