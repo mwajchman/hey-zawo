@@ -782,6 +782,7 @@
     qs('#stepLabel').textContent=ss[state.idx].dataset.label;
     if(state.idx===7) syncDone();
     if(state.idx===9) syncDash();
+    try{ if(ss[state.idx].querySelector('#voices') && window.__elderlyRenderVoices) window.__elderlyRenderVoices(); }catch(e){}
     window.scrollTo({top:0,behavior:'smooth'});
   }
   function syncDash(){
@@ -1069,6 +1070,8 @@
   var TOKEN=null; try{ TOKEN=localStorage.getItem("elderly_token"); }catch(e){}
   var ELDER=null;
   function api(m,p,b){ return fetch(p,{method:m,headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:b?JSON.stringify(b):undefined}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});}); }
+  function esc(x){ return String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  try{ window.__elderlyRenderVoices=function(){ try{ renderVoices(); }catch(e){} }; }catch(e){}
   if(TOKEN){
     api("GET","/api/elders").then(function(res){
       var elders=Array.isArray(res.j)?res.j:[];
