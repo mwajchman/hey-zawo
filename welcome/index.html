@@ -590,6 +590,10 @@
         <p><b><span class="vname">Ruth</span> is honest.</b> <span class="vpro">She</span> says what <span class="vpro-low">she</span> is, plainly — no pretending. Then the conversation turns to {name}: {her} garden, {her} week, {her} stories.</p>
         <p><b>You step back when ready.</b> Most families stay 5–10 minutes. Some stay the whole call. Both are perfect.</p>
       </div>
+      <div class="field" style="margin:0 0 14px">
+        <label>Her phone number</label>
+        <input id="ob-phone" type="tel" autocomplete="tel" placeholder="e.g. (385) 555-0123">
+      </div>
       <div class="two-col">
         <div class="field" style="margin:0">
           <label>Pick the day</label>
@@ -615,15 +619,7 @@
     <div class="card">
       <h3>Lock in {her} spot</h3>
       <p class="sub" style="margin-bottom:14px"><b style="color:var(--ink)">$0 due today.</b> {Her} first week is free — the card is only charged when the free week ends, at <b style="color:var(--ink)" id="payMonthly">$46/mo</b>. Cancel with one tap, no phone calls.</p>
-      <div class="field" style="margin-bottom:12px">
-        <label>Card number</label>
-        <input type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 5678 9012 3456">
-      </div>
-      <div class="pay-grid">
-        <div class="field" style="margin:0"><label>Expires</label><input type="text" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY"></div>
-        <div class="field" style="margin:0"><label>CVC</label><input type="text" inputmode="numeric" autocomplete="cc-csc" placeholder="123"></div>
-        <div class="field" style="margin:0"><label>ZIP</label><input type="text" inputmode="numeric" autocomplete="postal-code" placeholder="84604"></div>
-      </div>
+      <p class="sub" style="margin:0 0 4px">You'll add your card on the next secure page \u2014 powered by Stripe. Nothing is charged today; the card is only used when the free week ends.</p>
       <p class="lock-note" style="margin-top:12px">🔒 Secured by Stripe · we never see your card · cancel anytime from your dashboard</p>
     </div>
 
@@ -1065,4 +1061,31 @@
   });
 
   fill();
+
+// ===== Elderly \u2014 conexion real con el backend =====
+(function(){
+  var TOKEN=null; try{ TOKEN=localStorage.getItem("elderly_token"); }catch(e){}
+  var ELDER=null;
+  function api(m,p,b){ return fetch(p,{method:m,headers:{"Content-Type":"application/json","Authorization":"Bearer "+TOKEN},body:b?JSON.stringify(b):undefined}).then(function(r){return r.json().catch(function(){return {};}).then(function(j){return {ok:r.ok,j:j};});}); }
+  if(TOKEN){ api("GET","/api/elders").then(function(res){ if(res.ok && Array.isArray(res.j) && res.j.length){ ELDER=res.j[0]; var ph=document.getElementById("ob-phone"); if(ph && ELDER.phone_number) ph.value=ELDER.phone_number; } }).catch(function(){}); }
+  function digits(x){ return (x||"").replace(/[^0-9]/g,""); }
+  // "Secure her first call" -> guarda telefono + va a Stripe (o al portal si no hay Stripe).
+  document.addEventListener("click", function(e){
+    var sec = e.target.closest ? e.target.closest("[data-secure]") : null;
+    if(!sec) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    var ph=document.getElementById("ob-phone"); var phone=ph?ph.value.trim():"";
+    if(phone && digits(phone).length < 7){ ph.focus(); return; }
+    sec.disabled=true; sec.textContent="Securing\u2026";
+    function toStripe(){
+      if(!TOKEN){ window.location.href="/app"; return; }
+      api("POST","/api/billing/checkout",{}).then(function(res){
+        if(res.ok && res.j && res.j.url){ window.location.href=res.j.url; }
+        else { window.location.href="/app"; }
+      }).catch(function(){ window.location.href="/app"; });
+    }
+    if(ELDER && phone){ api("PATCH","/api/elders/"+ELDER.id,{phone_number:phone}).then(toStripe).catch(toStripe); }
+    else { toStripe(); }
+  }, true);
+})();
 </script>
