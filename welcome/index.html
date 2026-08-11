@@ -1108,6 +1108,19 @@
     if(phone) patch.phone_number=phone;
     if(context) patch.context=context;
     if(gently) patch.report_focus=gently;
+    // Sincronizar el plan FINAL del onboarding con el backend: lo que se ve aca = lo que se cobra en Stripe.
+    try{
+      if(typeof state!=="undefined"){
+        var _lenMap={std:"checkin",quick:"quick",full:"full"};
+        patch.calls_per_week=state.days;
+        patch.call_length=_lenMap[state.len]||"checkin";
+        patch.voice_kept=!!state.mem;
+        patch.extra_seats=(state.recips&&state.recips.length)||0;
+        patch.specialties=(state.specs&&state.specs.guardian!==undefined)
+          ? "guardian"
+          : Object.keys(state.specs||{}).map(function(k){return k==="mind"?"memory":k;}).join(",");
+      }
+    }catch(_e){}
     if(ELDER && Object.keys(patch).length){ api("PATCH","/api/elders/"+ELDER.id,patch).then(toStripe).catch(toStripe); }
     else { toStripe(); }
   }, true);
