@@ -2026,7 +2026,7 @@
     var arrow=ICON('back',12).replace('M19 12H5','M5 12h14').replace('M11 6l-6 6 6 6','M13 6l6 6-6 6');
     return '<div class="anytime-mini"><span class="ic">'+ICON('phone',16)+'</span><span class="t"><b>Anytime line</b> · '+a.calls30+' calls · '+a.usedMin+' min this month</span>'+(over>0?'<span class="amt over">+$'+overCost.toFixed(2)+'</span>':'<span class="amt ok">within plan</span>')+'<button class="go" data-action="go-calls">Manage '+arrow+'</button></div>'; }
   function anytimeCardHTML(e){ var a=e.anytime; if(!a) return ''; var P=e.c?e.c.pron:F;
-    var head='<div class="cardtop"><div><p class="kick">Anytime line · beyond '+P.p+' scheduled calls<span class="soon">Coming</span></p><h2>'+e.name+' can call whenever '+P.s+' wants</h2></div>'
+    var head='<div class="cardtop"><div><p class="kick">Anytime line · beyond '+P.p+' scheduled calls</p><h2>'+e.name+' can call whenever '+P.s+' wants</h2></div>'
       +'<button class="switch2'+(a.on?' on':'')+'" data-action="anytime-toggle" role="switch" aria-checked="'+a.on+'" aria-label="Turn the anytime line on or off"><span class="knob"></span></button></div>';
     if(!a.on){ return '<div class="card">'+head+'<p class="note" style="margin-top:8px">Turn this on to give '+e.name+' '+P.p+' own number to call, day or night, on top of '+P.p+' scheduled calls. Minutes past the plan bill per minute, and you set the ceiling.</p></div>'; }
     var included=a.includedMin,used=a.usedMin,rate=a.ratePerMin,over=Math.max(0,used-included),overCost=over*rate,pct=Math.min(100,included?used/included*100:0),col=over>0?'var(--watch)':'var(--brand)',plan=(e.plan?e.plan.split(' ·')[0]:'the plan');
