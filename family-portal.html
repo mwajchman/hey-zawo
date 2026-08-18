@@ -1565,7 +1565,12 @@
   function _norm(x){ return (''+x).replace(/[\u2018\u2019\u02BC]/g,"'").replace(/[\u201C\u201D]/g,'"').replace(/[\u2013\u2014]/g,'-'); }
   var T_NORM=null;
   function _tnorm(){ if(T_NORM) return T_NORM; T_NORM={}; for(var k in T){ if(Object.prototype.hasOwnProperty.call(T,k)) T_NORM[_norm(k)]=T[k]; } return T_NORM; }
-  function trCore(core){ if(lang==='en') return null; var key=_norm(core); var e=_tnorm()[key]; if(e) return e[_langIdx()]||null; for(var i=0;i<RULES.length;i++){ var m=key.match(RULES[i][0]); if(m){ return RULES[i][1][_langIdx()].replace(/\$(\d)/g,function(_,d){return m[+d]||'';}); } } return null; }
+  /* La clave de busqueda viene normalizada (comillas rectas, guion corto), asi que los
+     patrones de RULES tambien tienen que estarlo: una regla escrita con comillas curvas
+     no matcheaba nunca. Normalizamos el source una sola vez. */
+  var RULES_N=null;
+  function _rnorm(){ if(RULES_N) return RULES_N; RULES_N=RULES.map(function(r){ return [new RegExp(_norm(r[0].source), r[0].flags), r[1]]; }); return RULES_N; }
+  function trCore(core){ if(lang==='en') return null; var key=_norm(core); var e=_tnorm()[key]; if(e) return e[_langIdx()]||null; var R=_rnorm(); for(var i=0;i<R.length;i++){ var m=key.match(R[i][0]); if(m){ return R[i][1][_langIdx()].replace(/\$(\d)/g,function(_,d){return m[+d]||'';}); } } return null; }
   function tr(raw){ if(lang==='en'||raw==null) return raw; var s=''+raw; var lead=(s.match(/^\s*/)||[''])[0], trail=(s.match(/\s*$/)||[''])[0]; var core=s.replace(/\s+/g,' ').trim(); if(!core) return raw; var v=trCore(core); return v==null?raw:lead+v+trail; }
   function translateTextNode(n){ if(n.__en===undefined || (n.__tr!==undefined && n.nodeValue!==n.__tr)) n.__en=n.nodeValue; var out=tr(n.__en); if(out!==n.nodeValue) n.nodeValue=out; n.__tr=out; }
   function translateEl(el){ ['placeholder','aria-label','title'].forEach(function(attr){ var k='__en_'+attr; if(el[k]===undefined){ if(!el.getAttribute(attr)) return; el[k]=el.getAttribute(attr); } var out=tr(el[k]); if(out!=null) el.setAttribute(attr,out); }); }
