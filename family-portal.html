@@ -11,7 +11,7 @@
   :root{
     /* light-first, warm neutral base + one green accent + amber semantic */
     --bg:#F7F3EA; --bg2:#F0EADC; --card:#FFFFFF; --card2:#FBF8F1; --ink:#1B302A; --ink2:#42514A;
-    --muted:#6E7A72; --line:#E8E0CF; --line2:#F0EADC; --hair:#EFE9DB;
+    --muted:#5C6862; --line:#E8E0CF; --line2:#F0EADC; --hair:#EFE9DB;
     --brand:#2E7D6B; --brand-deep:#1C5A4C; --brand-ink:#FCFBF6; --brand-soft:#E4F0EA;
     --good:#2E7D6B; --good-soft:#E4F0EA; --watch:#B7702E; --watch-soft:#FBEFDF;
     --amber:#C4692A; --amber-soft:#FAEEDF;
@@ -613,7 +613,7 @@
   @media(prefers-reduced-motion:reduce){ .crisis-ic{animation:none} }
 
   /* ===== mobile: per-person nav as a horizontal strip ===== */
-  /* ===== dedicated mobile UI (≤920px) — desktop is untouched ===== */
+  /* ===== dedicated mobile UI (≤920px), desktop is untouched ===== */
   .mtop,.mtab{display:none}
   .msheet-ovl{display:none}
   .mtop{position:fixed;top:0;left:0;right:0;height:56px;z-index:120;align-items:center;justify-content:space-between;gap:6px;padding:0 6px;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
@@ -701,9 +701,9 @@
       <button class="you" data-action="open-settings" title="Account settings" style="text-align:left;background:none;border:0;cursor:pointer;padding:0"><b>Matías</b><br>Organizer · plan &amp; billing</button>
       <div class="footctrls">
       <div class="langsel" id="langSel" role="group" aria-label="Language">
-        <button data-action="set-lang" data-lang="en">EN</button>
-        <button data-action="set-lang" data-lang="es">ES</button>
-        <button data-action="set-lang" data-lang="pt">PT</button>
+        <button data-action="set-lang" data-lang="en" aria-pressed="true" aria-label="English">EN</button>
+        <button data-action="set-lang" data-lang="es" aria-pressed="false" aria-label="Español">ES</button>
+        <button data-action="set-lang" data-lang="pt" aria-pressed="false" aria-label="Português">PT</button>
       </div>
       <div class="ctlrow">
         <button class="ctl" data-action="open-settings" title="Settings" aria-label="Account settings"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V22a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 20.3a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.7 15H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.3 7a1.6 1.6 0 0 0-.3-1.8L3.9 5a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 2.7h.1A1.6 1.6 0 0 0 11 1a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 2.7l.1-.1A2 2 0 1 1 20 5.3l-.1.1A1.6 1.6 0 0 0 20.3 7v.1A1.6 1.6 0 0 0 22 9a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></button>
@@ -800,7 +800,7 @@
           <div class="card">
             <p class="kick">Seed her first call</p><h2>Give her companion something to open with</h2>
             <p class="note" style="margin-top:4px">One story makes call one feel personal, like it already knows her.</p>
-            <div class="givebox"><input type="text" placeholder="e.g. She loves her garden / grew up in Rosario"><button class="btn brand" data-action="give"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px"><path d="M12 5v14M5 12h14"/></svg>Add</button></div>
+            <div class="givebox"><input type="text" aria-label="Something to seed her first call" placeholder="e.g. She loves her garden / grew up in Rosario"><button class="btn brand" data-action="give"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:5px"><path d="M12 5v14M5 12h14"/></svg>Add</button></div>
             <div class="queue"><span class="qchip">Ask about her needlework</span><span class="qchip">Grew up in Rosario</span></div>
           </div>
         </div>
@@ -872,6 +872,40 @@
   // ---------- i18n (English source, translated at render time) ----------
   var LANGS=['en','es','pt'], lang='en';
   var T={
+    "day":["día","dia"],
+    "hours":["horas","horas"],
+    "min":["min","min"],
+    "Safe word set":["Palabra segura definida","Palavra segura definida"],
+    "Ready to share":["Listo para compartir","Pronto para compartilhar"],
+    "We will bring it up gently on the next call":["Lo mencionamos con suavidad en la próxima llamada","Vamos mencionar com delicadeza na próxima chamada"],
+    "We will remind you next week":["Te lo recordamos la semana que viene","Lembramos você na semana que vem"],
+    "Ready to send":["Listo para enviar","Pronto para enviar"],
+    "Preparing your download":["Preparando tu descarga","Preparando seu download"],
+    "Added to your calendar":["Agendado en tu calendario","Adicionado à sua agenda"],
+    "Anytime line paused":["Línea abierta en pausa","Linha aberta pausada"],
+    "We’ll just keep you posted":["Solo te mantenemos al tanto","Só mantemos você informado"],
+    "We’ll alert you at $20":["Te avisamos al llegar a $20","Avisamos você ao chegar a $20"],
+    "Hard cap set at $40 a month":["Tope firme en $40 por mes","Teto firme em $40 por mês"],
+    "No spending limit set":["Sin límite de gasto","Sem limite de gasto"],
+    "Ceiling updated":["Tope actualizado","Teto atualizado"],
+    "Call schedule updated":["Agenda de llamadas actualizada","Agenda de chamadas atualizada"],
+    "Signing you out...":["Cerrando tu sesión...","Encerrando sua sessão..."],
+    "Opening our secure payment page":["Abriendo nuestra página de pago segura","Abrindo nossa página de pagamento segura"],
+    "Downloading invoice (demo)":["Descargando la factura (demo)","Baixando a fatura (demo)"],
+    "Add a name first":["Primero poné un nombre","Primeiro coloque um nome"],
+    "Pick at least one person they can see":["Elegí al menos una persona que pueda ver","Escolha ao menos uma pessoa que ele possa ver"],
+    "Access updated":["Acceso actualizado","Acesso atualizado"],
+    "Your account will close at the end of the period":["Tu cuenta se cierra al final del período","Sua conta encerra no fim do período"],
+    "Message sent to support":["Mensaje enviado a soporte","Mensagem enviada ao suporte"],
+    "Link copied":["Link copiado","Link copiado"],
+    "Downloading the code":["Descargando el código","Baixando o código"],
+    "Marked as handled. We’ll keep watching.":["Marcado como resuelto. Seguimos atentos.","Marcado como resolvido. Seguimos atentos."],
+    "Emergency contact updated":["Contacto de emergencia actualizado","Contato de emergência atualizado"],
+    "Done":["Listo","Pronto"],
+    "Marked as saved, our calls will ring through":["Marcado como guardado, nuestras llamadas van a entrar","Marcado como salvo, nossas chamadas vão completar"],
+    "We’ll raise the volume and slow the pace, then try again":["Subimos el volumen y bajamos el ritmo, y probamos de nuevo","Aumentamos o volume e baixamos o ritmo, e tentamos de novo"],
+    "Noted, we’ll speak clearly for hearing aids":["Anotado, hablamos claro para audífonos","Anotado, falamos com clareza para aparelhos auditivos"],
+    "Hearing aids off":["Sin audífonos","Sem aparelhos auditivos"],
     "All my people":["Todas mis personas","Todas as minhas pessoas"],
     "The people you care for":["Las personas que cuidás","As pessoas de quem você cuida"],
     "Everyone":["Todos","Todos"],
@@ -1021,7 +1055,7 @@
     "Alberto needs you now · Today, 9:12 AM":["Alberto te necesita ahora · Hoy, 9:12 AM","Alberto precisa de você agora · Hoje, 9:12 AM"],
     "On his 9:12 call he said he slipped by the back step and was on the floor a few minutes before he could get up. He sounds shaken but says nothing is broken.":["En su llamada de las 9:12 dijo que resbaló junto al escalón de atrás y estuvo unos minutos en el piso antes de poder levantarse. Se lo oye sacudido, pero dice que no se rompió nada.","Na chamada das 9:12 ele disse que escorregou perto do degrau dos fundos e ficou alguns minutos no chão antes de conseguir se levantar. Parece abalado, mas diz que não quebrou nada."],
     "“I took a tumble by the back step. I'm alright now, but it gave me a fright.”":["“Me caí junto al escalón de atrás. Ya estoy bien, pero me dio un buen susto.”","“Levei um tombo perto do degrau dos fundos. Já estou bem, mas levei um susto.”"],
-    "We texted your whole family group at 9:13 AM — Matías (you), Diego and Beatriz. Everyone with access has been notified on their phone.":["Le enviamos un mensaje a todo tu grupo familiar a las 9:13 AM — Matías (vos), Diego y Beatriz. Todos los que tienen acceso fueron notificados en su teléfono.","Enviamos mensagem para todo o seu grupo familiar às 9:13 — Matías (você), Diego e Beatriz. Todos com acesso foram notificados no celular."],
+    "We texted your whole family group at 9:13 AM, Matías (you), Diego and Beatriz. Everyone with access has been notified on their phone.":["Le enviamos un mensaje a todo tu grupo familiar a las 9:13 AM, Matías (vos), Diego y Beatriz. Todos los que tienen acceso fueron notificados en su teléfono.","Enviamos mensagem para todo o seu grupo familiar às 9:13, Matías (você), Diego e Beatriz. Todos com acesso foram notificados no celular."],
     "There's no perfect script, a calm, warm voice is what helps most. You could start with:":["No hay guion perfecto; una voz calma y cálida es lo que más ayuda. Podés empezar con:","Não existe roteiro perfeito; uma voz calma e acolhedora é o que mais ajuda. Você pode começar com:"],
     "Then check for pain or a bump to the head, keep him talking, and if anything seems serious, don't wait, call":["Después fijate si hay dolor o un golpe en la cabeza, mantenelo hablando, y si algo parece serio, no esperes, llamá al","Depois verifique se há dor ou pancada na cabeça, mantenha ele conversando, e se algo parecer sério, não espere, ligue para"],
     "Every conversation, kept.":["Cada conversación, guardada.","Cada conversa, guardada."],
@@ -1182,7 +1216,7 @@
     "e.g. She loves her garden / grew up in Rosario":["ej. Ama su jardín / creció en Rosario","ex. Ama o jardim / cresceu em Rosário"],
     "name@example.com":["nombre@ejemplo.com","nome@exemplo.com"],
     "Mobile · for emergency alerts":["Celular · para alertas de emergencia","Celular · para alertas de emergência"],
-    "If something serious comes up on a call, a fall, a health scare, a distressing statement, we text this number the same day, any hour.":["Si algo serio surge en una llamada, una caída, un susto de salud, una frase angustiante, le escribimos a este número el mismo día, a cualquier hora.","Se algo sério surgir numa chamada, uma queda, um susto de saúde, uma frase angustiante, enviamos mensagem para este número no mesmo dia, a qualquer hora."],
+    "If something serious comes up on a call, a fall, a health scare, a distressing statement, we aim to text this number the same day, day or night.":["Si algo serio surge en una llamada, una caída, un susto de salud, una frase angustiante, buscamos escribir a este número el mismo día, de día o de noche.","Se algo sério surgir numa chamada, uma queda, um susto de saúde, uma frase angustiante, buscamos enviar mensagem para este número no mesmo dia, de dia ou de noite."],
     "We call from +1 (385) 269-4070, shown as “Elderly”. We'll help you get it saved so it rings through.":["Llamamos desde +1 (385) 269-4070, que aparece como “Elderly”. Te ayudamos a guardarlo para que entre la llamada.","Ligamos de +1 (385) 269-4070, que aparece como “Elderly”. Ajudamos você a salvar para que a chamada complete."],
     "Add a parent, an in-law, an aunt or uncle, anyone you want us to call and keep company. We'll walk you through their first call next.":["Sumá un padre, un suegro, una tía o un tío, quien quieras que llamemos y acompañemos. Enseguida te guiamos por su primera llamada.","Adicione um pai, um sogro, uma tia ou tio, quem você quiser que a gente ligue e faça companhia. A seguir guiamos você pela primeira chamada."]
   });
@@ -1306,10 +1340,10 @@
     "From her own words about sleep, energy, appetite and getting around, the everyday activities of daily living. It is self-reported wellbeing, not a medical assessment or a diagnosis.":["A partir de sus propias palabras sobre sueño, energía, apetito y desplazarse, las actividades cotidianas de la vida diaria. Es bienestar autoinformado, no una evaluación médica ni un diagnóstico.","A partir das próprias palavras sobre sono, energia, apetite e locomoção, as atividades do dia a dia. É bem-estar autorrelatado, não uma avaliação médica ou diagnóstico."],
     "Rosa only to her own last 12 weeks":["Rosa solo con sus propias últimas 12 semanas","Rosa apenas com as próprias últimas 12 semanas"],
     ". Everyone here sees her week and can feed her calls; only the organizer manages plan & billing. She's a member, never a subject.":[". Todos acá ven su semana y pueden alimentar sus llamadas; solo el organizador gestiona plan y facturación. Es un miembro, nunca un sujeto.",". Todos aqui veem a semana dela e podem alimentar as chamadas; só o organizador gerencia plano e faturamento. Ela é um membro, nunca um objeto."],
-    ", never a limit on her. Crisis calls always connect, even past the cap, and we tell you the same day.":[", nunca un límite sobre ella. Las llamadas de crisis siempre conectan, incluso pasado el tope, y te avisamos el mismo día.",", nunca um limite sobre ela. As chamadas de crise sempre completam, mesmo além do teto, e avisamos você no mesmo dia."],
-    ", and show it at the top of the portal. Crisis calls always get through, even outside call hours.":[", y lo mostramos arriba de todo en el portal. Las llamadas de crisis siempre entran, incluso fuera del horario de llamadas.",", e mostramos no topo do portal. As chamadas de crise sempre completam, mesmo fora do horário de chamadas."],
+    ", never a limit on her. We never hold back a crisis call because of the cap, and we aim to tell you the same day.":[", nunca un límite sobre ella. Nunca frenamos una llamada de crisis por el tope, y buscamos avisarte el mismo día.",", nunca um limite sobre ela. Nunca seguramos uma chamada de crise por causa do teto, e buscamos avisar você no mesmo dia."],
+    ", and show it at the top of the portal. We place crisis calls outside her call hours too.":[", y lo mostramos arriba de todo en el portal. Las llamadas de crisis también salen fuera del horario habitual.",", e mostramos no topo do portal. As chamadas de crise também saem fora do horário habitual."],
     "If a call surfaces a fall, a health scare or a distressing statement, we":["Si una llamada revela una caída, un susto de salud o una frase angustiante,","Se uma chamada revelar uma queda, um susto de saúde ou uma frase angustiante,"],
-    "text your whole family group the same day, any hour":["le escribimos a todo tu grupo familiar el mismo día, a cualquier hora","enviamos mensagem para todo o seu grupo familiar no mesmo dia, a qualquer hora"],
+    "aim to text your whole family group the same day, day or night":["buscamos escribirle a todo tu grupo familiar el mismo día, de día o de noche","buscamos enviar mensagem para todo o seu grupo familiar no mesmo dia, de dia ou de noite"],
     ", we'll suggest a word with her doctor, and tell you first.":[", sugeriremos hablarlo con su médica, y te avisamos primero.",", vamos sugerir conversar com o médico dela, e avisamos você primeiro."],
     ", we'll suggest a word with his doctor, and tell you first.":[", sugeriremos hablarlo con su médico, y te avisamos primero.",", vamos sugerir conversar com o médico dele, e avisamos você primeiro."],
     "If it comes up three weeks running":["Si aparece tres semanas seguidas","Se aparecer três semanas seguidas"],
@@ -1356,6 +1390,17 @@
     "“Mom, I set up a companion to call and chat with you a few times a week, someone warm to talk to when I can't be there. It's from a service I trust, and they'll always use our word,":["“Mamá, contraté un acompañante que te va a llamar y charlar unas veces por semana, alguien cálido con quien hablar cuando yo no puedo estar. Es de un servicio en el que confío, y siempre van a usar nuestra palabra,","“Mãe, contratei um acompanhante que vai te ligar e conversar algumas vezes por semana, alguém acolhedor para conversar quando eu não puder estar. É de um serviço em que confio, e sempre vão usar a nossa palavra,"]
   });
   var RULES=[
+    [/^Added to (.+) next call$/,["Sumado a la próxima llamada de $1","Adicionado à próxima chamada de $1"]],
+    [/^Anytime line on for (.+)$/,["Línea abierta activa para $1","Linha aberta ativa para $1"]],
+    [/^Invite sent to (.+)$/,["Invitación enviada a $1","Convite enviado para $1"]],
+    [/^Calling (.+)\.\.\.$/,["Llamando a $1...","Ligando para $1..."]],
+    [/^Saved (.+)'s phone type$/,["Guardamos el tipo de teléfono de $1","Salvamos o tipo de telefone de $1"]],
+    [/^Removed (.+)'s access$/,["Sacamos el acceso de $1","Removemos o acesso de $1"]],
+    [/^We've started (.+)'s setup$/,["Arrancamos la configuración de $1","Começamos a configuração de $1"]],
+    [/^We've gathered everything for (.+)$/,["Juntamos todo lo de $1","Reunimos tudo de $1"]],
+    [/^Great, (.+) can hear us clearly$/,["Buenísimo, $1 nos escucha con claridad","Ótimo, $1 nos ouve com clareza"]],
+    [/^We'll call at (.+)$/,["Llamamos a las $1","Ligamos às $1"]],
+    [/^Sent (.+) our contact to save, shown as “Elderly”$/,["Le mandamos a $1 nuestro contacto para guardar, aparece como “Elderly”","Enviamos a $1 nosso contato para salvar, aparece como “Elderly”"]],
     [/^(\d+) people you care for$/,['$1 personas que cuidás','$1 pessoas de quem você cuida']],
     [/^(\d+) conversations$/,['$1 conversaciones','$1 conversas']],
     [/^(\d+) all is well$/,['$1 todo bien','$1 tudo bem']],
@@ -1412,6 +1457,90 @@
     [/^Visa ending (\d+)$/,["Visa terminada en $1","Visa terminando em $1"]],
     [/^Expires (.+)$/,["Vence $1","Expira $1"]],
     [/^Today (\d.+)$/,["Hoy $1","Hoje $1"]],
+    [/^Mon · Jan (\d+)$/,["Lun · $1 ene","Seg · $1 jan"]],
+    [/^Mon · Feb (\d+)$/,["Lun · $1 feb","Seg · $1 fev"]],
+    [/^Mon · Mar (\d+)$/,["Lun · $1 mar","Seg · $1 mar"]],
+    [/^Mon · Apr (\d+)$/,["Lun · $1 abr","Seg · $1 abr"]],
+    [/^Mon · May (\d+)$/,["Lun · $1 may","Seg · $1 mai"]],
+    [/^Mon · Jun (\d+)$/,["Lun · $1 jun","Seg · $1 jun"]],
+    [/^Mon · Jul (\d+)$/,["Lun · $1 jul","Seg · $1 jul"]],
+    [/^Mon · Aug (\d+)$/,["Lun · $1 ago","Seg · $1 ago"]],
+    [/^Mon · Sep (\d+)$/,["Lun · $1 sep","Seg · $1 set"]],
+    [/^Mon · Oct (\d+)$/,["Lun · $1 oct","Seg · $1 out"]],
+    [/^Mon · Nov (\d+)$/,["Lun · $1 nov","Seg · $1 nov"]],
+    [/^Mon · Dec (\d+)$/,["Lun · $1 dic","Seg · $1 dez"]],
+    [/^Tue · Jan (\d+)$/,["Mar · $1 ene","Ter · $1 jan"]],
+    [/^Tue · Feb (\d+)$/,["Mar · $1 feb","Ter · $1 fev"]],
+    [/^Tue · Mar (\d+)$/,["Mar · $1 mar","Ter · $1 mar"]],
+    [/^Tue · Apr (\d+)$/,["Mar · $1 abr","Ter · $1 abr"]],
+    [/^Tue · May (\d+)$/,["Mar · $1 may","Ter · $1 mai"]],
+    [/^Tue · Jun (\d+)$/,["Mar · $1 jun","Ter · $1 jun"]],
+    [/^Tue · Jul (\d+)$/,["Mar · $1 jul","Ter · $1 jul"]],
+    [/^Tue · Aug (\d+)$/,["Mar · $1 ago","Ter · $1 ago"]],
+    [/^Tue · Sep (\d+)$/,["Mar · $1 sep","Ter · $1 set"]],
+    [/^Tue · Oct (\d+)$/,["Mar · $1 oct","Ter · $1 out"]],
+    [/^Tue · Nov (\d+)$/,["Mar · $1 nov","Ter · $1 nov"]],
+    [/^Tue · Dec (\d+)$/,["Mar · $1 dic","Ter · $1 dez"]],
+    [/^Wed · Jan (\d+)$/,["Mié · $1 ene","Qua · $1 jan"]],
+    [/^Wed · Feb (\d+)$/,["Mié · $1 feb","Qua · $1 fev"]],
+    [/^Wed · Mar (\d+)$/,["Mié · $1 mar","Qua · $1 mar"]],
+    [/^Wed · Apr (\d+)$/,["Mié · $1 abr","Qua · $1 abr"]],
+    [/^Wed · May (\d+)$/,["Mié · $1 may","Qua · $1 mai"]],
+    [/^Wed · Jun (\d+)$/,["Mié · $1 jun","Qua · $1 jun"]],
+    [/^Wed · Jul (\d+)$/,["Mié · $1 jul","Qua · $1 jul"]],
+    [/^Wed · Aug (\d+)$/,["Mié · $1 ago","Qua · $1 ago"]],
+    [/^Wed · Sep (\d+)$/,["Mié · $1 sep","Qua · $1 set"]],
+    [/^Wed · Oct (\d+)$/,["Mié · $1 oct","Qua · $1 out"]],
+    [/^Wed · Nov (\d+)$/,["Mié · $1 nov","Qua · $1 nov"]],
+    [/^Wed · Dec (\d+)$/,["Mié · $1 dic","Qua · $1 dez"]],
+    [/^Thu · Jan (\d+)$/,["Jue · $1 ene","Qui · $1 jan"]],
+    [/^Thu · Feb (\d+)$/,["Jue · $1 feb","Qui · $1 fev"]],
+    [/^Thu · Mar (\d+)$/,["Jue · $1 mar","Qui · $1 mar"]],
+    [/^Thu · Apr (\d+)$/,["Jue · $1 abr","Qui · $1 abr"]],
+    [/^Thu · May (\d+)$/,["Jue · $1 may","Qui · $1 mai"]],
+    [/^Thu · Jun (\d+)$/,["Jue · $1 jun","Qui · $1 jun"]],
+    [/^Thu · Jul (\d+)$/,["Jue · $1 jul","Qui · $1 jul"]],
+    [/^Thu · Aug (\d+)$/,["Jue · $1 ago","Qui · $1 ago"]],
+    [/^Thu · Sep (\d+)$/,["Jue · $1 sep","Qui · $1 set"]],
+    [/^Thu · Oct (\d+)$/,["Jue · $1 oct","Qui · $1 out"]],
+    [/^Thu · Nov (\d+)$/,["Jue · $1 nov","Qui · $1 nov"]],
+    [/^Thu · Dec (\d+)$/,["Jue · $1 dic","Qui · $1 dez"]],
+    [/^Fri · Jan (\d+)$/,["Vie · $1 ene","Sex · $1 jan"]],
+    [/^Fri · Feb (\d+)$/,["Vie · $1 feb","Sex · $1 fev"]],
+    [/^Fri · Mar (\d+)$/,["Vie · $1 mar","Sex · $1 mar"]],
+    [/^Fri · Apr (\d+)$/,["Vie · $1 abr","Sex · $1 abr"]],
+    [/^Fri · May (\d+)$/,["Vie · $1 may","Sex · $1 mai"]],
+    [/^Fri · Jun (\d+)$/,["Vie · $1 jun","Sex · $1 jun"]],
+    [/^Fri · Jul (\d+)$/,["Vie · $1 jul","Sex · $1 jul"]],
+    [/^Fri · Aug (\d+)$/,["Vie · $1 ago","Sex · $1 ago"]],
+    [/^Fri · Sep (\d+)$/,["Vie · $1 sep","Sex · $1 set"]],
+    [/^Fri · Oct (\d+)$/,["Vie · $1 oct","Sex · $1 out"]],
+    [/^Fri · Nov (\d+)$/,["Vie · $1 nov","Sex · $1 nov"]],
+    [/^Fri · Dec (\d+)$/,["Vie · $1 dic","Sex · $1 dez"]],
+    [/^Sat · Jan (\d+)$/,["Sáb · $1 ene","Sáb · $1 jan"]],
+    [/^Sat · Feb (\d+)$/,["Sáb · $1 feb","Sáb · $1 fev"]],
+    [/^Sat · Mar (\d+)$/,["Sáb · $1 mar","Sáb · $1 mar"]],
+    [/^Sat · Apr (\d+)$/,["Sáb · $1 abr","Sáb · $1 abr"]],
+    [/^Sat · May (\d+)$/,["Sáb · $1 may","Sáb · $1 mai"]],
+    [/^Sat · Jun (\d+)$/,["Sáb · $1 jun","Sáb · $1 jun"]],
+    [/^Sat · Jul (\d+)$/,["Sáb · $1 jul","Sáb · $1 jul"]],
+    [/^Sat · Aug (\d+)$/,["Sáb · $1 ago","Sáb · $1 ago"]],
+    [/^Sat · Sep (\d+)$/,["Sáb · $1 sep","Sáb · $1 set"]],
+    [/^Sat · Oct (\d+)$/,["Sáb · $1 oct","Sáb · $1 out"]],
+    [/^Sat · Nov (\d+)$/,["Sáb · $1 nov","Sáb · $1 nov"]],
+    [/^Sat · Dec (\d+)$/,["Sáb · $1 dic","Sáb · $1 dez"]],
+    [/^Sun · Jan (\d+)$/,["Dom · $1 ene","Dom · $1 jan"]],
+    [/^Sun · Feb (\d+)$/,["Dom · $1 feb","Dom · $1 fev"]],
+    [/^Sun · Mar (\d+)$/,["Dom · $1 mar","Dom · $1 mar"]],
+    [/^Sun · Apr (\d+)$/,["Dom · $1 abr","Dom · $1 abr"]],
+    [/^Sun · May (\d+)$/,["Dom · $1 may","Dom · $1 mai"]],
+    [/^Sun · Jun (\d+)$/,["Dom · $1 jun","Dom · $1 jun"]],
+    [/^Sun · Jul (\d+)$/,["Dom · $1 jul","Dom · $1 jul"]],
+    [/^Sun · Aug (\d+)$/,["Dom · $1 ago","Dom · $1 ago"]],
+    [/^Sun · Sep (\d+)$/,["Dom · $1 sep","Dom · $1 set"]],
+    [/^Sun · Oct (\d+)$/,["Dom · $1 oct","Dom · $1 out"]],
+    [/^Sun · Nov (\d+)$/,["Dom · $1 nov","Dom · $1 nov"]],
+    [/^Sun · Dec (\d+)$/,["Dom · $1 dic","Dom · $1 dez"]],
     [/^Mon (.+)$/,["Lun $1","Seg $1"]],[/^Tue (.+)$/,["Mar $1","Ter $1"]],[/^Wed (.+)$/,["Mié $1","Qua $1"]],
     [/^Thu (.+)$/,["Jue $1","Qui $1"]],[/^Fri (.+)$/,["Vie $1","Sex $1"]],[/^Sat (.+)$/,["Sáb $1","Sáb $1"]],[/^Sun (.+)$/,["Dom $1","Dom $1"]],
     [/^(.+) · Week of Aug 4-10 · (.+) · (\d+) calls a week$/,["$1 · Semana del 4-10 ago · $2 · $3 llamadas por semana","$1 · Semana de 4-10 ago · $2 · $3 chamadas por semana"]],
@@ -1430,7 +1559,12 @@
     [/^Sleep over the last 7 nights\. Last night ([\d.]+) hours\.$/,["Sueño en las últimas 7 noches. Anoche $1 horas.","Sono nas últimas 7 noites. Ontem à noite $1 horas."]]
   ];
   function _langIdx(){ return lang==='es'?0:1; }
-  function trCore(core){ if(lang==='en') return null; var e=T[core]; if(e) return e[_langIdx()]||null; for(var i=0;i<RULES.length;i++){ var m=core.match(RULES[i][0]); if(m){ return RULES[i][1][_langIdx()].replace(/\$(\d)/g,function(_,d){return m[+d]||'';}); } } return null; }
+  /* Comillas curvas y guiones largos rompian el match contra T ("what's" vs "what’s").
+     Normalizamos las dos puntas una sola vez y la fuga desaparece de raiz. */
+  function _norm(x){ return (''+x).replace(/[\u2018\u2019\u02BC]/g,"'").replace(/[\u201C\u201D]/g,'"').replace(/[\u2013\u2014]/g,'-'); }
+  var T_NORM=null;
+  function _tnorm(){ if(T_NORM) return T_NORM; T_NORM={}; for(var k in T){ if(Object.prototype.hasOwnProperty.call(T,k)) T_NORM[_norm(k)]=T[k]; } return T_NORM; }
+  function trCore(core){ if(lang==='en') return null; var key=_norm(core); var e=_tnorm()[key]; if(e) return e[_langIdx()]||null; for(var i=0;i<RULES.length;i++){ var m=key.match(RULES[i][0]); if(m){ return RULES[i][1][_langIdx()].replace(/\$(\d)/g,function(_,d){return m[+d]||'';}); } } return null; }
   function tr(raw){ if(lang==='en'||raw==null) return raw; var s=''+raw; var lead=(s.match(/^\s*/)||[''])[0], trail=(s.match(/\s*$/)||[''])[0]; var core=s.replace(/\s+/g,' ').trim(); if(!core) return raw; var v=trCore(core); return v==null?raw:lead+v+trail; }
   function translateTextNode(n){ if(n.__en===undefined || (n.__tr!==undefined && n.nodeValue!==n.__tr)) n.__en=n.nodeValue; var out=tr(n.__en); if(out!==n.nodeValue) n.nodeValue=out; n.__tr=out; }
   function translateEl(el){ ['placeholder','aria-label','title'].forEach(function(attr){ var k='__en_'+attr; if(el[k]===undefined){ if(!el.getAttribute(attr)) return; el[k]=el.getAttribute(attr); } var out=tr(el[k]); if(out!=null) el.setAttribute(attr,out); }); }
@@ -1838,7 +1972,7 @@
     var mc=c.mindCard?'<div class="card"><p class="kick">Mind &amp; memory · '+P.p+' normal, not decline</p><h2>'+c.mindCard.title+'</h2><p class="note" style="color:var(--ink2);margin-top:6px">'+c.mindCard.body+'</p><div class="tiles mt">'+c.mindCard.tiles.map(tileHTML).join('')+'</div></div>':'';
     var scmind=(sc||mc)?('<div class="'+((sc&&mc)?'g2 ':'')+'grid">'+sc+mc+'</div>'):'';
     var circle='<div class="card"><div class="cardtop"><div><p class="kick">'+P.P+' circle · you\'re not doing this alone</p><h2>Family in the conversation</h2></div><span class="onpoint">'+c.circle.onpoint+'</span></div><div class="people mt">'+c.circle.members.map(personHTML).join('')+addPerson()+'</div><p class="note">They\'re not watching '+P.o+', they\'re talking <em>with</em> '+P.o+', through the calls.</p><div class="mt">'+c.circle.contribs.map(contribHTML).join('')+'</div></div>';
-    var give='<div class="card tint"><p class="kick">Give '+P.p+' next call something</p><h2>Add a story, a question, a bit of news</h2><p class="note" style="margin-top:4px">Whatever you add, '+P.p+' companion weaves in naturally, '+P.s+' never gets a quiz.</p><div class="givebox"><input type="text" placeholder="Ask '+P.o+' about... / tell '+P.o+' that..."><button class="btn brand" data-action="give">'+ICON('add',14)+' Add to '+P.p+' call</button></div><div class="whenrow" data-when="next"><span class="whenlab">When to bring it up</span><button class="whenchip on" data-action="give-when" data-when="next">On '+P.p+' next call</button><button class="whenchip" data-action="give-when" data-when="week">Sometime this week</button><button class="whenchip" data-action="give-when" data-when="date">On a specific day</button><input type="date" class="whendate" aria-label="Choose a day"></div><div class="queue">'+c.queue.map(queueChipHTML).join('')+'</div></div>';
+    var give='<div class="card tint"><p class="kick">Give '+P.p+' next call something</p><h2>Add a story, a question, a bit of news</h2><p class="note" style="margin-top:4px">Whatever you add, '+P.p+' companion weaves in naturally, '+P.s+' never gets a quiz.</p><div class="givebox"><input type="text" aria-label="Add something to the next call" placeholder="Ask '+P.o+' about... / tell '+P.o+' that..."><button class="btn brand" data-action="give">'+ICON('add',14)+' Add to '+P.p+' call</button></div><div class="whenrow" data-when="next"><span class="whenlab">When to bring it up</span><button class="whenchip on" data-action="give-when" data-when="next">On '+P.p+' next call</button><button class="whenchip" data-action="give-when" data-when="week">Sometime this week</button><button class="whenchip" data-action="give-when" data-when="date">On a specific day</button><input type="date" class="whendate" aria-label="Choose a day"></div><div class="queue">'+c.queue.map(queueChipHTML).join('')+'</div></div>';
     var vl='<div class="g2 grid">'+voiceCardHTML(e)+'<div class="card"><p class="kick">This week\'s letter · also in your inbox</p><div class="letter mt"><p>Dear Matías,</p><p>'+c.letter+'</p><p class="sig">'+e.name+'\'s companion</p></div></div></div>';
     var priv='<div class="privacy">'+ICON('lock',15)+'<span>You see <b>summaries and signals</b>, never recordings you didn\'t save. '+e.name+' agreed to exactly this on '+P.p+' first call, '+P.s+' hears '+P.p+' own highlights and holds a veto on what\'s shared.</span></div>';
     var memlink='<div style="text-align:center;margin-top:2px"><button class="memlink" data-action="memorial-open">If '+e.name+' is no longer with us</button></div>';
@@ -1873,7 +2007,7 @@
       +'<div class="useleg"><span>'+included+' min included in '+plan+'</span>'+(over>0?'<span class="over">+'+over+' min over · $'+overCost.toFixed(2)+'</span>':'<span>'+(included-used)+' min left</span>')+'</div></div>'
       +'<div class="rateline">Included in '+plan+': <b>'+included+' min/mo</b>. Beyond that: <b>$'+rate.toFixed(2)+'/min</b>. '+(over>0?'Extra this month: <b>$'+overCost.toFixed(2)+'</b>.':'No extra charges yet.')+'</div>'
       +'<div class="ceil"><div class="ceil-lab">Your spend ceiling</div><div class="seg2">'+CEIL.map(function(o){return '<button class="'+(a.ceiling===o[0]?'on':'')+'" data-action="anytime-ceiling" data-mode="'+o[0]+'">'+o[1]+'</button>';}).join('')+'</div>'
-      +'<div class="crisisnote">'+ICON('lock',14)+'<span>A ceiling on the <b>bill</b>, never a limit on '+P.o+'. Crisis calls always connect, even past the cap, and we tell you the same day.</span></div>'
+      +'<div class="crisisnote">'+ICON('lock',14)+'<span>A ceiling on the <b>bill</b>, never a limit on '+P.o+'. We never hold back a crisis call because of the cap, and we aim to tell you the same day.</span></div>'
       +'<div class="ceil"><div class="allow-lab">Anytime allowance</div><div class="allow-row">'
         +'<div><div class="note" style="font-size:11.5px;margin-bottom:6px">Minutes included / month</div><div class="seg2">'+[30,60,120].map(function(v){return '<button class="'+(included===v?'on':'')+'" data-action="anytime-min" data-min="'+v+'">'+v+' min</button>';}).join('')+'</div></div>'
         +'<div><div class="note" style="font-size:11.5px;margin-bottom:6px">Rate beyond the plan</div><div class="seg2">'+[0.30,0.40,0.60].map(function(v){return '<button class="'+(Math.abs(rate-v)<0.001?'on':'')+'" data-action="anytime-rate" data-rate="'+v+'">$'+v.toFixed(2)+'/min</button>';}).join('')+'</div></div>'
@@ -1941,7 +2075,7 @@
   function keepsakeLink(e){ return 'callelderly.com/keepsake/'+e.id+'-'+_hash(e.name+e.id).toString(36).slice(0,6); }
   function memorialModal(e){ if(!e) return; var P=(e&&e.c)?e.c.pron:F;
     openModal('When someone we love passes', '<p style="font-size:14px;color:var(--ink2);line-height:1.6">We&#39;re so sorry. If '+e.name+' has passed away, we&#39;ll gently stop the calls right away, and gather everything '+P.s+' shared with us, '+P.p+' voice, '+P.p+' stories, '+P.p+' words, into one keepsake for your family to keep forever. <b>Nothing is ever deleted.</b> You can take all the time you need.</p>'
-      +'<div class="mfield" style="margin-top:15px"><label>When did '+e.name+' pass? (optional)</label><input type="text" id="mem-date" placeholder="e.g. August 2026"></div>'
+      +'<div class="mfield" style="margin-top:15px"><label for="mem-date">When did '+e.name+' pass? (optional)</label><input type="text" id="mem-date" placeholder="e.g. August 2026"></div>'
       +'<div class="modal-foot"><button class="btn ghost" data-action="close-modal">Not now</button><button class="btn brand" data-action="memorial-confirm" data-id="'+e.id+'">Create '+e.name+'&#39;s keepsake</button></div>'); }
   function renderKeepsake(e){ var c=e.c,P=c?c.pron:F,g=document.getElementById('keepsakeGrid'); if(!g) return;
     var yr=(e.memorial&&e.memorial.year)||new Date().getFullYear(), link=keepsakeLink(e);
@@ -1959,7 +2093,7 @@
   function namesList(arr){ if(!arr.length) return ''; if(arr.length===1) return arr[0]; return arr.slice(0,-1).join(', ')+' and '+arr[arr.length-1]; }
   function alertBannerHTML(e){ var a=e.alert; if(!a) return ''; var crit=a.level==='critical';
     var fam=namesList(SEATS.map(function(s){ return s.you?s.name+' (you)':s.name; }));
-    var sent='<div class="crisis-sent">'+ICON('bell',14)+'<span>We texted your whole family group at '+esc(a.sentTime||a.time)+' &mdash; '+esc(fam)+'. Everyone with access has been notified on their phone.</span></div>';
+    var sent='<div class="crisis-sent">'+ICON('bell',14)+'<span>We texted your whole family group at '+esc(a.sentTime||a.time)+', '+esc(fam)+'. Everyone with access has been notified on their phone.</span></div>';
     return '<div class="crisis '+(crit?'crit':'urgent')+'"><div class="crisis-ic">'+ICON('alert',22)+'</div><div class="crisis-body"><p class="crisis-kick">'+(crit?e.name+' needs you now':'Worth a call today')+' · '+esc(a.time)+'</p><h3>'+esc(a.title)+'</h3><p class="crisis-detail">'+esc(a.detail)+'</p><blockquote class="crisis-q">&ldquo;'+esc(a.quote)+'&rdquo;</blockquote>'+sent+'<div class="crisis-actions"><button class="btn '+(crit?'crit':'brand')+'" data-action="crisis-call" data-id="'+e.id+'">'+ICON('phone',14)+' Call '+e.name+' now</button><button class="btn" data-action="crisis-script" data-id="'+e.id+'">What to say</button><button class="btn ghost" data-action="crisis-handled" data-id="'+e.id+'">Mark as handled</button></div><p class="crisis-988">If this is an emergency, call <b>911</b>. For a mental-health crisis, call or text <b>988</b>.</p></div></div>'; }
   function renderAlerts(){ var box=document.getElementById('homeAlerts'); if(!box) return;
     var active=ELDERS.filter(function(e){return e.alert;});
@@ -1986,7 +2120,7 @@
       +'<div class="modal-foot"><button class="btn ghost" data-action="close-modal">Close</button></div></div>';
     openModal('Plan &amp; payment', body); }
   function paymentModal(){ openModal('Payment method', '<div class="mform"><div class="paycard"><span class="ic">'+ICON('lock',15)+'</span><div class="info"><div class="nm">Visa ending 4242</div><div class="sub">Expires 08/28</div></div><span class="rolepill" style="background:var(--good-soft);color:var(--brand-deep)">Active</span></div><p class="note" style="font-size:13px;margin-top:12px">To change your card we open our payment processor&#39;s secure page. Card details are never typed into or stored by the portal.</p><div class="modal-foot"><button class="btn ghost" data-action="close-modal">Close</button><button class="btn brand" data-action="payment-secure">'+ICON('lock',14)+' Open secure payment page</button></div></div>'); }
-  function editCrisisModal(){ openModal('Emergency contact', '<div class="mform"><p class="note">Who we reach first if a call surfaces something serious. We also text your whole family group the same day.</p><div class="mfield"><label>First to call</label><input type="text" id="cr-name" value="'+esc(crisisContact.name)+'"></div><div class="mfield"><label>Their mobile</label><input type="text" id="cr-phone" value="'+esc(crisisContact.phone)+'"></div><div class="mfield"><label>Backup person</label><input type="text" id="cr-backup" value="'+esc(crisisContact.backup)+'"></div><div class="modal-foot"><button class="btn ghost" data-action="close-modal">Cancel</button><button class="btn brand" data-action="crisis-save">Save contact</button></div></div>'); }
+  function editCrisisModal(){ openModal('Emergency contact', '<div class="mform"><p class="note">Who we reach first if a call surfaces something serious. We also text your whole family group the same day.</p><div class="mfield"><label for="cr-name">First to call</label><input type="text" id="cr-name" value="'+esc(crisisContact.name)+'"></div><div class="mfield"><label for="cr-phone">Their mobile</label><input type="text" id="cr-phone" value="'+esc(crisisContact.phone)+'"></div><div class="mfield"><label for="cr-backup">Backup person</label><input type="text" id="cr-backup" value="'+esc(crisisContact.backup)+'"></div><div class="modal-foot"><button class="btn ghost" data-action="close-modal">Cancel</button><button class="btn brand" data-action="crisis-save">Save contact</button></div></div>'); }
   function callModal(e){ e=e||(current&&E(current)); if(!e) return; var num=e.phone||CALLNUM; var tel=num.replace(/[^0-9+]/g,'');
     openModal('Call '+esc(e.name), '<div style="text-align:center;padding:4px 0"><span class="callav" style="'+avStyle(e)+'">'+(e.photo?'':e.av)+'</span><div style="font-family:var(--serif);font-size:20px;font-weight:600;margin-top:12px">'+esc(e.name)+'</div><div class="note">'+esc(num)+'</div><p class="note" style="font-size:12.5px;max-width:44ch;margin:14px auto 0">This places a call from your phone to '+esc(e.name)+'. On a phone it opens your dialer.</p></div><div class="modal-foot"><button class="btn ghost" data-action="close-modal">Not now</button><a class="btn brand" href="tel:'+tel+'">'+ICON('phone',14)+' Call now</a></div>'); }
   function rescheduleModal(e){ e=e||(current&&E(current)); if(!e) return; if(!e.sched) e.sched={days:['Mon','Wed','Fri'],time:'10:00 AM'}; var s=e.sched;
@@ -2002,9 +2136,9 @@
     iv=setInterval(function(){ if(!document.body.contains(fill)){ clearInterval(iv); return; } if(!playing) return; t+=0.1; if(t>=total){ t=total; playing=false; btn.innerHTML=PLAY(20); } fill.style.width=(t/total*100)+'%'; time.textContent=fmt(t); },100);
     btn.onclick=function(){ if(t>=total){ t=0; fill.style.width='0%'; time.textContent='0:00'; } playing=!playing; btn.innerHTML=playing?PAUSEICON():PLAY(20); }; }
   function addElderModal(){ openModal('Add someone you care for', '<div class="mform"><p class="note">Add a parent, an in-law, an aunt or uncle, anyone you want us to call and keep company. We&#39;ll walk you through their first call next.</p>'
-    +'<div class="mfield"><label>Their name</label><input type="text" id="ae-name" placeholder="e.g. Carmen"></div>'
-    +'<div class="mfield"><label>Your relationship</label><input type="text" id="ae-rel" placeholder="e.g. Mom, Dad, Aunt"></div>'
-    +'<div class="mfield"><label>Their mobile or landline</label><input type="text" id="ae-phone" placeholder="+1 (555) 000-0000"><p class="note" style="font-size:12px;margin-top:6px">We call from '+CALLNUM+', shown as “Elderly”. We&#39;ll help you get it saved so it rings through.</p></div>'
+    +'<div class="mfield"><label for="ae-name">Their name</label><input type="text" id="ae-name" placeholder="e.g. Carmen"></div>'
+    +'<div class="mfield"><label for="ae-rel">Your relationship</label><input type="text" id="ae-rel" placeholder="e.g. Mom, Dad, Aunt"></div>'
+    +'<div class="mfield"><label for="ae-phone">Their mobile or landline</label><input type="text" id="ae-phone" placeholder="+1 (555) 000-0000"><p class="note" style="font-size:12px;margin-top:6px">We call from '+CALLNUM+', shown as “Elderly”. We&#39;ll help you get it saved so it rings through.</p></div>'
     +'<div class="modal-foot"><button class="btn ghost" data-action="close-modal">Cancel</button><button class="btn brand" data-action="add-elder-save">Start their setup</button></div></div>'); }
   // ---------- support (a direct chat with the technical team) ----------
   function nowLabel(){ try{ return new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'}); }catch(e){ return 'Just now'; } }
@@ -2038,7 +2172,7 @@
     var activeEs=ELDERS.filter(function(e){return e.state!=='zero';}), activeNames=activeEs.map(function(e){return e.name;}).join(' and ');
     g.innerHTML=
       '<div class="card"><p class="kick">Plan</p><h2>'+ACCOUNT.plan+' · $'+ACCOUNT.perMonth+'/mo per person</h2><p class="note" style="margin-top:4px">'+activeEs.length+' people getting calls, billed monthly to the card on file. You are the organizer: only you manage the plan and billing.</p><div class="mt"><button class="btn" data-action="manage-plan">'+ICON('plancog',14)+' Manage plan &amp; payment</button></div></div>'
-      +'<div class="card"><div class="cardtop"><div><p class="kick">Emergency · escalation</p><h2>Who we reach if something serious happens</h2></div><button class="btn" data-action="edit-crisis">'+ICON('edit',14)+' Edit</button></div><p class="note" style="margin-top:2px">If a call surfaces a fall, a health scare or a distressing statement, we <b>text your whole family group the same day, any hour</b>, and show it at the top of the portal. Crisis calls always get through, even outside call hours.</p><div class="seat" style="border-top:0;padding-top:12px"><span class="av" style="background:'+SEATS[0].color+'">'+SEATS[0].name.charAt(0)+'</span><div class="info"><div class="nm">'+esc(crisisContact.name)+' <span class="note" style="font-size:12px">(first call)</span></div><div class="sub">'+esc(crisisContact.phone)+' · then '+esc(crisisContact.backup)+', then the rest of the family group</div></div><span class="rolepill" style="background:var(--alarm-soft);color:var(--alarm)">Primary</span></div><p class="note mt" style="font-size:12px">Always call 911 in a real emergency. For a mental-health crisis, 988.</p></div>'
+      +'<div class="card"><div class="cardtop"><div><p class="kick">Emergency · escalation</p><h2>Who we reach if something serious happens</h2></div><button class="btn" data-action="edit-crisis">'+ICON('edit',14)+' Edit</button></div><p class="note" style="margin-top:2px">If a call surfaces a fall, a health scare or a distressing statement, we <b>aim to text your whole family group the same day, day or night</b>, and show it at the top of the portal. We place crisis calls outside her call hours too.</p><div class="seat" style="border-top:0;padding-top:12px"><span class="av" style="background:'+SEATS[0].color+'">'+SEATS[0].name.charAt(0)+'</span><div class="info"><div class="nm">'+esc(crisisContact.name)+' <span class="note" style="font-size:12px">(first call)</span></div><div class="sub">'+esc(crisisContact.phone)+' · then '+esc(crisisContact.backup)+', then the rest of the family group</div></div><span class="rolepill" style="background:var(--alarm-soft);color:var(--alarm)">Primary</span></div><p class="note mt" style="font-size:12px">Elderly is not an emergency service and does not monitor calls in real time. Always call 911 in a real emergency. For a mental-health crisis, 988.</p></div>'
       +'<div class="card"><div class="cardtop"><div><p class="kick">Access · seats</p><h2>Who can see the portal</h2></div><button class="btn brand" data-action="invite-open">'+ICON('userplus',14)+' Invite someone</button></div><p class="note" style="margin-top:2px">Add a seat for a family member, choose exactly who they can see and their level, and remove them anytime. Inviting gives visibility, never control of your plan.</p><div class="mt">'+seatRows+'</div>'
         +'<div style="margin-top:16px;border-top:1px solid var(--hair);padding-top:14px"><div class="allow-lab">What each level can do</div>'+rolesLegendHTML()+'</div>'
         +'<p class="note mt" style="font-size:12px">Ideal circle: up to ~6 with access. Beyond that it stops feeling like family.</p></div>'
@@ -2053,15 +2187,15 @@
   function refreshDraftUI(){ var r=document.getElementById('inv-roles'); if(r) r.innerHTML=roleOptsHTML(_draft.role); var c=document.getElementById('inv-sees'); if(c) c.innerHTML=seesChipsHTML(_draft.sees); }
   function inviteModal(){ _draft={mode:'invite',role:'viewer',sees:[]};
     openModal('Invite someone', '<div class="mform">'
-      +'<div class="mfield"><label>Name</label><input type="text" id="inv-name" placeholder="e.g. Laura"></div>'
-      +'<div class="mfield"><label>Email</label><input type="email" id="inv-email" placeholder="name@example.com"></div>'
-      +'<div class="mfield"><label>Mobile · for emergency alerts</label><input type="text" id="inv-phone" placeholder="+1 (555) 000-0000"><p class="note" style="font-size:12px;margin-top:6px">If something serious comes up on a call, a fall, a health scare, a distressing statement, we text this number the same day, any hour.</p></div>'
+      +'<div class="mfield"><label for="inv-name">Name</label><input type="text" id="inv-name" placeholder="e.g. Laura"></div>'
+      +'<div class="mfield"><label for="inv-email">Email</label><input type="email" id="inv-email" placeholder="name@example.com"></div>'
+      +'<div class="mfield"><label for="inv-phone">Mobile · for emergency alerts</label><input type="text" id="inv-phone" placeholder="+1 (555) 000-0000"><p class="note" style="font-size:12px;margin-top:6px">If something serious comes up on a call, a fall, a health scare, a distressing statement, we aim to text this number the same day, day or night.</p></div>'
       +'<div class="mfield"><label>Access level</label><div class="roleopts" id="inv-roles">'+roleOptsHTML(_draft.role)+'</div></div>'
       +'<div class="mfield"><label>Can see</label><div class="seechips" id="inv-sees">'+seesChipsHTML(_draft.sees)+'</div></div>'
       +'<div class="modal-foot"><button class="btn ghost" data-action="close-modal">Cancel</button><button class="btn brand" data-action="invite-send">Send invite</button></div></div>'); }
   function seatModal(i){ var s=SEATS[i]; _draft={mode:'edit',i:i,role:s.role,sees:(s.sees==='all'?ELDERS.map(function(e){return e.id;}):s.sees.slice())};
     openModal('Manage '+esc(s.name)+"&#39;s access", '<div class="mform"><p class="note">'+esc(s.email)+'</p>'
-      +'<div class="mfield"><label>Mobile · for emergency alerts</label><input type="text" id="inv-phone" value="'+esc(s.phone||'')+'" placeholder="+1 (555) 000-0000"></div>'
+      +'<div class="mfield"><label for="inv-phone">Mobile · for emergency alerts</label><input type="text" id="inv-phone" value="'+esc(s.phone||'')+'" placeholder="+1 (555) 000-0000"></div>'
       +'<div class="mfield"><label>Access level</label><div class="roleopts" id="inv-roles">'+roleOptsHTML(_draft.role)+'</div></div>'
       +'<div class="mfield"><label>Can see</label><div class="seechips" id="inv-sees">'+seesChipsHTML(_draft.sees)+'</div></div>'
       +'<div class="modal-foot"><button class="btn danger" data-action="seat-remove" data-i="'+i+'">Remove access</button><button class="btn brand" data-action="seat-save" data-i="'+i+'">Save changes</button></div></div>'); }
@@ -2179,7 +2313,10 @@
   // ---------- helpers: escape, toast, share ----------
   function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
   var _toastBox;
-  function toast(msg){ if(!_toastBox){ _toastBox=document.createElement('div'); _toastBox.className='toastwrap'; document.body.appendChild(_toastBox); }
+  /* Los mensajes venian con entidades HTML (&#39;) de cuando se inyectaban con innerHTML.
+     Aca el texto se escapa, asi que la entidad se veia cruda: la deshacemos antes. */
+  function _unent(x){ return (''+x).replace(/&#39;/g,'\u2019').replace(/&quot;/g,'"').replace(/&amp;/g,'&'); }
+  function toast(msg){ msg=_unent(msg); if(!_toastBox){ _toastBox=document.createElement('div'); _toastBox.className='toastwrap'; document.body.appendChild(_toastBox); }
     var t=document.createElement('div'); t.className='toast'; t.setAttribute('role','status'); t.innerHTML=ICON2check()+'<span>'+esc(tr(msg))+'</span>'; _toastBox.appendChild(t);
     requestAnimationFrame(function(){ t.classList.add('in'); });
     setTimeout(function(){ t.classList.remove('in'); setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); },400); },2600); }
@@ -2192,7 +2329,7 @@
     var tail={en:' · the people you care for',es:' · las personas que cuidás',pt:' · as pessoas de quem você cuida'}[lang];
     var hd=document.getElementById('homeDate'); if(hd){ try{ var ds=new Date().toLocaleDateString(loc,{weekday:'long',month:'long',day:'numeric'}); hd.textContent=ds.charAt(0).toUpperCase()+ds.slice(1)+tail; }catch(e){} } }
   function updateLangUI(){ var names={en:'English',es:'Español',pt:'Português'};
-    document.querySelectorAll('#langSel button').forEach(function(x){ x.classList.toggle('on', x.getAttribute('data-lang')===lang); });
+    document.querySelectorAll('#langSel button').forEach(function(x){ var on=(x.getAttribute('data-lang')===lang); x.classList.toggle('on', on); x.setAttribute('aria-pressed', on?'true':'false'); });
     try{ document.documentElement.setAttribute('lang',lang); }catch(e){} }
   function applyLang(){ try{ localStorage.setItem('elderly_lang',lang); }catch(e){}
     renderHome(); renderHero(); renderMenu();
@@ -2230,12 +2367,12 @@
     if(a==='anytime-min'){ var el3=current&&E(current); if(el3&&el3.anytime){ el3.anytime.includedMin=parseInt(b.getAttribute('data-min'),10); renderPane('calls',el3); toast('Included minutes set to '+el3.anytime.includedMin+'/mo'); } return; }
     if(a==='anytime-rate'){ var el4=current&&E(current), rt=parseFloat(b.getAttribute('data-rate')); if(el4&&el4.anytime){ el4.anytime.ratePerMin=rt; renderPane('calls',el4); toast('Overage rate set to $'+rt.toFixed(2)+'/min'); } return; }
     if(a==='wl-send'){ var elw=dEl(b); if(elw){ toast('Sent '+elw.name+' our contact to save, shown as “Elderly”'); } return; }
-    if(a==='wl-saved'){ var elx=dEl(b); if(elx){ elx.device.whitelisted=true; reCalls(elx); toast('Marked as saved — our calls will ring through'); } return; }
+    if(a==='wl-saved'){ var elx=dEl(b); if(elx){ elx.device.whitelisted=true; reCalls(elx); toast('Marked as saved, our calls will ring through'); } return; }
     if(a==='hear-test'){ var elh=dEl(b); if(elh){ hearTestModal(elh); } return; }
-    if(a==='hear-yes'){ var ely=dEl(b); if(ely){ ely.device.heard=true; reCalls(ely); closeModal(); toast('Great — '+ely.name+' can hear us clearly'); } return; }
+    if(a==='hear-yes'){ var ely=dEl(b); if(ely){ ely.device.heard=true; reCalls(ely); closeModal(); toast('Great, '+ely.name+' can hear us clearly'); } return; }
     if(a==='hear-no'){ var eln=dEl(b); if(eln){ closeModal(); toast('We&#39;ll raise the volume and slow the pace, then try again'); } return; }
     if(a==='dev-type'){ var eld=dEl(b); if(eld){ eld.device.type=b.getAttribute('data-type'); reCalls(eld); toast('Saved '+eld.name+'&#39;s phone type'); } return; }
-    if(a==='dev-aid'){ var elai=dEl(b); if(elai){ elai.device.aid=!elai.device.aid; reCalls(elai); toast(elai.device.aid?'Noted — we&#39;ll speak clearly for hearing aids':'Hearing aids off'); } return; }
+    if(a==='dev-aid'){ var elai=dEl(b); if(elai){ elai.device.aid=!elai.device.aid; reCalls(elai); toast(elai.device.aid?'Noted, we&#39;ll speak clearly for hearing aids':'Hearing aids off'); } return; }
     if(a==='sched-day'){ var elsd=dEl(b); if(elsd){ var dy=b.getAttribute('data-day'),i=elsd.sched.days.indexOf(dy),nowOn; if(i>=0){ if(elsd.sched.days.length>1){ elsd.sched.days.splice(i,1); nowOn=false; } else nowOn=true; } else { elsd.sched.days.push(dy); nowOn=true; } b.classList.toggle('on',nowOn); reCalls(elsd); toast('Call schedule updated'); } return; }
     if(a==='sched-time'){ var elst=dEl(b); if(elst){ elst.sched.time=b.getAttribute('data-time'); var seg=b.closest('.seg2'); if(seg) seg.querySelectorAll('button').forEach(function(x){ x.classList.toggle('on',x===b); }); reCalls(elst); toast('We&#39;ll call at '+elst.sched.time); } return; }
     if(a==='explain-scores'){ openModal('How we read '+(current?E(current).name:'her')+"&#39;s week", scoresExplainHTML(current&&E(current))); return; }
@@ -2255,7 +2392,7 @@
     if(a==='invite-open'){ inviteModal(); return; }
     if(a==='pick-role'){ if(_draft){ _draft.role=b.getAttribute('data-role'); refreshDraftUI(); } return; }
     if(a==='pick-sees'){ if(_draft){ var sid=b.getAttribute('data-id'), ix=_draft.sees.indexOf(sid); if(ix>=0) _draft.sees.splice(ix,1); else _draft.sees.push(sid); refreshDraftUI(); } return; }
-    if(a==='invite-send'){ var inm=(document.getElementById('inv-name')||{}).value||'', iem=(document.getElementById('inv-email')||{}).value||'', iph=(document.getElementById('inv-phone')||{}).value||''; inm=inm.trim(); iem=iem.trim(); iph=iph.trim(); if(!inm){ toast('Add a name first'); return; } if(!_draft.sees.length){ toast('Pick at least one person they can see'); return; } var pal=['#3E7CA8','#B7546A','#5B7596','#A3651F','#7A6BA8']; SEATS.push({name:inm,email:iem||'—',phone:iph,color:pal[SEATS.length%pal.length],role:_draft.role,sees:normSees(_draft.sees)}); closeModal(); renderSettings(); toast('Invite sent to '+inm); return; }
+    if(a==='invite-send'){ var inm=(document.getElementById('inv-name')||{}).value||'', iem=(document.getElementById('inv-email')||{}).value||'', iph=(document.getElementById('inv-phone')||{}).value||''; inm=inm.trim(); iem=iem.trim(); iph=iph.trim(); if(!inm){ toast('Add a name first'); return; } if(!_draft.sees.length){ toast('Pick at least one person they can see'); return; } var pal=['#3E7CA8','#B7546A','#5B7596','#A3651F','#7A6BA8']; SEATS.push({name:inm,email:iem||', ',phone:iph,color:pal[SEATS.length%pal.length],role:_draft.role,sees:normSees(_draft.sees)}); closeModal(); renderSettings(); toast('Invite sent to '+inm); return; }
     if(a==='seat-manage'){ seatModal(parseInt(b.getAttribute('data-i'),10)); return; }
     if(a==='seat-save'){ var si=parseInt(b.getAttribute('data-i'),10); if(SEATS[si]&&_draft){ SEATS[si].role=_draft.role; SEATS[si].sees=normSees(_draft.sees); SEATS[si].phone=((document.getElementById('inv-phone')||{}).value||'').trim(); } closeModal(); renderSettings(); toast('Access updated'); return; }
     if(a==='seat-remove'){ var sj=parseInt(b.getAttribute('data-i'),10), snm=SEATS[sj]?SEATS[sj].name:'them'; SEATS.splice(sj,1); closeModal(); renderSettings(); toast('Removed '+snm+"&#39;s access"); return; }
@@ -2290,7 +2427,7 @@
     toast('Done'); });
 
   // ---------- theme + text size ----------
-  // Light theme only — dark mode removed. setTheme always forces light and ignores any saved/dark request.
+  // Light theme only, dark mode removed. setTheme always forces light and ignores any saved/dark request.
   function setTheme(t){ root.setAttribute('data-theme','light'); try{ localStorage.setItem('elderly_theme','light'); }catch(e){} }
   setTheme('light');
   var tbtn=document.getElementById('themeBtn'); if(tbtn){ tbtn.style.display='none'; }

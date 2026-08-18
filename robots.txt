@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Private surfaces: the family portal, the team panel and the onboarding flow.
+Disallow: /app
+Disallow: /admin
+Disallow: /manage
+Disallow: /welcome
+Disallow: /portal
+
+Sitemap: https://www.callelderly.com/sitemap.xml
