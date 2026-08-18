@@ -1428,7 +1428,7 @@
   function translateTextNode(n){ if(n.__en===undefined || (n.__tr!==undefined && n.nodeValue!==n.__tr)) n.__en=n.nodeValue; var out=tr(n.__en); if(out!==n.nodeValue) n.nodeValue=out; n.__tr=out; }
   function translateEl(el){ ['placeholder','aria-label','title'].forEach(function(attr){ var k='__en_'+attr; if(el[k]===undefined){ if(!el.getAttribute(attr)) return; el[k]=el.getAttribute(attr); } var out=tr(el[k]); if(out!=null) el.setAttribute(attr,out); }); }
   function translateAll(){ if(lang==='en') return; var root=document.body; if(!root) return; var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false); var nodes=[],n; while(n=w.nextNode()) nodes.push(n); for(var i=0;i<nodes.length;i++) translateTextNode(nodes[i]); var els=root.querySelectorAll('[placeholder],[aria-label],[title]'); for(var j=0;j<els.length;j++) translateEl(els[j]); }
-  function detectLang(){ try{ var s=localStorage.getItem('elderly_lang'); if(s&&LANGS.indexOf(s)>=0) return s; }catch(e){} var nv=((navigator.language||navigator.userLanguage||'en')+'').toLowerCase(); if(nv.indexOf('es')===0) return 'es'; if(nv.indexOf('pt')===0) return 'pt'; return 'en'; }
+  function detectLang(){ try{ var q=new URLSearchParams(location.search).get('lang'); if(q&&LANGS.indexOf(q)>=0) return q; }catch(e){} try{ var s=localStorage.getItem('elderly_lang'); if(s&&LANGS.indexOf(s)>=0) return s; }catch(e){} var nv=((navigator.language||navigator.userLanguage||'en')+'').toLowerCase(); if(nv.indexOf('es')===0) return 'es'; if(nv.indexOf('pt')===0) return 'pt'; return 'en'; }
   Object.assign(T, {
     "Calls":["Llamadas","Chamadas"],"Circle":["Círculo","Círculo"],"Memory":["Memoria","Memória"],
     "Menu":["Menú","Menu"],"More":["Más","Mais"],"Close":["Cerrar","Fechar"],

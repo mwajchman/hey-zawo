@@ -1245,7 +1245,7 @@ document.addEventListener('DOMContentLoaded', function(){
   ['you','elder','rel'].forEach(function(k){ if(pq.get(k)) extra+='&'+k+'='+encodeURIComponent(pq.get(k)); });
 
   var timer, who='rosa', cur='home', loaded=false;
-  function src(n){ return 'family-portal.html?demo=1&who='+who+'&beat='+n+extra; }
+  function src(n){ var lg=(function(){try{return localStorage.getItem('elderlyLang')||'en';}catch(e){return 'en';}})(); return 'family-portal.html?demo=1&who='+who+'&beat='+n+'&lang='+lg+extra; }
   function paintNote(n){ note.innerHTML=(who==='alberto' && DAD[n]) ? DAD[n] : (NOTES[n]||''); }
 
   function setBeat(n){
@@ -2109,5 +2109,27 @@ openStep(1); booted = true;
   var saved="en";
   try{ saved=localStorage.getItem("elderlyLang")||"en"; }catch(e){}
   if(saved==="es"||saved==="pt") setLang(saved);
+})();
+</script>
+
+<script id="belief-cycle">
+(function(){
+  function start(){
+    var spans=document.querySelectorAll('.belief .swap');
+    if(!spans.length) return;
+    var mode='a';
+    setInterval(function(){
+      mode=(mode==='a')?'b':'a';
+      spans.forEach(function(sp){
+        var v=sp.getAttribute('data-'+mode);
+        if(v==null||v==='') v=sp.getAttribute('data-a')||sp.textContent;
+        if((sp.textContent||'').trim()===(v||'').trim()) return;
+        sp.style.transition='opacity .38s ease';
+        sp.style.opacity='0';
+        setTimeout(function(){ sp.textContent=v; sp.style.opacity='1'; },380);
+      });
+    },3400);
+  }
+  if(document.readyState!=='loading') setTimeout(start,1500); else window.addEventListener('load',function(){setTimeout(start,1500);});
 })();
 </script>
