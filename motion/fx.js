@@ -209,12 +209,15 @@
   }
 
   // On screen and still at zero well after its cue: the observer never
-  // fired for it. Anything mid-reveal is above 0.02 and is left alone.
+  // fired for it. An element that already has an animation attached is
+  // skipped — it is either mid-reveal or waiting out its stagger delay,
+  // which also reads as opacity 0.
   function rescueVisible() {
     var h = window.innerHeight || 0;
     hidden.forEach(function (el) {
       var r = el.getBoundingClientRect();
       if (r.bottom < 0 || r.top > h) return;
+      if (el.getAnimations && el.getAnimations().length) return;
       if (parseFloat(window.getComputedStyle(el).opacity) < 0.02) force(el);
     });
   }
