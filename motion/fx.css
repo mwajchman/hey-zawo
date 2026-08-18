@@ -1,0 +1,92 @@
+/* ------------------------------------------------------------------
+   Elderly · Motion FX
+   Spring curves generated with Motion's generate-css-easing
+   (motion.dev AI Kit, free tier). Pure CSS: no runtime cost.
+
+   --fx-spring : perceptual 0.35s, bounce 0.15  -> hover / lift
+   --fx-press  : perceptual 0.22s, bounce 0.30  -> press / tap
+   --fx-glide  : perceptual 0.60s, bounce 0     -> calm, no overshoot
+   Time sibling animations off the perceptual duration, not the total.
+   ------------------------------------------------------------------ */
+
+:root{
+  --fx-spring: 650ms linear(0, 0.0824, 0.2537, 0.4405, 0.6071, 0.7402, 0.8387, 0.907, 0.9517, 0.979, 0.9946, 1.0024, 1.0056, 1.0063, 1.0057, 1.0045, 1.0034, 1.0024, 1.0015, 1.001, 1.0005, 1);
+  --fx-press: 500ms linear(0, 0.1927, 0.5259, 0.7992, 0.9616, 1.0316, 1.0459, 1.0359, 1.0206, 1.0084, 1.0013, 0.9984, 1, 0.9984, 0.9991, 0.9997, 1);
+  --fx-glide: 1050ms linear(0, 0.0304, 0.1023, 0.1943, 0.2929, 0.3899, 0.4805, 0.5624, 0.6346, 0.6971, 0.7504, 0.7955, 0.8332, 0.8645, 0.8903, 0.9115, 0.9288, 0.9428, 0.9542, 0.9634, 0.9708, 0.9768, 0.9816, 0.9854, 0.9884, 0.9908, 0.9927, 0.9943, 0.9955, 0.9964, 0.9972, 0.9978, 0.9983, 0.9986, 1);
+}
+
+/* ---------- Reading progress ---------- */
+
+.fx-progress{
+  position:fixed; top:0; left:0; right:0; height:3px; z-index:1000;
+  /* --accent, not --brand: it has to read against both the cream page and
+     the dark green belief bar that sits at the top of the landing. */
+  background:var(--accent, #2E7D6B);
+  transform:scaleX(0); transform-origin:0 50%;
+  pointer-events:none;
+}
+
+/* ---------- Primary actions ---------- */
+
+.btn, .hdr-build, .fc-play, .endcta a, .cta{
+  transition:transform var(--fx-spring), box-shadow var(--fx-spring), filter var(--fx-spring);
+}
+.btn:hover, .hdr-build:hover, .endcta a:hover, .cta:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 22px -10px rgba(23,80,69,.45);
+}
+.btn:active, .hdr-build:active, .fc-play:active, .endcta a:active, .cta:active{
+  transform:scale(.97) translateY(0);
+  transition:transform var(--fx-press);
+}
+.fc-play:hover{ transform:scale(1.06) }
+
+/* ---------- Secondary controls ---------- */
+
+.wt, .ftab, .cdot, .hnav, .hdr-login, .lang-pill button{
+  transition:transform var(--fx-spring), background-color var(--fx-spring), color var(--fx-spring), border-color var(--fx-spring), opacity var(--fx-spring);
+}
+.wt:active, .ftab:active, .hnav:active, .lang-pill button:active{
+  transform:scale(.95);
+  transition:transform var(--fx-press);
+}
+.cdot:hover{ transform:scale(1.35) }
+.hnav:hover{ transform:scale(1.08) }
+
+/* ---------- Cards ---------- */
+
+.proof, .stat, .bc, .fullcall, .fc-chips span{
+  transition:transform var(--fx-spring), box-shadow var(--fx-spring), border-color var(--fx-spring);
+}
+.proof:hover, .stat:hover{
+  transform:translateY(-3px);
+}
+.bc:hover{
+  transform:translateY(-4px);
+  box-shadow:0 18px 38px -20px rgba(28,51,45,.38);
+}
+
+/* ---------- Links ---------- */
+
+.blist .bc .top, .src a{
+  transition:color var(--fx-spring);
+}
+
+/* ---------- Reveal safety net ----------
+   Elements are hidden by JS, never by CSS: if the script fails to load
+   the page still renders in full. This class marks the ones the failsafe
+   brought back; the inline styles are cleared at the same time, so no
+   !important is needed and :hover keeps working. */
+
+.fx-shown{ opacity:1; transform:none; transition:opacity 300ms ease-out }
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce){
+  :root{ --fx-spring:1ms linear; --fx-press:1ms linear; --fx-glide:1ms linear }
+  .fx-progress{ display:none }
+  .btn:hover, .hdr-build:hover, .proof:hover, .stat:hover, .bc:hover,
+  .endcta a:hover, .cta:hover, .cdot:hover, .hnav:hover, .fc-play:hover{
+    transform:none;
+  }
+}
