@@ -1137,6 +1137,14 @@
     if(!dragging) return;
     dragging=false; lane.classList.remove('grabbing');
     try{ lane.releasePointerCapture(e.pointerId); }catch(err){}
+    // A clean release with no drag = a tap. Flip the card under the cursor HERE, because
+    // setPointerCapture redirects the follow-up 'click' to the lane (not the card), so the
+    // click handler's closest('.qcard') would fail. moved=999 then makes that click a no-op.
+    if(e.pointerType!=='touch' && moved<=6){
+      var el=document.elementFromPoint(e.clientX,e.clientY);
+      var c=el && el.closest && el.closest('.qcard');
+      if(c){ toggle(c); moved=999; }
+    }
     holdFor(1400);
   }
   lane.addEventListener('pointerup', endDrag);
