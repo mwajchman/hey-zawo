@@ -742,8 +742,8 @@
         <button type="button" class="wt on" data-mode="a" aria-pressed="true">For Grandma</button>
         <button type="button" class="wt" data-mode="b" aria-pressed="false">For Grandpa</button>
       </div>
-      <h1>A warm companion calls <span class="swap" data-a="Grandma" data-b="Grandpa" data-es-a="a la abuela" data-es-b="al abuelo">Grandma</span> to keep <span class="swap" data-a="her" data-b="him" data-es-a="" data-es-b="">her</span> company, <em>and brings the whole family together with it</em>.</h1>
-      <p class="lede">Once a week, everyone sends something small: a voice message, a photo, something to pray for. <span class="swap" data-a="Her" data-b="His">Her</span> AI companion weaves it through <span class="swap" data-a="her" data-b="his" data-es-a="sus" data-es-b="sus">her</span> calls, saves the stories <span class="swap" data-a="she" data-b="he" data-es-a="" data-es-b="">she</span> tells back, and texts you how <span class="swap" data-a="she's" data-b="he's">she's</span> really doing. As it gets to know <span class="swap" data-a="her" data-b="him">her</span>, it keeps <span class="swap" data-a="her" data-b="his" data-es-a="sus" data-es-b="sus">her</span> memories and watches over <span class="swap" data-a="her" data-b="him">her</span> physically, mentally and emotionally.</p>
+      <h1>A warm companion calls <span class="swap" data-a="Grandma" data-b="Grandpa" data-es-a="a la abuela" data-es-b="al abuelo" data-pt-a="para a vovó" data-pt-b="para o vovô">Grandma</span> to keep <span class="swap" data-a="her" data-b="him" data-es-a="" data-es-b="" data-pt-a="" data-pt-b="">her</span> company, <em>and brings the whole family together with it</em>.</h1>
+      <p class="lede">Once a week, everyone sends something small: a voice message, a photo, something to pray for. <span class="swap" data-a="Her" data-b="His">Her</span> AI companion weaves it through <span class="swap" data-a="her" data-b="his" data-es-a="sus" data-es-b="sus" data-pt-a="suas" data-pt-b="suas">her</span> calls, saves the stories <span class="swap" data-a="she" data-b="he" data-es-a="" data-es-b="">she</span> tells back, and texts you how <span class="swap" data-a="she's" data-b="he's" data-es-a="" data-es-b="" data-pt-a="" data-pt-b="">she's</span> really doing. As it gets to know <span class="swap" data-a="her" data-b="him" data-es-a="" data-es-b="" data-pt-a="" data-pt-b="">her</span>, it keeps <span class="swap" data-a="her" data-b="his" data-es-a="sus" data-es-b="sus" data-pt-a="suas" data-pt-b="suas">her</span> memories and watches over <span class="swap" data-a="her" data-b="him" data-es-a="" data-es-b="" data-pt-a="" data-pt-b="">her</span> physically, mentally and emotionally.</p>
       <button class="btn" onclick="document.getElementById('builder').scrollIntoView()">Start her free week</button>
       <p class="cta-note">No card today · you'll see the price live as you build her plan</p>
     </div>
@@ -1981,9 +1981,9 @@ openStep(1); booted = true;
   var SWAPS = { es:{"her|his":["su","su"],"Her|His":["Su","Su"],"she|he":["ella","él"],"She|He":["Ella","Él"],
       "Grandma|Grandpa":["la abuela","el abuelo"],"Grandma's|Grandpa's":["de la abuela","del abuelo"],
       "her|him":["la","lo"],"Her|Him":["La","Lo"],"she's|he's":["está","está"],"mom|dad":["mamá","papá"],"Mom|Dad":["Mamá","Papá"]},
-    pt:{"her|his":["dela","dele"],"Her|His":["Dela","Dele"],"she|he":["ela","ele"],"She|He":["Ela","Ele"],
+    pt:{"her|his":["sua","sua"],"Her|His":["Sua","Sua"],"she|he":["ela","ele"],"She|He":["Ela","Ele"],
       "Grandma|Grandpa":["a vovó","o vovô"],"Grandma's|Grandpa's":["da vovó","do vovô"],
-      "her|him":["ela","ele"],"Her|Him":["Ela","Ele"],"she's|he's":["ela está","ele está"],"mom|dad":["mãe","pai"],"Mom|Dad":["Mãe","Pai"]} };
+      "her|him":["ela","ele"],"Her|Him":["Ela","Ele"],"she's|he's":["está","está"],"mom|dad":["mãe","pai"],"Mom|Dad":["Mãe","Pai"]} };
   var PACKS = { es:{"check-in":"saludo","check-ins":"saludos","quick visit":"visita corta","quick visits":"visitas cortas","full visit":"visita completa","full visits":"visitas completas"},
     pt:{"check-in":"visita","check-ins":"visitas","quick visit":"visita rápida","quick visits":"visitas rápidas","full visit":"visita completa","full visits":"visitas completas"} };
   var DMAPS = { es:{"M":"L","Tu":"Ma","W":"Mi","Th":"J","F":"V","Sa":"S","Su":"D"},
@@ -2039,8 +2039,7 @@ openStep(1); booted = true;
     spans.forEach(function(sp){
       if(sp.dataset.enA===undefined){ sp.dataset.enA=sp.getAttribute("data-a")||""; sp.dataset.enB=sp.getAttribute("data-b")||""; }
       if(LANG!=="en"){
-        var a, b;
-        if(LANG==="es"){ a=sp.dataset.esA; b=sp.dataset.esB; }
+        var a=sp.dataset[LANG+"A"], b=sp.dataset[LANG+"B"];
         if(a===undefined){ var d=(SWAPS[LANG]||{})[sp.dataset.enA+"|"+sp.dataset.enB]; if(d){a=d[0]; b=d[1];} }
         if(a!==undefined){ sp.setAttribute("data-a",a); sp.setAttribute("data-b",b); }
         else { sp.setAttribute("data-a",sp.dataset.enA); sp.setAttribute("data-b",sp.dataset.enB); }
