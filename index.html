@@ -1114,7 +1114,11 @@
   var tx=0;
   lane.addEventListener('touchstart', function(e){ paused=true; clearTimeout(idle); moved=0; tx=e.touches[0].clientX; }, {passive:true});
   lane.addEventListener('touchmove', function(e){ moved=Math.max(moved, Math.abs(e.touches[0].clientX-tx)); }, {passive:true});
-  lane.addEventListener('touchend', function(){ holdFor(1600); }, {passive:true});
+  lane.addEventListener('touchend', function(e){
+    // On mobile the synthesized click is often swallowed by the scroll container, so flip on tap here.
+    if(moved<=10){ var c=e.target && e.target.closest && e.target.closest('.qcard'); if(c){ toggle(c); moved=999; /* skip the follow-up click so it doesn't un-flip */ } }
+    holdFor(1600);
+  }, {passive:true});
 
   // drag to scrub, at whatever speed the hand moves
   var dragging=false, startX=0, startScroll=0, moved=0;
@@ -2082,11 +2086,16 @@ openStep(1); booted = true;
   function doPH(){
     PH.forEach(function(r){ var el=document.getElementById(r[0]); if(el) el.placeholder=(LANG==="es"?r[2]:LANG==="pt"?r[3]:r[1]); });
   }
+  function _inMarquee(node){ var el = node && (node.nodeType===1 ? node : node.parentElement); return !!(el && el.closest && el.closest("#mtrack, .marquee")); }
   var mo=new MutationObserver(function(muts){
     if(LANG==="en") return;
     muts.forEach(function(m){
+      // skip the auto-scrolling testimonial marquee: it's already translated on lang-switch,
+      // and re-translating it every scroll frame janks the main thread and breaks card taps.
+      if(_inMarquee(m.target)) return;
       if(m.type==="characterData"){ applyNode(m.target); }
       if(m.addedNodes) m.addedNodes.forEach(function(nd){
+        if(_inMarquee(nd)) return;
         if(nd.nodeType===3) applyNode(nd);
         else if(nd.nodeType===1 && nd.closest && !nd.closest("#langPill")) walk(nd, applyNode);
       });
