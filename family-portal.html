@@ -357,6 +357,17 @@
   }
 
   /* ===== toasts ===== */
+  /* Aviso de demo: tiene que verse siempre, no escondido en un modal. */
+  .demobar{position:sticky;top:0;z-index:60;display:flex;gap:9px;align-items:center;
+    justify-content:center;flex-wrap:wrap;padding:8px 14px;background:var(--brand);
+    color:var(--brand-ink);font-size:12.5px;line-height:1.4;text-align:center}
+  .demobar b{font-weight:800;letter-spacing:.04em;text-transform:uppercase;font-size:11px;
+    border:1px solid currentColor;border-radius:99px;padding:1px 8px}
+  /* Lo que la demo muestra y el producto todavia no hace. Se marca en vez de sacarse:
+     ensena a donde va el producto sin afirmar que ya llego. */
+  .soon{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--watch);background:var(--watch-soft);
+    border-radius:99px;padding:2px 8px;margin-left:8px;vertical-align:middle}
   .toastwrap{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:200;align-items:center;pointer-events:none}
   .toast{display:inline-flex;align-items:center;gap:9px;background:var(--ink);color:#FCFBF6;border-radius:12px;padding:11px 16px;font-size:13.5px;font-weight:600;box-shadow:0 12px 34px -10px rgba(0,0,0,.4);opacity:0;transform:translateY(12px);transition:opacity .3s ease,transform .3s cubic-bezier(.2,.75,.25,1);max-width:90vw}
   .toast.in{opacity:1;transform:none}
@@ -671,6 +682,9 @@
   }
 </style>
 
+<div class="demobar" id="demoBar" hidden>
+  <b>Demo</b><span>A made-up family, with invented data, so you can see how the portal works.</span>
+</div>
 <div class="shell">
   <!-- ================= SIDEBAR ================= -->
   <aside class="side">
@@ -873,6 +887,8 @@
   // ---------- i18n (English source, translated at render time) ----------
   var LANGS=['en','es','pt'], lang='en';
   var T={
+    "Demo":["Demo","Demo"],
+    "A made-up family, with invented data, so you can see how the portal works.":["Una familia inventada, con datos inventados, para que veas cómo funciona el portal.","Uma família inventada, com dados inventados, para você ver como o portal funciona."],
     "day":["día","dia"],
     "hours":["horas","horas"],
     "min":["min","min"],
@@ -1235,8 +1251,8 @@
     "Her voice, kept · memories":["Su voz, guardada · recuerdos","A voz dela, guardada · memórias"],
     "His voice, kept · memories":["Su voz, guardada · recuerdos","A voz dele, guardada · memórias"],
     "His voice, kept · memories add-on":["Su voz, guardada · complemento recuerdos","A voz dele, guardada · complemento memórias"],
-    "Her stories, in her own voice, download any call, keep them forever.":["Sus historias, en su propia voz; descargá cualquier llamada y guardalas para siempre.","As histórias dela, na própria voz; baixe qualquer chamada e guarde para sempre."],
-    "His stories, in his own voice, download any call, keep them forever.":["Sus historias, en su propia voz; descargá cualquier llamada y guardalas para siempre.","As histórias dele, na própria voz; baixe qualquer chamada e guarde para sempre."],
+    "Her stories, in her own voice. Download any call and keep your own copy.":["Sus historias, en su propia voz; descargá cualquier llamada y guardalas para siempre.","As histórias dela, na própria voz; baixe qualquer chamada e guarde para sempre."],
+    "His stories, in his own voice. Download any call and keep your own copy.":["Sus historias, en su propia voz; descargá cualquier llamada y guardalas para siempre.","As histórias dele, na própria voz; baixe qualquer chamada e guarde para sempre."],
     "How we read Rosa's week":["Cómo leemos la semana de Rosa","Como lemos a semana de Rosa"],
     "How the safe word protects her":["Cómo la protege la palabra segura","Como a palavra-chave a protege"],
     "What the family fed the calls":["Lo que la familia sumó a las llamadas","O que a família adicionou às chamadas"],
@@ -1575,6 +1591,13 @@
   function translateTextNode(n){ if(n.__en===undefined || (n.__tr!==undefined && n.nodeValue!==n.__tr)) n.__en=n.nodeValue; var out=tr(n.__en); if(out!==n.nodeValue) n.nodeValue=out; n.__tr=out; }
   function translateEl(el){ ['placeholder','aria-label','title'].forEach(function(attr){ var k='__en_'+attr; if(el[k]===undefined){ if(!el.getAttribute(attr)) return; el[k]=el.getAttribute(attr); } var out=tr(el[k]); if(out!=null) el.setAttribute(attr,out); }); }
   function translateAll(){ if(lang==='en') return; var root=document.body; if(!root) return; var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null,false); var nodes=[],n; while(n=w.nextNode()) nodes.push(n); for(var i=0;i<nodes.length;i++) translateTextNode(nodes[i]); var els=root.querySelectorAll('[placeholder],[aria-label],[title]'); for(var j=0;j<els.length;j++) translateEl(els[j]); }
+  /* Lo que viene en la URL cuando la landing nos abre. Antes solo se leia `lang`. */
+  function demoParams(){
+    try{
+      var q=new URLSearchParams(location.search);
+      return {demo:q.get('demo')==='1', who:q.get('who')||'', beat:q.get('beat')||''};
+    }catch(e){ return {demo:false, who:'', beat:''}; }
+  }
   function detectLang(){ try{ var q=new URLSearchParams(location.search).get('lang'); if(q&&LANGS.indexOf(q)>=0) return q; }catch(e){} try{ var s=localStorage.getItem('elderly_lang'); if(s&&LANGS.indexOf(s)>=0) return s; }catch(e){} var nv=((navigator.language||navigator.userLanguage||'en')+'').toLowerCase(); if(nv.indexOf('es')===0) return 'es'; if(nv.indexOf('pt')===0) return 'pt'; return 'en'; }
   Object.assign(T, {
     "Calls":["Llamadas","Chamadas"],"Circle":["Círculo","Círculo"],"Memory":["Memoria","Memória"],
@@ -1643,7 +1666,7 @@
        circle:{onpoint:"Diego is on point this week",members:[['M','#2E7D6B','Matías · you'],['D','#B7702E','Diego'],['B','#6D6AC4','Beatriz'],['T','#3E7CA8','Tomás · grandson']],
          contribs:[['D','#B7702E','Diego added a question','“Ask her about the fishing trip we\'re planning for October.”','Woven into Wednesday, she loved it'],['T','#3E7CA8','Tomás sent a photo','“The baby\'s first steps”, for the companion to bring up.','Five minutes on Sunday']]},
        queue:[['','Ask how the lemon pie turned out'],['Beatriz','Grandkids say hi'],['You','Ask about the fishing trip']],
-       voice:"+38 minutes saved this month",voiceNote:"Her stories, in her own voice, download any call, keep them forever.",
+       voice:"+38 minutes saved this month",voiceNote:"Her stories, in her own voice. Download any call and keep your own copy.",
        recordings:[{title:"The whole family, grandson's birthday",date:"Sun · Aug 10",len:"22:14"},{title:"Church & the biscuits",date:"Thu · Aug 8",len:"14:02"},{title:"Cooking class, lemon pie",date:"Wed · Aug 7",len:"16:20"}],
        letter:"Rosa had a good week. The garden is her pride, she's planning to share tomatoes at church. She caught a scam call on Tuesday like a pro. Her knee came up twice; nothing alarming, just worth a gentle eye."}},
 
@@ -1698,7 +1721,7 @@
        circle:{onpoint:"You're his person",members:[['M','#2E7D6B','Matías · you'],['R','#3E7CA8','Raúl · his neighbour']],
          contribs:[['M','#2E7D6B','You added a story','“Tell him I passed my licence renewal.”','He had a field day with it'],['R','#3E7CA8','Raúl','“The café\'s got his usual table ready.”','Mentioned on Monday']]},
        queue:[['You','Tell him about the licence'],['','Ask about the fishing trip']],
-       voice:"+22 minutes saved this month",voiceNote:"His stories, in his own voice, download any call, keep them forever.",
+       voice:"+22 minutes saved this month",voiceNote:"His stories, in his own voice. Download any call and keep your own copy.",
        recordings:[{title:"The fishing-licence joke",date:"Wed · Aug 7",len:"18:05"},{title:"Old navy stories",date:"Fri · Aug 9",len:"16:11"},{title:"He asked all about you",date:"Sun · Aug 10",len:"12:30"}],
        letter:"Jorge is on wonderful form, sharp, funny, and full of stories. He asked all about you on Sunday. Nothing needs you this week; just enjoy the calls."}},
 
@@ -1798,7 +1821,9 @@
   var ROLE={ organizer:{label:'Organizer', desc:'Full control. Manages the plan and billing. Only one organizer.'},
              contributor:{label:'Contributor', desc:'Sees the week and feeds the calls (add stories, questions). Cannot change the plan.'},
              viewer:{label:'Viewer', desc:'Read-only. Sees the weekly summary. Cannot change anything.'} };
-  var ACCOUNT={plan:'Guardian', perMonth:39, active:2};
+  /* El precio tiene que ser el que cobra el producto: 6 llamadas por semana con
+     Guardian son $70 en pricing.py. Mostrar $39 era prometer un precio que no existe. */
+  var ACCOUNT={plan:'Guardian', perMonth:70, active:2};
 
   // support tickets: each is a direct chat with the technical team
   var TICKETS=[
@@ -2001,7 +2026,7 @@
     var arrow=ICON('back',12).replace('M19 12H5','M5 12h14').replace('M11 6l-6 6 6 6','M13 6l6 6-6 6');
     return '<div class="anytime-mini"><span class="ic">'+ICON('phone',16)+'</span><span class="t"><b>Anytime line</b> · '+a.calls30+' calls · '+a.usedMin+' min this month</span>'+(over>0?'<span class="amt over">+$'+overCost.toFixed(2)+'</span>':'<span class="amt ok">within plan</span>')+'<button class="go" data-action="go-calls">Manage '+arrow+'</button></div>'; }
   function anytimeCardHTML(e){ var a=e.anytime; if(!a) return ''; var P=e.c?e.c.pron:F;
-    var head='<div class="cardtop"><div><p class="kick">Anytime line · beyond '+P.p+' scheduled calls</p><h2>'+e.name+' can call whenever '+P.s+' wants</h2></div>'
+    var head='<div class="cardtop"><div><p class="kick">Anytime line · beyond '+P.p+' scheduled calls<span class="soon">Coming</span></p><h2>'+e.name+' can call whenever '+P.s+' wants</h2></div>'
       +'<button class="switch2'+(a.on?' on':'')+'" data-action="anytime-toggle" role="switch" aria-checked="'+a.on+'" aria-label="Turn the anytime line on or off"><span class="knob"></span></button></div>';
     if(!a.on){ return '<div class="card">'+head+'<p class="note" style="margin-top:8px">Turn this on to give '+e.name+' '+P.p+' own number to call, day or night, on top of '+P.p+' scheduled calls. Minutes past the plan bill per minute, and you set the ceiling.</p></div>'; }
     var included=a.includedMin,used=a.usedMin,rate=a.ratePerMin,over=Math.max(0,used-included),overCost=over*rate,pct=Math.min(100,included?used/included*100:0),col=over>0?'var(--watch)':'var(--brand)',plan=(e.plan?e.plan.split(' ·')[0]:'the plan');
@@ -2080,7 +2105,7 @@
     return '<svg viewBox="0 0 '+px+' '+px+'" width="'+px+'" height="'+px+'" shape-rendering="crispEdges" style="display:block;border-radius:10px"><rect width="'+px+'" height="'+px+'" fill="#fff"/><g fill="#1B302A">'+rects+'</g></svg>'; }
   function keepsakeLink(e){ return 'callelderly.com/keepsake/'+e.id+'-'+_hash(e.name+e.id).toString(36).slice(0,6); }
   function memorialModal(e){ if(!e) return; var P=(e&&e.c)?e.c.pron:F;
-    openModal('When someone we love passes', '<p style="font-size:14px;color:var(--ink2);line-height:1.6">We&#39;re so sorry. If '+e.name+' has passed away, we&#39;ll gently stop the calls right away, and gather everything '+P.s+' shared with us, '+P.p+' voice, '+P.p+' stories, '+P.p+' words, into one keepsake for your family to keep forever. <b>Nothing is ever deleted.</b> You can take all the time you need.</p>'
+    openModal('When someone we love passes', '<p style="font-size:14px;color:var(--ink2);line-height:1.6">We&#39;re so sorry. If '+e.name+' has passed away, we&#39;ll gently stop the calls right away, and gather everything '+P.s+' shared with us, '+P.p+' voice, '+P.p+' stories, '+P.p+' words, into one keepsake for your family. <b>We keep the stories and the notes, backed up off-site every day.</b> You can take all the time you need.</p>'
       +'<div class="mfield" style="margin-top:15px"><label for="mem-date">When did '+e.name+' pass? (optional)</label><input type="text" id="mem-date" placeholder="e.g. August 2026"></div>'
       +'<div class="modal-foot"><button class="btn ghost" data-action="close-modal">Not now</button><button class="btn brand" data-action="memorial-confirm" data-id="'+e.id+'">Create '+e.name+'&#39;s keepsake</button></div>'); }
   function renderKeepsake(e){ var c=e.c,P=c?c.pron:F,g=document.getElementById('keepsakeGrid'); if(!g) return;
@@ -2088,11 +2113,11 @@
     var recs=(c&&c.recordings)?c.recordings:[];
     var recList=recs.length?recs.map(function(rr){ return '<div class="rec"><button class="recplay" data-action="play" data-text="'+esc(rr.title)+'" data-dur="'+esc(rr.len)+'">'+PLAY(12)+'</button><div class="rt"><b>'+rr.title+'</b><span>'+rr.date+' · '+rr.len+'</span></div><button class="btn sm dl" data-action="download" title="Download">'+ICON('download',15)+'</button></div>'; }).join(''):'';
     var head='<div class="card keepsake-hero"><div class="kh-photo"'+(e.photo?' style="background-image:url(\''+e.photo+'\')"':'')+' role="img" aria-label="'+esc(e.name)+'"></div><div class="kh-txt"><p class="kick">In loving memory</p><h1>'+e.name+'</h1><div class="kh-dates">'+esc(e.rel.split(' ·')[0])+' · '+e.born+' &ndash; '+yr+'</div><p class="kh-lede">We&#39;ve gathered '+e.name+'&#39;s voice, '+P.p+' words and '+P.p+' moments into one place. It&#39;s yours to keep, and yours to share with everyone who loved '+P.o+'.</p></div></div>';
-    var gift='<div class="card gift"><div class="gift-qr">'+qrSVG(link,160)+'</div><div class="gift-txt"><p class="kick">A keepsake for your family</p><h2>Share '+e.name+'&#39;s memories</h2><p class="note" style="color:var(--ink2);margin-top:6px">Anyone with this code or link can listen to '+P.p+' voice and read '+P.p+' stories, forever, at no cost. Print the code for a memorial card, or send the link to the whole family.</p><div class="linkbox"><span class="lk">'+link+'</span><button class="btn sm" data-action="copy-link" data-link="'+link+'">Copy</button></div><div class="mt" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn brand" data-action="keepsake-share" data-link="'+link+'">'+ICON('share',14)+' Share the keepsake</button><button class="btn" data-action="download-qr">'+ICON('download',14)+' Download the code</button></div></div></div>';
+    var gift='<div class="card gift"><div class="gift-qr">'+qrSVG(link,160)+'</div><div class="gift-txt"><p class="kick">A keepsake for your family</p><h2>Share '+e.name+'&#39;s memories</h2><p class="note" style="color:var(--ink2);margin-top:6px">Anyone with this code or link can listen to '+P.p+' voice and read '+P.p+' stories, at no cost. Print the code for a memorial card, or send the link to the whole family.</p><div class="linkbox"><span class="lk">'+link+'</span><button class="btn sm" data-action="copy-link" data-link="'+link+'">Copy</button></div><div class="mt" style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn brand" data-action="keepsake-share" data-link="'+link+'">'+ICON('share',14)+' Share the keepsake</button><button class="btn" data-action="download-qr">'+ICON('download',14)+' Download the code</button></div></div></div>';
     var voice=recList?'<div class="card"><p class="kick">In '+P.p+' own voice</p><h2>'+e.name+'&#39;s recordings</h2><p class="note" style="margin-top:2px">Every saved call, kept forever.</p><div class="reclist mt">'+recList+'</div></div>':'';
     var words=(e.sayings&&e.sayings.length)?'<div class="card"><p class="kick">In '+P.p+' words</p><h2>Things '+e.name+' said</h2><div class="sayings mt">'+e.sayings.map(function(s){ return '<figure class="saying"><blockquote>'+esc(s.q)+'</blockquote><figcaption>'+esc(s.ctx)+'</figcaption></figure>'; }).join('')+'</div></div>':'';
     var letter=(c&&c.letter)?'<div class="card"><p class="kick">'+e.name+'&#39;s stories</p><h2>From the weekly letters</h2><div class="letter mt"><p>'+c.letter+'</p></div></div>':'';
-    var foot='<div class="privacy"><span>The calls have stopped, and nothing here will ever be deleted. Take all the time you need, everything is here for your family, whenever you&#39;re ready.</span></div>';
+    var foot='<div class="privacy"><span>The calls have stopped. We keep the stories and the notes, and they are backed up off-site every day; the recordings are held by our calling provider, so we do not promise those forever. Take all the time you need, everything is here for your family, whenever you&#39;re ready.</span></div>';
     g.innerHTML=head+gift+voice+words+letter+foot; }
 
   // ---------- crisis / fast lane ----------
@@ -2443,6 +2468,39 @@
   var xbtn=document.getElementById('textBtn'); if(xbtn) xbtn.onclick=function(){ setTx(root.getAttribute('data-textscale')==='lg'?'md':'lg'); };
   document.addEventListener('keydown', function(e){ if(e.key==='Escape'){ closeModal(); closeMenu(); } });
 
+  /* ================= PUENTE CON LA LANDING =================
+     La landing muestra esta demo dentro de un iframe y cambia de pantalla con
+     __demoBeat / __demoWho (o postMessage si el origen esta bloqueado). Sin esto los
+     botones de la landing no hacian nada: el visitante leia "si no atiende" y seguia
+     viendo la pantalla de inicio. */
+  var DEMO_BEATS={
+    'home'  : function(){ goHome(); },
+    '1'     : function(w){ openElder(w||'rosa'); showPane('overview'); },   // despues de cada llamada
+    '2'     : function(w){ openElder(w||'rosa'); showPane('calls'); },      // si no atiende
+    '3'     : function(w){ openElder(w||'rosa'); showPane('circle'); },     // quien puede ver esto
+    'zero'  : function(){ openElder('elena'); }                             // semana uno
+  };
+  var DEMO_WHO='rosa';
+  function demoGo(beat){
+    beat=String(beat||'home');
+    var fn=DEMO_BEATS[beat]||DEMO_BEATS.home;
+    try{ fn(DEMO_WHO); }catch(e){ try{ goHome(); }catch(e2){} }
+    /* El ack le dice a la landing que no hace falta recargar el iframe. */
+    try{ if(window.parent && window.parent!==window)
+      window.parent.postMessage({type:'demo:ack', beat:beat}, '*'); }catch(e){}
+  }
+  window.__demoBeat=function(n){ demoGo(n); };
+  window.__demoWho=function(w){
+    if(!w) return;
+    DEMO_WHO=String(w);
+    try{ if(E(DEMO_WHO)) openElder(DEMO_WHO); }catch(e){}
+  };
+  window.addEventListener('message', function(ev){
+    var d=(ev&&ev.data)||{};
+    if(d.type==='demo:beat') demoGo(d.beat);
+    else if(d.type==='demo:who') window.__demoWho(d.who);
+  });
+
   // ---------- routing: shareable links + back button ----------
   var _routing=false;
   function setHash(h){ if(_routing) return; try{ if(location.hash!==h){ if(history.pushState) history.pushState(null,'',h); else location.hash=h; } }catch(e){} }
@@ -2456,6 +2514,14 @@
 
   lang=detectLang();
   renderHome(); renderHero(); applyRoute(); updateSupportBadge(); renderAlerts();
+  /* Si nos abrio la landing: mostrar el aviso de demo y saltar a la pantalla pedida. */
+  (function(){
+    var d=demoParams();
+    if(d.demo){ var bar=document.getElementById('demoBar'); if(bar) bar.hidden=false; }
+    if(d.who) DEMO_WHO=d.who;
+    if(d.beat) demoGo(d.beat);
+    else if(d.who) window.__demoWho(d.who);
+  })();
   updateGreeting(); translateAll(); updateLangUI(); mbSync();
   window.addEventListener('resize', function(){ clearTimeout(window._r); window._r=setTimeout(function(){ if(current && curPane!=='home' && curPane!=='zero') renderPane(curPane,E(current)); },160); });
 })();
