@@ -1873,7 +1873,7 @@
       +'</div></div>';
     return '<div class="card">'+head+body+'</div>'; }
   function dEl(b){ var id=b.getAttribute('data-id'); return id?E(id):(current&&E(current)); }
-  function reCalls(el){ if(!el)return; if(!el.device)el.device={}; if(!el.sched)el.sched={days:[],time:''}; renderPane('calls',el); }
+  function reCalls(el){ if(!el)return; if(!el.device)el.device={}; if(!el.sched)el.sched={days:[],time:''}; if(el.c && curPane==='calls') renderPane('calls',el); }
   function hearTestModal(e){ var P=e.c?e.c.pron:F;
     openModal('Test call to '+e.name, '<p class="note" style="font-size:14px;line-height:1.5">We&#39;ll place a short call now from <b>'+CALLNUM+'</b>. Stay on the line with '+e.name+' if you can, then tell us how it went.</p>'
       +'<div class="ceil"><div class="allow-lab">Did '+P.s+' hear every word?</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button class="btn brand" data-action="hear-yes" data-id="'+e.id+'">'+ICON('shield',14)+' Yes, clearly</button><button class="btn" data-action="hear-no" data-id="'+e.id+'">Not really</button></div></div>'
@@ -1894,7 +1894,7 @@
     var timeSeg='<div class="seg2" style="margin-top:9px">'+['8:00 AM','10:00 AM','2:00 PM','6:00 PM','8:00 PM'].map(function(tm){return '<button class="'+(s.time===tm?'on':'')+'" data-action="sched-time" data-id="'+e.id+'" data-time="'+tm+'">'+tm+'</button>';}).join('')+'</div>';
     var sched='<div class="ceil"><div class="allow-lab">Call schedule · '+s.days.length+' a week at '+s.time+'</div>'+days+timeSeg+'<p class="note" style="font-size:12px;margin-top:7px">Pick the days and time that suit '+P.o+' (some sleep by day and are up at night).</p></div>';
     return '<div class="card"><p class="kick">Calls · delivery &amp; schedule</p><h2>Making sure the call lands, and '+P.s+' can hear it</h2>'+alarm+'<div class="dstats mt">'+status+'</div>'+wl+hear+numline+dev+sched+'</div>'; }
-  function renderCalls(e){ var c=e.c,P=c.pron,g=document.getElementById('callsGrid');
+  function renderCalls(e){ if(!e||!e.c) return; var c=e.c,P=c.pron,g=document.getElementById('callsGrid');
     g.innerHTML='<div class="card"><p class="kick">Calls &amp; letters · the record of every visit</p><h1 style="font-size:24px">Every conversation, kept.</h1><p class="note" style="margin-top:4px">Each call leaves a warm note and a shareable moment.'+(e.voiceKept?' With the memories add-on, you can play or <b>download</b> the recording.':'')+'</p><div class="calls mt">'+c.calls.slice().reverse().map(callHTML).join('')+'</div></div>'+anytimeCardHTML(e)+deliveryScheduleHTML(e)+'<div class="g2 grid">'+voiceCardHTML(e)+'<div class="card"><p class="kick">Notifications</p><h2>How often you hear from us</h2><div class="mt"><div class="check done"><span class="bx">'+ICON2check()+'</span><span class="t">A weekly letter, Sundays</span></div><div class="check done"><span class="bx">'+ICON2check()+'</span><span class="t">A ping only if something needs you</span></div><div class="check"><span class="bx"></span><span class="t"><s>After every call</s>, off (kept it calm)</span></div></div></div></div>'; }
   function renderCircle(e){ var c=e.c,P=c.pron,g=document.getElementById('circleGrid');
     var mine=SEATS.map(function(s,i){return {s:s,i:i};}).filter(function(x){ return x.s.sees==='all'||(x.s.sees&&x.s.sees.indexOf(e.id)>=0); });
