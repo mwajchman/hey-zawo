@@ -1141,6 +1141,10 @@
   }
   lane.addEventListener('pointerup', endDrag);
   lane.addEventListener('pointercancel', endDrag);
+  // Pause the auto-scroll while the mouse is over the lane, so cards are STILL and a click flips
+  // them cleanly (otherwise you chase the moving card and it registers as a drag, not a tap).
+  lane.addEventListener('pointerenter', function(e){ if(e.pointerType!=='touch'){ paused=true; clearTimeout(idle); } });
+  lane.addEventListener('pointerleave', function(e){ if(e.pointerType!=='touch' && !track.querySelector('.qcard.flip')) holdFor(300); });
 
   function toggle(card){
     var f=card.classList.toggle('flip');
