@@ -1099,7 +1099,7 @@
   function tick(ts){
     if(last==null) last=ts;
     var dt=Math.min(64, ts-last); last=ts;
-    if(paused || dragging || reduce){ pos = lane.scrollLeft; }   // the hand is in charge
+    if(paused || dragging || reduce || track.querySelector('.qcard.flip')){ pos = lane.scrollLeft; }   // the hand (or an open card) is in charge
     else { pos += SPEED*dt/1000; lane.scrollLeft = pos; }
     wrap();
     requestAnimationFrame(tick);
