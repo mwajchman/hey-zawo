@@ -625,9 +625,10 @@
   .mt-av{width:28px;height:28px;border-radius:50%;flex:none;background-size:cover;background-position:center;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
   .mt-nm{font-weight:700;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .mt-title>svg{color:var(--muted);flex:none}
-  .mtab.on{position:fixed;left:0;right:0;bottom:0;z-index:120;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(8px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .mtab.on{position:fixed;left:0;right:0;bottom:0;z-index:120;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(8px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:2px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;--fl:0px;--fr:0px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%)}
+  .mtab.on.can-left{--fl:22px} .mtab.on.can-right{--fr:22px}
   .mtab::-webkit-scrollbar{display:none}
-  .mtab-i{flex:0 0 auto;min-width:60px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 8px;border:0;background:none;border-radius:12px;color:var(--muted);font-size:10.5px;font-weight:700;cursor:pointer;line-height:1}
+  .mtab-i{flex:0 0 auto;min-width:52px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 7px;border:0;background:none;border-radius:12px;color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;line-height:1;white-space:nowrap}
   .mtab-i svg{color:var(--muted)}
   .mtab-i.on{color:var(--brand);background:var(--brand-soft)} .mtab-i.on svg{color:var(--brand)}
   .msheet-ovl{position:fixed;inset:0;z-index:210;background:rgba(20,30,26,.5);align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .22s}
@@ -1377,7 +1378,12 @@
     [/^Tomorrow · (.+)$/,["Mañana · $1","Amanhã · $1"]],
     [/^Tomorrow (.+)$/,["Mañana $1","Amanhã $1"]],
     [/^Today · (.+)$/,["Hoy · $1","Hoje · $1"]],
+    [/^Last call Today, (.+), reached$/,["Última llamada hoy, $1, contactada","Última chamada hoje, $1, atendida"]],
+    [/^Last call Yesterday, (.+), reached$/,["Última llamada ayer, $1, contactada","Última chamada ontem, $1, atendida"]],
+    [/^Last call Today, (.+), no answer$/,["Última llamada hoy, $1, sin respuesta","Última chamada hoje, $1, sem resposta"]],
+    [/^Last call Yesterday, (.+), no answer$/,["Última llamada ayer, $1, sin respuesta","Última chamada ontem, $1, sem resposta"]],
     [/^Last call (.+), reached$/,["Última llamada $1, contactada","Última chamada $1, atendida"]],
+    [/^Last call (.+), no answer$/,["Última llamada $1, sin respuesta","Última chamada $1, sem resposta"]],
     [/^Mom · (\d+)$/,["Mamá · $1","Mãe · $1"]],
     [/^Dad · (\d+)$/,["Papá · $1","Pai · $1"]],
     [/^Mother-in-law · (\d+)$/,["Suegra · $1","Sogra · $1"]],
@@ -2133,7 +2139,10 @@
     tab.innerHTML=items.map(function(it){ return '<button class="mtab-i'+(curPane===it.pane?' on':'')+'" data-mpane="'+it.pane+'">'+ICON(it.ic,20)+'<span>'+MSHORT[it.pane]+'</span></button>'; }).join('');
     tab.classList.add('on');
     tab.querySelectorAll('.mtab-i').forEach(function(b){ b.onclick=function(){ showPane(b.getAttribute('data-mpane')); }; });
+    function mtFade(){ var sl=tab.scrollLeft, max=tab.scrollWidth-tab.clientWidth; tab.classList.toggle('can-left', sl>4); tab.classList.toggle('can-right', sl < max-4); }
+    tab.onscroll=mtFade;
     var act=tab.querySelector('.mtab-i.on'); if(act&&act.scrollIntoView){ try{ act.scrollIntoView({inline:'center',block:'nearest'}); }catch(_){} }
+    mtFade(); setTimeout(mtFade,80);
   }
   function mSheetOpen(html, kind){ mbBuild(); _sheetKind=kind; document.getElementById('mSheetBody').innerHTML=html; document.getElementById('mSheetOvl').classList.add('on'); translateAll(); }
   function mSheetClose(){ var o=document.getElementById('mSheetOvl'); if(o) o.classList.remove('on'); _sheetKind=null; }
