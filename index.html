@@ -62,7 +62,18 @@
   header .wide{display:flex; justify-content:space-between; align-items:center}
   .logo{display:flex; align-items:center; gap:9px; font-weight:700; font-size:18px}
   .logo .dot{width:26px;height:26px;border-radius:50%;background:var(--brand);color:var(--brand-ink);display:grid;place-items:center;font-size:12px}
-  header a{color:var(--accent); font-size:14px; font-weight:600; text-decoration:none}
+  header a{color:var(--accent); font-size:14px; font-weight:600; text-decoration:none; white-space:nowrap}
+  .hdr-right{display:flex; align-items:center; gap:14px}
+  .hdr-login{color:var(--ink); opacity:.72}
+  .hdr-login:hover{opacity:1}
+  @media (max-width:600px){
+    header{padding:13px 0}
+    .hdr-right{gap:11px}
+    .hdr-build{display:none}          /* CTA ya está en la barra fija de abajo + hero */
+    .logo{font-size:16px}
+    .belief{font-size:12px; line-height:1.4}
+  }
+  @media (max-width:380px){ .hdr-right{gap:9px} .hdr-login{font-size:13px} }
 
   /* ---------- HERO ---------- */
   .hero{padding:30px 0 54px}
@@ -721,9 +732,10 @@
     .pf-note{font-size:12.5px; text-align:left}
   }
 
-  .lang-pill{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
-  .lang-pill button{padding:5px 11px;font-size:12px;font-weight:700;color:var(--muted);letter-spacing:.04em}
-  .lang-pill button.on{background:var(--brand);color:var(--brand-ink)}
+  .lang-pill{display:inline-flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--bg2)}
+  .lang-pill button{padding:5px 11px;font-size:11.5px;font-weight:800;letter-spacing:.03em;color:var(--muted);border:0;background:transparent;border-radius:999px;cursor:pointer;line-height:1;transition:color .15s,background .15s}
+  .lang-pill button:hover{color:var(--ink)}
+  .lang-pill button.on{background:var(--brand);color:var(--brand-ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
 </style>
 
 <div class="belief">We are advocates for connection: the more <span class="swap" data-a="she" data-b="he">she</span> has, the better <span class="swap" data-a="she" data-b="he">she</span> does, <em>in every part of <span class="swap" data-a="her" data-b="his">her</span> life</em>.</div>
@@ -731,10 +743,10 @@
 <header>
   <div class="wide">
     <div class="logo"><span class="dot">☎</span> Elderly</div>
-    <span style="display:flex;align-items:center;gap:14px">
+    <span class="hdr-right">
       <span class="lang-pill" id="langPill"><button data-lang="en" class="on">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button></span>
-      <a href="/ingresar" style="opacity:.8">Log in</a>
-      <a href="#builder">Build <span class="swap" data-a="her" data-b="his">her</span> plan →</a>
+      <a href="/ingresar" class="hdr-login">Log in</a>
+      <a href="#builder" class="hdr-build">Build <span class="swap" data-a="her" data-b="his">her</span> plan →</a>
     </span>
   </div>
 </header>
