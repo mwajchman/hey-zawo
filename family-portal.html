@@ -718,7 +718,6 @@
       <div class="langsel" id="langSel" role="group" aria-label="Language">
         <button data-action="set-lang" data-lang="en" aria-pressed="true" aria-label="English">EN</button>
         <button data-action="set-lang" data-lang="es" aria-pressed="false" aria-label="Español">ES</button>
-        <button data-action="set-lang" data-lang="pt" aria-pressed="false" aria-label="Português">PT</button>
       </div>
       <div class="ctlrow">
         <button class="ctl" data-action="open-settings" title="Settings" aria-label="Account settings"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V22a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 20.3a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 2.7 15H2.5a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.3 7a1.6 1.6 0 0 0-.3-1.8L3.9 5a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 9 2.7h.1A1.6 1.6 0 0 0 11 1a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 2.7l.1-.1A2 2 0 1 1 20 5.3l-.1.1A1.6 1.6 0 0 0 20.3 7v.1A1.6 1.6 0 0 0 22 9a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></button>
@@ -885,7 +884,7 @@
   var F={s:'she',o:'her',p:'her',P:'Her',Ss:'She'}, M={s:'he',o:'him',p:'his',P:'His',Ss:'He'};
 
   // ---------- i18n (English source, translated at render time) ----------
-  var LANGS=['en','es','pt'], lang='en';
+  var LANGS=['en','es'], lang='en';
   var T={
     "Demo":["Demo","Demo"],
     "A made-up family, with invented data, so you can see how the portal works.":["Una familia inventada, con datos inventados, para que veas cómo funciona el portal.","Uma família inventada, com dados inventados, para você ver como o portal funciona."],
@@ -2208,7 +2207,7 @@
         +'<div style="margin-top:16px;border-top:1px solid var(--hair);padding-top:14px"><div class="allow-lab">What each level can do</div>'+rolesLegendHTML()+'</div>'
         +'<p class="note mt" style="font-size:12px">Ideal circle: up to ~6 with access. Beyond that it stops feeling like family.</p></div>'
       +'<div class="card"><div class="cardtop"><div><p class="kick">Help</p><h2>Support &amp; technical team</h2></div><button class="btn brand" data-action="support-open">'+ICON('chat',14)+' Message the team</button></div><p class="note" style="margin-top:2px">Send a message, attach a photo of what you\'re seeing, and chat directly with our technical team. Each conversation stays in one place.</p></div>'
-      +'<div class="card"><p class="kick">Language</p><h2>Language</h2><p class="note" style="margin-top:2px">Choose the language for the whole portal.</p><div class="langpick mt">'+LANGS.map(function(l){return '<button class="langopt'+(l===lang?' on':'')+'" data-action="set-lang" data-lang="'+l+'"><b>'+({en:'English',es:'Español',pt:'Português'})[l]+'</b><span>'+({en:'EN',es:'ES',pt:'PT'})[l]+'</span></button>';}).join('')+'</div></div>'
+      +'<div class="card"><p class="kick">Language</p><h2>Language</h2><p class="note" style="margin-top:2px">Choose the language for the whole portal.</p><div class="langpick mt">'+LANGS.map(function(l){return '<button class="langopt'+(l===lang?' on':'')+'" data-action="set-lang" data-lang="'+l+'"><b>'+({en:'English',es:'Español'})[l]+'</b><span>'+({en:'EN',es:'ES'})[l]+'</span></button>';}).join('')+'</div></div>'
       +'<div class="card dangerzone"><p class="kick">Close account</p><h2>Cancel and close the portal</h2><p class="note" style="color:var(--ink2);max-width:60ch;margin-top:6px">This cancels the plan and closes the portal for everyone. '+activeNames+' stop getting calls at the end of the current billing period. This cannot be undone.</p><div class="mt"><button class="btn danger" data-action="close-account">Close my account</button></div></div>';
     translateAll();
   }
@@ -2314,7 +2313,7 @@
   function mSheetClose(){ var o=document.getElementById('mSheetOvl'); if(o) o.classList.remove('on'); _sheetKind=null; }
   function mbMenu(){
     var h='<div class="msheet-acct"><span class="av" style="background:'+SEATS[0].color+'">'+SEATS[0].name.charAt(0)+'</span><div><b>'+esc(SEATS[0].name)+'</b><span>Organizer · plan &amp; billing</span></div></div>'
-     +'<div class="msheet-lab">Language</div><div class="msheet-lang">'+LANGS.map(function(l){return '<button class="'+(l===lang?'on':'')+'" data-action="set-lang" data-lang="'+l+'">'+({en:'English',es:'Español',pt:'Português'})[l]+'</button>';}).join('')+'</div>'
+     +'<div class="msheet-lab">Language</div><div class="msheet-lang">'+LANGS.map(function(l){return '<button class="'+(l===lang?'on':'')+'" data-action="set-lang" data-lang="'+l+'">'+({en:'English',es:'Español'})[l]+'</button>';}).join('')+'</div>'
      +'<button class="msheet-item" data-action="m-settings">'+ICON('plancog',20)+'<span>Settings</span></button>'
      +'<button class="msheet-item" data-action="m-support">'+ICON('chat',20)+'<span>Support</span></button>'
      +'<button class="msheet-item danger" data-action="m-logout">'+ICON('back',20)+'<span>Log out</span></button>';
@@ -2356,10 +2355,10 @@
   // ---------- dynamic greeting + date ----------
   function updateGreeting(){ var h=new Date().getHours(); var g=h<12?'Good morning':h<19?'Good afternoon':'Good evening';
     var hg=document.getElementById('homeGreet'); if(hg){ hg.__en=g+', Matías.'; hg.textContent=tr(hg.__en); }
-    var loc=lang==='es'?'es-ES':lang==='pt'?'pt-BR':'en-US';
+    var loc=lang==='es'?'es-ES':'en-US';
     var tail={en:' · the people you care for',es:' · las personas que cuidás',pt:' · as pessoas de quem você cuida'}[lang];
     var hd=document.getElementById('homeDate'); if(hd){ try{ var ds=new Date().toLocaleDateString(loc,{weekday:'long',month:'long',day:'numeric'}); hd.textContent=ds.charAt(0).toUpperCase()+ds.slice(1)+tail; }catch(e){} } }
-  function updateLangUI(){ var names={en:'English',es:'Español',pt:'Português'};
+  function updateLangUI(){ var names={en:'English',es:'Español'};
     document.querySelectorAll('#langSel button').forEach(function(x){ var on=(x.getAttribute('data-lang')===lang); x.classList.toggle('on', on); x.setAttribute('aria-pressed', on?'true':'false'); });
     try{ document.documentElement.setAttribute('lang',lang); }catch(e){} }
   function applyLang(){ try{ localStorage.setItem('elderly_lang',lang); }catch(e){}

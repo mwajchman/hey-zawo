@@ -767,7 +767,7 @@
   <div class="wide">
     <div class="logo"><span class="dot">☎</span> Elderly</div>
     <span class="hdr-right">
-      <span class="lang-pill" id="langPill"><button data-lang="en" class="on">EN</button><button data-lang="es">ES</button><button data-lang="pt">PT</button></span>
+      <span class="lang-pill" id="langPill"><button data-lang="en" class="on">EN</button><button data-lang="es">ES</button></span>
       <a href="/ingresar" class="hdr-login">Log in</a>
       <a href="#builder" class="hdr-build">Build <span class="swap" data-a="her" data-b="his">her</span> plan →</a>
     </span>
@@ -2168,7 +2168,8 @@ openStep(1); booted = true;
   var LANG = "en";
   function norm(s){ return s.replace(/\s+/g," ").trim(); }
   function lookup(key){
-    var dict = LANG==="pt" ? (typeof TR_PT!=="undefined"?TR_PT:{}) : TR;
+    /* Solo ingles y espanol. TR_PT queda en el archivo pero ya no se alcanza. */
+    var dict = TR;
     if(Object.prototype.hasOwnProperty.call(dict,key)) return dict[key];
     for(var i=0;i<PATTERNS.length;i++){ var m=key.match(PATTERNS[i][0]); if(m) return PATTERNS[i][1](m); }
     return undefined;
@@ -2257,7 +2258,8 @@ openStep(1); booted = true;
   window.__setLang = setLang;
   var saved="en";
   try{ saved=localStorage.getItem("elderlyLang")||"en"; }catch(e){}
-  if(saved==="es"||saved==="pt") setLang(saved);
+  /* El producto es bilingue. Si alguien tenia portugues elegido, vuelve a ingles. */
+  if(saved==="es") setLang(saved);
 })();
 </script>
 
