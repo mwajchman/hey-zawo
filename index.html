@@ -2055,18 +2055,65 @@ function render(){
   $("barGo").textContent = current===4 ? "Ask for early access →" : "Continue";
 }
 /* ---- full call player ---- */
-const FC_MOMENTS = [
-  {t:15,  label:"The safe word",     title:"\"The keyword is sunflower\"",       note:"Fifteen seconds in, before anything else, she hears the word only her family chose, so she knows the call is safe. That's Scam Shield, in her own call."},
-  {t:97,  label:"The birthday",      title:"The whole family, for a birthday",   note:"\"This Sunday I got together with the whole family for a grandson's birthday, I had a really good time.\" She brings it up herself, and takes her time."},
-  {t:213, label:"Drawn on her face", title:"The grandkids got the markers out",  note:"She dozed off after lunch; the little ones drew all over her face. Her son-in-law caught it on camera before she noticed, and the way she tells it is the whole point."},
-  {t:334, label:"\"I'll miss you\"",  title:"The littlest one at the door",       note:"\"Grandma, I'm gonna miss you so much\", and the grandson who cooked her an omelette, one each, for lunch. \"Those things are very lovely.\""},
-  {t:388, label:"The lemon pie",     title:"The one that's never missing",       note:"A cooking class, lemon pie for the grandson who visits from the States, cream biscuits for whoever gives her a ride. \"I love giving to people.\""}
-];
-let FC_DUR = 426, fcCur = 0, fcPlaying = false, fcTimer = null;
+/* Las dos grabaciones de Mari: la original en español y su doblaje al inglés.
+   Los tiempos de cada una salen de transcribir SU audio, no de convertir los del otro:
+   el doblaje dura 7:05 y el original 8:26, así que los mismos momentos caen distinto. */
+const CALLS = {
+  en: {
+    src: "audio/whole-call.mp3",
+    dur: 426,
+    moments: [
+      {t:15,  label:"The safe word",     title:"\"The keyword is sunflower\"",       note:"Fifteen seconds in, before anything else, she hears the word only her family chose, so she knows the call is safe. That's Scam Shield, in her own call."},
+      {t:97,  label:"The birthday",      title:"The whole family, for a birthday",   note:"\"This Sunday I got together with the whole family for a grandson's birthday, I had a really good time.\" She brings it up herself, and takes her time."},
+      {t:213, label:"Drawn on her face", title:"The grandkids got the markers out",  note:"She dozed off after lunch; the little ones drew all over her face. Her son-in-law caught it on camera before she noticed, and the way she tells it is the whole point."},
+      {t:334, label:"\"I'll miss you\"",  title:"The littlest one at the door",       note:"\"Grandma, I'm gonna miss you so much\", and the grandson who cooked her an omelette, one each, for lunch. \"Those things are very lovely.\""},
+      {t:388, label:"The lemon pie",     title:"The one that's never missing",       note:"A cooking class, lemon pie for the grandson who visits from the States, cream biscuits for whoever gives her a ride. \"I love giving to people.\""}
+    ]
+  },
+  es: {
+    src: "audio/whole-call-es.mp3",
+    dur: 507,
+    moments: [
+      {t:17,  label:"La palabra clave",  title:"\"La palabra clave es girasol\"",     note:"A los diecisiete segundos, antes que nada, escucha la palabra que eligió su familia, y así sabe que la llamada es de confianza. Eso es el Escudo Antiestafas, en su propia llamada."},
+      {t:96,  label:"El cumpleaños",     title:"Toda la familia, por un cumpleaños",  note:"\"El domingo participé con toda la familia por un cumpleaños de un nieto, lo pasé muy bien.\" Lo trae ella sola, y se toma su tiempo."},
+      {t:223, label:"La cara escrita",   title:"Los nietos y los marcadores",         note:"Se durmió después del almuerzo y los chiquitos le escribieron la cara. El yerno le sacó la foto antes de que se diera cuenta, y cómo lo cuenta es todo el asunto."},
+      {t:387, label:"\"Te voy a extrañar\"", title:"El más chiquito, en la puerta",  note:"\"Abuelita, te voy a extrañar mucho\", y el nieto que le cocinó un omelette, uno para cada uno, para el almuerzo. \"Esas cosas son muy agradables.\""},
+      {t:433, label:"El lemon pie",      title:"El que nunca falta",                  note:"Un curso de cocina, lemon pie para el nieto que viene de Estados Unidos, bizcochitos de crema para quien la lleva. \"Me gusta regalar.\""}
+    ]
+  }
+};
+function callLang(){ return (typeof LANG !== "undefined" && CALLS[LANG]) ? LANG : "en"; }
+let FC_MOMENTS = CALLS.en.moments;
+let FC_DUR = CALLS.en.dur, fcCur = 0, fcPlaying = false, fcTimer = null;
 const fcAudio = $("fcAudio"), fcTrack = $("fcTrack"), fcFill = $("fcFill"), fcTimeEl = $("fcTime"), fcNote = $("fcNote"), fcChips = $("fcChips"), fcPlayBtn = $("fcPlay");
 const fmt = s => Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0");
-const fcReal = () => fcAudio.src && !isNaN(fcAudio.duration) && fcAudio.duration > 0;
-fcAudio.addEventListener("loadedmetadata", ()=>{ FC_DUR = fcAudio.duration; fcRender(); fcPins(); });
+const fcReal = () => !!fcAudio.getAttribute("src");
+fcAudio.addEventListener("loadedmetadata", ()=>{
+  FC_DUR = fcAudio.duration;
+  if(fcCur > 0 && Math.abs(fcAudio.currentTime - fcCur) > 1){
+    try{ fcAudio.currentTime = fcCur; }catch(e){}
+  }
+  if(fcPlaying) fcAudio.play().catch(()=>{});
+  fcRender(); fcPins();
+});
+
+/* Cambiar el idioma cambia la grabación: otra fuente, otra duración y otros pines.
+   Se para lo que estuviera sonando y se vuelve al principio, porque el segundo 200 de
+   una llamada no es el segundo 200 de la otra. */
+function fcSetLang(l){
+  const c = CALLS[l] || CALLS.en;
+  if(fcAudio.getAttribute("src") === c.src) return;
+  try{ fcAudio.pause(); }catch(e){}
+  fcPlaying = false; fcCur = 0;
+  clearInterval(fcTimer);
+  FC_MOMENTS = c.moments;
+  FC_DUR = c.dur;
+  fcAudio.setAttribute("src", c.src);
+  fcAudio.load();
+  fcChipsBuild();
+  fcPins();
+  fcRender();
+}
 function fcPins(){
   fcTrack.querySelectorAll(".fc-pin").forEach(e=>e.remove());
   FC_MOMENTS.forEach((m,i)=>{
@@ -2078,53 +2125,59 @@ function fcPins(){
     fcTrack.appendChild(pin);
   });
 }
-function fcActive(){
-  let a = null;
-  FC_MOMENTS.forEach(m=>{ if(fcCur >= m.t - 1) a = m; });
-  return a;
-}
-function fcRender(){
-  fcFill.style.width = Math.min(100, fcCur/FC_DUR*100) + "%";
-  fcTimeEl.textContent = fmt(fcCur) + " / " + fmt(FC_DUR);
-  fcPlayBtn.textContent = fcPlaying ? "❚❚" : "▶";
-  const a = fcActive();
-  fcNote.innerHTML = a
-    ? `<span class="t">${fmt(a.t)} · ${a.label.toUpperCase()}</span><b>${a.title}</b>${a.note}`
-    : `<b>Press play, or tap a numbered moment</b>Five pins mark the parts families ask about most, the rest is there because we have nothing to cut.`;
-  fcTrack.querySelectorAll(".fc-pin").forEach((p,i)=>p.classList.toggle("done", fcCur >= FC_MOMENTS[i].t));
-  [...fcChips.children].forEach((c,i)=>c.classList.toggle("active", a === FC_MOMENTS[i]));
-}
-function fcSeek(t){
-  fcCur = Math.max(0, Math.min(FC_DUR, t));
-  if(fcReal()) fcAudio.currentTime = fcCur;
-  fcRender();
-}
-function fcTogglePlay(){
-  fcPlaying = !fcPlaying;
-  if(fcReal()){ fcPlaying ? fcAudio.play() : fcAudio.pause(); }
-  clearInterval(fcTimer);
-  if(fcPlaying && !fcReal()){
-    fcTimer = setInterval(()=>{
-      fcCur += .25;
-      if(fcCur >= FC_DUR){ fcCur = FC_DUR; fcPlaying = false; clearInterval(fcTimer); }
-      fcRender();
-    }, 250);
+  function fcActive(){
+    let a = null;
+    FC_MOMENTS.forEach(m=>{ if(fcCur >= m.t - 1) a = m; });
+    return a;
   }
-  fcRender();
-}
-fcAudio.addEventListener("timeupdate", ()=>{ if(fcReal()){ fcCur = fcAudio.currentTime; fcRender(); } });
-fcPlayBtn.addEventListener("click", fcTogglePlay);
-fcTrack.addEventListener("click", e=>{
-  const r = fcTrack.getBoundingClientRect();
-  fcSeek((e.clientX - r.left)/r.width * FC_DUR);
-});
-FC_MOMENTS.forEach((m,i)=>{
-  const c = document.createElement("button");
-  c.className = "fc-chip";
-  c.innerHTML = `<i>${fmt(m.t)}</i>${m.label}`;
-  c.addEventListener("click", ()=>fcSeek(m.t));
-  fcChips.appendChild(c);
-});
+  function fcRender(){
+    fcFill.style.width = Math.min(100, fcCur/FC_DUR*100) + "%";
+    fcTimeEl.textContent = fmt(fcCur) + " / " + fmt(FC_DUR);
+    fcPlayBtn.textContent = fcPlaying ? "❚❚" : "▶";
+    const a = fcActive();
+    fcNote.innerHTML = a
+      ? `<span class="t">${fmt(a.t)} · ${a.label.toUpperCase()}</span><b>${a.title}</b>${a.note}`
+      : `<b>Press play, or tap a numbered moment</b>Five pins mark the parts families ask about most, the rest is there because we have nothing to cut.`;
+    fcTrack.querySelectorAll(".fc-pin").forEach((p,i)=>p.classList.toggle("done", fcCur >= FC_MOMENTS[i].t));
+    [...fcChips.children].forEach((c,i)=>c.classList.toggle("active", a === FC_MOMENTS[i]));
+  }
+  function fcSeek(t){
+    fcCur = Math.max(0, Math.min(FC_DUR, t));
+    if(fcReal()){ try{ fcAudio.currentTime = fcCur; }catch(e){} }
+    fcRender();
+  }
+  function fcTogglePlay(){
+    fcPlaying = !fcPlaying;
+    if(fcReal()){ fcPlaying ? fcAudio.play().catch(()=>{}) : fcAudio.pause(); }
+    clearInterval(fcTimer);
+    if(fcPlaying && !fcReal()){
+      fcTimer = setInterval(()=>{
+        fcCur += .25;
+        if(fcCur >= FC_DUR){ fcCur = FC_DUR; fcPlaying = false; clearInterval(fcTimer); }
+        fcRender();
+      }, 250);
+    }
+    fcRender();
+  }
+  fcAudio.addEventListener("timeupdate", ()=>{ if(fcReal()){ fcCur = fcAudio.currentTime; fcRender(); } });
+  fcPlayBtn.addEventListener("click", fcTogglePlay);
+  fcTrack.addEventListener("click", e=>{
+    const r = fcTrack.getBoundingClientRect();
+    fcSeek((e.clientX - r.left)/r.width * FC_DUR);
+  });
+  /* Los chips se rehacen enteros al cambiar de idioma: cada llamada tiene sus
+     propios momentos y caen en otro segundo. */
+  function fcChipsBuild(){
+    fcChips.innerHTML = "";
+    FC_MOMENTS.forEach((m,i)=>{
+      const c = document.createElement("button");
+      c.className = "fc-chip";
+      c.innerHTML = `<i>${fmt(m.t)}</i>${m.label}`;
+      c.addEventListener("click", ()=>fcSeek(m.t));
+      fcChips.appendChild(c);
+    });
+  }
+  fcChipsBuild();
 fcPins(); fcRender();
 
 /* ---- companionship extracts ---- */
@@ -2294,6 +2347,7 @@ openStep(1); booted = true;
   });
   function setLang(l){
     LANG=l;
+    try{ if(typeof fcSetLang === "function") fcSetLang(l); }catch(e){}
     try{ localStorage.setItem("elderlyLang", l); }catch(e){}
     document.documentElement.lang=l;
     document.querySelectorAll("#langPill button").forEach(function(b){ b.classList.toggle("on", b.dataset.lang===l); });
