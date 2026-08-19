@@ -2402,6 +2402,15 @@ openStep(1); booted = true;
     }
   };
 
+  /* Borde de palabra que cuenta los acentos y la ñ. El de JavaScript no:
+     \b se define sobre [A-Za-z0-9_], asi que "mamá" no tiene borde despues de
+     la á y /\bmamá\b/ nunca encuentra nada. El primer grupo se devuelve en el
+     reemplazo con $1. */
+  var GEN_LETRA = "0-9A-Za-z_\u00c0-\u024f";
+  function genRe(palabra){
+    return new RegExp("(^|[^" + GEN_LETRA + "])" + palabra + "(?![" + GEN_LETRA + "])", "g");
+  }
+
   var GEN_REGLAS = {
     en: [
       [/\bGrandma\b/g, "Grandpa"], [/\bgrandma\b/g, "grandpa"],
@@ -2419,16 +2428,17 @@ openStep(1); booted = true;
       [/\bMari\b/g, "Walter"]
     ],
     es: [
-      [/\bde la abuela\b/g, "del abuelo"], [/\ba la abuela\b/g, "al abuelo"],
-      [/\bLa abuela\b/g, "El abuelo"], [/\bla abuela\b/g, "el abuelo"],
-      [/\bAbuela\b/g, "Abuelo"], [/\babuela\b/g, "abuelo"],
-      [/\bAbuelita\b/g, "Abuelito"], [/\babuelita\b/g, "abuelito"],
-      [/\bMamá\b/g, "Papá"], [/\bmamá\b/g, "papá"],
-      [/\bElla misma\b/g, "Él mismo"], [/\bella misma\b/g, "él mismo"],
-      [/\bElla\b/g, "Él"], [/\bella\b/g, "él"],
-      [/\buna mamá callada\b/g, "un papá callado"],
-      [/\bvigilada\b/g, "vigilado"],
-      [/\bMari\b/g, "Tino"]
+      [genRe("una mamá callada"), "$1un papá callado"],
+      [genRe("de la abuela"), "$1del abuelo"], [genRe("a la abuela"), "$1al abuelo"],
+      [genRe("La abuela"), "$1El abuelo"], [genRe("la abuela"), "$1el abuelo"],
+      [genRe("Abuela"), "$1Abuelo"], [genRe("abuela"), "$1abuelo"],
+      [genRe("Abuelita"), "$1Abuelito"], [genRe("abuelita"), "$1abuelito"],
+      [genRe("Mamá"), "$1Papá"], [genRe("mamá"), "$1papá"],
+      [genRe("Madre"), "$1Padre"], [genRe("madre"), "$1padre"],
+      [genRe("Ella misma"), "$1Él mismo"], [genRe("ella misma"), "$1él mismo"],
+      [genRe("Ella"), "$1Él"], [genRe("ella"), "$1él"],
+      [genRe("vigilada"), "$1vigilado"],
+      [genRe("Mari"), "$1Tino"]
     ]
   };
 
