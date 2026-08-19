@@ -601,6 +601,7 @@
   .x-quote{margin:2px 10px 10px; background:var(--chip); border-radius:12px; padding:10px 13px; font-size:12.5px; font-style:italic; line-height:1.45; display:none}
   .x-quote.show{display:block}
   .x-quote .wave{margin-top:6px}
+.x-line{display:block; min-height:2.9em}
   .comp-foot{font-size:10.5px; color:var(--muted); text-align:center; padding:2px 10px 11px}
 
   /* ---------- price bar ---------- */
@@ -1658,10 +1659,65 @@ const CLIPS = {
   en6: { en: "audio/en6.mp3", es: "audio/es6.mp3", label: "Recounting the novel" },
   whole: { en: "audio/whole-call.mp3", es: "audio/whole-call-es.mp3", label: "The whole call" },
 };
-let clipAudio = null, clipNow = "";
+/* Lo que dice cada grabacion, con el segundo en que lo dice. Sale de transcribir
+   cada archivo, no de un guion: por eso la linea cambia cuando cambia lo que suena.
+   El español de en4 es el de es6, que es esa misma conversacion entera. */
+const CUES = {
+  en1: {
+    en: [[0.0,"Who's speaking?"],[2.2,"I'm Eduardo, from Elderly."],[4.1,"I'm here to chat for a bit and keep you company."],[6.7,"How are you feeling today?"],[7.8,"Remember,"],[8.3,"the code word you agreed on with your family"],[10.8,"is sunflower, so you know you can trust me."],[15.3,"What did you say the code word was?"],[19.6,"The code word is sunflower, Mari."],[22.2,"That way you know this call is from your family,"],[24.9,"who set this"],[25.5,"up to keep you company."],[27.1,"How are you feeling today?"]],
+    es: [[0.0,"¿Quién habla?"],[2.0,"Soy Eduardo, de Elderly."],[4.0,"Estoy aquí para charlar un ratito y hacerte compañía."],[7.0,"¿Cómo te sentís hoy?"],[8.0,"Recuerda,"],[8.5,"la palabra clave que acordaste con tu familia es girasol,"],[12.0,"así que sabes que soy de confianza."],[15.0,"¿La palabra clave qué es que me dijiste?"],[19.0,"La palabra clave es girasol, Mari."],[22.0,"Así sabes que esta llamada es de parte de tu familia,"],[25.0,"que me preparó para hacerte compañía."],[27.0,"¿Cómo te sentís hoy?"],[29.0,"Bien."]]
+  },
+  en2: {
+    en: [[0.0,"Oh no, please you must tell me,"],[2.0,"what is it that happened?"],[3.6,"Two of them actually came over to spend the night at my house,"],[7.4,"specifically the two boys"],[8.9,"and then my other daughter who lives right next door to me."],[11.9,"She has two little girls of her own and well,"],[14.4,"all four of them end up getting together to"],[16.8,"play the very next day."],[20.4,"I really didn't sleep well at all that night"],[22.5,"because my oldest child was pacing back and"],[24.5,"forth all over the house and he really"],[26.5,"couldn't seem to fall asleep so I had to get"],[28.8,"up and"],[29.1,"ask him what is wrong, tell me what is wrong."],[31.2,"Well eventually he finally drifted off to"],[33.0,"sleep but for me the absolute worst thing"],[34.7,"is just not sleeping well at night."],[36.9,"I was feeling so completely exhausted."],[38.6,"I managed to prepare a nice lunch for all four"],[41.1,"of them and then I went straight to bed."],[43.3,"They began to play around on the little patio"],[45.4,"and I was able to hear them as they made their"],[47.6,"way inside the bedroom."],[50.2,"And then when my son-in-law,"],[51.5,"who is the father of those two boys,"],[53.1,"finally arrived at the"],[54.1,"house around 4.30 in the afternoon,"],[55.8,"he turns to me and says, oh you know what,"],[57.9,"I really"],[58.4,"think I should take a nice little picture of"],[60.3,"you together with the oldest one."],[61.7,"So he goes ahead and snaps the photo and then"],[63.7,"he brings it over to show me and oh,"],[65.4,"I just"],[65.7,"looked at him and told him,"],[67.0,"well I have to say this really isn't funny at all because"],[69.9,"they had gone and drawn all over my face."],[71.5,"Oh goodness me, no, no, no, absolutely not."]],
+    es: [[0.0,"¡Oh, no!"],[1.0,"¡Contame!"],[2.2,"¿Qué pasó?"],[3.5,"Dos vinieron a dormir a mi casa,"],[7.1,"los dos varones,"],[8.8,"y al lado tengo mi otra hija que vive y tiene"],[13.9,"dos nenas."],[14.7,"Y bueno, se reunieron los cuatro al otro día."],[18.4,"A la noche no dormí bien porque"],[21.0,"el más grandecito caminaba por toda la casa y"],[24.2,"no se podía dormir."],[25.5,"Y yo me levanté, ¡oh,"],[27.0,"qué pasa!"],[27.9,"Bueno, por fin después se durmió."],[31.1,"Pero yo, para mí lo peor es no dormir bien"],[35.1,"a la noche."],[36.4,"Estaba cansada."],[38.1,"El almuerzo a los cuatro y me acosté."],[42.3,"Se pusieron a jugar"],[44.5,"en el patricito y yo no sentía que entraban al dormitorio."],[49.3,"Y cuando vino a las cuatro"],[51.4,"y media mi yerno, el papá de los varoncitos,"],[55.3,"me dice, ¡ay, te voy a sacar una foto con"],[58.9,"el más grande!"],[60.7,"Me saca la foto y me muestra."],[64.4,"¡Ay!"],[64.9,"Le digo, esto no me causa ninguna gracia."],[70.2,"Me habían escrito la cara."],[72.8,"¡Ay, pobre María!"]]
+  },
+  en3: {
+    en: [[0.0,"The youngest one tells me, when I leave,"],[2.6,"he says,"],[3.1,"Grandma, I'm going to miss you so much."],[6.5,"And one day he comes, he likes to cook."],[12.4,"He had made an omelet,"],[13.8,"so he had made one for me and another for him."],[16.7,"He had it ready for me for lunch."],[20.4,"And those things, yeah, they're really nice."],[24.8,"They do you a lot of good."],[27.8,"Yes, absolutely."],[28.8,"That's everything."]],
+    es: [[0.0,"Es muy lindo."],[0.9,"Uno que me dice el más chiquito,"],[3.2,"cuando me voy, dice abuelita,"],[5.3,"te voy a extrañar mucho."],[7.0,"Y un día se viene y le gusta cocinar."],[12.1,"Había hecho omelette."],[15.0,"Entonces había hecho uno para mí y otro para él."],[19.0,"Me tenía preparado para el almuerzo."],[22.0,"Y esas cosas, sí, son muy agradables."],[26.1,"Hacen mucho bien."],[28.0,"Sí, totalmente."]]
+  },
+  en4: {
+    en: [[0.0,"Well, actually, I like all of them a lot."],[4.4,"There was one I read recently that I left halfway through,"],[11.2,"and because it really got"],[14.2,"to me."],[15.2,"It made me so sad."],[16.2,"The World War II era,"],[17.4,"when they had to sell everything,"],[19.4,"the Japanese living in the United"],[21.3,"States, and they went to a special place."],[23.7,"Oh, that made me so sad,"],[25.1,"and I couldn't finish it."],[26.6,"I still have it there."],[27.6,"I still have it."]],
+    es: [[0.0,"emociones."],[0.8,"¿Te gustaría compartir de qué se trataba ese libro?"],[4.9,"Y de la Segunda Guerra Mundial."],[7.6,"Interesante tema."],[9.1,"La Segunda Guerra"],[10.5,"Mundial tuvo muchas historias impactantes."],[13.1,"¿Te gustaba la parte histórica o había"],[15.4,"algún personaje que te llamaba más la atención?"],[22.8,"Bueno, era..."],[24.2,"Entiendo."],[25.2,"¿Había algo en particular?"],[28.0,"En Estados Unidos, los que venían,"],[31.8,"los japoneses,"],[33.3,"venían a instalarse a Estados Unidos,"],[36.8,"pero no le era tan fácil vivir ahí."],[40.0,"Sí, lo entiendo."],[41.0,"Fue un tiempo muy complicado para muchas personas."],[44.2,"La"],[44.3,"migración y la adaptación deben haber sido un gran desafío."],[47.9,"¿Te impactó alguna"],[49.0,"historia en especial sobre eso?"],[52.3,"Sí,"],[52.7,"porque el personaje de la historia principal"],[58.0,"era uno que había ido a vivir"],[61.4,"a Estados Unidos,"],[62.8,"se casó con la norteamericana y después se escribía"],[67.0,"con su primo,"],[68.6,"y su primo hizo que fuera su hija,"],[72.8,"porque querían cambiar las"],[76.1,"costumbres que tenían ellos tan arraigadas,"],[80.2,"que no les gustaba."],[82.0,"Entonces"],[82.8,"querían que aprendieran otra cultura."],[85.8,"Por eso mandó a su hija a Estados Unidos."],[89.2,"Y quedó en ese momento cuando se declara la"],[93.6,"guerra y a ellos los hacen"],[96.2,"vender todo, quedarse sin nada,"],[101.4,"y los mandan a un lugar apartado."],[106.8,"Eso suena muy..."]]
+  },
+  en5: {
+    en: [[0.0,"Sounds great."],[1.0,"Yes, I do."],[2.0,"I participate in gymnastics and I also make"],[4.8,"sure to attend my yoga sessions regularly."],[7.5,"I have made some truly wonderful friends there."],[10.4,"In fact,"],[10.8,"we have all been studying under the very same"],[13.0,"instructor for quite a number of"],[14.6,"years now."],[15.6,"And I must say,"],[16.3,"the cooking class I've been taking is also exceptionally good."],[19.6,"Well, Mary, what are you,"],[21.2,"how lovely everything you're…"],[23.0,"A dear friend who takes such good care of me"],[26.2,"lives just two blocks away from my house."],[29.2,"She simply won't let me carry a single bag."],[32.3,"She insists on carrying everything that we have."],[35.0,"She takes such wonderful care of me and it"],[37.6,"makes me feel so very good."],[39.2,"I think to myself, well,"],[40.5,"how nice it is that they really love me."]],
+    es: [[0.0,"Eso suena lindo."],[2.0,"Hago gimnasia, voy a yoga,"],[5.1,"tengo unas buenas compañeras que hace muchos"],[10.3,"años que compartimos"],[12.7,"con la misma profesora,"],[15.9,"el curso de cocina también está muy bueno,"],[21.7,"a don Juana me encanta,"],[24.8,"me dio una compañera que me cuida mucho,"],[28.3,"ella no me deja que yo lleve una bolsa, ella"],[32.1,"carga con todas las cosas que llevamos,"],[36.9,"me cuida muchísimo y eso me pone bien,"],[41.6,"me quiere."]]
+  },
+  en6: {
+    en: [[0.0,"Emotions."],[0.4,"Would you be willing to share with me what"],[2.1,"that book was about?"],[5.3,"And what of the Second World War?"],[8.6,"That is a truly fascinating topic to discuss."],[10.2,"The Second World War was filled with so many"],[11.8,"powerful and deeply moving stories."],[12.9,"Were you more interested in the historical events,"],[14.6,"or was there perhaps a specific character that"],[16.2,"really captured your attention?"],[22.1,"Well, I suppose that it was really the very..."],[26.1,"I see."],[26.3,"Was there someone in particular who..."],[28.6,"When the Japanese people arrived in the United States,"],[31.7,"they came to settle down."],[33.1,"However,"],[33.6,"they soon found that life in America was not"],[36.5,"as easy as they had expected."],[40.6,"Yes, I understand."],[41.7,"It was a very complicated time for many people."],[44.3,"Migration and adaptation must have been a great challenge."],[47.2,"Did any story in particular about that impact you?"],[50.6,"Well, yes, that is correct,"],[52.0,"because the central character of this"],[54.0,"particular story was a man"],[55.4,"who had moved away to live in the United States,"],[57.9,"where he married an American woman."],[59.7,"And then, subsequently,"],[61.1,"he wrote a letter to his cousin,"],[63.2,"and his cousin arranged everything"],[65.4,"so that she would be legally recognized as his own daughter,"],[69.2,"because they were eager"],[70.6,"to change the customs that had become so deeply rooted,"],[73.8,"which they no longer found"],[75.8,"acceptable."],[76.6,"So they wanted her to learn in another culture."],[80.0,"That's why he sent his daughter"],[82.2,"to the United States,"],[84.0,"and she stayed at that moment when war has been declared,"],[88.7,"and they are forcing them to sell off everything they own."],[93.4,"Wow, what could that be?"],[94.6,"Left with nothing, and they send them to a,"],[97.9,"I don't know, to a remote place,"],[101.0,"that's where it ended."],[102.2,"That's where my book ended."],[103.7,"That sounds very odd."]],
+    es: [[0.0,"emociones."],[0.8,"¿Te gustaría compartir de qué se trataba ese libro?"],[4.9,"Y de la Segunda Guerra Mundial."],[7.6,"Interesante tema."],[9.1,"La Segunda Guerra"],[10.5,"Mundial tuvo muchas historias impactantes."],[13.1,"¿Te gustaba la parte histórica o había"],[15.4,"algún personaje que te llamaba más la atención?"],[22.8,"Bueno, era..."],[24.2,"Entiendo."],[25.2,"¿Había algo en particular?"],[28.0,"En Estados Unidos, los que venían,"],[31.8,"los japoneses,"],[33.3,"venían a instalarse a Estados Unidos,"],[36.8,"pero no le era tan fácil vivir ahí."],[40.0,"Sí, lo entiendo."],[41.0,"Fue un tiempo muy complicado para muchas personas."],[44.2,"La"],[44.3,"migración y la adaptación deben haber sido un gran desafío."],[47.9,"¿Te impactó alguna"],[49.0,"historia en especial sobre eso?"],[52.3,"Sí,"],[52.7,"porque el personaje de la historia principal"],[58.0,"era uno que había ido a vivir"],[61.4,"a Estados Unidos,"],[62.8,"se casó con la norteamericana y después se escribía"],[67.0,"con su primo,"],[68.6,"y su primo hizo que fuera su hija,"],[72.8,"porque querían cambiar las"],[76.1,"costumbres que tenían ellos tan arraigadas,"],[80.2,"que no les gustaba."],[82.0,"Entonces"],[82.8,"querían que aprendieran otra cultura."],[85.8,"Por eso mandó a su hija a Estados Unidos."],[89.2,"Y quedó en ese momento cuando se declara la"],[93.6,"guerra y a ellos los hacen"],[96.2,"vender todo, quedarse sin nada,"],[101.4,"y los mandan a un lugar apartado."],[106.8,"Eso suena muy..."]]
+  }
+};
+
+let clipAudio = null, clipNow = "", cueTimer = null;
+
+function cueIdioma(){ return (document.documentElement.lang || "en").slice(0,2); }
+function cuesDe(key){
+  const c = CUES[key];
+  return c ? (c[cueIdioma()] || c.en) : null;
+}
+function cueStop(){ clearInterval(cueTimer); cueTimer = null; }
+function cueStart(key){
+  cueStop();
+  const cues = cuesDe(key), linea = xQuote.querySelector(".x-line");
+  if(!cues || !cues.length || !linea) return;
+  const pintar = ()=>{
+    const t = clipAudio ? clipAudio.currentTime : 0;
+    let dice = cues[0][1];
+    for(let i = 0; i < cues.length; i++){ if(t >= cues[i][0] - 0.15) dice = cues[i][1]; }
+    if(linea.textContent !== dice) linea.textContent = dice;
+  };
+  let alto = 0;
+  for(let i = 0; i < cues.length; i++){ linea.textContent = cues[i][1]; alto = Math.max(alto, linea.scrollHeight); }
+  linea.style.minHeight = alto + "px";
+  pintar();
+  cueTimer = setInterval(pintar, 200);
+}
 function clipStop(){
   if(clipAudio){ clipAudio.pause(); }
   clipNow = "";
+  cueStop();
+  try{ xQuote.classList.remove("show"); }catch(e){}
   document.querySelectorAll("[data-clip].playing, .play.playing")
     .forEach(el => el.classList.remove("playing"));
 }
@@ -2194,8 +2250,12 @@ document.querySelectorAll(".extract").forEach(b => b.addEventListener("click", (
   if(wasOn){ clipStop(); xQuote.classList.remove("show"); return; }
   b.classList.add("playing");
   if(b.dataset.clip) clipPlay(b.dataset.clip, b);
-  xQuote.innerHTML = '"' + b.dataset.quote + '"<div class="wave"><i></i><i></i><i></i><i></i><i></i></div>';
+  const hayCues = !!(b.dataset.clip && cuesDe(b.dataset.clip));
+  xQuote.innerHTML = '<span class="x-line">'
+    + (hayCues ? "" : '"' + b.dataset.quote + '"')
+    + '</span><div class="wave"><i></i><i></i><i></i><i></i><i></i></div>';
   xQuote.classList.add("show");
+  if(hayCues) cueStart(b.dataset.clip);
 }));
 
 /* ---- how-it-works slider ---- */
