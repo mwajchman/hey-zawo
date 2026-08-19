@@ -1206,6 +1206,7 @@ document.addEventListener('DOMContentLoaded', function(){
     swaps.forEach(function(el){
       el.textContent=el.getAttribute('data-'+m);
     });
+    try{ if(window.__generoElderly) window.__generoElderly(); }catch(e){}
   }
   btns.forEach(function(b){
     b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); });
@@ -2365,6 +2366,114 @@ openStep(1); booted = true;
     var w=document.createTreeWalker(root, NodeFilter.SHOW_TEXT), x;
     while((x=w.nextNode())) fn(x);
   }
+
+  /* ---- el genero del mayor, en toda la pagina --------------------------
+     Cada regla se aplica sobre el texto ya traducido. El orden importa:
+     "de la abuela" tiene que resolverse antes que "la abuela", si no queda
+     "de el abuelo". */
+  var GEN_SALTAR = "script,style,#langPill,.swap,select,option,.fc-shell,.fc-sub,.comp-card,.x-quote,#fcNote,.fc-chips,.founder-quote";
+
+  /* Frases donde una regla suelta se equivoca, porque hay dos personas y cada
+     una cambia para el lado contrario. */
+  var GEN_FRASE = {
+    en: {
+      "Emma left you something from her recital. Want to hear it? \ud83c\udfb5":
+        "Emma left you something from her recital. Want to hear it? \ud83c\udfb5",
+      "Play it! And then let me record something back for her.":
+        "Play it! And then let me record something back for her.",
+      "This is the portal itself, with a sample family living in it: Rosa, 78, and the four people who look after her. Nothing to sign up for, nothing to install. Open it and click anything.":
+        "This is the portal itself, with a sample family living in it: Rosa, 78, and the four people who look after her. Nothing to sign up for, nothing to install. Open it and click anything.",
+      "My mom is the caregiver, for my dad. Is this for her?":
+        "My dad is the caregiver, for my mom. Is this for him?",
+      "Caregivers are the least-checked-on people in a family, and yes, this is for her too. Her companion asks about":
+        "Caregivers are the least-checked-on people in a family, and yes, this is for him too. His companion asks about"
+    },
+    es: {
+      "Este es el portal mismo, con una familia de muestra viviendo adentro: Rosa, 78, y las cuatro personas que la cuidan. Nada que registrar, nada que instalar. Ábrelo y haz clic en lo que quieras.":
+        "Este es el portal mismo, con una familia de muestra viviendo adentro: Rosa, 78, y las cuatro personas que la cuidan. Nada que registrar, nada que instalar. Ábrelo y haz clic en lo que quieras.",
+      "Mi mamá es la cuidadora, de mi papá. ¿Esto es para ella?":
+        "Mi papá es el cuidador, de mi mamá. ¿Esto es para él?",
+      "Las cuidadoras son las personas menos cuidadas de una familia, y sí, esto también es para ella. Su compañera pregunta por":
+        "Los cuidadores son las personas menos cuidadas de una familia, y sí, esto también es para él. Su compañera pregunta por",
+      "Ella atiende, porque la esperan noticias frescas":
+        "Él atiende, porque lo esperan noticias frescas",
+      "Y dentro de cada llamada hay noticias de su propia familia, hasta una mamá callada los siente cerca.":
+        "Y dentro de cada llamada hay noticias de su propia familia, hasta un papá callado los siente cerca."
+    }
+  };
+
+  var GEN_REGLAS = {
+    en: [
+      [/\bGrandma\b/g, "Grandpa"], [/\bgrandma\b/g, "grandpa"],
+      [/\bGrandmother\b/g, "Grandfather"], [/\bgrandmother\b/g, "grandfather"],
+      [/\bMom\b/g, "Dad"], [/\bmom\b/g, "dad"],
+      [/\bMother\b/g, "Father"], [/\bmother\b/g, "father"],
+      [/\bShe\b/g, "He"], [/\bshe\b/g, "he"],
+      [/\bHerself\b/g, "Himself"], [/\bherself\b/g, "himself"],
+      [/\bHers\b/g, "His"], [/\bhers\b/g, "his"],
+      /* "her" es las dos cosas: objeto ("gets her to pick up") y posesivo
+         ("her week"). Es objeto cuando cierra la frase o la sigue algo que no
+         puede poseerse; en el resto de los casos es posesivo. */
+      [/\bher\b(?=\s*(?:[,.;:!?)\u201d"]|$)|\s+(?:to|and|or|too|about|outside|back|off|up|down|directly|still|instead|again|whenever|so|talking)\b)/g, "him"],
+      [/\bHer\b/g, "His"], [/\bher\b/g, "his"],
+      [/\bMari\b/g, "Walter"]
+    ],
+    es: [
+      [/\bde la abuela\b/g, "del abuelo"], [/\ba la abuela\b/g, "al abuelo"],
+      [/\bLa abuela\b/g, "El abuelo"], [/\bla abuela\b/g, "el abuelo"],
+      [/\bAbuela\b/g, "Abuelo"], [/\babuela\b/g, "abuelo"],
+      [/\bAbuelita\b/g, "Abuelito"], [/\babuelita\b/g, "abuelito"],
+      [/\bMamá\b/g, "Papá"], [/\bmamá\b/g, "papá"],
+      [/\bElla misma\b/g, "Él mismo"], [/\bella misma\b/g, "él mismo"],
+      [/\bElla\b/g, "Él"], [/\bella\b/g, "él"],
+      [/\buna mamá callada\b/g, "un papá callado"],
+      [/\bvigilada\b/g, "vigilado"],
+      [/\bMari\b/g, "Tino"]
+    ]
+  };
+
+  function genMasculino(t, lang){
+    var frases = GEN_FRASE[lang] || GEN_FRASE.en;
+    var limpio = norm(t);
+    if(Object.prototype.hasOwnProperty.call(frases, limpio)) return frases[limpio];
+    var reglas = GEN_REGLAS[lang] || GEN_REGLAS.en, out = t;
+    for(var i = 0; i < reglas.length; i++) out = out.replace(reglas[i][0], reglas[i][1]);
+    return out;
+  }
+
+  /* Devuelve la pagina al femenino. Se llama antes de traducir, para que la
+     traduccion vuelva a encontrar sus claves. */
+  function genRevert(){
+    walk(document.body, function(n){
+      if(n.__fem !== undefined && n.nodeValue === n.__mas){ n.nodeValue = n.__fem; }
+      n.__fem = undefined; n.__mas = undefined;
+    });
+  }
+
+  function genApply(){
+    var on = document.querySelector(".who-toggle .wt.on");
+    if(!on || on.getAttribute("data-mode") !== "b") return;
+    walk(document.body, function(n){
+      var p = n.parentElement;
+      if(!p || p.closest(GEN_SALTAR)) return;
+      var t = n.nodeValue; if(!t || !t.trim()) return;
+      var m = genMasculino(t, LANG);
+      if(m !== t){ n.__fem = t; n.nodeValue = m; n.__mas = m; }
+    });
+  }
+
+  /* La puerta para el interruptor, que vive en otro script. */
+  window.__generoElderly = function(){
+    doPH();
+    mo.disconnect();
+    genRevert();
+    /* Las vistas del portal demo se reinyectan en ingles; se vuelven a traducir
+       antes de aplicar el genero, que si no quedan a medio camino. */
+    if(LANG!=="en") walk(document.body, applyNode);
+    genApply();
+    if(LANG!=="en") mo.observe(document.body,{subtree:true,childList:true,characterData:true});
+  };
+
   function doSwaps(){
     var spans=document.querySelectorAll(".swap");
     spans.forEach(function(sp){
@@ -2390,9 +2499,16 @@ openStep(1); booted = true;
       spans.forEach(function(s,i){ s.textContent=DA[i%7]; });
     });
   }
+  var PH_M={"Margaret":"Walter","Margarita":"Tino","Margarida":"Tino"};
   var PH=[["suHer","Margaret","Margarita","Margarida"],["suName","Emily Carter","Emilia Castro","Emília Costa"],["suEmail","you@email.com","tu@correo.com","voce@email.com"],["suPhone","+1 385 555 0100","+1 385 555 0100","+1 385 555 0100"]];
   function doPH(){
-    PH.forEach(function(r){ var el=document.getElementById(r[0]); if(el) el.placeholder=(LANG==="es"?r[2]:LANG==="pt"?r[3]:r[1]); });
+    var on=document.querySelector(".who-toggle .wt.on");
+    var b=on && on.getAttribute("data-mode")==="b";
+    PH.forEach(function(r){
+      var el=document.getElementById(r[0]); if(!el) return;
+      var v=(LANG==="es"?r[2]:LANG==="pt"?r[3]:r[1]);
+      el.placeholder=(b && PH_M[v]) ? PH_M[v] : v;
+    });
   }
   function _inMarquee(node){ var el = node && (node.nodeType===1 ? node : node.parentElement); return !!(el && el.closest && el.closest("#mtrack, .marquee")); }
   var mo=new MutationObserver(function(muts){
@@ -2417,9 +2533,12 @@ openStep(1); booted = true;
     document.documentElement.lang=l;
     document.querySelectorAll("#langPill button").forEach(function(b){ b.classList.toggle("on", b.dataset.lang===l); });
     mo.disconnect();
+    genRevert();
     walk(document.body, restoreNode);
     doSwaps(); doDays(); doPH();
-    if(l!=="en"){ walk(document.body, applyNode); mo.observe(document.body,{subtree:true,childList:true,characterData:true}); }
+    if(l!=="en"){ walk(document.body, applyNode); }
+    genApply();
+    if(l!=="en"){ mo.observe(document.body,{subtree:true,childList:true,characterData:true}); }
   }
   document.querySelectorAll("#langPill button").forEach(function(b){
     b.addEventListener("click", function(){ if(b.dataset.lang!==LANG) setLang(b.dataset.lang); });
