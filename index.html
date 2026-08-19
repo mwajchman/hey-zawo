@@ -1367,14 +1367,18 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="comp-card">
           <img class="comp-photo" alt="Mari on the phone, smiling">
           <div class="comp-head">Mari, 78 &middot; with her companion</div>
-          <div class="comp-sub">Tap one to read it in her words:</div>
-          <button class="extract" data-quote="She did the twirl? Play it again… and tell her Grandma clapped from here.">
+          <div class="comp-sub">Tap one to hear it in her own voice:</div>
+          <button class="extract" data-clip="en3" data-quote="Grandma, I'm going to miss you so much.">
             <span class="x-play">&#9654;</span>
-            <span class="x-main"><b>Emma&rsquo;s recital reaches her</b><span class="x-sub">from Tuesday&rsquo;s call &middot; 0:14</span></span>
+            <span class="x-main"><b>Her grandson, at the door</b><span class="x-sub">from a real call &middot; tap to listen</span></span>
           </button>
-          <button class="extract" data-quote="You couldn't find yeast back then, so my mother traded eggs for it. Nobody knows that story…">
+          <button class="extract" data-clip="en2" data-quote="She searched for it for an hour, and had it stuck on her the whole time. &ldquo;I was wearing it!&rdquo;">
             <span class="x-play">&#9654;</span>
-            <span class="x-main"><b>The bread story, saved forever</b><span class="x-sub">into the family memories &middot; 0:31</span></span>
+            <span class="x-main"><b>The glue stick, saved forever</b><span class="x-sub">into the family memories &middot; tap to listen</span></span>
+          </button>
+          <button class="extract" data-clip="en4" data-quote="I thought I&rsquo;d stopped existing for them, but he still visits me.">
+            <span class="x-play">&#9654;</span>
+            <span class="x-main"><b>Alone, but not lonely</b><span class="x-sub">why we watch loneliness first &middot; tap to listen</span></span>
           </button>
           <div class="x-quote" id="xQuote"></div>
         </div>
@@ -1627,7 +1631,7 @@ Object.entries(AGENTS).filter(([key])=>key!=="comp").forEach(([key,a])=>{
   c.dataset.key = key; c.setAttribute("aria-pressed","false");
   c.innerHTML = (a.badge ? `<span class="a-badge">${a.badge}</span>` : "")
     + `<span class="a-main"><h3>${a.name}</h3><span class="fee">${a.tag}</span><span class="trig">${a.trig}</span></span>`
-    + (a.script ? `<span class="play" data-play="${key}" aria-label="Hear a sample call">▶</span>` : "");
+    + (a.script ? `<span class="play" data-play="${key}" aria-label="Hear a real call">▶</span>` : "");
   c.addEventListener("click", e=>{
     const p = e.target.closest("[data-play]");
     if(p){ showCall(p.dataset.play); return; }
@@ -1635,6 +1639,45 @@ Object.entries(AGENTS).filter(([key])=>key!=="comp").forEach(([key,a])=>{
   });
   agentsEl.appendChild(c);
 });
+
+/* ---- clips reales de las llamadas ----------------------------------------
+   Seis grabaciones que ya estaban en el repo y no sonaban en ningun lado. Un solo
+   <audio> para todas: asi arrancar una corta la anterior sola, sin llevar cuentas.
+   Los `es` quedan preparados para cuando esten los originales en español; hoy solo
+   existen tres de seis, asi que no se declara ninguno todavia. */
+const CLIPS = {
+  en1: { en: "audio/en1.mp3", label: "The safe word" },
+  en2: { en: "audio/en2.mp3", label: "The glue stick" },
+  en3: { en: "audio/en3.mp3", label: "Her grandson" },
+  en4: { en: "audio/en4.mp3", label: "Alone, but not lonely" },
+  en5: { en: "audio/en5.mp3", label: "A rough night" },
+  en6: { en: "audio/en6.mp3", label: "Recounting the novel" },
+  whole: { en: "audio/whole-call.mp3", label: "The whole call" },
+};
+let clipAudio = null, clipNow = "";
+function clipStop(){
+  if(clipAudio){ clipAudio.pause(); }
+  clipNow = "";
+  document.querySelectorAll("[data-clip].playing, .play.playing")
+    .forEach(el => el.classList.remove("playing"));
+}
+function clipPlay(key, btn){
+  const c = CLIPS[key];
+  if(!c) return;
+  if(!clipAudio){
+    clipAudio = new Audio();
+    clipAudio.addEventListener("ended", clipStop);
+    clipAudio.addEventListener("error", clipStop);
+  }
+  // El reproductor de la llamada entera es otro elemento: si esta sonando, se calla.
+  try{ if(typeof fcAudio !== "undefined" && fcAudio && !fcAudio.paused){ fcAudio.pause(); fcPlaying = false; fcRender(); } }catch(e){}
+  if(clipNow === key && !clipAudio.paused){ clipStop(); return; }
+  clipStop();
+  clipAudio.src = c.en;          // cuando haya español, elegir aca por LANG
+  clipNow = key;
+  if(btn) btn.classList.add("playing");
+  clipAudio.play().catch(()=>clipStop());
+}
 
 /* ---- demo phone ---- */
 const INFO = {
@@ -1668,9 +1711,15 @@ function dpDefault(){
   dpReset();
   dpScreen.innerHTML = `<div class="dp-center"><img class="dp-avatar-lg" src="${MARI_SRC}" alt=""><p><b>Her shields, explained.</b><br>Tap one to see why it matters.<br>▶ plays a real call, word for word.<br>Or skip, connection stands alone.</p><div class="dp-free">Add or drop a shield anytime ·<br>the calls never change.</div></div>`;
 }
+/* Que clip real le corresponde a cada tarjeta. Sale del tema con el que cada uno
+   estaba agrupado en la landing anterior, no de una eleccion nueva. */
+const AGENT_CLIP = { comp: "en4", scam: "en1", health: "en5", mind: "en6", guardian: "whole" };
+
 function showCall(key){
   const a = AGENTS[key]; if(!a || !a.script) return;
   dpReset();
+  const clip = AGENT_CLIP[key];
+  if(clip) clipPlay(clip, document.querySelector(`[data-play="${key}"]`));
   dpScreen.innerHTML = `<div class="dp-callhead"><img src="${MARI_SRC}" alt=""><div><b>Mari · on her phone</b><span>${a.name}</span></div><span class="dp-timer" id="dpTimer">0:00</span></div>
   <div class="dp-wave">${"<i></i>".repeat(16)}</div><div class="dp-body" id="dpBody"></div>`;
   const body = $("dpBody"), seq = dpSeq;
@@ -2085,8 +2134,9 @@ const xQuote = document.getElementById("xQuote");
 document.querySelectorAll(".extract").forEach(b => b.addEventListener("click", () => {
   const wasOn = b.classList.contains("playing");
   document.querySelectorAll(".extract").forEach(x => x.classList.remove("playing"));
-  if(wasOn){ xQuote.classList.remove("show"); return; }
+  if(wasOn){ clipStop(); xQuote.classList.remove("show"); return; }
   b.classList.add("playing");
+  if(b.dataset.clip) clipPlay(b.dataset.clip, b);
   xQuote.innerHTML = '"' + b.dataset.quote + '"<div class="wave"><i></i><i></i><i></i><i></i><i></i></div>';
   xQuote.classList.add("show");
 }));
