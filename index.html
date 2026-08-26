@@ -1963,6 +1963,11 @@ function suNote(){
     "Price shown: $" + planTotal + "/mo"
   ].join(" · ");
 }
+function planSpecs(){
+  // Companionship es la base y no es una especialidad: va vacio.
+  const MAP = { scam:"scam", health:"health", mind:"memory", guardian:"guardian" };
+  return MAP[state.agent] || "";
+}
 function suSay(html, isErr){
   const c = $("confirm");
   c.classList.add("show");
@@ -1995,7 +2000,17 @@ $("cta").addEventListener("click", async ()=>{
         country: COUNTRY ? COUNTRY.code : "",
         language: (function(){ try{ return localStorage.getItem("elderlyLang") || "en"; }catch(e){ return "en"; } })(),
         note: suNote(),
-        consent: true
+        consent: true,
+        // El plan que acaba de armar, en campos y no en prosa. Iba solo adentro de `note`,
+        // asi que "Her plan is saved" era mentira: al abrirle la cuenta habia que volver a
+        // cargarlo a mano, leyendolo de un texto. Ahora viaja con ella y se aplica solo.
+        elder_name: hr.value.trim(),
+        relationship: $("suFor").value || "",
+        calls_per_week: state.days.size,
+        call_length: state.pack,
+        specialties: planSpecs(),
+        voice_kept: !!state.memory,
+        days: [...state.days].sort((a,b)=>a-b).join(",")
       })
     });
     if(!r.ok) throw new Error("http " + r.status);
