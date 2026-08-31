@@ -45,7 +45,8 @@
   .bs-pitch{font-family:var(--serif);font-style:italic;font-weight:500;font-size:29px;line-height:1.2;
     letter-spacing:-.01em;margin:0;position:relative}
   .bs-sub{color:rgba(243,238,224,.74);font-size:15px;line-height:1.55;margin:16px 0 0;position:relative}
-  .bs-trust{color:rgba(243,238,224,.6);font-size:12.5px;font-weight:600;letter-spacing:.02em;position:relative}
+  /* Una sola linea: partida en dos se lee como dos promesas sueltas y pierde el remate. */
+  .bs-trust{color:rgba(243,238,224,.6);font-size:12.5px;font-weight:600;letter-spacing:.02em;position:relative;white-space:nowrap}
   /* right form panel */
   .card{flex:1 1 55%;min-width:0;background:var(--surface);border:0;border-radius:0;overflow:hidden}
   @media(max-width:800px){
@@ -123,7 +124,7 @@
         <p class="bs-pitch" id="bsPitch">A warm call every day, and a note for you after each one.</p>
         <p class="bs-sub" id="bsSub">Elderly checks in on the people you love, and keeps you close, wherever you are.</p>
       </div>
-      <p class="bs-trust" id="bsTrust">Real phone calls. Real conversations. Real peace of mind.</p>
+      <p class="bs-trust" id="bsTrust">Real phone calls. Real peace of mind.</p>
     </aside>
     <div class="card">
       <div class="head">
@@ -299,7 +300,7 @@
       noAccess:'This email is not on the team.',badPass:'Wrong password.',lang:'ES',
       pitch:'A warm call every day, and a note for you after each one.',
       pitchSub:'Elderly checks in on the people you love, and keeps you close, wherever you are.',
-      trust:'Real phone calls. Real conversations. Real peace of mind.'},
+      trust:'Real phone calls. Real peace of mind.'},
     es:{tabFamily:'Familias',tabTeam:'Equipo',
       famTitle:'Hola de nuevo',famSub:'Ingresá al portal de tu familia',
       suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
@@ -317,7 +318,7 @@
       noAccess:'Ese email no es del equipo.',badPass:'Contraseña incorrecta.',lang:'EN',
       pitch:'Una llamada cálida cada día, y una nota para vos después de cada una.',
       pitchSub:'Elderly acompaña a quienes querés y te mantiene cerca, estés donde estés.',
-      trust:'Llamadas de verdad. Conversaciones de verdad. Tranquilidad de verdad.'}
+      trust:'Llamadas de verdad. Tranquilidad de verdad.'}
   };
   var lang='en';
   var tab='family', famView='login';
