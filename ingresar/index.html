@@ -72,6 +72,7 @@
   .seg button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(20,40,32,.12)}
   .body{padding:22px 34px 30px}
   .field{margin-bottom:14px}
+  .field .hint{margin:6px 0 0;font-size:11.5px;line-height:1.45;color:var(--muted)}
   .field label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;
     text-transform:uppercase;letter-spacing:.05em}
   .field input,.field select{width:100%;padding:12px 13px;border:1px solid var(--line);background:var(--surface-2);
@@ -196,6 +197,13 @@
             </select>
           </div>
           <div class="field"><label id="l-email2">Email</label><input type="email" id="suEmail"></div>
+          <!-- El celular de QUIEN CONTRATA, no el de la persona mayor. Va en el alta y no
+               despues porque la primera llamada de todas es a este numero. -->
+          <div class="field"><label id="l-phone">Your mobile</label>
+            <input type="tel" id="suPhone" inputmode="tel" autocomplete="tel"
+                   placeholder="+1 385 555 0100">
+            <p class="hint" id="l-phonehint">With the country and area code. This is the number we call first.</p>
+          </div>
           <div class="field"><label id="l-pass2">Password</label><input type="password" id="suPass"></div>
           <button class="btn" id="signupBtn">Create account</button>
           <p class="switch" id="sw2"></p>
@@ -288,6 +296,9 @@
       suTitle:'Create your account',suSub:'Start bringing Elderly to your family',
       teamTitle:'Team portal',teamSub:'Sign in with your account',
       email:'Email',pass:'Password',login:'Sign in',name:'Your name',country:'Country',signup:'Create account',
+      phone:'Your mobile',phonePh:'+1 385 555 0100',
+      phoneHint:'With the country and area code. This is the number we call first.',
+      needPhone:'Please add your mobile number, with the country code.',
       forgot:'Forgot your password?',fgTitle:'Reset password',fgIntro:"Enter your email and we'll send you a link to set a new password.",
       fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
       rsTitle:'New password',rsIntro:'Choose a new password for your account.',rsSave:'Save new password',
@@ -306,6 +317,9 @@
       suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
       teamTitle:'Portal del equipo',teamSub:'Ingresá con tu cuenta',
       email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',country:'País',signup:'Crear cuenta',
+      phone:'Tu celular',phonePh:'+54 9 261 555 0100',
+      phoneHint:'Con el código de país y de área. A ese número te llamamos primero.',
+      needPhone:'Poné tu celular, con el código de país.',
       forgot:'¿Olvidaste tu contraseña?',fgTitle:'Recuperar contraseña',fgIntro:'Poné tu email y te mandamos un link para crear una nueva.',
       fgSend:'Enviar link',backLogin:'Volver a iniciar sesión',fgSent:'Revisá tu correo. Si ese email tiene cuenta, el link ya va en camino.',
       rsTitle:'Contraseña nueva',rsIntro:'Elegí una contraseña nueva para tu cuenta.',rsSave:'Guardar contraseña',
@@ -330,6 +344,8 @@
     el('tabFamily').textContent=s().tabFamily; el('tabTeam').textContent=s().tabTeam;
     el('l-email').textContent=s().email; el('l-pass').textContent=s().pass; el('loginBtn').textContent=s().login;
     el('l-name').textContent=s().name; el('l-country').textContent=s().country; el('l-email2').textContent=s().email; el('l-pass2').textContent=s().pass; el('signupBtn').textContent=s().signup;
+    el('l-phone').textContent=s().phone; el('l-phonehint').textContent=s().phoneHint;
+    el('suPhone').setAttribute('placeholder', s().phonePh);
     el('l-emailT').textContent=s().email; el('l-passT').textContent=s().pass; el('teamBtn').textContent=s().teamBtn; el('teamNote').textContent=s().teamNote;
     el('toForgot').textContent=s().forgot; el('fgIntro').textContent=s().fgIntro; el('l-fgEmail').textContent=s().email;
     el('forgotBtn').textContent=s().fgSend; el('toLogin2').textContent=s().backLogin;
@@ -377,9 +393,27 @@
     authAndGo("/api/login",{email:el('email').value.trim(),password:el('pass').value},
       "elderly_token","/app",el('err1'),el('loginBtn'),s().login);
   };
+  /* El celular se limpia y se completa aca tambien, no solo en el servidor: quien
+     escribe "(385) 555-0100" no tiene por que ver un error de formato. Diez digitos con
+     pais US o CA son un numero de alla; cualquier otra cosa se manda tal cual y decide
+     el backend, que es el que sabe. */
+  function telNormalizar(v, pais){
+    var s=String(v||'').trim(); if(!s) return '';
+    if(s.charAt(0)==='+') return '+'+s.slice(1).replace(/[^0-9]/g,'');
+    var d=s.replace(/[^0-9]/g,''); if(!d) return '';
+    if(pais==='US'||pais==='CA'||!pais){
+      if(d.length===10) return '+1'+d;
+      if(d.length===11 && d.charAt(0)==='1') return '+'+d;
+    }
+    return d;
+  }
+
   el('signupBtn').onclick=function(){
     if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=s().needAll;return}
-    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:el('suCountry').value},
+    var _pais=el('suCountry').value;
+    var _tel=telNormalizar(el('suPhone').value, _pais);
+    if(!_tel){ el('err2').textContent=s().needPhone; return; }
+    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:_pais,phone:_tel},
       "elderly_token","/app",el('err2'),el('signupBtn'),s().signup);
   };
   el('teamBtn').onclick=function(){
