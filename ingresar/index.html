@@ -257,7 +257,10 @@
     fetch('/api/config').then(function(r){return r.json()}).then(function(cfg){
       var cid=cfg&&cfg.google_client_id; if(!cid) return;
       var sc=document.createElement('script');
-      sc.src='https://accounts.google.com/gsi/client'; sc.async=true; sc.defer=true;
+      /* ?hl=en y no la opcion locale del renderButton: esa la ignora si la cuenta de
+         Google del navegador tiene otro idioma, y el boton salia en español dentro de
+         una pagina en ingles. El idioma del script si manda. */
+      sc.src='https://accounts.google.com/gsi/client?hl=en'; sc.async=true; sc.defer=true;
       sc.onload=function(){
         try{
           google.accounts.id.initialize({
@@ -269,8 +272,7 @@
             }
           });
           google.accounts.id.renderButton(box,{theme:'outline',size:'large',
-                                               text:'continue_with',width:320,
-                                               locale:'en'});
+                                               text:'continue_with',width:320});
           wrap.hidden=false;
           var div=el('gdiv'); if(div) div.hidden=false;
         }catch(e){}
