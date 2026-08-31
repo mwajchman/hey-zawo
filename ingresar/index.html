@@ -123,7 +123,7 @@
         <p class="bs-pitch" id="bsPitch">A warm call every day, and a note for you after each one.</p>
         <p class="bs-sub" id="bsSub">Elderly checks in on the people you love, and keeps you close, wherever you are.</p>
       </div>
-      <p class="bs-trust" id="bsTrust">Real phone calls. Real voices. Real peace of mind.</p>
+      <p class="bs-trust" id="bsTrust">Real phone calls. Real conversations. Real peace of mind.</p>
     </aside>
     <div class="card">
       <div class="head">
@@ -290,14 +290,14 @@
       rsTitle:'New password',rsIntro:'Choose a new password for your account.',rsSave:'Save new password',
       minPass:'Password must be at least 8 characters.',
       teamBtn:'Enter the panel',teamNote:'Private access for the Elderly team only.',
-      sw1:'New here? <a href="/#early">Join the early-access list</a>',
+      sw1:'New here? <a id="toSignup" href="#">Create your account</a>',
       sw2:'Already have an account? <a id="toLogin">Sign in</a>',
       doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
       back:'← Back to home',needEmail:'Please enter your email.',needAll:'Please add your name and email.',
       noAccess:'This email is not on the team.',badPass:'Wrong password.',lang:'ES',
       pitch:'A warm call every day, and a note for you after each one.',
       pitchSub:'Elderly checks in on the people you love, and keeps you close, wherever you are.',
-      trust:'Real phone calls. Real voices. Real peace of mind.'},
+      trust:'Real phone calls. Real conversations. Real peace of mind.'},
     es:{tabFamily:'Familias',tabTeam:'Equipo',
       famTitle:'Hola de nuevo',famSub:'Ingresá al portal de tu familia',
       suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
@@ -308,14 +308,14 @@
       rsTitle:'Contraseña nueva',rsIntro:'Elegí una contraseña nueva para tu cuenta.',rsSave:'Guardar contraseña',
       minPass:'La contraseña debe tener al menos 8 caracteres.',
       teamBtn:'Entrar al panel',teamNote:'Acceso privado, solo para el equipo de Elderly.',
-      sw1:'¿Nuevo por acá? <a href="/es#early">Sumate al acceso temprano</a>',
+      sw1:'¿Nuevo por acá? <a id="toSignup" href="#">Creá tu cuenta</a>',
       sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
       doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te vamos a escribir apenas tu portal esté listo.',
       back:'← Volver al inicio',needEmail:'Poné tu email.',needAll:'Completá tu nombre y email.',
       noAccess:'Ese email no es del equipo.',badPass:'Contraseña incorrecta.',lang:'EN',
       pitch:'Una llamada cálida cada día, y una nota para vos después de cada una.',
       pitchSub:'Elderly acompaña a quienes querés y te mantiene cerca, estés donde estés.',
-      trust:'Llamadas de verdad. Voces de verdad. Tranquilidad de verdad.'}
+      trust:'Llamadas de verdad. Conversaciones de verdad. Tranquilidad de verdad.'}
   };
   var lang='en';
   var tab='family', famView='login';
@@ -426,8 +426,9 @@
       setTab('family'); famShow('reset'); } })();
 
   // Alta de cuentas nuevas en pausa: por ahora vamos a lista de acceso temprano.
-  // Cualquier /ingresar?signup=1 (links viejos, guardados) redirige a la lista en la web.
-  (function(){ if(new URLSearchParams(location.search).get('signup')!=null){ location.replace(lang==='es'?'/es#early':'/#early'); } })();
+  // /ingresar?signup=1 abre directo el alta. Mientras el alta estuvo en pausa esto
+  // mandaba a la lista de acceso temprano; ya no, porque las cuentas estan abiertas.
+  (function(){ if(new URLSearchParams(location.search).get('signup')!=null){ famShow('signup'); } })();
 
   applyLang();
 })();
