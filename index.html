@@ -518,6 +518,9 @@
   .su-field input:focus, .su-field select:focus{outline:2px solid #8FD0BC; outline-offset:1px; border-color:#8FD0BC}
   .su-field input.err{border-color:#E9B44C; outline-color:#E9B44C}
   .su-field.full{grid-column:1 / -1; margin-bottom:10px}
+  .su-sms{grid-column:1 / -1; display:flex; gap:9px; align-items:flex-start; margin:2px 0 14px; cursor:pointer}
+  .su-sms input{margin:2px 0 0; flex:none; width:16px; height:16px; accent-color:var(--accent)}
+  .su-sms span{font-size:12px; line-height:1.5; opacity:.78}
   .signup .cont{background:#8FD0BC; color:#0F3A31; font-weight:700}
   .signup .cont:hover{filter:brightness(1.05)}
   .signup .fine{color:rgba(253,251,245,.65)}
@@ -1483,10 +1486,10 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="wa-msg alert" id="waSignal"></div>
       </div>
       <div class="signup" id="early">
-        <span class="fw-tag">Early access</span>
-        <h3 class="fw-title">Ask for her spot</h3>
-        <p class="fw-sub">We are taking families one at a time, so every first call lands well. Tell us who she is and we get back to you with her start date.</p>
-        <div class="fw-chips"><span>✓ No card</span><span>✓ Her plan is saved</span><span>✓ A person writes back</span></div>
+        <span class="fw-tag">First week free</span>
+        <h3 class="fw-title">Create her account</h3>
+        <p class="fw-sub">It takes a minute. You set her up in the portal, and the first call is to you, so you hear the voice before she does.</p>
+        <div class="fw-chips"><span>✓ No card</span><span>✓ Cancel anytime</span><span>✓ You choose the first call</span></div>
         <div class="su-field full">
           <label for="suCountry">Where does she live?</label>
           <select id="suCountry"></select>
@@ -1499,9 +1502,16 @@ document.addEventListener('DOMContentLoaded', function(){
           <div class="su-field"><label for="suName">Your name</label><input type="text" id="suName" placeholder="Emily Carter" autocomplete="name"></div>
           <div class="su-field"><label for="suEmail">Email</label><input type="email" id="suEmail" placeholder="you@email.com" autocomplete="email"></div>
         </div>
-        <div class="su-field full"><label for="suPhone">Your phone (optional)</label><input type="tel" id="suPhone" placeholder="+1 385 555 0100" autocomplete="tel"></div>
-        <button class="cont" id="cta">Ask for early access →</button>
-        <p class="fine">By asking for access you let us keep your details and contact you about Elderly. Nothing else, ever.</p>
+        <div class="su-field full"><label for="suPhone">Your mobile</label><input type="tel" id="suPhone" placeholder="+1 385 555 0100" autocomplete="tel"></div>
+        <div class="su-field full"><label for="suPass">Choose a password</label><input type="password" id="suPass" placeholder="At least 8 characters" autocomplete="new-password"></div>
+        <!-- Casilla SIN marcar, igual que en /ingresar. Los operadores de Estados Unidos
+             la exigen para aprobar la campana A2P y el revisor entra al sitio a mirarla,
+             asi que las DOS puertas de alta tienen que tenerla. -->
+        <label class="su-sms"><input type="checkbox" id="suSms">
+          <span>Yes, text me about my account and my calls. One message after each call (up to 7 per week), plus verification codes. No marketing or promotional texts, ever. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help.</span>
+        </label>
+        <button class="cont" id="cta">Create her account →</button>
+        <p class="fine">By creating the account you accept our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
       </div>
       <div class="confirm" id="confirm"></div>
     </div>
@@ -1978,37 +1988,40 @@ function suSay(html, isErr){
   c.innerHTML = html;
 }
 $("cta").addEventListener("click", async ()=>{
-  const hr = $("suHer"), nm = $("suName"), em = $("suEmail"), ph = $("suPhone"), btn = $("cta");
+  const hr = $("suHer"), nm = $("suName"), em = $("suEmail"), ph = $("suPhone"),
+        pw = $("suPass"), sms = $("suSms"), btn = $("cta");
   let ok = true;
-  [hr, nm, em, ph].forEach(f=>f.classList.remove("err"));
+  [hr, nm, em, ph, pw].forEach(f=>f.classList.remove("err"));
   if(!hr.value.trim()){ hr.classList.add("err"); ok = false; }
   if(!nm.value.trim()){ nm.classList.add("err"); ok = false; }
   if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim())){ em.classList.add("err"); ok = false; }
   const digits = (ph.value.match(/\d/g)||[]).length;
-  if(ph.value.trim() && (digits < 7 || digits > 15)){ ph.classList.add("err"); ok = false; }
+  if(digits < 7 || digits > 15){ ph.classList.add("err"); ok = false; }
+  if((pw.value||"").length < 8){ pw.classList.add("err"); ok = false; }
   if(!ok){
-    suSay("Almost there. We need her first name, your name and an email that works.", true);
-    ([hr,nm,em,ph].find(f=>f.classList.contains("err"))||hr).focus();
+    suSay("Almost there. We need her first name, your name, an email that works, your mobile and a password of at least 8 characters.", true);
+    ([hr,nm,em,ph,pw].find(f=>f.classList.contains("err"))||hr).focus();
+    return;
+  }
+  if(!sms.checked){
+    suSay("Please tick the box so we can text you. Without it we cannot send the verification code.", true);
+    sms.focus();
     return;
   }
   btn.disabled = true;
   try{
-    const r = await fetch("/api/waitlist", {
+    // El alta esta abierta, asi que este boton CREA la cuenta con el plan que acaba de
+    // armar, en vez de dejar el mail en una lista. Antes decia "your plan is saved" y
+    // despues habia que abrir la cuenta a mano: la persona quedaba esperando un mail.
+    const r = await fetch("/api/signup-plan", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
-        name: nm.value.trim(),
-        phone: ph.value.trim(),
         email: em.value.trim(),
-        country: COUNTRY ? COUNTRY.code : "",
-        language: (function(){ try{ return localStorage.getItem("elderlyLang") || "en"; }catch(e){ return "en"; } })(),
-        note: suNote(),
-        consent: true,
-        // El plan que acaba de armar, en campos y no en prosa. Iba solo adentro de `note`,
-        // asi que "Her plan is saved" era mentira: al abrirle la cuenta habia que volver a
-        // cargarlo a mano, leyendolo de un texto. Ahora viaja con ella y se aplica solo.
+        password: pw.value,
+        full_name: nm.value.trim(),
+        phone: ph.value.trim(),
         elder_name: hr.value.trim(),
-        relationship: $("suFor").value || "",
         calls_per_week: state.days.size,
         call_length: state.pack,
         specialties: planSpecs(),
@@ -2016,14 +2029,19 @@ $("cta").addEventListener("click", async ()=>{
         days: [...state.days].sort((a,b)=>a-b).join(",")
       })
     });
-    if(!r.ok) throw new Error("http " + r.status);
-    suSay(COUNTRY && COUNTRY.live
-      ? "✓ <strong>You are on the early access list.</strong><br>Her plan is saved. We write back with her start date."
-      : "✓ <strong>You are on the list.</strong><br>We have not opened her country yet. You are first in line, and we write to you the day we do.");
-    btn.textContent = "Request sent ✓";
+    const j = await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(j.detail || ("http " + r.status));
+    try{ localStorage.setItem("elderly_token", j.token); }catch(e){}
+    suSay("✓ <strong>Her account is ready.</strong><br>Taking you to the portal…");
+    btn.textContent = "Done ✓";
+    setTimeout(function(){ location.href = "/app"; }, 900);
   }catch(e){
     btn.disabled = false;
-    suSay("We could not send that. Please try again, or write to <a href=\"mailto:hello@callelderly.com\" style=\"color:var(--accent);font-weight:700\">hello@callelderly.com</a>", true);
+    // El mensaje del backend importa: dice si ese correo ya tiene cuenta, o si la
+    // contrasena es corta. Tragarlo obligaba a adivinar por que no funciono.
+    var motivo = (e && e.message && e.message.indexOf("http ") !== 0) ? e.message : "";
+    suSay((motivo || "We could not create the account. Please try again") +
+          ", or write to <a href=\"mailto:hello@callelderly.com\" style=\"color:var(--accent);font-weight:700\">hello@callelderly.com</a>", true);
   }
 });
 $("upsell1").addEventListener("click", ()=>{ state.agent = "guardian"; render(); });
