@@ -203,6 +203,10 @@
             <input type="tel" id="suPhone" inputmode="tel" autocomplete="tel"
                    placeholder="+1 385 555 0100">
             <p class="hint" id="l-phonehint">With the country and area code. This is the number we call first.</p>
+            <!-- El consentimiento a los SMS tiene que estar escrito y a la vista: los
+                 operadores de Estados Unidos exigen poder ver COMO acepto la persona, y
+                 un campo de telefono a secas no alcanza para registrar la campana. -->
+            <p class="hint" id="l-smsconsent">By entering your number you agree to receive text messages from Elderly about your account and your calls. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.</p>
           </div>
           <div class="field"><label id="l-pass2">Password</label><input type="password" id="suPass"></div>
           <button class="btn" id="signupBtn">Create account</button>
@@ -298,6 +302,7 @@
       email:'Email',pass:'Password',login:'Sign in',name:'Your name',country:'Country',signup:'Create account',
       phone:'Your mobile',phonePh:'+1 385 555 0100',
       phoneHint:'With the country and area code. This is the number we call first.',
+      smsConsent:'By entering your number you agree to receive text messages from Elderly about your account and your calls. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.',
       needPhone:'Please add your mobile number, with the country code.',
       forgot:'Forgot your password?',fgTitle:'Reset password',fgIntro:"Enter your email and we'll send you a link to set a new password.",
       fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
@@ -319,6 +324,7 @@
       email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',country:'País',signup:'Crear cuenta',
       phone:'Tu celular',phonePh:'+54 9 261 555 0100',
       phoneHint:'Con el código de país y de área. A ese número te llamamos primero.',
+      smsConsent:'Al poner tu número aceptás recibir mensajes de texto de Elderly sobre tu cuenta y tus llamadas. Pueden aplicar cargos de tu operador. Respondé STOP para no recibir más, HELP para ayuda. Mirá nuestra <a href="/privacy">Política de Privacidad</a> y los <a href="/terms">Términos</a>.',
       needPhone:'Poné tu celular, con el código de país.',
       forgot:'¿Olvidaste tu contraseña?',fgTitle:'Recuperar contraseña',fgIntro:'Poné tu email y te mandamos un link para crear una nueva.',
       fgSend:'Enviar link',backLogin:'Volver a iniciar sesión',fgSent:'Revisá tu correo. Si ese email tiene cuenta, el link ya va en camino.',
@@ -345,6 +351,7 @@
     el('l-email').textContent=s().email; el('l-pass').textContent=s().pass; el('loginBtn').textContent=s().login;
     el('l-name').textContent=s().name; el('l-country').textContent=s().country; el('l-email2').textContent=s().email; el('l-pass2').textContent=s().pass; el('signupBtn').textContent=s().signup;
     el('l-phone').textContent=s().phone; el('l-phonehint').textContent=s().phoneHint;
+    el('l-smsconsent').innerHTML=s().smsConsent;
     el('suPhone').setAttribute('placeholder', s().phonePh);
     el('l-emailT').textContent=s().email; el('l-passT').textContent=s().pass; el('teamBtn').textContent=s().teamBtn; el('teamNote').textContent=s().teamNote;
     el('toForgot').textContent=s().forgot; el('fgIntro').textContent=s().fgIntro; el('l-fgEmail').textContent=s().email;
