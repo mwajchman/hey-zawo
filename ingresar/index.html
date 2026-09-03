@@ -210,10 +210,11 @@
                  operadores de Estados Unidos exigen poder ver COMO acepto la persona, y
                  un campo de telefono a secas no alcanza para registrar la campana. -->
             <!-- Casilla SIN marcar, y el alta no sigue sin ella. Los operadores de
-                 Estados Unidos exigen exactamente esto para aprobar la campana A2P, y el
-                 revisor entra al sitio a mirarlo. Un texto suelto no alcanza. -->
+                 Estados Unidos exigen que sea OPCIONAL: el alta sigue sin ella. Atarla
+                 hizo que rechazaran la campana (error 30923, "forced consent"), y el
+                 revisor entra a esta pagina misma a comprobarlo. -->
             <label class="smsok"><input type="checkbox" id="suSms">
-              <span id="l-smsconsent">Yes, text me about my account and my calls. One message after each call (up to 7 per week), plus verification codes. No marketing or promotional texts, ever. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.</span>
+              <span id="l-smsconsent"><b>Optional.</b> Yes, text me about my account and my calls. You can leave this unticked and still create your account and use Elderly; we will email you instead. One message after each call (up to 7 per week), plus verification codes. No marketing or promotional texts, ever. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.</span>
             </label>
           </div>
           <div class="field"><label id="l-pass2">Password</label><input type="password" id="suPass"></div>
@@ -310,8 +311,7 @@
       email:'Email',pass:'Password',login:'Sign in',name:'Your name',country:'Country',signup:'Create account',
       phone:'Your mobile',phonePh:'+1 385 555 0100',
       phoneHint:'With the country and area code. This is the number we call first.',
-      smsConsent:'Yes, text me about my account and my calls. One message after each call (up to 7 per week), plus verification codes. No marketing or promotional texts, ever. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.',
-      needSms:'Please tick the box so we can text you. Without it we cannot send the verification code.',
+      smsConsent:'<b>Optional.</b> Yes, text me about my account and my calls. You can leave this unticked and still create your account and use Elderly; we will email you instead. One message after each call (up to 7 per week), plus verification codes. No marketing or promotional texts, ever. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.',
       needPhone:'Please add your mobile number, with the country code.',
       forgot:'Forgot your password?',fgTitle:'Reset password',fgIntro:"Enter your email and we'll send you a link to set a new password.",
       fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
@@ -333,8 +333,7 @@
       email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',country:'País',signup:'Crear cuenta',
       phone:'Tu celular',phonePh:'+54 9 261 555 0100',
       phoneHint:'Con el código de país y de área. A ese número te llamamos primero.',
-      smsConsent:'Sí, mandame mensajes sobre mi cuenta y mis llamadas. Uno después de cada llamada (hasta 7 por semana), más los códigos de verificación. Nunca publicidad ni promociones. Pueden aplicar cargos de tu operador. Respondé STOP para no recibir más, HELP para ayuda. Mirá nuestra <a href="/privacy">Política de Privacidad</a> y los <a href="/terms">Términos</a>.',
-      needSms:'Marcá la casilla para que podamos escribirte. Sin eso no podemos mandarte el código.',
+      smsConsent:'<b>Opcional.</b> Sí, mandame mensajes sobre mi cuenta y mis llamadas. Podés dejarla sin marcar y crear tu cuenta igual; te escribimos por mail. Uno después de cada llamada (hasta 7 por semana), más los códigos de verificación. Nunca publicidad ni promociones. Pueden aplicar cargos de tu operador. Respondé STOP para no recibir más, HELP para ayuda. Mirá nuestra <a href="/privacy">Política de Privacidad</a> y los <a href="/terms">Términos</a>.',
       needPhone:'Poné tu celular, con el código de país.',
       forgot:'¿Olvidaste tu contraseña?',fgTitle:'Recuperar contraseña',fgIntro:'Poné tu email y te mandamos un link para crear una nueva.',
       fgSend:'Enviar link',backLogin:'Volver a iniciar sesión',fgSent:'Revisá tu correo. Si ese email tiene cuenta, el link ya va en camino.',
@@ -430,8 +429,7 @@
     var _pais=el('suCountry').value;
     var _tel=telNormalizar(el('suPhone').value, _pais);
     if(!_tel){ el('err2').textContent=s().needPhone; return; }
-    if(!el('suSms').checked){ el('err2').textContent=s().needSms; return; }
-    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:_pais,phone:_tel},
+    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:_pais,phone:_tel,sms_consent:el('suSms').checked},
       "elderly_token","/app",el('err2'),el('signupBtn'),s().signup);
   };
   el('teamBtn').onclick=function(){
