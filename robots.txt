@@ -8,4 +8,7 @@ Disallow: /manage
 Disallow: /welcome
 Disallow: /portal
 
+# Plantilla de trabajo con datos inventados. Se lee como un portal real.
+Disallow: /family-portal
+
 Sitemap: https://www.callelderly.com/sitemap.xml

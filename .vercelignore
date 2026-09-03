@@ -1,0 +1,8 @@
+# Lo que NO se sube al sitio. Vercel publica todo el repo, no solo lo que está linkeado:
+# el respaldo de la landing vieja se descargaba entero desde callelderly.com, 646 KB, sin
+# que nadie lo hubiera puesto en ningún lado.
+*.bak
+index.landing-viejo.html.bak
+
+# El portal viejo del equipo, tapado por el redirect /portal → /ingresar.
+portal/
