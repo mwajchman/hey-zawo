@@ -2130,6 +2130,30 @@ function pintarModoEspera(c){
   });
 })();
 
+
+/* Contar por donde hay demanda. Elegir un pais cerrado no dejaba ningun rastro: si diez
+   personas miraban Uruguay y una sola completaba el formulario, veiamos una, y la que
+   decide donde abrir es la otra.
+
+   Se manda SOLO el codigo del pais. Ni nombre, ni correo, ni identificador de la persona.
+   Una vez por pais y por pestaña: quien prueba cinco paises buscando el suyo cuenta una
+   vez en cada uno, y volver al mismo no lo suma de nuevo. */
+function anotarInteres(c){
+  if(!c || c.live) return;                    // en un pais abierto lo que importa es quien compra
+  try{
+    const clave = "elderlyInteres:" + c.code;
+    if(sessionStorage.getItem(clave)) return;
+    sessionStorage.setItem(clave, "1");
+  }catch(e){ /* sin sessionStorage se cuenta igual: mejor de mas que de menos */ }
+  /* keepalive para que llegue aunque cierre la pestaña justo despues, que es
+     exactamente el caso que queremos medir. */
+  try{
+    fetch("/api/interes-pais", {method:"POST", keepalive:true,
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({country: c.code})}).catch(()=>{});
+  }catch(e){}
+}
+
 function buildCountrySelect(){
   const sel = $("suCountry");
   if(!sel) return;
@@ -2141,6 +2165,7 @@ function buildCountrySelect(){
     COUNTRY = countryByCode(sel.value);
     renderCountryNote();
     render();
+    anotarInteres(COUNTRY);
   });
   renderCountryNote();
 }
