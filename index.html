@@ -1232,7 +1232,8 @@ document.addEventListener('DOMContentLoaded', function(){
   var swaps=[].slice.call(document.querySelectorAll('.swap'));
   var btns=[].slice.call(document.querySelectorAll('.who-toggle .wt'));
   if(!swaps.length || !btns.length) return;
-  function setMode(m){
+  function setMode(m, porEleccion){
+    if(porEleccion) window.__generoElegido = true;   // el ciclador deja de mandar
     btns.forEach(function(b){
       var on=b.getAttribute('data-mode')===m;
       b.classList.toggle('on', on);
@@ -1244,8 +1245,20 @@ document.addEventListener('DOMContentLoaded', function(){
     try{ if(window.__generoElderly) window.__generoElderly(); }catch(e){}
   }
   btns.forEach(function(b){
-    b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode')); });
+    b.addEventListener('click', function(){ setMode(b.getAttribute('data-mode'), true); });
   });
+
+  /* El selector "Who is this for?" del final tambien manda. Era codigo muerto: un hijo
+     elegia "My dad" y la pagina lo ignoraba por completo, despues de haberle hablado en
+     femenino durante todo el armado. El interruptor del hero es lo unico que cambiaba el
+     genero, y quien entra por un link directo al armador nunca lo ve. */
+  var selFor=document.getElementById('suFor');
+  if(selFor){
+    selFor.addEventListener('change', function(){
+      var v=(selFor.value||'').toLowerCase();
+      setMode((v.indexOf('dad')>=0 || v.indexOf('grandpa')>=0) ? 'b' : 'a', true);
+    });
+  }
 });
 </script>
 
@@ -2055,6 +2068,8 @@ $("cta").addEventListener("click", async ()=>{
         password: pw.value,
         full_name: nm.value.trim(),
         phone: ph.value.trim(),
+        // "My mom" / "My dad" / ... El backend ya tenía el campo y nadie se lo mandaba.
+        relationship: ($("suFor") && $("suFor").value) || "",
         // Es lo primero que pregunta el armador y no llegaba hasta el backend: la cuenta
         // nacia sin pais y el precio por pais no la alcanzaba nunca.
         country: (COUNTRY && COUNTRY.code) || "US",
@@ -2067,6 +2082,31 @@ $("cta").addEventListener("click", async ()=>{
       })
     });
     const j = await r.json().catch(()=>({}));
+    // Si el alta esta cerrada, el backend devuelve 403 y un mensaje que manda a
+    // callelderly.com, que es donde la persona ya esta parada. Antes eso se pintaba tal
+    // cual: recorrio cuatro pasos, escribio el nombre de su madre, y el producto le
+    // contesto que fuera al sitio en el que estaba. Cae a la lista de espera, que guarda
+    // el plan que armo.
+    if(r.status === 403){
+      const w = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          name: nm.value.trim(), email: em.value.trim(), phone: ph.value.trim(),
+          country: (COUNTRY && COUNTRY.code) || "US", consent: true,
+          elder_name: hr.value.trim(), calls_per_week: state.days.size,
+          call_length: state.pack, specialties: planSpecs(),
+          voice_kept: !!state.memory,
+          days: [...state.days].sort((a,b)=>a-b).join(",")
+        })
+      });
+      if(w.ok){
+        suSay("\u2713 <strong>Te anotamos.</strong><br>Estamos abriendo de a poco. "
+          + "Guardamos el plan que armaste y te escribimos apenas haya lugar.");
+        btn.textContent = "Saved \u2713";
+        return;
+      }
+    }
     if(!r.ok) throw new Error(j.detail || ("http " + r.status));
     try{ localStorage.setItem("elderly_token", j.token); }catch(e){}
     suSay("✓ <strong>Her account is ready.</strong><br>Taking you to the portal…");
@@ -2684,6 +2724,12 @@ openStep(1); booted = true;
     if(!spans.length) return;
     var mode='a';
     setInterval(function(){
+      /* Si la persona ya dijo para quien es, esto no toca nada mas. El ciclador existe
+         para mostrar que el producto sirve para una abuela o un abuelo mientras nadie
+         eligio; una vez que eligio, seguir alternando le pisa la eleccion. Duraba cinco
+         segundos y volvia sola a femenino: quien eligio "abuelo" veia el boton cambiar
+         solo, que parece un error del sitio. */
+      if(window.__generoElegido) return;
       mode=(mode==='a')?'b':'a';
       spans.forEach(function(sp){
         var v=sp.getAttribute('data-'+mode);

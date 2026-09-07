@@ -247,15 +247,6 @@
   var root=document.documentElement;
   var PORTAL_URL="/portal";
 
-  /* accounts (solo hash, nunca texto plano) */
-  var ACCOUNTS={
-    "matias@heyzawo.com":"17cba007407bd75e21d906ebfe8726853582fab39e1f03dc9bd57a2b454b47c2",
-    "pablo@heyzawo.com":"435b3265482ba13e8e83e2bab79724f04ee8e8edad9841d47d51e2bcbb0091f6",
-    "belen@heyzawo.com":"952e1cce5a5f3bddc35fe0d965a2e6b7c284a320b8850a86d29e10dc01c21ff6"
-  };
-  var NAMES={"matias@heyzawo.com":"Matías","pablo@heyzawo.com":"Pablo","belen@heyzawo.com":"Belén"};
-  function sha256hex(s){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){
-    return Array.prototype.map.call(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
 
   function setTheme(t){root.setAttribute('data-theme',t);try{localStorage.setItem('elderly_web_theme',t)}catch(e){}
     el('themeBtn').innerHTML=t==='dark'
