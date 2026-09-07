@@ -2055,6 +2055,9 @@ $("cta").addEventListener("click", async ()=>{
         password: pw.value,
         full_name: nm.value.trim(),
         phone: ph.value.trim(),
+        // Es lo primero que pregunta el armador y no llegaba hasta el backend: la cuenta
+        // nacia sin pais y el precio por pais no la alcanzaba nunca.
+        country: (COUNTRY && COUNTRY.code) || "US",
         elder_name: hr.value.trim(),
         calls_per_week: state.days.size,
         call_length: state.pack,
