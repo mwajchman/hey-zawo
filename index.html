@@ -2845,7 +2845,7 @@ openStep(1); booted = true;
     LANG=l;
     try{ if(typeof fcSetLang === "function") fcSetLang(l); }catch(e){}
     try{ if(typeof clipStop === "function") clipStop(); }catch(e){}
-    try{ localStorage.setItem("elderlyLang", l); }catch(e){}
+    try{ localStorage.setItem("elderlyLang", l); localStorage.setItem("elderly_lang", l); }catch(e){}
     document.documentElement.lang=l;
     document.querySelectorAll("#langPill button").forEach(function(b){ b.classList.toggle("on", b.dataset.lang===l); });
     mo.disconnect();

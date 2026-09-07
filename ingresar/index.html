@@ -335,7 +335,8 @@
       trust:'Llamadas de verdad. Tranquilidad de verdad.'}
   };
   var lang='en';
-  try{ if(localStorage.getItem('elderlyLang')==='es') lang='es'; }catch(e){}
+  try{ var g=localStorage.getItem('elderlyLang')||localStorage.getItem('elderly_lang');
+        if(g==='es') lang='es'; }catch(e){}
   var tab='family', famView='login';
 
   function s(){return STR[lang]}
