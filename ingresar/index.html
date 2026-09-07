@@ -167,29 +167,29 @@
               <div id="gbtn"></div>
             </div>
           <div class="su-div" id="gdiv" hidden>or with your email</div>
-          <div class="field"><label id="l-email">Email</label><input type="email" id="email" autocomplete="username"></div>
-          <div class="field"><label id="l-pass">Password</label><input type="password" id="pass" autocomplete="current-password"></div>
-          <button class="btn" id="loginBtn">Sign in</button>
+          <form id="formLogin" novalidate><div class="field"><label id="l-email" for="email">Email</label><input type="email" id="email" autocomplete="username"></div>
+          <div class="field"><label id="l-pass" for="pass">Password</label><input type="password" id="pass" autocomplete="current-password"></div>
+          <button class="btn" type="submit" id="loginBtn">Sign in</button></form>
           <p class="switch" style="margin-top:12px"><a id="toForgot" href="#">Forgot your password?</a></p>
           <p class="switch" id="sw1"></p>
         </div>
         <div id="forgot" hidden>
           <p class="err" id="err3"></p>
           <p class="sub" id="fgIntro" style="margin:0 0 14px">Enter your email and we'll send you a link to set a new password.</p>
-          <div class="field"><label id="l-fgEmail">Email</label><input type="email" id="fgEmail" autocomplete="username"></div>
-          <button class="btn" id="forgotBtn">Send reset link</button>
+          <form id="formForgot" novalidate><div class="field"><label id="l-fgEmail" for="fgEmail">Email</label><input type="email" id="fgEmail" autocomplete="username"></div>
+          <button class="btn" type="submit" id="forgotBtn">Send reset link</button></form>
           <p class="switch"><a id="toLogin2" href="#">Back to sign in</a></p>
         </div>
         <div id="reset" hidden>
           <p class="err" id="err4"></p>
           <p class="sub" id="rsIntro" style="margin:0 0 14px">Choose a new password for your account.</p>
-          <div class="field"><label id="l-rsPass">New password</label><input type="password" id="rsPass" autocomplete="new-password"></div>
-          <button class="btn" id="resetBtn">Save new password</button>
+          <form id="formReset" novalidate><div class="field"><label id="l-rsPass" for="rsPass">New password</label><input type="password" id="rsPass" autocomplete="new-password"></div>
+          <button class="btn" type="submit" id="resetBtn">Save new password</button></form>
         </div>
         <div id="signup" hidden>
           <p class="err" id="err2"></p>
-          <div class="field"><label id="l-name">Your name</label><input type="text" id="suName"></div>
-          <div class="field"><label id="l-country">Country</label>
+          <form id="formSignup" novalidate><div class="field"><label id="l-name" for="suName">Your name</label><input type="text" id="suName"></div>
+          <div class="field"><label id="l-country" for="suCountry">Country</label>
             <select id="suCountry">
               <option value="US">United States</option>
               <option value="CA">Canada</option>
@@ -203,18 +203,18 @@
               <option value="OTHER">Other / Otro</option>
             </select>
           </div>
-          <div class="field"><label id="l-email2">Email</label><input type="email" id="suEmail"></div>
+          <div class="field"><label id="l-email2" for="suEmail">Email</label><input type="email" id="suEmail"></div>
           <!-- El celular de QUIEN CONTRATA, no el de la persona mayor. Va en el alta y no
                despues porque la primera llamada de todas es a este numero. Hoy solo se usa
                para llamar: no sale ningun mensaje de texto. Queda guardado para cuando los
                mensajes funcionen, y ese dia habra que pedir el si, no darlo por dado. -->
-          <div class="field"><label id="l-phone">Your mobile</label>
+          <div class="field"><label id="l-phone" for="suPhone">Your mobile</label>
             <input type="tel" id="suPhone" inputmode="tel" autocomplete="tel"
                    placeholder="+1 385 555 0100">
             <p class="hint" id="l-phonehint">With the country and area code. This is the number we call first.</p>
           </div>
-          <div class="field"><label id="l-pass2">Password</label><input type="password" id="suPass"></div>
-          <button class="btn" id="signupBtn">Create account</button>
+          <div class="field"><label id="l-pass2" for="suPass">Password</label><input type="password" id="suPass"></div>
+          <button class="btn" type="submit" id="signupBtn">Create account</button></form>
           <p class="switch" id="sw2"></p>
         </div>
         <div id="done" class="done" hidden>
@@ -227,9 +227,9 @@
       <!-- ============ TEAM ============ -->
       <div data-pane="team" hidden>
         <p class="err" id="errT"></p>
-        <div class="field"><label id="l-emailT">Email</label><input type="email" id="emailT" autocomplete="username"></div>
-        <div class="field"><label id="l-passT">Password</label><input type="password" id="passT" autocomplete="current-password"></div>
-        <button class="btn" id="teamBtn">Enter the panel</button>
+        <form id="formTeam" novalidate><div class="field"><label id="l-emailT" for="emailT">Email</label><input type="email" id="emailT" autocomplete="username"></div>
+        <div class="field"><label id="l-passT" for="passT">Password</label><input type="password" id="passT" autocomplete="current-password"></div>
+        <button class="btn" type="submit" id="teamBtn">Enter the panel</button></form>
         <p class="note" id="teamNote">Private access for the Elderly team only.</p>
       </div>
     </div>
@@ -335,6 +335,7 @@
       trust:'Llamadas de verdad. Tranquilidad de verdad.'}
   };
   var lang='en';
+  try{ if(localStorage.getItem('elderlyLang')==='es') lang='es'; }catch(e){}
   var tab='family', famView='login';
 
   function s(){return STR[lang]}
@@ -379,6 +380,13 @@
     if(t==='family')famShow('login'); else syncTitle();
   }
   document.querySelectorAll('.seg button').forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
+  /* Enter envia. Se invoca el manejador del boton en vez de simular un clic: el boton es
+     type=submit, y un .click() volveria a disparar este mismo submit. */
+  [['formLogin','loginBtn'],['formForgot','forgotBtn'],['formReset','resetBtn'],
+   ['formSignup','signupBtn'],['formTeam','teamBtn']].forEach(function(par){
+    var f=document.getElementById(par[0]), b=document.getElementById(par[1]);
+    if(f&&b) f.addEventListener('submit', function(e){ e.preventDefault(); if(b.onclick) b.onclick(); });
+  });
 
   /* Login unificado contra el backend real (mismo dominio via proxy de Vercel). */
   function authAndGo(path, body, tokenKey, dest, errEl, btn, btnText){

@@ -2,41 +2,104 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "redirects": [
-    { "source": "/portal", "destination": "/ingresar", "permanent": false },
-    { "source": "/portal/:path*", "destination": "/ingresar", "permanent": false },
-    { "source": "/login", "destination": "/ingresar", "permanent": false },
-    { "source": "/signin", "destination": "/ingresar", "permanent": false },
-    { "source": "/early", "destination": "/#early", "permanent": false },
-    { "source": "/waitlist", "destination": "/#early", "permanent": false },
-    { "source": "/welcome", "destination": "/app", "permanent": false },
-    { "source": "/welcome/:path*", "destination": "/app", "permanent": false }
+    {
+      "source": "/portal",
+      "destination": "/ingresar",
+      "permanent": false
+    },
+    {
+      "source": "/portal/:path*",
+      "destination": "/ingresar",
+      "permanent": false
+    },
+    {
+      "source": "/login",
+      "destination": "/ingresar",
+      "permanent": false
+    },
+    {
+      "source": "/signin",
+      "destination": "/ingresar",
+      "permanent": false
+    },
+    {
+      "source": "/early",
+      "destination": "/#early",
+      "permanent": false
+    },
+    {
+      "source": "/waitlist",
+      "destination": "/#early",
+      "permanent": false
+    },
+    {
+      "source": "/welcome",
+      "destination": "/app",
+      "permanent": false
+    },
+    {
+      "source": "/welcome/:path*",
+      "destination": "/app",
+      "permanent": false
+    },
+    {
+      "source": "/plan",
+      "destination": "/#builder",
+      "permanent": false
+    }
   ],
   "rewrites": [
-    { "source": "/api/:path*", "destination": "https://web-production-0134d.up.railway.app/api/:path*" },
-    { "source": "/app", "destination": "https://web-production-0134d.up.railway.app/app" },
-    { "source": "/manage", "destination": "https://web-production-0134d.up.railway.app/manage" },
-    { "source": "/plan", "destination": "https://web-production-0134d.up.railway.app/plan" },
-    { "source": "/admin", "destination": "https://web-production-0134d.up.railway.app/admin" },
-    { "source": "/r/:path*", "destination": "https://web-production-0134d.up.railway.app/r/:path*" },
-    { "source": "/stripe/webhook", "destination": "https://web-production-0134d.up.railway.app/stripe/webhook" }
+    {
+      "source": "/api/:path*",
+      "destination": "https://web-production-0134d.up.railway.app/api/:path*"
+    },
+    {
+      "source": "/app",
+      "destination": "https://web-production-0134d.up.railway.app/app"
+    },
+    {
+      "source": "/manage",
+      "destination": "https://web-production-0134d.up.railway.app/manage"
+    },
+    {
+      "source": "/admin",
+      "destination": "https://web-production-0134d.up.railway.app/admin"
+    },
+    {
+      "source": "/r/:path*",
+      "destination": "https://web-production-0134d.up.railway.app/r/:path*"
+    },
+    {
+      "source": "/stripe/webhook",
+      "destination": "https://web-production-0134d.up.railway.app/stripe/webhook"
+    }
   ],
   "headers": [
     {
       "source": "/(app|manage|admin|plan)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/robots.txt",
       "headers": [
-        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+        {
+          "key": "Content-Type",
+          "value": "text/plain; charset=utf-8"
+        }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" }
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
       ]
     }
   ]
