@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="/motion/fx.css">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<script>try{document.documentElement.setAttribute('data-theme',localStorage.getItem('elderly_web_theme')||'light')}catch(e){document.documentElement.setAttribute('data-theme','light')}</script>
+<script>document.documentElement.setAttribute('data-theme','light')</script>
 <style>
   :root{
     --ground:#FAF5EB;--surface:#FFFFFF;--surface-2:#F3ECDC;--glow:#FFFDF7;
@@ -17,11 +17,6 @@
     --font-sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     --font-display:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
     --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
-  }
-  :root[data-theme="dark"]{
-    --ground:#0F1E1A;--surface:#17302A;--surface-2:#1D3A33;--glow:#16291F;
-    --ink:#EFE9DA;--ink-soft:#C3CCC4;--muted:#98AB9F;--line:#26463D;
-    --rail:#0C1915;--primary:#2E7D6B;--primary-ink:#0C1F1A;--accent:#D89A55;--crit:#E08A76;
   }
   *{box-sizing:border-box}
   body{margin:0;min-height:100vh;font-family:var(--font-sans);color:var(--ink);
@@ -109,11 +104,6 @@
   .foot{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-top:1px solid var(--line)}
   .foot a{color:var(--muted);font-size:13px;font-weight:600;text-decoration:none;padding:6px 8px;border-radius:8px;transition:.15s}
   .foot a:hover{color:var(--ink)}
-  .toprow{position:absolute;top:16px;right:16px;display:flex;gap:4px}
-  .toprow button{background:none;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px;
-    font-family:inherit;font-size:12.5px;font-weight:700;display:grid;place-items:center}
-  .toprow button:hover{color:var(--ink);background:var(--surface-2)}
-  .toprow button svg{width:17px;height:17px}
   [hidden]{display:none!important}
   .legal-name{max-width:640px;margin:26px auto 30px;padding:0 20px;text-align:center;
     font-size:11.5px;line-height:1.7;color:var(--ink);opacity:.62}
@@ -136,9 +126,6 @@
     </aside>
     <div class="card">
       <div class="head">
-      <div class="toprow">
-        <button id="themeBtn" aria-label="Theme"></button>
-      </div>
       <div class="brand">
         <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg>
         <span class="word">Elder<b>ly</b></span>
@@ -244,17 +231,9 @@
 <script>
 (function(){
   var el=function(id){return document.getElementById(id)};
-  var root=document.documentElement;
   var PORTAL_URL="/portal";
 
 
-  function setTheme(t){root.setAttribute('data-theme',t);try{localStorage.setItem('elderly_web_theme',t)}catch(e){}
-    el('themeBtn').innerHTML=t==='dark'
-      ?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6L19 19M19 5l-1.4 1.4M6.4 17.6L5 19"/></svg>'
-      :'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';}
-  var t0='light';try{t0=localStorage.getItem('elderly_web_theme')||'light'}catch(e){}
-  setTheme(t0);
-  el('themeBtn').onclick=function(){setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark')};
 
   /* ENTRAR CON GOOGLE.
      El boton solo aparece si el servidor tiene client id: sin eso quedaria uno que no
@@ -340,6 +319,7 @@
   var tab='family', famView='login';
 
   function s(){return STR[lang]}
+  var root=document.documentElement;
   function applyLang(){
     root.setAttribute('lang',lang);
     document.title=(lang==='es'?'Ingresar':'Sign in')+' · Elderly';

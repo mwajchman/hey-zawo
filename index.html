@@ -32,21 +32,6 @@
     --alert:#A9682B; --alert-bg:#FBF1E1; --chip:#EFE8D6; --wa:#E9F4E4;
     --shadow:0 1px 2px rgba(28,51,45,.05), 0 10px 30px rgba(28,51,45,.08);
   }
-  /* dark mode removed, force light regardless of OS preference */
-  @media (prefers-color-scheme: dark) and (max-width:0px){
-    :root{
-      --bg:#0F1E1A; --bg2:#132622; --card:#17302A; --ink:#EFE9DA; --muted:#98AB9F;
-      --line:#26463D; --brand:#2E7D6B; --brand-deep:#0C1F1A; --brand-ink:#F5F1E6; --accent:#7FC2AF;
-      --alert:#D89A55; --alert-bg:#2C2315; --chip:#1D3A33; --wa:#1B3A2C;
-      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
-    }
-  }
-  :root[data-theme="dark"]{
-    --bg:#0F1E1A; --bg2:#132622; --card:#17302A; --ink:#EFE9DA; --muted:#98AB9F;
-    --line:#26463D; --brand:#2E7D6B; --brand-deep:#0C1F1A; --brand-ink:#F5F1E6; --accent:#7FC2AF;
-    --alert:#D89A55; --alert-bg:#2C2315; --chip:#1D3A33; --wa:#1B3A2C;
-    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
-  }
   :root[data-theme="light"]{
     --bg:#FAF5EB; --bg2:#F3ECDC; --card:#FFFFFF; --ink:#1C332D; --muted:#5A6560;
     --line:#E7DECA; --brand:#175045; --brand-deep:#0F3A31; --brand-ink:#FDFBF5; --accent:#2E7D6B;
@@ -118,7 +103,6 @@
     content:""; position:absolute; top:20px; left:50%; transform:translateX(-50%);
     width:86px; height:24px; border-radius:999px; background:#0A1411; z-index:6;
   }
-  :root[data-theme="dark"] .phone{background:#000}
   .screen{position:absolute; inset:10px; border-radius:43px; background:var(--bg2); overflow:hidden}
   .scene{position:absolute; inset:0; padding:54px 14px 18px; opacity:0; animation:28s linear infinite}
   .s1{animation-name:w1} .s2{animation-name:w2} .s3{animation-name:w3} .s4{animation-name:w4}
@@ -207,8 +191,6 @@
   .duo-wrap{padding-top:26px}
   .duo{position:relative; display:flex; gap:clamp(22px,5vw,46px); justify-content:center}
   .dphone{width:min(190px,40vw); aspect-ratio:390/760; background:var(--ink); border-radius:30px; position:relative; box-shadow:0 16px 40px rgba(28,51,45,.22)}
-  @media (prefers-color-scheme: dark) and (max-width:0px){ .dphone{background:#000} }
-  :root[data-theme="dark"] .dphone{background:#000}
   :root[data-theme="light"] .dphone{background:var(--ink)}
   .dphone::after{content:""; position:absolute; top:9px; left:50%; transform:translateX(-50%); width:54px; height:14px; border-radius:999px; background:#0A1411; z-index:6}
   .dlabel{position:absolute; top:-24px; left:50%; transform:translateX(-50%); white-space:nowrap; font-size:10px; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--muted)}
@@ -826,7 +808,6 @@
   select:hover{border-color:var(--brand,#2E7D6B)}
   select:focus-visible{outline:2px solid var(--brand,#2E7D6B); outline-offset:1px}
   select::-ms-expand{display:none}
-  [data-theme="dark"] select{color-scheme:dark}
 </style>
 
 <div class="belief">We are advocates for connection: the more <span class="swap" data-a="she" data-b="he">she</span> has, the better <span class="swap" data-a="she" data-b="he">she</span> does, <em>in every part of <span class="swap" data-a="her" data-b="his">her</span> life</em>.</div>
