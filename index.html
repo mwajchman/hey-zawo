@@ -500,6 +500,9 @@
   .fw-title{font-family:"Iowan Old Style",Palatino,Georgia,serif; font-size:clamp(21px,3vw,26px); font-weight:600; margin:0 0 6px; color:var(--brand-ink)}
   .fw-sub{font-size:13.5px; color:rgba(253,251,245,.75); margin:0 0 14px; line-height:1.5}
   .fw-chips{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:20px}
+  /* Lista de espera: no hay cuenta, asi que no hay contrasena que elegir. */
+  body.esperando #suPassWrap{display:none}
+  body.esperando .fw-tag{background:#CFE8DD; color:#1C5A4C}
   .fw-chips span{border:1px solid rgba(143,208,188,.45); color:#CFE8DD; font-size:12px; font-weight:600; border-radius:999px; padding:5px 12px}
   .signup .su-div{color:rgba(253,251,245,.55)}
   .signup .su-div::before, .signup .su-div::after{background:rgba(253,251,245,.2)}
@@ -532,6 +535,33 @@
   .signup .cont{background:#8FD0BC; color:#0F3A31; font-weight:700}
   .signup .cont:hover{filter:brightness(1.05)}
   .signup .fine{color:rgba(253,251,245,.65)}
+  /* Sin esto los enlaces de Terms y Privacy salen con el azul por defecto del
+     navegador sobre la tarjeta verde oscura: ilegibles y ajenos a la marca. */
+  .signup .fine a{color:#CFE8DD; text-decoration:underline; text-underline-offset:2px}
+  .signup .fine a:hover{color:#fff}
+  /* Los <select> tenian appearance:none y ninguna flecha propia: quedaban identicos a
+     un campo de texto y nada indicaba que se podian desplegar. */
+  .su-field select, .country-first select{
+    background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%231C5A4C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 16px center; background-size:12px 8px;
+    padding-right:40px; cursor:pointer;
+  }
+  .su-donde{font-size:12.5px; color:rgba(253,251,245,.75); margin:0 0 14px}
+  .su-donde b{color:var(--brand-ink)}
+  .su-cambiar{background:none; border:0; color:#8FD0BC; font:inherit; font-size:12.5px;
+    font-weight:700; text-decoration:underline; text-underline-offset:2px; cursor:pointer; padding:0 2px}
+  .su-cambiar:hover{color:#fff}
+  .su-pass-wrap{position:relative}
+  .su-pass-wrap input{padding-right:78px}
+  .su-ver{position:absolute; right:8px; top:50%; transform:translateY(-50%); background:none;
+    border:0; color:#1C5A4C; font:inherit; font-size:12px; font-weight:700; letter-spacing:.04em;
+    text-transform:uppercase; cursor:pointer; padding:8px 10px; border-radius:10px}
+  .su-ver:hover{background:rgba(28,90,76,.1)}
+  .su-ver:focus-visible{outline:2px solid #1C5A4C; outline-offset:1px}
+  /* El error se marcaba solo con el color del borde. Quien no distingue ese ambar no
+     se entera de cual campo falta, asi que ahora tambien lo dice en texto. */
+  .su-err{font-size:12px; color:#F0C36A; margin:6px 0 0 4px}
+  .su-err[hidden]{display:none}
   .confirm{display:none; margin-top:12px; background:var(--alert-bg); border-radius:12px; padding:12px 14px; font-size:13px}
   .confirm.show{display:block}
   .confirm.bad{background:#FBEDE4; color:#7A3B12}
@@ -1388,8 +1418,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 <!-- BUILDER -->
 <div class="builder-head" id="builder">
-  <h2>Try your first week for free &middot; cancel anytime</h2>
-  <p>Connection is the plan. Shields are add-ons. The price takes shape as you go.</p>
+  <h2 id="bhTitle">Try your first week for free &middot; cancel anytime</h2>
+  <p id="bhSub">Connection is the plan. Shields are add-ons. The price takes shape as you go.</p>
 </div>
 <div class="wrap" style="padding-left:20px;padding-right:20px">
   <div class="su-field full country-first">
@@ -1410,7 +1440,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
       <div class="cp-grid">
         <div class="cp-left">
-          <div class="cp-amount"><b>$29</b><small>/ month</small></div>
+          <div class="cp-amount"><b id="baseTxt">$29</b><small>/ month</small></div>
           <div class="cp-eyebrow">The basic plan includes</div>
           <ul class="cp-list">
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v2a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 4.2 2 2 0 0 1 5.1 2h2a2 2 0 0 1 2 1.7c.1.9.3 1.7.6 2.5a2 2 0 0 1-.5 2.1L8.1 9.4a16 16 0 0 0 6 6l1.1-1.1a2 2 0 0 1 2.1-.5c.8.3 1.6.5 2.5.6a2 2 0 0 1 1.7 2z"/></svg><div><b>3 calls a week</b></div></li>
@@ -1515,23 +1545,28 @@ document.addEventListener('DOMContentLoaded', function(){
         <div class="wa-msg alert" id="waSignal"></div>
       </div>
       <div class="signup" id="early">
-        <span class="fw-tag">First week free</span>
-        <h3 class="fw-title">Create her account</h3>
-        <p class="fw-sub">It takes a minute. You set her up in the portal, and the first call is to you, so you hear the voice before she does.</p>
-        <div class="fw-chips"><span>✓ No card</span><span>✓ Cancel anytime</span><span>✓ You choose the first call</span></div>
+        <span class="fw-tag" id="fwTag">First week free</span>
+        <h3 class="fw-title" id="fwTitle">Create her account</h3>
+        <p class="fw-sub" id="fwSub">It takes a minute. You set her up in the portal, and the first call is to you, so you hear the voice before she does.</p>
+        <div class="fw-chips" id="fwChips"><span>✓ No card</span><span>✓ Cancel anytime</span><span>✓ You choose the first call</span></div>
+        <form id="suForm" novalidate>
+        <p class="su-donde" id="suDonde"></p>
         <div class="su-grid">
           <div class="su-field"><label for="suFor">Who is this for?</label>
             <select id="suFor"><option>My mom</option><option>My dad</option><option>My grandma</option><option>My grandpa</option><option>Someone I love</option></select></div>
-          <div class="su-field"><label for="suHer">Her first name</label><input type="text" id="suHer" placeholder="Margaret" autocomplete="off"></div>
-          <div class="su-field"><label for="suName">Your name</label><input type="text" id="suName" placeholder="Emily Carter" autocomplete="name"></div>
-          <div class="su-field"><label for="suEmail">Email</label><input type="email" id="suEmail" placeholder="you@email.com" autocomplete="email"></div>
+          <div class="su-field"><label for="suHer">Her first name</label><input type="text" id="suHer" placeholder="Margaret" autocomplete="off" required aria-describedby="errHer"><p class="su-err" id="errHer" hidden>Tell us her first name, it is how we greet her.</p></div>
+          <div class="su-field"><label for="suName">Your name</label><input type="text" id="suName" placeholder="Emily Carter" autocomplete="name" required aria-describedby="errName"><p class="su-err" id="errName" hidden>We need your name too.</p></div>
+          <div class="su-field"><label for="suEmail">Email</label><input type="email" id="suEmail" placeholder="you@email.com" autocomplete="email" inputmode="email" required aria-describedby="errEmail"><p class="su-err" id="errEmail" hidden>That email does not look right. Her reports go here.</p></div>
         </div>
-        <div class="su-field full"><label for="suPhone">Your mobile</label><input type="tel" id="suPhone" placeholder="+1 385 555 0100" autocomplete="tel"></div>
-        <div class="su-field full"><label for="suPass">Choose a password</label><input type="password" id="suPass" placeholder="At least 8 characters" autocomplete="new-password"></div>
-        <button class="cont" id="cta">Create her account →</button>
-        <p class="fine">By creating the account you accept our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
+        <div class="su-field full"><label for="suPhone">Your mobile</label><input type="tel" id="suPhone" placeholder="+1 385 555 0100" autocomplete="tel" inputmode="tel" required aria-describedby="errPhone"><p class="su-err" id="errPhone" hidden>Include the country code, like +1 385 555 0100.</p></div>
+        <div class="su-field full" id="suPassWrap"><label for="suPass">Choose a password</label>
+          <div class="su-pass-wrap"><input type="password" id="suPass" placeholder="At least 8 characters" autocomplete="new-password" required aria-describedby="errPass"><button type="button" class="su-ver" id="suVer" aria-label="Show password">Show</button></div>
+          <p class="su-err" id="errPass" hidden>At least 8 characters.</p></div>
+        <button class="cont" id="cta" type="submit">Create her account →</button>
+        <p class="fine" id="fwFine">By creating the account you accept our <a href="/terms">Terms</a> and <a href="/privacy">Privacy Policy</a>.</p>
+        </form>
       </div>
-      <div class="confirm" id="confirm"></div>
+      <div class="confirm" id="confirm" role="status" aria-live="polite"></div>
     </div>
   </div>
 
@@ -1914,14 +1949,14 @@ let planTotal = 0;   /* ultimo precio calculado, para adjuntarlo al pedido de ac
    La lista viene del backend (regions.py, una sola fuente de verdad) y si no
    responde usamos esta copia, para que el formulario nunca quede sin paises. */
 const COUNTRY_FALLBACK = [
-  {code:"US", name:"United States", channel:"retell",   live:true,  base_usd:29},
-  {code:"MX", name:"Mexico",        channel:"retell",   live:true,  base_usd:25},
-  {code:"AR", name:"Argentina",     channel:"whatsapp", live:false, base_usd:19},
-  {code:"BR", name:"Brazil",        channel:"whatsapp", live:false, base_usd:19},
-  {code:"UY", name:"Uruguay",       channel:"whatsapp", live:false, base_usd:19},
-  {code:"CL", name:"Chile",         channel:"whatsapp", live:false, base_usd:19},
-  {code:"CO", name:"Colombia",      channel:"whatsapp", live:false, base_usd:19},
-  {code:"PE", name:"Peru",          channel:"whatsapp", live:false, base_usd:19},
+  {code:"US", name:"United States", channel:"retell",   live:true,  base_usd:29, dial:"+1"},
+  {code:"MX", name:"Mexico",        channel:"retell",   live:true,  base_usd:25, dial:"+52"},
+  {code:"AR", name:"Argentina",     channel:"whatsapp", live:false, base_usd:19, dial:"+54"},
+  {code:"BR", name:"Brazil",        channel:"whatsapp", live:false, base_usd:19, dial:"+55"},
+  {code:"UY", name:"Uruguay",       channel:"whatsapp", live:false, base_usd:19, dial:"+598"},
+  {code:"CL", name:"Chile",         channel:"whatsapp", live:false, base_usd:19, dial:"+56"},
+  {code:"CO", name:"Colombia",      channel:"whatsapp", live:false, base_usd:19, dial:"+57"},
+  {code:"PE", name:"Peru",          channel:"whatsapp", live:false, base_usd:19, dial:"+51"},
 ];
 let COUNTRIES = COUNTRY_FALLBACK.slice();
 let COUNTRY = COUNTRIES[0];
@@ -1941,16 +1976,75 @@ function renderCountryNote(){
     // Se capta el interes, no se promete el como. El canal para estos paises todavia no
     // existe: describirlo con detalle tecnico lo hace sonar decidido y probado, y quien
     // deja sus datos se va creyendo que ya sabemos como va a funcionar.
-    el.innerHTML = "We are not in <b>" + c.name + "</b> yet. Leave your details and you "
-      + "will be the first to know when we get there. No commitment, and we will not "
-      + "write to you for anything else.";
+    el.innerHTML = "We are not in <b>" + c.name + "</b> yet. Build her plan anyway, and "
+      + "at the last step you leave your details: we save the plan and write to you the "
+      + "day we arrive. Nothing to pay, and we will not write to you for anything else.";
+    pintarModoEspera(c);
     return;
   }
+  pintarModoEspera(c);
   el.innerHTML = (c.channel === "whatsapp")
     ? "In <b>" + c.name + "</b> the call arrives <b>through WhatsApp</b>, so she needs "
       + "WhatsApp on a phone with data. She accepts once, on the first call, and we walk "
       + "her through it."
     : "In <b>" + c.name + "</b> her phone simply rings. Nothing to install.";
+}
+
+/* Cuando el pais todavia no esta abierto, el ultimo bloque NO puede seguir diciendo
+   "primera semana gratis" ni "crear su cuenta": no hay cuenta que crear ni semana que
+   regalar. Cambia de identidad entero, y la contrasena se esconde porque para la lista
+   de espera no hay nada que proteger (el submit ya no la pedia, pero seguia a la vista). */
+function pintarModoEspera(c){
+  const esperando = !!(c && !c.live);
+  document.body.classList.toggle("esperando", esperando);
+  const set = (id, html) => { const e = $(id); if(e) e.innerHTML = html; };
+  const pais = (c && c.name) || "her country";
+
+  // El pais se elige arriba de todo y este bloque queda cuatro pasos mas abajo: al
+  // llegar aca ya no se ve cual eligio, y es lo que decide precio y si hay cuenta.
+  set("suDonde", "She lives in <b>" + pais + "</b>. "
+    + "<button type=\"button\" class=\"su-cambiar\" id=\"suCambiar\">Change</button>");
+  const volver = $("suCambiar");
+  if(volver) volver.addEventListener("click", ()=>{
+    const sel = $("suCountry");
+    if(sel){ sel.scrollIntoView({block:"center", behavior:"smooth"}); sel.focus(); }
+  });
+  // El ejemplo del telefono seguia el prefijo de Estados Unidos en todos los paises.
+  const tel = $("suPhone"), errTel = $("errPhone");
+  if(tel && c && c.dial){
+    const ej = c.code === "US" ? "+1 385 555 0100" : c.dial + " 00 0000 0000";
+    tel.placeholder = ej;
+    if(errTel) errTel.textContent = "Include the country code, like " + ej + ".";
+  }
+
+  if(esperando){
+    set("bhTitle", "Build her plan &middot; we save it for when we arrive");
+    set("bhSub", "Elderly is not in " + pais + " yet. The price below is what her plan "
+      + "will cost the day we open, so you already know.");
+    set("fwTag", "Waiting list");
+    set("fwTitle", "Save her plan for " + pais);
+    set("fwSub", "No account and no charge today. We keep the plan you just built and "
+      + "write to you the day Elderly reaches " + pais + ", so you pick up here.");
+    set("fwChips", "<span>\u2713 No card</span><span>\u2713 No account yet</span>"
+      + "<span>\u2713 One email, when we arrive</span>");
+    const b = $("cta"); if(b && b.textContent.indexOf("\u2713") < 0)
+      b.textContent = "Join the list for " + pais + " \u2192";
+    set("fwFine", "We only use this to tell you when Elderly reaches " + pais + ". "
+      + "Read our <a href=\"/privacy\">Privacy Policy</a>.");
+  } else {
+    set("bhTitle", "Try your first week for free &middot; cancel anytime");
+    set("bhSub", "Connection is the plan. Shields are add-ons. The price takes shape as you go.");
+    set("fwTag", "First week free");
+    set("fwTitle", "Create her account");
+    set("fwSub", "It takes a minute. You set her up in the portal, and the first call is "
+      + "to you, so you hear the voice before she does.");
+    set("fwChips", "<span>\u2713 No card</span><span>\u2713 Cancel anytime</span>"
+      + "<span>\u2713 You choose the first call</span>");
+    const b = $("cta"); if(b && b.textContent.indexOf("\u2713") < 0)
+      b.textContent = "Create her account \u2192";
+    set("fwFine", "By creating the account you accept our <a href=\"/terms\">Terms</a> "
+      + "and <a href=\"/privacy\">Privacy Policy</a>.");
+  }
 }
 
 function buildCountrySelect(){
@@ -2007,25 +2101,49 @@ function suSay(html, isErr){
   c.classList.toggle("bad", !!isErr);
   c.innerHTML = html;
 }
-$("cta").addEventListener("click", async ()=>{
+/* Mostrar la contrasena: el campo pide 8 caracteres minimo y hasta ahora se escribia a
+   ciegas, que es de donde salen la mitad de los "no puedo entrar" del dia siguiente. */
+(function(){
+  const b = $("suVer"), campo = $("suPass");
+  if(!b || !campo) return;
+  b.addEventListener("click", ()=>{
+    const oculto = campo.type === "password";
+    campo.type = oculto ? "text" : "password";
+    b.textContent = oculto ? "Hide" : "Show";
+    b.setAttribute("aria-label", oculto ? "Hide password" : "Show password");
+    campo.focus();
+  });
+})();
+
+/* Marca o limpia un campo. El borde ambar solo no alcanza: quien no distingue ese color
+   no sabe cual de los cinco campos esta mal, asi que cada uno dice lo suyo. */
+function marcar(campo, mal, idError){
+  campo.classList.toggle("err", mal);
+  campo.setAttribute("aria-invalid", mal ? "true" : "false");
+  const e = $(idError); if(e) e.hidden = !mal;
+}
+
+async function enviarAlta(){
   const hr = $("suHer"), nm = $("suName"), em = $("suEmail"), ph = $("suPhone"),
         pw = $("suPass"), btn = $("cta");
-  let ok = true;
-  [hr, nm, em, ph, pw].forEach(f=>f.classList.remove("err"));
-  if(!hr.value.trim()){ hr.classList.add("err"); ok = false; }
-  if(!nm.value.trim()){ nm.classList.add("err"); ok = false; }
-  if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim())){ em.classList.add("err"); ok = false; }
-  const digits = (ph.value.match(/\d/g)||[]).length;
-  if(digits < 7 || digits > 15){ ph.classList.add("err"); ok = false; }
   // La contraseña solo hace falta si de verdad vamos a crear una cuenta. Para la lista de
   // espera no hay cuenta que proteger, y pedirla es un obstáculo para nada.
   const creaCuenta = !(COUNTRY && !COUNTRY.live);
-  if(creaCuenta && (pw.value||"").length < 8){ pw.classList.add("err"); ok = false; }
-  if(!ok){
+  const digits = (ph.value.match(/\d/g)||[]).length;
+  const fallas = [
+    [hr, !hr.value.trim(), "errHer"],
+    [nm, !nm.value.trim(), "errName"],
+    [em, !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim()), "errEmail"],
+    [ph, (digits < 7 || digits > 15), "errPhone"],
+    [pw, creaCuenta && (pw.value||"").length < 8, "errPass"],
+  ];
+  fallas.forEach(([campo, mal, id]) => marcar(campo, mal, id));
+  const primero = fallas.find(([,mal]) => mal);
+  if(primero){
     suSay(creaCuenta
       ? "Almost there. We need her first name, your name, an email that works, your mobile and a password of at least 8 characters."
       : "Almost there. We need her first name, your name, an email that works and your mobile.", true);
-    ([hr,nm,em,ph,pw].find(f=>f.classList.contains("err"))||hr).focus();
+    primero[0].focus();
     return;
   }
   btn.disabled = true;
@@ -2044,6 +2162,7 @@ $("cta").addEventListener("click", async ()=>{
           country: COUNTRY.code,
           consent: true,
           elder_name: hr.value.trim(),
+          relationship: ($("suFor") && $("suFor").value) || "",
           calls_per_week: state.days.size,
           call_length: state.pack,
           specialties: planSpecs(),
@@ -2094,7 +2213,8 @@ $("cta").addEventListener("click", async ()=>{
         body: JSON.stringify({
           name: nm.value.trim(), email: em.value.trim(), phone: ph.value.trim(),
           country: (COUNTRY && COUNTRY.code) || "US", consent: true,
-          elder_name: hr.value.trim(), calls_per_week: state.days.size,
+          elder_name: hr.value.trim(),
+          relationship: ($("suFor") && $("suFor").value) || "", calls_per_week: state.days.size,
           call_length: state.pack, specialties: planSpecs(),
           voice_kept: !!state.memory,
           days: [...state.days].sort((a,b)=>a-b).join(",")
@@ -2120,7 +2240,20 @@ $("cta").addEventListener("click", async ()=>{
     suSay((motivo || "We could not create the account. Please try again") +
           ", or write to <a href=\"mailto:hello@callelderly.com\" style=\"color:var(--accent);font-weight:700\">hello@callelderly.com</a>", true);
   }
+}
+
+/* El bloque no era un <form>: con el cursor en cualquier campo, Enter no hacia nada y
+   habia que ir al boton con el mouse. Ahora envia, y el navegador reconoce el alta. */
+$("suForm").addEventListener("submit", (e)=>{ e.preventDefault(); enviarAlta(); });
+
+/* Corregir mientras escribe: si el campo ya esta bien, el aviso se apaga solo en vez de
+   quedar encendido hasta el proximo intento. */
+[["suHer","errHer"],["suName","errName"],["suEmail","errEmail"],
+ ["suPhone","errPhone"],["suPass","errPass"]].forEach(([campo,err])=>{
+  const c = $(campo); if(!c) return;
+  c.addEventListener("input", ()=>{ if(c.classList.contains("err")) marcar(c, false, err); });
 });
+
 $("upsell1").addEventListener("click", ()=>{ state.agent = "guardian"; render(); });
 $("upsell1").addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); state.agent="guardian"; render(); } });
 
@@ -2197,6 +2330,7 @@ function render(){
   planTotal = total;
   $("freqPrice").textContent = extraDays > 0 ? `+${extraDays} extra day${extraDays>1?"s":""} · +$${daysAdd}/mo` : "included in her base";
 
+  const bt = $("baseTxt"); if(bt) bt.textContent = money(BASE);
   const s1 = stepEl(1).querySelector(".chosen");
   s1.innerHTML = (maxReached>1 && current!==1) ? `<b>Friendship base</b> · $${BASE}/mo` : "";
   stepEl(1).querySelector(".edit").hidden = !(maxReached>1 && current!==1);
@@ -2248,7 +2382,8 @@ function render(){
     });
   }
   lastTotal = total;
-  $("mSub").textContent = `${state.calls} ${p.label}${state.calls>1?"s":""} a week` + (a?` · ${a.name}`:"");
+  $("mSub").textContent = ((COUNTRY && !COUNTRY.live) ? "When we arrive · " : "")
+    + `${state.calls} ${p.label}${state.calls>1?"s":""} a week` + (a?` · ${a.name}`:"");
   $("barGo").textContent = current===4 ? "Ask for early access →" : "Continue";
 }
 /* ---- full call player ---- */
