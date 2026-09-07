@@ -457,8 +457,19 @@
     if((pw||'').length<8){el('err4').textContent=s().minPass;return}
     authAndGo("/api/password/reset",{token:RESET_TOKEN,password:pw},"elderly_token","/app",el('err4'),el('resetBtn'),s().rsSave);
   };
-  // Aviso de verificación de email (?verified=1 ok, =0 expiró).
-  (function(){ var q=new URLSearchParams(location.search); var v=q.get('verified');
+  // Aviso de verificación de email (?verified=1 ok, =0 expiró) y de cambio de email
+  // (?email_changed). El backend ya mandaba a esta página con ese segundo parámetro y
+  // nadie lo leía: quien cambiaba su correo hacía clic en el link de confirmación y
+  // aterrizaba en un login pelado, sin saber si había funcionado.
+  (function(){ var q=new URLSearchParams(location.search);
+    var ec=q.get('email_changed');
+    if(ec!==null){ var m=el('verifiedNote');
+      if(ec==='1'){ m.textContent=(lang==='es')?'Listo, tu email quedó cambiado. Entrá con el nuevo.':'Done, your email is changed. Sign in with the new one.'; }
+      else{ m.textContent=(lang==='es')?'Ese link de confirmación ya venció. Pedí el cambio de nuevo desde tu portal.':'That confirmation link has expired. Ask for the change again from your portal.'; }
+      m.hidden=false;
+      var u2=new URL(location.href); u2.searchParams.delete('email_changed'); history.replaceState(null,'',u2);
+    }
+    var v=q.get('verified');
     if(v!==null){ var n=el('verifiedNote');
       if(v==='1'){ n.textContent=(lang==='es')?'¡Tu email quedó verificado! Ya podés iniciar sesión.':'Your email is verified! You can sign in now.'; n.style.color='#2f8563'; }
       else{ n.textContent=(lang==='es')?'El link de verificación expiró. Reenvialo desde tu portal.':'That verification link expired. Resend it from your portal.'; n.style.color='#b8402e'; }
