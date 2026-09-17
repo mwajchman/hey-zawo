@@ -37,7 +37,7 @@
   --teal:#01534C; --forest:#06342F; --teal-up:#0C685E;
   --cream:#F7F2E7; --amber:#F0913E;
   /* extended, sampled from the brand photography */
-  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
+  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#9C4B0D;
   --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
   --rule:rgba(18,48,44,.18); --rule-c:rgba(247,242,231,.26);
   --w:min(100% - 3rem, 76rem);
@@ -103,7 +103,10 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 .nav menu a:not(.btn){color:var(--cream);text-decoration:none;opacity:.75;
   display:inline-flex;align-items:center;min-height:24px}
 .nav menu a:not(.btn):hover{opacity:1}
+/* EN y ES medían 17 y 15 px de ancho. El mínimo de toque es 24x24: el alto ya lo daba
+   .nav menu a, el ancho lo da este min-width. */
 .lang{display:flex;gap:.15rem;font-size:.78rem}
+.nav menu .lang a{min-width:24px;justify-content:center}
 /* El selector de idioma: el activo en miel, el otro apagado, como estaba. Va con la
    especificidad de .nav menu (si no, la regla de arriba le gana y apaga el activo).
    Antes el conjunto iba a opacity .85 y el inactivo a .55: 2.4:1 en texto de 12px. */
@@ -381,6 +384,8 @@ ul.bd li.sum{border-top:2px solid var(--teal);margin-top:.3rem;font-weight:800;c
 .wprice small{font-size:.85rem;font-weight:800;color:var(--ink-soft);margin-left:.15rem;white-space:nowrap}
 .wprice em{font-style:normal;font-size:.85rem;font-weight:700;color:var(--ink-soft);margin-left:.9rem}
 @media(max-width:620px){.wprice em{width:100%;margin:.3rem 0 0}}
+.wprice[hidden]{display:none}
+.wnote{margin:0;font-size:1rem;font-weight:800;color:var(--amber-tx);max-width:34rem;line-height:1.4}
 .wnav{margin-left:auto;display:flex;gap:.6rem;align-items:center}
 .wback{border:2px solid var(--rule);background:transparent;color:var(--teal);font:inherit;font-weight:800;
   font-size:.92rem;padding:.72rem 1.25rem;border-radius:999px;cursor:pointer}
@@ -416,6 +421,8 @@ form input,form select{display:block;width:100%;margin-top:.4rem;padding:.78rem 
   border:2px solid var(--rule);border-radius:14px;background:#FFFDF8;color:var(--ink)}
 form input:focus,form select:focus{border-color:var(--amber-dp);outline:none}
 form .err{display:none;font-size:.8rem;font-weight:700;color:#A8320F;margin-top:.3rem}
+form .notlive{background:rgba(240,145,62,.14);border-left:4px solid var(--amber-dp);border-radius:12px;padding:.8rem 1rem;margin:0 0 1.1rem;font-size:.88rem;font-weight:700;color:var(--ink)}
+form [hidden]{display:none!important}
 form label.bad input{border-color:#A8320F}
 form label.bad .err{display:block}
 .ok{margin-top:1rem;padding:.95rem 1.2rem;background:var(--teal);color:var(--cream);border-radius:16px;font-size:.92rem;max-width:none}
@@ -460,6 +467,8 @@ footer .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2.4rem;padding
 footer h4{font-size:.85rem;color:var(--honey);margin-bottom:.8rem}
 footer p{color:rgba(247,242,231,.7)}
 footer a{color:var(--cream);text-decoration:none;opacity:.72}
+/* Los enlaces del pie medían 17px de alto. 24 es el mínimo de toque. */
+footer li a,footer .end a{display:inline-flex;align-items:center;min-height:24px}
 footer a:hover{opacity:1;text-decoration:underline}
 footer ul{list-style:none;padding:0;margin:0}
 footer li{margin-bottom:.45rem}
@@ -522,6 +531,9 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .track .knob{position:absolute;top:50%;left:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--cream);box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:none}
 .pin{position:absolute;top:0;width:18px;height:18px;margin-left:-9px;padding:0;border:0;background:transparent;cursor:pointer}
 .pin::before{content:"";position:absolute;left:3px;top:0;width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--honey)}
+/* El área de toque del pin: 24x24, el mínimo, sin mover ni agrandar el dibujo. El público
+   pasa los 50 y el pin se veía de 18px. */
+.pin::after{content:"";position:absolute;left:50%;top:50%;width:24px;height:24px;transform:translate(-50%,-50%)}
 .pin[data-on]::before{background:var(--cream)}
 .moments{list-style:none;margin:.5rem 0 0;padding:0}
 .moments button{display:flex;align-items:baseline;gap:.9rem;width:100%;text-align:left;background:transparent;border:0;
@@ -812,6 +824,7 @@ form label.chk{display:flex;gap:.8rem;align-items:flex-start;font-size:.92rem;fo
 form label.chk input{width:22px;height:22px;margin:.1rem 0 0;padding:0;flex:none;accent-color:var(--teal)}
 form label.chk .err{margin-top:.2rem}
 form label.chk.bad span{color:#A8320F}
+form label i{font-style:normal;font-weight:700;color:var(--ink-soft);text-transform:none;letter-spacing:0}
 .btn[disabled]{opacity:.6;cursor:progress}
 </style>
 </head>
@@ -855,7 +868,7 @@ form label.chk.bad span{color:#A8320F}
       <a class="btn" href="#price">Arma su plan</a>
       <a class="btn line" href="#call">Escucha una llamada completa</a>
     </div>
-    <p class="fine">Hoy no te pedimos tarjeta. La primera semana es gratis, y el precio se arma a medida que eliges.</p>
+    <p class="fine">Desde <b id="heroPrice">$25</b> USD al mes, primera semana gratis. Para crear la cuenta no te pedimos tarjeta, y el precio se arma a medida que eliges.</p>
     </div>
 
     <div class="callstage" id="stage" role="group" aria-label="Una llamada de ejemplo: suena el teléfono, contesta y conversan en voz alta.">
@@ -1043,7 +1056,7 @@ form label.chk.bad span{color:#A8320F}
     <div class="prom">
       <div>
         <h4>Siempre lo sabe</h4>
-        <p>Antes de la primera llamada, se lo cuentas tú, con las palabras que te damos. En cada llamada, Elderly dice que es una IA y pide permiso antes de grabar cualquier cosa. Participa, no la vigilan.</p>
+        <p>Antes de la primera llamada, se lo cuentas tú, con las palabras que te damos. En la primera llamada Elderly le pide permiso en voz alta para llamarla y para grabar, y desde ahí abre cada llamada diciendo que es una IA y que la llamada se graba. Participa, no la vigilan.</p>
       </div>
       <div>
         <h4>La primera semana es gratis</h4>
@@ -1076,11 +1089,11 @@ form label.chk.bad span{color:#A8320F}
         </button>
         <div class="pmeta">
           <b>Mari, 78 · una llamada real</b>
-          <span class="ptime"><span id="pcur">0:00</span> / <span id="pdur">8:27</span></span>
+          <span class="ptime"><span id="pcur">0:00</span> / <span id="pdur">8:26</span></span>
         </div>
         <p class="pfine">Compartida con permiso. Las marcas señalan momentos reales.</p>
       </div>
-      <div class="track" id="track" role="slider" tabindex="0" aria-label="Posición en la llamada" aria-valuemin="0" aria-valuemax="507" aria-valuenow="0" aria-valuetext="0:00">
+      <div class="track" id="track" role="slider" tabindex="0" aria-label="Posición en la llamada" aria-valuemin="0" aria-valuemax="506" aria-valuenow="0" aria-valuetext="0:00 de 8:26">
         <span class="wf" id="wf" aria-hidden="true"></span><span class="fill" id="pfill"></span><span class="knob" id="pknob"></span>
       </div>
       <ul class="moments" id="moments"></ul>
@@ -1127,6 +1140,7 @@ form label.chk.bad span{color:#A8320F}
         <button class="cbtn" id="cprev" type="button" aria-label="Preguntas anteriores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="cdots" id="cdots"></div>
         <button class="cbtn" id="cnext" type="button" aria-label="Siguientes preguntas"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="cbtn" id="cplay" type="button" aria-pressed="false" aria-label="Pausar las preguntas para que no avancen solas"><svg viewBox="0 0 24 24" aria-hidden="true" id="cplayIcon"><path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor"/></svg></button>
       </div>
     </div>
     <p style="margin-top:2rem;font-size:.95rem">Estas son seis. <a href="#faq">Aquí están todas las preguntas que nos han hecho, con respuestas honestas</a></p>
@@ -1148,7 +1162,7 @@ form label.chk.bad span{color:#A8320F}
     <div class="browser" aria-hidden="true">
       <div class="bbar"><i></i><i></i><i></i><span class="url">callelderly.com/demo</span><span class="tag">Familia de ejemplo</span></div>
       <div class="bbody">
-        <div class="phead"><b>Rosa, 78</b><small>5 llamadas esta semana</small></div>
+        <div class="phead"><b>Lupita, 77</b><small>5 llamadas esta semana</small></div>
         <div class="wk" style="margin-top:.9rem"><i class="c">L</i><i class="c">M</i><i class="c">M</i><i class="c">J</i><i class="c">V</i><i>S</i><i>D</i></div>
         <div class="pcard" style="margin-top:.9rem">
           <div class="h">Resumen de la llamada de hoy</div>
@@ -1238,14 +1252,17 @@ form label.chk.bad span{color:#A8320F}
                 </div>
                 <div class="f2">
                   <label>Tu celular<input name="phone" type="tel" required autocomplete="tel" placeholder="+52 55 1234 5678"><span class="err"></span></label>
-                  <label>Contraseña<input name="password" type="password" required autocomplete="new-password" placeholder="Al menos 8 caracteres"><span class="err"></span></label>
+                  <label id="pwLabel">Contraseña<input name="password" type="password" required autocomplete="new-password" placeholder="Al menos 8 caracteres"><span class="err"></span></label>
                 </div>
                 <div class="f2">
                   <label>¿Dónde vives?
                     <select name="country" id="acctCountry"><option value="MX" selected>México</option><option value="US">Estados Unidos</option></select>
                   </label>
+                  <label id="otherLabel" hidden>¿En qué país?<input name="other_country" id="acctOtherCountry" autocomplete="country-name" placeholder="Escribe tu país"><span class="err"></span></label>
                 </div>
-                <p class="tiny">Sin tarjeta · cancelas cuando quieras · tú eliges cuándo es la primera llamada. Al crear la cuenta aceptas nuestros <a href="https://www.callelderly.com/terms">Términos</a> y nuestra <a href="https://www.callelderly.com/privacy">Política de privacidad</a> (en inglés).</p>
+                <p class="notlive" id="notLiveNote" hidden></p>
+                <label class="chk" id="waitConsentLabel" hidden><input type="checkbox" id="waitConsent"><span>Opcional: Elderly también puede escribirme por WhatsApp o mensaje de texto, no solo por email. Si lo dejas sin marcar, tu lugar en la lista es exactamente el mismo.</span></label>
+                <p class="tiny" id="acctFine">Para crear la cuenta no te pedimos tarjeta. La pedimos en el portal antes de la primera llamada con ella, no se cobra nada durante los primeros siete días, y cancelas cuando quieras desde el portal. Al crear la cuenta aceptas nuestros <a href="https://www.callelderly.com/terms">Términos</a> y nuestra <a href="https://www.callelderly.com/privacy">Política de privacidad</a> (en inglés).</p>
                 <p class="ok" id="acctOk" hidden role="status"></p>
               </form>
             </div>
@@ -1258,7 +1275,8 @@ form label.chk.bad span{color:#A8320F}
       </div>
 
       <div class="wbar">
-        <p class="wprice"><span>$</span><b id="total">25</b><small>USD / mes</small><em id="wsum">3 llamadas por semana · 10 min</em></p>
+        <p class="wprice" id="wpriceBox"><span>$</span><b id="total">25</b><small>USD / mes</small><em id="wsum">3 llamadas por semana · 10 min</em></p>
+        <p class="wnote" id="wnote" hidden></p>
         <p class="sr-only" id="priceSay" aria-live="polite" role="status">25 dólares al mes</p>
         <div class="wnav">
           <button type="button" class="wback" id="back" hidden>Atrás</button>
@@ -1303,7 +1321,7 @@ form label.chk.bad span{color:#A8320F}
       <div class="bar t" style="margin-bottom:1.6rem"></div>
       <h2 class="d2" style="max-width:14ch">¿Vives en otro país?<br><span class="ter">Te avisamos apenas abramos.</span></h2>
       <p style="margin-top:1.2rem;font-size:1.06rem">Hoy Elderly funciona en México y en Estados Unidos. Estamos preparando los próximos países de Latinoamérica. Déjanos tus datos y te escribimos en cuanto lleguemos al tuyo.</p>
-      <p class="tiny">Solo te vamos a escribir para avisarte cuando abramos en tu país.</p>
+      <p class="tiny">Solo te vamos a escribir para avisarte cuando abramos en tu país. Con el email alcanza: el WhatsApp es opcional y nunca mandamos publicidad.</p>
     </div>
 
     <div class="lista-card">
@@ -1338,9 +1356,9 @@ form label.chk.bad span{color:#A8320F}
         </div>
         <div class="f2">
           <label>Email<input name="email" type="email" required autocomplete="email"><span class="err"></span></label>
-          <label>WhatsApp<input name="whatsapp" type="tel" required autocomplete="tel" placeholder="Con código de país"><span class="err"></span></label>
+          <label>WhatsApp <i>opcional</i><input name="whatsapp" type="tel" autocomplete="tel" placeholder="Con código de país"><span class="err"></span></label>
         </div>
-        <label class="chk"><input type="checkbox" name="consent" required><span>Acepto que Elderly me contacte por email o WhatsApp cuando abra en mi país.<span class="err"></span></span></label>
+        <label class="chk"><input type="checkbox" name="consent"><span>Opcional: Elderly también puede escribirme por WhatsApp o mensaje de texto. Si lo dejas sin marcar te avisamos por email igual, y tu lugar en la lista es exactamente el mismo.<span class="err"></span></span></label>
         <button type="submit" class="btn" id="listaBtn">Avísenme</button>
         <p class="ok" id="listaOk" hidden role="status"></p>
       </form>
@@ -1374,7 +1392,7 @@ form label.chk.bad span{color:#A8320F}
     </div>
 
     <div class="tpanel" role="tabpanel" id="p-exp" aria-labelledby="t-exp" hidden>
-      <div class="qa"><h3>¿Sabe que habla con una IA?</h3><p>Sí, y se entera por ti, no por un desconocido al teléfono. Antes de la primera llamada se lo cuentas tú, con las palabras que te damos. Después, cada vez que pregunta, Elderly le dice con claridad que es una computadora. Nunca se hace pasar por una persona.</p></div>
+      <div class="qa"><h3>¿Sabe que habla con una IA?</h3><p>Sí, por dos caminos. Antes de la primera llamada se lo cuentas tú, con las palabras que te damos. Y después Elderly lo dice en voz alta en su primera frase de cada llamada, sin que nadie se lo pregunte: su nombre, que es una inteligencia artificial y que la llamada se graba para su familia. Nunca se hace pasar por una persona, y si ella vuelve a preguntar, tampoco lo niega.</p></div>
       <div class="qa"><h3>¿Puede llamar a Elderly cuando quiera?</h3><p>Sí, a cualquier hora, de día o de noche. Elderly queda guardado como contacto en su celular (o anotado junto al teléfono fijo), para que llame cuando quiera compañía. Darle su propia línea para recibir llamadas es un extra que todavía estamos armando. Escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a> y te anotamos: cuando abra te decimos cuánto cuesta, y no se suma nada a tu plan hasta que digas que sí.</p></div>
       <div class="qa"><h3>¿Funciona si no escucha bien?</h3><p>Elderly se adapta: habla más fuerte, más despacio, y repite con paciencia todas las veces que haga falta. Si en varias llamadas notamos un patrón de audición, te lo contamos para que lo consulten con su médico.</p></div>
       <div class="qa"><h3>¿Y si le cuesta hablar, por una embolia o Parkinson?</h3><p>Siendo honestos: todavía no. Hoy Elderly no es lo bastante confiable con un habla muy afectada, y preferimos decírtelo antes que cobrarte. Estamos trabajando en eso.</p></div>
@@ -1393,15 +1411,16 @@ form label.chk.bad span{color:#A8320F}
 
     <div class="tpanel" role="tabpanel" id="p-fam" aria-labelledby="t-fam" hidden>
       <div class="qa"><h3>¿Quién ve los resúmenes: solo yo, o toda la familia?</h3><p>Tú decides. Como titular de la cuenta eliges quién recibe los emails después de cada llamada y quién puede entrar al portal completo. Puedes darles a todos lo mismo, o reservar algunas cosas. Lo configuras tú, y lo cambias cuando quieras.</p></div>
-      <div class="qa"><h3>¿Podemos dividir el costo entre hermanos?</h3><p>Por ahora la cuenta tiene una sola tarjeta. La mayoría de las familias lo resuelve a la antigua: una persona paga y los demás le pasan su parte. Por ejemplo, un plan de 5 días con llamadas de 30 minutos cuesta $55 USD al mes: entre cinco hermanos, $11 cada uno.</p></div>
+      <div class="qa"><h3>¿Podemos dividir el costo entre hermanos?</h3><p>Por ahora la cuenta tiene una sola tarjeta. La mayoría de las familias lo resuelve a la antigua: una persona paga y los demás le pasan su parte. Por ejemplo, un plan de 5 días con llamadas de 30 minutos cuesta $55 USD al mes en México: entre cinco hermanos, $11 cada uno.</p></div>
       <div class="qa"><h3>Uno de mis papás cuida al otro. ¿También es para quien cuida?</h3><p>Quien cuida es la persona a la que menos se le pregunta cómo está, así que sí. Elderly le pregunta por su sueño, su cansancio y sus propias historias, no solo por la persona que cuida. Cada plan es para una sola persona, así que para los dos se necesitan dos planes.</p></div>
       <div class="qa"><h3>Si cancelo y vuelvo, ¿Elderly se sigue acordando?</h3><p>Cancelar el plan no borra nada: mientras la cuenta siga abierta, las grabaciones se pueden descargar y Elderly retoma donde se quedó. Cerrar la cuenta es otra cosa, así que antes descarga lo que quieras conservar.</p></div>
     </div>
 
     <div class="tpanel" role="tabpanel" id="p-data" aria-labelledby="t-data" hidden>
       <div class="qa"><h3>¿Decide qué se guarda y qué se comparte?</h3><p>Sus historias son suyas. Cuando surge algo bonito, Elderly le pregunta en el momento: “Qué linda historia. ¿Me permites guardarla para tu familia?”. Lo que no quiera compartir queda en privado. La seguridad es distinta: las alertas de seguridad siempre llegan a los contactos que elegiste.</p></div>
-      <div class="qa"><h3>¿De quién son las grabaciones?</h3><p>Guardar historias es el archivo de su voz, $6 USD al mes. Una vez guardada, la historia es de tu familia: la pueden escuchar o descargar cuando quieran mientras la cuenta esté abierta, o borrarla para siempre. No usamos su voz ni sus llamadas para entrenar nada, y si eso cambiara algún día, te lo diríamos primero y con claridad.</p></div>
-      <div class="qa"><h3>¿Qué pasa con los recuerdos si Elderly cierra?</h3><p>Te avisaríamos y nos aseguraríamos de que tu familia descargue antes cada grabación. Su voz se queda con tu familia, no con nosotros.</p></div>
+      <div class="qa"><h3>¿Se graban todas las llamadas, y de quién son las grabaciones?</h3><p>Todas las llamadas se graban y se transcriben. Eso es lo que Elderly dice en voz alta al empezar cada llamada, y lo que le pide permiso en la primera. Las grabaciones son de tu familia: desde el portal puedes escuchar o descargar cualquier llamada mientras la cuenta esté abierta. Lo que no recibes es la transcripción palabra por palabra. Recibes el resumen y las señales, porque eso fue lo que acordamos con ella. El archivo de su voz, $6 USD al mes, es otra cosa: guarda en su propia voz las historias que ella elige guardar, para que no se pierdan junto con la llamada. No usamos su voz ni sus llamadas para entrenar nada, y si eso cambiara algún día, te lo diríamos primero y con claridad.</p></div>
+      <div class="qa"><h3>¿Alguien de Elderly puede escuchar las llamadas?</h3><p>Mientras están pasando, no. Nadie de Elderly, y nadie de tu familia, escucha en vivo. Después es distinto, y preferimos decirlo antes que dejarte suponer lo contrario: unas pocas personas del equipo que opera el servicio pueden abrir una grabación o una transcripción, y lo hacen solo por tres motivos, que son comprobar que alguien dio permiso de verdad, entender por qué salió mal una llamada y responder algo que tú preguntaste. Cada vez, el sistema deja anotado quién la abrió y cuándo. Los proveedores ven lo que necesitan para hacer su trabajo, y eso está detallado en la <a href="https://www.callelderly.com/privacy">Política de privacidad</a>.</p></div>
+      <div class="qa"><h3>¿Qué pasa con los recuerdos si Elderly cierra?</h3><p>La versión honesta es esta. Las historias escritas, los resúmenes y las notas son nuestras para entregártelas, y nuestros <a href="https://www.callelderly.com/terms">Términos</a> ahora nos obligan a avisarte con al menos 30 días y a dejar las descargas funcionando durante ese tiempo. El audio es la parte que no podemos prometer para siempre: las grabaciones viven en la empresa que hace las llamadas, no en un estante nuestro. Así que la regla que de verdad te protege es la aburrida. Descarga lo que te importa mientras la cuenta está abierta, y no esperes a que estemos cerrando.</p></div>
       <div class="qa"><h3>¿Quién está detrás de Elderly?</h3><p>Hijos, hijas, papás y mamás construyendo la herramienta que vamos a querer para nuestros propios papás. En palabras de uno de nuestros fundadores: “En diez años mi papá va a ser mayor. Estoy creando la mejor herramienta que existe para que nunca se sienta solo”.</p></div>
     </div>
   </div>
@@ -1431,7 +1450,7 @@ form label.chk.bad span{color:#A8320F}
   <a href="#faq">Preguntas</a>
   <a href="https://www.callelderly.com/" hreflang="en" lang="en">English</a>
   <a href="https://www.callelderly.com/ingresar?lang=es">Ingresar</a>
-  <a href="#price">Arma su plan</a>
+  <a href="#price">Arma su plan · desde <span id="mnavPrice">$25</span></a>
 </nav>
 
 <div id="sticky" aria-hidden="true">
@@ -1614,6 +1633,33 @@ form label.chk.bad span{color:#A8320F}
     var stickyPrice=document.getElementById('stickyPrice'), dayNote=document.getElementById('dayNote');
     var next=document.getElementById('next'), back=document.getElementById('back');
     var form=document.getElementById('acct'), okBox=document.getElementById('acctOk');
+    var pwLabel=document.getElementById('pwLabel'),
+        otherLabel=document.getElementById('otherLabel'),
+        otherInput=document.getElementById('acctOtherCountry'),
+        notLiveNote=document.getElementById('notLiveNote'),
+        waitCbLabel=document.getElementById('waitConsentLabel'),
+        waitCb=document.getElementById('waitConsent'),
+        acctFine=document.getElementById('acctFine'),
+        wpriceBox=document.getElementById('wpriceBox'),
+        wnote=document.getElementById('wnote');
+    var FINE_LIVE=acctFine?acctFine.innerHTML:'';
+    /* Si el país no está abierto NO se crea cuenta. Entonces: no se pide contraseña (la que
+       se pedía se descartaba sin usarla), se pregunta el país REAL, no se muestra un precio
+       de un lugar donde no se puede comprar, y el permiso para escribir es una casilla de
+       verdad, nunca un consent:true escrito a mano. */
+    function esperaUI(vivo){
+      var otro=paisElegido()==='OTHER';
+      if(otherLabel) otherLabel.hidden=!otro;
+      if(pwLabel) pwLabel.hidden=!vivo;
+      if(waitCbLabel) waitCbLabel.hidden=vivo;
+      if(notLiveNote){
+        notLiveNote.hidden=vivo;
+        if(!vivo) notLiveNote.textContent='Todavía no llamamos ahí, así que hoy no se crea ninguna cuenta y no hace falta contraseña. Guardamos el plan que armaste y cómo contactarte, y te escribimos cuando abramos.';
+      }
+      if(acctFine) acctFine.innerHTML = vivo ? FINE_LIVE
+        : 'Hoy no hay tarjeta, no hay cobro y no se crea ninguna cuenta. Guardamos tu nombre, tu email, tu país y el plan que armaste, nada más. Pídenos borrarlo cuando quieras a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>. El resto está en nuestra <a href="https://www.callelderly.com/privacy">Política de privacidad</a> (en inglés).';
+      if(next && step===LAST) next.textContent = vivo ? 'Crear su cuenta' : 'Guardar mi plan';
+    }
 
     selectedDays=function(){ return dayBtns.filter(function(b){return b.getAttribute('aria-pressed')==='true';}); };
     chosenLen=function(){ return opts.filter(function(o){return o.getAttribute('aria-checked')==='true';})[0]; };
@@ -1629,6 +1675,21 @@ form label.chk.bad span{color:#A8320F}
     function paisElegido(){
       return (countrySel && countrySel.value) ? countrySel.value : DEFAULT_COUNTRY;
     }
+    /* ¿Se puede contratar hoy en el país elegido? Un código que el backend no conoce
+       (incluido "OTHER") NO es un país vivo: antes caía en la base de México y le mostraba
+       un precio a alguien que no puede comprar. */
+    function paisVivo(){
+      var r=regionByCode(paisElegido());
+      return !!(r && r.live!==false);
+    }
+    /* El "desde $X" del hero y del menú: el precio de arranque de un país donde SÍ se
+       vende, nunca el de uno donde no se puede comprar. */
+    function baseVisible(){
+      var r=regionByCode(paisElegido());
+      if(r && r.live!==false && Number(r.base_usd)>0) return Math.round(Number(r.base_usd));
+      var d=regionByCode(DEFAULT_COUNTRY);
+      return Math.round((d && Number(d.base_usd)>0)?Number(d.base_usd):BASE_FALLBACK);
+    }
     function baseDelPais(){
       var r=regionByCode(paisElegido()), b=r?Number(r.base_usd):NaN;
       return (b>0)?b:BASE_FALLBACK;
@@ -1642,7 +1703,30 @@ form label.chk.bad span{color:#A8320F}
       return {n:n, extra:extra, len:len, p:Math.round(p), base:Math.round(base)};
     }
     function render(){
-      var s=price();
+      var s=price(), vivo=paisVivo();
+      esperaUI(vivo);
+      var heroP=document.getElementById('heroPrice'), mnavP=document.getElementById('mnavPrice');
+      if(heroP) heroP.textContent='$'+baseVisible();
+      if(mnavP) mnavP.textContent='$'+baseVisible();
+      if(!vivo){
+        var donde=nombrePaisCod(paisElegido());
+        if(wpriceBox) wpriceBox.hidden=true;
+        if(wnote){ wnote.hidden=false;
+          wnote.textContent='Elderly todavía no llama en '+(donde||'tu país')+'. Hoy no hay nada que pagar y no se cobra nada.'; }
+        stickyPrice.textContent='$'+baseVisible();
+        say.textContent='Todavía no está disponible en tu país';
+        bd.innerHTML='';
+        bd.appendChild(row('Plan base, hasta 3 llamadas por semana',''));
+        if(s.extra) bd.appendChild(row(s.extra+(s.extra===1?' día extra':' días extra'),''));
+        if(+s.len.dataset.add) bd.appendChild(row('Llamadas de '+s.len.dataset.len+' minutos',''));
+        shields.forEach(function(c){ if(c.checked) bd.appendChild(row(c.parentNode.querySelector('b').textContent,'')); });
+        bd.appendChild(row('Precio donde vives','se define cuando abramos','sum'));
+        wsum.textContent=(s.n?s.n+(s.n===1?' llamada por semana':' llamadas por semana'):'elige al menos un día')+' · '+s.len.dataset.len+' min';
+        dayNote.textContent = s.n===0 ? 'Elige al menos un día para empezar.' : 'Tres días vienen incluidos; cada día extra suma $7 al mes donde ya operamos.';
+        return;
+      }
+      if(wpriceBox) wpriceBox.hidden=false;
+      if(wnote) wnote.hidden=true;
       total.textContent=s.p; stickyPrice.textContent='$'+s.p;
       say.textContent=s.p+' dólares al mes';
       wsum.textContent=(s.n?s.n+(s.n===1?' llamada por semana':' llamadas por semana'):'elige al menos un día')+' · '+s.len.dataset.len+' min';
@@ -1672,7 +1756,7 @@ form label.chk.bad span{color:#A8320F}
         if(i+1===step) li.setAttribute('aria-current','step'); else li.removeAttribute('aria-current');
       });
       back.hidden = step===1;
-      next.textContent = step===LAST ? 'Crear su cuenta' : 'Seguir';
+      next.textContent = step===LAST ? (paisVivo()?'Crear su cuenta':'Guardar mi plan') : 'Seguir';
       /* Solo movemos el foco cuando la persona cambia de paso. Al cargar la página no:
          si no, el primer Tab caía adentro del armador, a miles de píxeles de scroll, y quien
          navega con teclado o lector de pantalla se saltaba el salto al contenido y el menú. */
@@ -1692,6 +1776,11 @@ form label.chk.bad span{color:#A8320F}
       BO:'Bolivia',EC:'Ecuador',PY:'Paraguay',VE:'Venezuela',CR:'Costa Rica',GT:'Guatemala',DO:'República Dominicana',
       PA:'Panamá',SV:'El Salvador',HN:'Honduras',NI:'Nicaragua',PR:'Puerto Rico',ES:'España',CU:'Cuba'};
     function nombrePais(r){ return ES_NAMES[r.code] || r.name; }
+    function nombrePaisCod(c){ var r=regionByCode(c); return ES_NAMES[c] || (r&&r.name) || ''; }
+    /* Países donde todavía NO se puede contratar. Se muestran a propósito, en su propio
+       grupo: quien vive ahí deja su país REAL y su plan, en vez de perderse detrás de un
+       "OTHER" que borraba el dato que la política de privacidad promete guardar. */
+    var PROXIMOS=['AR','BO','BR','CL','CO','CR','CU','DO','EC','SV','GT','HN','NI','PA','PY','PE','PR','UY','VE'];
     var REGIONS=[{code:'MX',name:'Mexico',live:true,base_usd:25},{code:'US',name:'United States',live:true,base_usd:29}],
         countrySel=document.getElementById('acctCountry');
     function regionByCode(c){
@@ -1706,9 +1795,18 @@ form label.chk.bad span{color:#A8320F}
       var antes=countrySel.value;
       var vivos=REGIONS.filter(function(r){ return r.live!==false; });
       if(!vivos.length) vivos=[{code:'MX',name:'Mexico',live:true,base_usd:25}];
+      var yaVivo={}; vivos.forEach(function(r){ yaVivo[String(r.code).toUpperCase()]=1; });
+      var luego=[];
+      REGIONS.forEach(function(r){ if(r.live===false) luego.push(String(r.code).toUpperCase()); });
+      PROXIMOS.forEach(function(c){ if(!yaVivo[c] && luego.indexOf(c)<0) luego.push(c); });
+      luego=luego.filter(function(c){ return !yaVivo[c]; });
+      luego.sort(function(a,b){ return (nombrePaisCod(a)||a)<(nombrePaisCod(b)||b)?-1:1; });
       countrySel.innerHTML=vivos.map(function(r){
         return '<option value="'+r.code+'">'+nombrePais(r)+'</option>';
-      }).join('')+'<option value="OTHER">Otro país · todavía no</option>';
+      }).join('')
+        +'<optgroup label="Todavía no abrimos ahí · guardamos tu plan">'
+        +luego.map(function(c){ return '<option value="'+c+'">'+(nombrePaisCod(c)||c)+'</option>'; }).join('')
+        +'<option value="OTHER">Otro país</option></optgroup>';
       countrySel.value=antes||DEFAULT_COUNTRY;
       if(!countrySel.value) countrySel.value=vivos[0].code;
     }
@@ -1736,11 +1834,18 @@ form label.chk.bad span{color:#A8320F}
       if(len>=15) return 'quick';
       return 'checkin';
     }
+    /* El país REAL que deja la persona. Si eligió "Otro país", el país es lo que escribió
+       en el campo de al lado: "OTHER" nunca viaja al backend. */
+    function paisReal(){
+      var c=paisElegido();
+      if(c!=='OTHER') return c;
+      return (otherInput && otherInput.value.trim()) || '';
+    }
     function datosDelPlan(){
       var f=function(n){ var el=form.querySelector('[name="'+n+'"]'); return el?el.value.trim():''; };
       return {
         email:f('email'), password:f('password'), full_name:f('yourname'), phone:f('phone'),
-        relationship:f('who'), country:f('country')||'MX', elder_name:f('hername'),
+        relationship:f('who'), country:paisReal()||'MX', elder_name:f('hername'),
         calls_per_week:selectedDays().length, call_length:packDelLargo(),
         specialties:shields.filter(function(c){ return c.checked && c.dataset.spec; }).map(function(c){ return c.dataset.spec; }).join(','), voice_kept:!!document.getElementById('sh-voice').checked,
         days:selectedDays().map(function(b){ return b.dataset.day; }).sort().join(',')
@@ -1754,31 +1859,47 @@ form label.chk.bad span{color:#A8320F}
     function aLaLista(d, texto){
       return fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({name:d.full_name, email:d.email, phone:d.phone, country:d.country,
-          language:'es', consent:true, elder_name:d.elder_name, relationship:d.relationship,
+          language:'es', consent:!!(waitCb && waitCb.checked), elder_name:d.elder_name, relationship:d.relationship,
           calls_per_week:d.calls_per_week, call_length:d.call_length,
           specialties:d.specialties, voice_kept:d.voice_kept, days:d.days})
       }).then(function(w){ if(w.ok){ decir(texto); next.textContent='Guardado'; return true; } return false; });
     }
     function submit(){
       var bad=0;
+      if(!paisVivo() && paisElegido()==='OTHER'){
+        var ol=document.getElementById('otherLabel'), oe=ol&&ol.querySelector('.err');
+        if(!(otherInput && otherInput.value.trim())){
+          ol.classList.add('bad'); if(oe) oe.textContent='Dinos en qué país vives, así sabemos dónde abrir.'; bad++;
+        } else ol.classList.remove('bad');
+      }
       [].slice.call(form.querySelectorAll('input[required]')).forEach(function(inp){
         var lab=inp.parentNode, err=lab.querySelector('.err'), v=inp.value.trim(), msg='';
+        /* Un campo escondido no se valida: en la lista de espera no se crea cuenta, así que
+           la contraseña ni se pide ni se guarda. */
+        if(lab.hidden) { lab.classList.remove('bad'); return; }
         if(!v) msg='Falta completar este dato.';
         else if(inp.type==='email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg='Revisa el email, parece que tiene un error.';
         else if(inp.type==='password' && v.length<8) msg='Usa al menos 8 caracteres.';
         else if(inp.type==='tel'){ var n=(v.match(/\d/g)||[]).length; if(n<7||n>15) msg='Revisa el celular: debe tener entre 7 y 15 dígitos.'; }
         if(msg){ lab.classList.add('bad'); err.textContent=msg; bad++; } else lab.classList.remove('bad');
       });
-      if(bad){ form.querySelector('label.bad input').focus(); return; }
+      if(bad){ var f1=form.querySelector('label.bad input'); if(f1) f1.focus(); return; }
 
-      var d=datosDelPlan(), r0=regionByCode(d.country);
-      next.disabled=true; next.textContent='Creando…';
+      var d=datosDelPlan(), r0=paisVivo()?regionByCode(paisElegido()):null;
+      next.disabled=true; next.textContent=paisVivo()?'Creando…':'Guardando…';
 
       /* Si todavia no llegamos a su pais, NO se crea la cuenta: se guarda el plan. Darle un
          portal que no puede recibir una llamada seria dejar a una familia esperando.
          Vale para "Otro país" y para cualquier pais que el backend marque como no vivo. */
       if(!r0 || r0.live===false){
-        aLaLista(d,'<b>Estás en la lista'+(r0?' para '+nombrePais(r0):'')+'.</b> Hoy Elderly llama en México y en Estados Unidos. Guardamos el plan que armaste, así cuando lleguemos sigues donde lo dejaste. No pedimos tarjeta y no se cobra nada.')
+        var donde=nombrePaisCod(paisElegido()) || d.country;
+        aLaLista(d,'<b>Estás en la lista'+(donde?' para '+donde:'')+'.</b> '+
+          'Hoy Elderly llama en México y en Estados Unidos, y guardamos el plan que armaste para '+
+          (d.elder_name||'ella')+', así sigues donde lo dejaste cuando abramos en '+(donde||'tu país')+'. '+
+          'No se creó ninguna cuenta, no te pedimos tarjeta y no se cobra nada. '+
+          'No mandamos un correo de confirmación, así que este mensaje es el comprobante: la próxima vez que sepas de nosotros en '+
+          (d.email||'tu correo')+' va a ser el día que abramos ahí. '+
+          'Para salir de la lista, escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.')
           .then(function(ok){ if(!ok) decir('No pudimos guardar tus datos. Intenta de nuevo, o escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.', true); })
           .catch(function(){ decir('No pudimos guardar tus datos. Intenta de nuevo, o escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.', true); })
           .then(function(){ next.disabled=false; });
@@ -1853,19 +1974,33 @@ form label.chk.bad span{color:#A8320F}
         bad+=listaMarcar(nm, nm.value.trim() ? '' : 'Escribe tu nombre.');
         bad+=listaMarcar(em, !em.value.trim() ? 'Escribe tu email.'
           : (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim()) ? '' : 'Revisa el email, parece que tiene un error.'));
-        bad+=listaMarcar(wa, !wa.value.trim() ? 'Escribe tu WhatsApp.'
+        /* El WhatsApp es opcional: con el email alcanza para avisarle. Solo se revisa si
+           escribió algo. */
+        bad+=listaMarcar(wa, !wa.value.trim() ? ''
           : ((dig>=7 && dig<=15) ? '' : 'Revisa el número: debe tener entre 7 y 15 dígitos.'));
-        bad+=listaMarcar(co, co.checked ? '' : 'Necesitamos tu permiso para poder avisarte.');
+        /* La casilla NUNCA puede ser obligatoria: atar el consentimiento al alta es
+           exactamente lo que hizo que rechazaran la campaña A2P (error 30923). */
+        listaMarcar(co, '');
         if(bad){ var first=lForm.querySelector('label.bad input, label.bad select'); if(first) first.focus(); return; }
         lOk.hidden=true;
         lBtn.disabled=true; lBtn.textContent='Enviando…';
         var fallo='No pudimos guardar tus datos. Intenta de nuevo en un momento, o escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.';
+        var pais=(lSel.options[lSel.selectedIndex]||{}).text||'', correo=em.value.trim(), tel=wa.value.trim();
         fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({name:nm.value.trim(), email:em.value.trim(), phone:wa.value.trim(),
-            country:lSel.value||'OTHER', language:'es', consent:true, note:'Contactar por WhatsApp'})
+          body:JSON.stringify({name:nm.value.trim(), email:correo, phone:tel,
+            country:lSel.value||'', language:'es', consent:!!co.checked,
+            note:(tel && co.checked)?'Acepta WhatsApp':''})
         }).then(function(w){
           if(w.status===201 || w.ok){
-            listaDecir('<b>Listo.</b> Te escribimos apenas Elderly llegue a tu país.');
+            listaDecir('<b>Listo, quedaste anotada para '+pais+'.</b> '+
+              'Guardamos tu nombre, tu email'+(tel?', tu número':'')+' y tu país, nada más. '+
+              'No te mandamos un correo de confirmación, así que este mensaje es el comprobante: '+
+              'la próxima vez que sepas de nosotros en '+correo+' va a ser el día que Elderly abra en '+pais+'. '+
+              (co.checked && tel ? 'Como marcaste la casilla, también podemos escribirte por WhatsApp. '
+                                 : 'Te vamos a escribir solo por email. ')+
+              'No hay nada que pagar y no te vamos a mandar publicidad. '+
+              'Para salir de la lista o para que borremos tus datos, escríbenos a '+
+              '<a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.');
             lForm.reset(); lBtn.textContent='Enviado';
             return;
           }
@@ -1942,7 +2077,10 @@ form label.chk.bad span{color:#A8320F}
     var cur=document.getElementById('pcur'), durEl=document.getElementById('pdur');
     var track=document.getElementById('track'), fill=document.getElementById('pfill'), knob=document.getElementById('pknob');
     var list=document.getElementById('moments'), err=document.getElementById('perr');
-    var dur=507, pending=null, dragging=false, pins=[], rows=[];
+    /* El largo real del mp3 (506,9 s). Estaba en 507, así que el lector de pantalla decía
+       "de 8:27" mientras la etiqueta a la vista decía 8:26. Igual se corrige solo cuando
+       carga la metadata; esto arregla el rato en el que todavía no cargó. */
+    var dur=506, pending=null, dragging=false, pins=[], rows=[];
     var PLAY='M7 4.5v15l13-7.5z', PAUSE='M6 4.5h4.5v15H6zM13.5 4.5H18v15h-4.5z';
 
     function fmt(t){ t=Math.max(0,Math.floor(t||0)); var m=Math.floor(t/60), s=t%60; return m+':'+(s<10?'0':'')+s; }
@@ -2060,6 +2198,20 @@ form label.chk.bad span{color:#A8320F}
     var track=document.getElementById('cards'), cards=[].slice.call(track.children);
     var dotsEl=document.getElementById('cdots'), prev=document.getElementById('cprev'), next=document.getElementById('cnext');
     var page=0, pages=1, per=3, timer=null, hold=false, DELAY=7000;
+    /* WCAG 2.2.2: algo que se mueve solo por más de 5 segundos necesita una forma de
+       pararlo, y tiene que ser un control con nombre, no "toca cualquier flecha". También
+       sirve para quien lee despacio, que es medio público de esta página. */
+    var playBtn=document.getElementById('cplay'), playIcon=document.getElementById('cplayIcon');
+    var PAUSE_D='M8 5h3v14H8zM13 5h3v14h-3z', PLAY_D='M8 5l11 7-11 7z';
+    function syncPlay(){
+      if(!playBtn) return;
+      playBtn.setAttribute('aria-pressed', hold?'true':'false');
+      playBtn.setAttribute('aria-label', hold
+        ? 'Dejar que las preguntas vuelvan a avanzar solas'
+        : 'Pausar las preguntas para que no avancen solas');
+      if(playIcon) playIcon.firstElementChild.setAttribute('d', hold?PLAY_D:PAUSE_D);
+      playBtn.hidden = !!RM;   /* con movimiento reducido nunca gira: no hay nada que pausar */
+    }
     function perView(){ var w=window.innerWidth; return w<=620?1:(w<=980?2:3); }
     function build(){
       per=perView(); pages=Math.ceil(cards.length/per); page=Math.min(page,pages-1);
@@ -2082,17 +2234,22 @@ form label.chk.bad span{color:#A8320F}
       });
       [].slice.call(dotsEl.children).forEach(function(d,i){ d.setAttribute('aria-current',i===page?'true':'false'); });
       if(user) hold=true;
+      syncPlay();
       schedule();
     }
     function flipped(){ return cards.some(function(c){ return c.getAttribute('aria-pressed')==='true'; }); }
     function schedule(){ clearTimeout(timer); if(RM || hold) return; timer=setTimeout(function(){ if(!flipped()) go(page+1); else schedule(); }, DELAY); }
+    if(playBtn) playBtn.addEventListener('click',function(){
+      hold=!hold; syncPlay();
+      if(hold) clearTimeout(timer); else schedule();
+    });
     prev.addEventListener('click',function(){ go(page-1,true); });
     next.addEventListener('click',function(){ go(page+1,true); });
     root.addEventListener('mouseenter',function(){ clearTimeout(timer); });
     root.addEventListener('mouseleave',function(){ schedule(); });
     root.addEventListener('focusin',function(){ clearTimeout(timer); });
     var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(build,150); });
-    build();
+    build(); syncPlay();
   })();
 
   /* ---------- flip cards ---------- */

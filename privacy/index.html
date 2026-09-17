@@ -30,7 +30,7 @@
 <style>
 :root{
   --teal:#01534C; --forest:#06342F; --cream:#F7F2E7; --amber:#F0913E;
-  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
+  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#9C4B0D;
   --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
   --rule:rgba(18,48,44,.16); --rule-c:rgba(247,242,231,.24);
   --w:min(100% - 3rem, 72rem);
@@ -179,7 +179,7 @@ footer nav{display:flex;gap:1.2rem}
     </nav>
     <h1>Privacy Policy</h1>
     <p class="desc">What Elderly records, why, who can see it, and how to delete it.</p>
-    <div class="meta"><span>Last updated: September 17, 2026</span><span id="readtime">Reading time</span></div>
+    <div class="meta"><span>Last updated: September 18, 2026</span><span id="readtime">Reading time</span></div>
   </div>
   <svg class="cord" viewBox="0 0 760 200" aria-hidden="true">
     <path d="M0 190 C 150 170, 260 120, 360 100 C 420 88, 450 60, 440 40 C 430 20, 400 26, 402 46 C 380 26, 350 34, 362 60 L 402 92 C 520 60, 640 90, 760 40"/>
@@ -199,7 +199,7 @@ footer nav{display:flex;gap:1.2rem}
 <p class="intro">Elderly calls an older adult you love, and sends you a short note afterward. That means we handle recordings of real conversations with someone who may not be the person paying us. This page explains exactly what we keep, who can see it, and how to make it go away.</p>
 
 <section id="who-we-are"><h2>Who we are</h2>
-<p>Elderly is operated by <b>Elderly, Inc.</b>, a Delaware corporation. You can reach a human at <a href="mailto:matias@callelderly.com">matias@callelderly.com</a>. Elderly is available in the United States and Mexico only.</p>
+<p>Elderly is operated by <b>Elderly, Inc.</b>, a Delaware corporation. You can reach a human at <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>. Elderly is available in the United States and Mexico only.</p>
 </section>
 
 <section id="two-people"><h2>The two people in every account</h2>
@@ -221,13 +221,17 @@ footer nav{display:flex;gap:1.2rem}
 </ul>
 <h3>From the calls</h3>
 <ul>
-<li><b>An audio recording of each call</b>, and a written transcript of it.</li>
+<li><b>An audio recording of each call</b>, and a written transcript of it. Every call, not a sample of them.</li>
 <li>Call metadata: date, time, length, whether the call was answered, and by whom (person or voicemail).</li>
 <li>A short written summary of each call, generated automatically from the transcript, plus flags for things worth your attention (for example: they mentioned pain, or they sounded down).</li>
 </ul>
+<div class="callout"><p><b>What the family sees is not the same as what we hold.</b> In the portal you can play and download the recording of any call, for as long as the account is open. You are not shown the word-for-word transcript: you get the summary and the flags. That is deliberate, and it is part of what we told the older adult on the first call. If they declined to be recorded, we delete the transcript after the summary is written, and no audio is kept.</p></div>
 <h3>From the website</h3>
 <ul>
-<li>Basic usage analytics on our public pages, so we know which pages people read. We do not use advertising trackers, and we do not sell or share data for advertising.</li>
+<li><b>Nothing at all on the pages you only read.</b> There is no analytics product on this website, no tag manager, no advertising tracker, and no cookie set by us. We cannot tell you which of our pages are read the most, because we do not measure it.</li>
+<li><b>What you type into a form</b>, if you type into one. The waiting list and the plan builder are the only two, and they have their own section below.</li>
+<li><b>Google sees the request for our fonts.</b> Every page loads its typeface from Google Fonts, so Google's servers see your IP address and your browser as the page loads, before you have done anything. Nothing comes back to us from that, and we never ask Google to identify you. We would rather serve the fonts ourselves, and we have not done it yet.</li>
+<li><b>On the login page, Google's sign-in script loads with the page</b>, not when you press the button. That is how it draws the button. It can leave a Google cookie in your browser even if you never sign in with Google and use your email and password instead.</li>
 </ul>
 </section>
 
@@ -261,9 +265,21 @@ footer nav{display:flex;gap:1.2rem}
 <p><b>We never send marketing text messages, and we never share mobile numbers.</b> We ask for your mobile number so we can reach you if something goes wrong with the calls; we do not text it today. No phone number is sold, rented, or shared with third parties or affiliates for marketing or promotional purposes.</p>
 </section>
 
-<section id="website"><h2>What we count on the website</h2>
-<p>On the public site there is one thing we count, and only one: <b>when someone picks a country where Elderly has not opened yet</b>. We store the country and the date. That is the whole record.</p>
-<p>We do <b>not</b> store your name, your email, your IP address, or any identifier that could point back to you, and we do not use cookies, trackers or third-party analytics anywhere on this site. We count this because it is how we decide which country to open next, and we would rather decide it with real numbers than with guesses.</p>
+<section id="website"><h2>What the website sends us</h2>
+<p>Reading the site sends us nothing. There is no analytics anywhere on it, no tracker and no cookie of ours. The only way this website sends us anything about you is if you fill in a form, and there are two.</p>
+
+<h3>The waiting list, and the plan builder when we are not open where you live</h3>
+<p>Both end up in the same place. If you are in a country where Elderly does not call yet, nothing is created and nothing is charged, and we keep what you typed so that we can write to you when we open there. That is:</p>
+<ul>
+<li>Your <b>name, email address and country</b>.</li>
+<li>Your <b>phone number</b>, if you gave one. It is optional, and leaving it out changes nothing.</li>
+<li>Whether you ticked the box saying we may also reach you by text or WhatsApp. The box is optional and unticked by default; your place on the list is the same either way.</li>
+<li>If you got there through the plan builder, <b>the plan you built</b>: the older adult's first name, your relationship to them, how many calls a week, how long, and which of the optional shields you had switched on. <b>One of those shields is about health and another is about memory</b>, so what you switched on says something about the person you were building it for. It is stored the way you left it, and it is the reason we can put the plan back in front of you instead of asking you to build it again.</li>
+</ul>
+<div class="callout"><p>We do not set a cookie for this, we do not store your IP address, and we do not pass any of it to an advertiser or a data broker. It is never used to sell you anything: we do not send marketing at all. To have it deleted, write to <a href="mailto:hello@callelderly.com">hello@callelderly.com</a> and it is gone.</p></div>
+
+<h3>The country counter</h3>
+<p>Separately, and with nothing attached to it, we count <b>when someone picks a country where Elderly has not opened yet</b>. That record is the country and the date, and nothing else: no name, no email, no address of any kind. It is how we decide which country to open next, and we would rather decide it with real numbers than with guesses.</p>
 </section>
 
 <section id="vendors"><h2>Who else touches this data</h2>
@@ -279,9 +295,23 @@ footer nav{display:flex;gap:1.2rem}
 <tr><th scope="row">Railway</th><td>Hosts the application and the database, in the United States. If you live in Mexico, your information is stored and processed there.</td></tr>
 <tr><th scope="row">Vercel</th><td>Serves the public website.</td></tr>
 <tr><th scope="row">Cloudflare</th><td>Holds a second copy of the database backups, so a failure at our host cannot erase everything. The storage is private and encrypted at rest.</td></tr>
-<tr><th scope="row">Google</th><td>Only if you choose to sign in with Google: verifies who you are and gives us your email and name.</td></tr>
+<tr><th scope="row">Google Fonts</th><td>Serves the typeface on every page of this website. Google's servers see your IP address and browser when a page loads. No account, no cookie of ours, and nothing comes back to us.</td></tr>
+<tr><th scope="row">Google Sign-In</th><td>Verifies who you are if you choose to sign in with Google, and gives us your email and name. Its script loads with the login page rather than when you press the button, so it may leave a Google cookie in your browser even if you sign in with your email and password instead.</td></tr>
 </tbody></table></div>
 <p>We may also disclose information if the law requires it, or if we believe someone is in immediate danger.</p>
+</section>
+
+<section id="who-can-listen"><h2>Who at Elderly can open a recording</h2>
+<p>This is the question people actually want answered, so here it is without hedging.</p>
+<div class="callout"><p><b>Nobody listens live.</b> Not us, not anyone in your family. There is no room where calls are monitored as they happen. If someone is in danger during a call, the caller tells them to hang up and dial emergency services, because nobody on our side is listening in a position to help.</p></div>
+<p>Afterwards is different. A small number of people who operate the service can open the recording and the transcript of a call. They do it for three reasons, and we hold ourselves to these three:</p>
+<ul>
+<li><b>To check a permission.</b> The older adult gives permission out loud, on a call. When the automatic reading of that answer is not clear enough to trust, a person listens to the actual words before we call anyone again.</li>
+<li><b>To fix a call that went wrong.</b> When a call fails or behaves badly, reading what was said is the only way to find out why.</li>
+<li><b>To answer you.</b> When you write to support about a specific call, we look at that call.</li>
+</ul>
+<p>Every one of those openings is written into our logs: which staff account opened it, which call, and when. Listening to someone's conversation is not allowed to be a silent operation here.</p>
+<p>Beyond that, the vendors in the table above handle the audio and the text as part of doing their job. We do not sell recordings, we do not share them with anyone else, and we do not use them to train general-purpose AI models.</p>
 </section>
 
 <section id="family-access"><h2>Who in your family can see what</h2>
@@ -290,7 +320,7 @@ footer nav{display:flex;gap:1.2rem}
 
 <section id="retention"><h2>How long we keep it</h2>
 <dl class="keep">
-<div><dt>Recordings and transcripts</dt><dd>Kept while the account is active, so the calls can remember. They are not erased automatically when you stop using the service. Ask us to delete them, from your portal or by email, and we do it within 30 days.</dd></div>
+<div><dt>Recordings and transcripts</dt><dd>Kept while the account is active, so the calls can remember. They are not erased automatically when you stop using the service. Ask us to delete them, from your portal or by email, and we do it within 30 days. The audio itself is held by Retell, the company that places the calls, rather than on our own servers, so we cannot promise it forever. Download what matters to you while the account is open.</dd></div>
 <div><dt>Notes and summaries</dt><dd>The same.</dd></div>
 <div><dt>Billing records</dt><dd>Kept as long as tax and accounting law requires, typically seven years.</dd></div>
 <div><dt>Consent recordings</dt><dd>Kept for as long as we called that person, plus one year, because they are the record that we had permission.</dd></div>
@@ -305,7 +335,7 @@ footer nav{display:flex;gap:1.2rem}
   <div><b>Delete it.</b><p>Close the account and have the data erased. Ask us from the support form in your portal, or write to us, and we do it.</p></div>
   <div><b>Stop the emails.</b><p>Every email we send has an unsubscribe link, or write to us at <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.</p></div>
 </div>
-<p>Write to <a href="mailto:matias@callelderly.com">matias@callelderly.com</a> and we will respond within 30 days. We will not charge you or degrade your service for asking.</p>
+<p>Write to <a href="mailto:hello@callelderly.com">hello@callelderly.com</a> and we will respond within 30 days. We will not charge you or degrade your service for asking.</p>
 <p>If you are the older adult being called, these rights are yours too, and you do not need the account holder's permission to use them.</p>
 </section>
 
@@ -325,9 +355,9 @@ footer nav{display:flex;gap:1.2rem}
     <section id="contact" class="contact">
       <div>
         <h2>Contact</h2>
-        <address><b>Elderly, Inc.</b><br>2809 N Dandelion Dr, Saratoga Springs, UT 84045<br><a href="mailto:matias@callelderly.com">matias@callelderly.com</a></address>
+        <address><b>Elderly, Inc.</b><br>2809 N Dandelion Dr, Saratoga Springs, UT 84045<br><a href="mailto:hello@callelderly.com">hello@callelderly.com</a></address>
       </div>
-      <a class="btn" href="mailto:matias@callelderly.com">Write to us</a>
+      <a class="btn" href="mailto:hello@callelderly.com">Write to us</a>
     </section>
     <a class="totop" href="#main">Back to top</a>
   </article>

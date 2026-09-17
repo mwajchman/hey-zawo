@@ -37,7 +37,7 @@
   --teal:#01534C; --forest:#06342F; --teal-up:#0C685E;
   --cream:#F7F2E7; --amber:#F0913E;
   /* extended, sampled from the brand photography */
-  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
+  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#9C4B0D;
   --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
   --rule:rgba(18,48,44,.18); --rule-c:rgba(247,242,231,.26);
   --w:min(100% - 3rem, 76rem);
@@ -103,7 +103,10 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 .nav menu a:not(.btn){color:var(--cream);text-decoration:none;opacity:.75;
   display:inline-flex;align-items:center;min-height:24px}
 .nav menu a:not(.btn):hover{opacity:1}
+/* EN y ES median 17 y 15 px de ancho. El minimo de toque es 24x24: el alto ya lo daba
+   .nav menu a, el ancho lo da este min-width. */
 .lang{display:flex;gap:.15rem;font-size:.78rem}
+.nav menu .lang a{min-width:24px;justify-content:center}
 /* El selector de idioma: el activo en miel, el otro apagado, como estaba. Va con la
    especificidad de .nav menu (si no, la regla de arriba le gana y apaga el activo).
    Antes el conjunto iba a opacity .85 y el inactivo a .55: 2.4:1 en texto de 12px. */
@@ -321,7 +324,10 @@ details .ans{margin:.8rem 0 0;font-size:.95rem;max-width:none;padding-left:0;bor
   .stats>div:first-child{padding-top:0;border-top:0}}
 .stats b{display:block;font-size:clamp(2.8rem,5vw,4rem);font-weight:900;letter-spacing:-.05em;line-height:1;color:var(--honey)}
 .stats p{font-size:.95rem;margin:.7rem 0 .5rem;max-width:20rem}
-.stats cite{font-style:normal;font-size:.76rem;font-weight:700;opacity:.55}
+.stats cite{display:block;font-style:normal;font-size:.76rem;font-weight:700;opacity:.72}
+.stats cite a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.stats cite a:hover{color:var(--honey)}
+.stats cite i{font-style:italic}
 
 /* ---------------- FULL BLEED ---------------- */
 .bleed{position:relative;isolation:isolate}
@@ -381,6 +387,8 @@ ul.bd li.sum{border-top:2px solid var(--teal);margin-top:.3rem;font-weight:800;c
 .wprice small{font-size:.85rem;font-weight:800;color:var(--ink-soft);margin-left:.15rem;white-space:nowrap}
 .wprice em{font-style:normal;font-size:.85rem;font-weight:700;color:var(--ink-soft);margin-left:.9rem}
 @media(max-width:620px){.wprice em{width:100%;margin:.3rem 0 0}}
+.wprice[hidden]{display:none}
+.wnote{margin:0;font-size:1rem;font-weight:800;color:var(--amber-tx);max-width:34rem;line-height:1.4}
 .wnav{margin-left:auto;display:flex;gap:.6rem;align-items:center}
 .wback{border:2px solid var(--rule);background:transparent;color:var(--teal);font:inherit;font-weight:800;
   font-size:.92rem;padding:.72rem 1.25rem;border-radius:999px;cursor:pointer}
@@ -416,6 +424,12 @@ form input,form select{display:block;width:100%;margin-top:.4rem;padding:.78rem 
   border:2px solid var(--rule);border-radius:14px;background:#FFFDF8;color:var(--ink)}
 form input:focus,form select:focus{border-color:var(--amber-dp);outline:none}
 form .err{display:none;font-size:.8rem;font-weight:700;color:#A8320F;margin-top:.3rem}
+form label.chk{display:flex;gap:.8rem;align-items:flex-start;font-size:.92rem;font-weight:700;color:var(--ink);cursor:pointer;margin:.3rem 0 1.2rem}
+form label.chk input{width:22px;height:22px;margin:.1rem 0 0;padding:0;flex:none;accent-color:var(--teal)}
+form label.chk .err{margin-top:.2rem}
+form label.chk.bad span{color:#A8320F}
+form .notlive{background:rgba(240,145,62,.14);border-left:4px solid var(--amber-dp);border-radius:12px;padding:.8rem 1rem;margin:0 0 1.1rem;font-size:.88rem;font-weight:700;color:var(--ink)}
+form [hidden]{display:none!important}
 form label.bad input{border-color:#A8320F}
 form label.bad .err{display:block}
 .ok{margin-top:1rem;padding:.95rem 1.2rem;background:var(--teal);color:var(--cream);border-radius:16px;font-size:.92rem;max-width:none}
@@ -460,6 +474,8 @@ footer .cols{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:2.4rem;padding
 footer h4{font-size:.85rem;color:var(--honey);margin-bottom:.8rem}
 footer p{color:rgba(247,242,231,.7)}
 footer a{color:var(--cream);text-decoration:none;opacity:.72}
+/* Los enlaces del pie median 17px de alto. 24 es el minimo de toque. */
+footer li a,footer .end a{display:inline-flex;align-items:center;min-height:24px}
 footer a:hover{opacity:1;text-decoration:underline}
 footer ul{list-style:none;padding:0;margin:0}
 footer li{margin-bottom:.45rem}
@@ -522,6 +538,9 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .track .knob{position:absolute;top:50%;left:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--cream);box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:none}
 .pin{position:absolute;top:0;width:18px;height:18px;margin-left:-9px;padding:0;border:0;background:transparent;cursor:pointer}
 .pin::before{content:"";position:absolute;left:3px;top:0;width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--honey)}
+/* El area de toque del pin: 24x24, el minimo, sin mover ni agrandar el dibujo. El publico
+   pasa los 50 y el pin se veia de 18px. */
+.pin::after{content:"";position:absolute;left:50%;top:50%;width:24px;height:24px;transform:translate(-50%,-50%)}
 .pin[data-on]::before{background:var(--cream)}
 .moments{list-style:none;margin:.5rem 0 0;padding:0}
 .moments button{display:flex;align-items:baseline;gap:.9rem;width:100%;text-align:left;background:transparent;border:0;
@@ -818,7 +837,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       <a class="btn" href="#price">Build their plan</a>
       <a class="btn line" href="#call">Listen to a whole call</a>
     </div>
-    <p class="fine">No card today. The first week is free, and the price takes shape as you build the plan.</p>
+    <p class="fine">From <b id="heroPrice">$29</b> a month, first week free. No card to create the account, and the price takes shape as you build the plan.</p>
     </div>
 
     <div class="callstage" id="stage" role="group" aria-label="A sample call: the phone rings, it gets answered, and the two of them talk out loud.">
@@ -1006,7 +1025,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     <div class="prom">
       <div>
         <h4>They're in on it, always</h4>
-        <p>Before the first call you tell them yourself, with the words we hand you. The friend says it's an AI on every call and asks permission before anything is recorded. A member, never a subject.</p>
+        <p>Before the first call you tell them yourself, with the words we hand you. On the first call the friend asks their permission to call and to record, out loud, and from then on it opens every single call by saying it's an AI and that the call is recorded. A member, never a subject.</p>
       </div>
       <div>
         <h4>The first week is free</h4>
@@ -1039,11 +1058,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         </button>
         <div class="pmeta">
           <b>Mari, 78 · a real call</b>
-          <span class="ptime"><span id="pcur">0:00</span> / <span id="pdur">7:06</span></span>
+          <span class="ptime"><span id="pcur">0:00</span> / <span id="pdur">7:05</span></span>
         </div>
         <p class="pfine">Shared with permission. The pins mark real moments.</p>
       </div>
-      <div class="track" id="track" role="slider" tabindex="0" aria-label="Position in the call" aria-valuemin="0" aria-valuemax="426" aria-valuenow="0" aria-valuetext="0:00">
+      <div class="track" id="track" role="slider" tabindex="0" aria-label="Position in the call" aria-valuemin="0" aria-valuemax="425" aria-valuenow="0" aria-valuetext="0:00 of 7:05">
         <span class="wf" id="wf" aria-hidden="true"></span><span class="fill" id="pfill"></span><span class="knob" id="pknob"></span>
       </div>
       <ul class="moments" id="moments"></ul>
@@ -1090,9 +1109,10 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         <button class="cbtn" id="cprev" type="button" aria-label="Previous questions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div class="cdots" id="cdots"></div>
         <button class="cbtn" id="cnext" type="button" aria-label="Next questions"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="cbtn" id="cplay" type="button" aria-pressed="false" aria-label="Pause the questions from moving on their own"><svg viewBox="0 0 24 24" aria-hidden="true" id="cplayIcon"><path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor"/></svg></button>
       </div>
     </div>
-    <p style="margin-top:2rem;font-size:.95rem">Six of twenty-eight. <a href="#faq">Every question we've ever been asked, answered honestly</a></p>
+    <p style="margin-top:2rem;font-size:.95rem">These are six. <a href="#faq">Every question we've ever been asked, answered honestly</a></p>
   </div>
 </section>
 
@@ -1111,7 +1131,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     <div class="browser" aria-hidden="true">
       <div class="bbar"><i></i><i></i><i></i><span class="url">callelderly.com/demo</span><span class="tag">Sample family</span></div>
       <div class="bbody">
-        <div class="phead"><b>Rosa, 78</b><small>5 calls this week</small></div>
+        <div class="phead"><b>Peggy, 78</b><small>5 calls this week</small></div>
         <div class="wk" style="margin-top:.9rem"><i class="c">M</i><i class="c">T</i><i class="c">W</i><i class="c">T</i><i class="c">F</i><i>S</i><i>S</i></div>
         <div class="pcard" style="margin-top:.9rem">
           <div class="h">After today's call</div>
@@ -1199,16 +1219,19 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
                   <label>Your name<input name="yourname" required autocomplete="name"><span class="err"></span></label>
                   <label>Email<input name="email" type="email" required autocomplete="email"><span class="err"></span></label>
                 </div>
-                <div class="f2">
+                <div class="f2" id="rowPhonePw">
                   <label>Your mobile<input name="phone" type="tel" required autocomplete="tel" placeholder="+1 (555) 000-0000"><span class="err"></span></label>
-                  <label>Password<input name="password" type="password" required autocomplete="new-password" placeholder="At least 8 characters"><span class="err"></span></label>
+                  <label id="pwLabel">Password<input name="password" type="password" required autocomplete="new-password" placeholder="At least 8 characters"><span class="err"></span></label>
                 </div>
                 <div class="f2">
                   <label>Where do you live?
                     <select name="country" id="acctCountry"><option value="US">United States</option></select>
                   </label>
+                  <label id="otherLabel" hidden>Which country?<input name="other_country" id="acctOtherCountry" autocomplete="country-name" placeholder="Type your country"><span class="err"></span></label>
                 </div>
-                <p class="tiny">No card · cancel anytime · you choose the first call. By creating the account you accept our <a href="https://www.callelderly.com/terms">Terms</a> and <a href="https://www.callelderly.com/privacy">Privacy Policy</a>.</p>
+                <p class="notlive" id="notLiveNote" hidden></p>
+                <label class="chk" id="waitConsentLabel" hidden><input type="checkbox" id="waitConsent"><span>Optional: Elderly can also reach me by text or WhatsApp, not only by email. Leaving this unticked changes nothing about your place on the list.</span></label>
+                <p class="tiny" id="acctFine">No card to create the account. We ask for a card in the portal before the first call with them, nothing is charged for the first seven days, and you can cancel any time from the portal. By creating the account you accept our <a href="https://www.callelderly.com/terms">Terms</a> and <a href="https://www.callelderly.com/privacy">Privacy Policy</a>.</p>
                 <p class="ok" id="acctOk" hidden role="status"></p>
               </form>
             </div>
@@ -1221,7 +1244,8 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       </div>
 
       <div class="wbar">
-        <p class="wprice"><span>$</span><b id="total">29</b><small>/ month</small><em id="wsum">3 calls a week · 10 min</em></p>
+        <p class="wprice" id="wpriceBox"><span id="cur">$</span><b id="total">29</b><small id="per">/ month</small><em id="wsum">3 calls a week · 10 min</em></p>
+        <p class="wnote" id="wnote" hidden></p>
         <p class="sr-only" id="priceSay" aria-live="polite" role="status">29 dollars a month</p>
         <div class="wnav">
           <button type="button" class="wback" id="back" hidden>Back</button>
@@ -1242,13 +1266,13 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     <div class="stats">
       <div>
         <b>50%</b>
-        <p>higher dementia risk for isolated older adults. Connection protects them.</p>
-        <cite>U.S. Surgeon General, 2023</cite>
+        <p>higher dementia risk, roughly, for older adults living with chronic loneliness and isolation. Connection protects them.</p>
+        <cite><a href="https://www.ncbi.nlm.nih.gov/books/NBK595227/" rel="noopener">U.S. Surgeon General, <i>Our Epidemic of Loneliness and Isolation</i>, 2023, p. 28</a></cite>
       </div>
       <div>
         <b>$7.75B</b>
         <p>lost to fraud by Americans over 60 in 2025, up 59% in a year. Most never tell their kids.</p>
-        <cite>FBI IC3 Annual Report, 2025</cite>
+        <cite><a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf" rel="noopener">FBI Internet Crime Complaint Center, 2025 Internet Crime Report, p. 44</a></cite>
       </div>
       <div>
         <b>63M</b>
@@ -1281,11 +1305,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       <div class="qa"><h3>What if nobody sends anything one week?</h3><p>They never hear silence. During onboarding you tell us about their people, their stories and their world, and the friend keeps learning from every call after that. There is always something to talk about; your deposits just make the week richer.</p></div>
       <div class="qa"><h3>My parent refuses outside help. Why would they accept this?</h3><p>Because nothing is asked of them: no stranger in the house, nothing to install, no effort. Just the phone ringing, like it always has. You set everything up; they only answer. And inside every call is news from their own family.</p></div>
       <div class="qa"><h3>What language does it speak?</h3><p>English and Spanish at launch, including the way they actually speak it. More coming with our first families.</p></div>
-      <div class="qa"><h3>Can it call outside the US?</h3><p>Yes, in Mexico. The rest of Latin America is next. If your parent lives in another country, <a href="https://www.callelderly.com/es#lista">join the waitlist on our Spanish site</a> and we will write as soon as we open there.</p></div>
+      <div class="qa"><h3>Can it call outside the US?</h3><p>Yes, in Mexico. The rest of Latin America is next. If your parent lives anywhere else, build the plan anyway and pick your country at the last step: nothing is created and nothing is charged, we keep the plan, and we write when we open there. There is also a <a href="https://www.callelderly.com/es#lista">waiting list on our Spanish site</a>.</p></div>
     </div>
 
     <div class="tpanel" role="tabpanel" id="p-exp" aria-labelledby="t-exp" hidden>
-      <div class="qa"><h3>Do they know it's an AI?</h3><p>Yes, and they hear it from you, not from a stranger on the phone. Before the first call you tell them yourself, with the words we hand you. From then on, any time they ask, it says plainly that it is a computer. It never pretends to be a person.</p></div>
+      <div class="qa"><h3>Do they know it's an AI?</h3><p>Yes, twice over. Before the first call you tell them yourself, with the words we hand you. And then the friend says it out loud in its opening line on every single call, without being asked: its name, that it's an AI, and that the call is recorded for their family. It never pretends to be a person, and it never denies it if they ask again.</p></div>
       <div class="qa"><h3>Can they call their friend back?</h3><p>Yes, any time, day or night. The friend has a name, saved as a contact in their phone (or written by the landline) so they can call whenever they want company. Giving them their own incoming line is an extra we are still building. Write to <a href="mailto:hello@callelderly.com">hello@callelderly.com</a> and we will put you on the list: when it opens we tell you what it costs, and nothing is added to your plan until you say yes.</p></div>
       <div class="qa"><h3>Does it work if they don't hear well?</h3><p>The friend adapts: louder, slower, patient with every "say that again," as many times as it takes. If we notice a hearing pattern across several calls, we tell you what we're seeing so you can look into it with their doctor.</p></div>
       <div class="qa"><h3>What if their speech is slurred, from a stroke or Parkinson's?</h3><p>Honestly: not yet. The friend isn't reliable enough with heavily impaired speech today, and we'd rather tell you than take your money. We're working on it.</p></div>
@@ -1304,15 +1328,16 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 
     <div class="tpanel" role="tabpanel" id="p-fam" aria-labelledby="t-fam" hidden>
       <div class="qa"><h3>Who sees the reports: just me, or the whole family?</h3><p>You decide. As the account owner you choose who receives the after-call emails and who can open the full dashboard. Give everyone the same view, or keep some things closer. It's yours to set, and to change.</p></div>
-      <div class="qa"><h3>Can my siblings and I split the cost?</h3><p>There's one card on the account for now. Most families split it the old-fashioned way: one person pays, everyone else sends their share. Five siblings on a $59 plan is about $12 each.</p></div>
+      <div class="qa"><h3>Can my siblings and I split the cost?</h3><p>There's one card on the account for now. Most families split it the old-fashioned way: one person pays, everyone else sends their share. For example, five calls a week with 30-minute calls comes to $59 a month: between five siblings, about $12 each.</p></div>
       <div class="qa"><h3>One parent is the caregiver for the other. Is this for them too?</h3><p>Caregivers are the least-checked-on people in a family, so yes. The friend asks about them: their sleep, their load, their own stories, not only the person they care for. Each friend is dedicated to one person, so covering both means two plans.</p></div>
       <div class="qa"><h3>If I cancel and come back, does the friend still remember?</h3><p>Canceling the plan doesn't erase anything: while the account stays open, recordings are there to download and the friend picks up right where they left off. Closing the account is different, so download what you want to keep first.</p></div>
     </div>
 
     <div class="tpanel" role="tabpanel" id="p-data" aria-labelledby="t-data" hidden>
       <div class="qa"><h3>Do they control what's kept and shared?</h3><p>Their stories are theirs. When something beautiful comes up, the friend asks in the moment, "That's a lovely story. May I save it for your family?", and what they decline stays private. Safety is different: safety alerts always reach the contacts you chose.</p></div>
-      <div class="qa"><h3>Who owns the recordings?</h3><p>Saving stories is the voice archive, $6 a month. Once a story is saved, your family owns it: play or download it any time while the account is open, or delete it permanently yourselves. We don't use their voice or their calls to train anything, and if that ever changed, you would hear it from us first, plainly.</p></div>
-      <div class="qa"><h3>What happens to the memories if Elderly ever shuts down?</h3><p>We would tell you and make sure your family has downloaded every recording first. Their voice leaves with your family, not with us.</p></div>
+      <div class="qa"><h3>Is every call recorded, and who owns the recordings?</h3><p>Every call is recorded and transcribed. That is what the friend says out loud at the start of every call, and what it asks permission for on the first one. The recordings belong to your family: from the portal you can play or download any call while the account is open. What you don't get is the word-for-word transcript. You get the note and the signals, because that was the deal we made with them. The voice archive, $6 a month, is a different thing: it keeps the life stories she chooses to save in her own voice, so they survive the call they came from. We don't use their voice or their calls to train anything, and if that ever changed, you would hear it from us first, plainly.</p></div>
+      <div class="qa"><h3>Can anyone at Elderly listen to the calls?</h3><p>Not while they are happening. Nobody at Elderly, and nobody in your family, listens in live. Afterwards is different, and we would rather say it than let you assume otherwise: a small number of people who run the service can open a recording or a transcript, and they do it for three reasons only, which are checking that someone really gave permission, working out why a call went wrong, and answering a support request from you. Every single time, the system writes down who opened it and when. Our vendors see what they need to do their job, which is set out in the <a href="https://www.callelderly.com/privacy">Privacy Policy</a>.</p></div>
+      <div class="qa"><h3>What happens to the memories if Elderly ever shuts down?</h3><p>Here is the honest version. The written stories, the notes and the summaries are ours to hand over, and our <a href="https://www.callelderly.com/terms">Terms</a> now commit us to giving you at least 30 days' notice and keeping the downloads working through it. The audio is the part we can't promise forever: the recordings sit with the company that places the calls, not on a shelf of ours. So the rule that actually protects you is the boring one. Download what matters to you while the account is open, and don't wait for us to be closing.</p></div>
       <div class="qa"><h3>Who is behind Elderly?</h3><p>Parents, sons and daughters building the tool we'll want for our own parents. In our founder's words: "In ten years my father will be old. I'm building the best tool that exists so he never feels alone."</p></div>
     </div>
   </div>
@@ -1340,7 +1365,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
   <a href="#portal">Family portal</a>
   <a href="#faq">Questions</a>
   <a href="https://www.callelderly.com/ingresar">Log in</a>
-  <a href="#price">Build their plan</a>
+  <a href="#price">Build their plan · from <span id="mnavPrice">$29</span></a>
 </nav>
 
 <div id="sticky" aria-hidden="true">
@@ -1514,6 +1539,33 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     var stickyPrice=document.getElementById('stickyPrice'), dayNote=document.getElementById('dayNote');
     var next=document.getElementById('next'), back=document.getElementById('back');
     var form=document.getElementById('acct'), okBox=document.getElementById('acctOk');
+    var pwLabel=document.getElementById('pwLabel'),
+        otherLabel=document.getElementById('otherLabel'),
+        otherInput=document.getElementById('acctOtherCountry'),
+        notLiveNote=document.getElementById('notLiveNote'),
+        waitCbLabel=document.getElementById('waitConsentLabel'),
+        waitCb=document.getElementById('waitConsent'),
+        acctFine=document.getElementById('acctFine'),
+        wpriceBox=document.getElementById('wpriceBox'),
+        wnote=document.getElementById('wnote');
+    var FINE_LIVE=acctFine?acctFine.innerHTML:'';
+    /* Si el pais no esta abierto NO se crea cuenta. Entonces: no se pide contrasena (la que
+       se pedia se descartaba sin usarla), se pregunta el pais REAL, el precio no se muestra
+       porque ahi no se puede comprar, y el permiso para escribir es una casilla de verdad,
+       nunca un consent:true escrito a mano. */
+    function esperaUI(vivo){
+      var otro=paisElegido()==='OTHER';
+      if(otherLabel) otherLabel.hidden=!otro;
+      if(pwLabel) pwLabel.hidden=!vivo;
+      if(waitCbLabel) waitCbLabel.hidden=vivo;
+      if(notLiveNote){
+        notLiveNote.hidden=vivo;
+        if(!vivo) notLiveNote.textContent='Elderly does not call there yet, so nothing is created today and no password is needed. We keep the plan you built and how to reach you, and we write when we open.';
+      }
+      if(acctFine) acctFine.innerHTML = vivo ? FINE_LIVE
+        : 'No card, no charge, and no account today. We store your name, email, country and the plan you built, and nothing else. Ask us to delete it any time at <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>. Our <a href="https://www.callelderly.com/privacy">Privacy Policy</a> explains the rest.';
+      if(next && step===LAST) next.textContent = vivo ? 'Create their account' : 'Save my plan';
+    }
 
     selectedDays=function(){ return dayBtns.filter(function(b){return b.getAttribute('aria-pressed')==='true';}); };
     chosenLen=function(){ return opts.filter(function(o){return o.getAttribute('aria-checked')==='true';})[0]; };
@@ -1533,6 +1585,21 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       var r=regionByCode(paisElegido()), b=r?Number(r.base_usd):NaN;
       return (b>0)?b:BASE_FALLBACK;
     }
+    /* ¿Se puede contratar hoy en el pais elegido? Un codigo que el backend no conoce
+       (incluido "OTHER") NO es un pais vivo: antes caia en la base de Estados Unidos y le
+       mostraba $29 a alguien que no puede comprar. */
+    function paisVivo(){
+      var r=regionByCode(paisElegido());
+      return !!(r && r.live!==false);
+    }
+    /* El "desde $X" del hero y del menu: el precio de arranque de un pais donde SI se
+       vende, nunca el de uno donde no se puede comprar. */
+    function baseVisible(){
+      var r=regionByCode(paisElegido());
+      if(r && r.live!==false && Number(r.base_usd)>0) return Math.round(Number(r.base_usd));
+      var d=regionByCode(DEFAULT_COUNTRY);
+      return Math.round((d && Number(d.base_usd)>0)?Number(d.base_usd):BASE_FALLBACK);
+    }
     function price(){
       var n=selectedDays().length, len=chosenLen(), base=baseDelPais();
       var extra=Math.max(0,n-INCLUDED), p=base+extra*EXTRA+parseInt(len.dataset.add,10);
@@ -1542,7 +1609,30 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       return {n:n, extra:extra, len:len, p:Math.round(p), base:Math.round(base)};
     }
     function render(){
-      var s=price();
+      var s=price(), vivo=paisVivo();
+      esperaUI(vivo);
+      var heroP=document.getElementById('heroPrice'), mnavP=document.getElementById('mnavPrice');
+      if(heroP) heroP.textContent='$'+baseVisible();
+      if(mnavP) mnavP.textContent='$'+baseVisible();
+      if(!vivo){
+        var donde=nombrePais(paisElegido());
+        if(wpriceBox) wpriceBox.hidden=true;
+        if(wnote){ wnote.hidden=false;
+          wnote.textContent='Elderly does not call '+(donde||'your country')+' yet. Nothing to pay today, and nothing is charged.'; }
+        stickyPrice.textContent='$'+baseVisible();
+        say.textContent='Not available in your country yet';
+        bd.innerHTML='';
+        bd.appendChild(row('Base plan, up to 3 calls a week',''));
+        if(s.extra) bd.appendChild(row(s.extra+(s.extra===1?' extra day':' extra days'),''));
+        if(+s.len.dataset.add) bd.appendChild(row(s.len.dataset.len+' minutes a call',''));
+        shields.forEach(function(c){ if(c.checked) bd.appendChild(row(c.parentNode.querySelector('b').textContent,'')); });
+        bd.appendChild(row('Price where you live','set when we open','sum'));
+        wsum.textContent=(s.n?s.n+(s.n===1?' call a week':' calls a week'):'pick at least one day')+' · '+s.len.dataset.len+' min';
+        dayNote.textContent = s.n===0 ? 'Pick at least one day to start.' : 'Three days are included; each day beyond three adds $7 a month where we operate.';
+        return;
+      }
+      if(wpriceBox) wpriceBox.hidden=false;
+      if(wnote) wnote.hidden=true;
       total.textContent=s.p; stickyPrice.textContent='$'+s.p;
       say.textContent=s.p+' dollars a month';
       wsum.textContent=(s.n?s.n+(s.n===1?' call a week':' calls a week'):'pick at least one day')+' · '+s.len.dataset.len+' min';
@@ -1550,7 +1640,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         : (s.extra ? 'Three days are included. '+s.extra+(s.extra===1?' extra day adds $7':' extra days add $'+s.extra*EXTRA)+' a month.'
                    : 'Each day beyond three adds $7 a month.');
       bd.innerHTML='';
-      bd.appendChild(row(s.n+(s.n===1?' call a week':' calls a week'), '$'+s.base));
+      bd.appendChild(row('Base plan, up to 3 calls a week', '$'+s.base));
       if(s.extra) bd.appendChild(row(s.extra+(s.extra===1?' extra day':' extra days'), '+$'+s.extra*EXTRA));
       if(+s.len.dataset.add) bd.appendChild(row(s.len.dataset.len+' minutes a call', '+$'+s.len.dataset.add));
       var specOn=shields.filter(function(c){ return c.checked && c.dataset.spec; });
@@ -1572,7 +1662,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         if(i+1===step) li.setAttribute('aria-current','step'); else li.removeAttribute('aria-current');
       });
       back.hidden = step===1;
-      next.textContent = step===LAST ? 'Create their account' : 'Continue';
+      next.textContent = step===LAST ? (paisVivo()?'Create their account':'Save my plan') : 'Continue';
       /* Solo movemos el foco cuando la persona cambia de paso. Al cargar la pagina no:
          si no, el primer Tab caia adentro del armador, a 7.500px de scroll, y quien navega
          con teclado o lector de pantalla se saltaba el "Skip to content", el logo y el menu. */
@@ -1597,14 +1687,39 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     /* En el selector va SOLO lo que se puede contratar hoy. Los "coming soon" del backend
        hacian elegir un pais al que todavia no llegamos y prometian una llamada que no sale.
        Quien vive en otro lado elige "Another country" y su plan va a la lista de espera. */
+    /* Los paises donde todavia NO se puede contratar se muestran a proposito, en su propio
+       grupo. Antes todos caian en un solo "OTHER" y el pais real se perdia: la lista de
+       espera guardaba "OTHER", y la politica de privacidad promete guardar el pais. */
+    var PROXIMOS=[['AR','Argentina'],['BO','Bolivia'],['BR','Brazil'],['CL','Chile'],['CO','Colombia'],
+                  ['CR','Costa Rica'],['CU','Cuba'],['DO','Dominican Republic'],['EC','Ecuador'],
+                  ['SV','El Salvador'],['GT','Guatemala'],['HN','Honduras'],['NI','Nicaragua'],
+                  ['PA','Panama'],['PY','Paraguay'],['PE','Peru'],['PR','Puerto Rico'],
+                  ['UY','Uruguay'],['VE','Venezuela']];
+    function nombrePais(code){
+      var r=regionByCode(code); if(r && r.name) return r.name;
+      for(var i=0;i<PROXIMOS.length;i++){ if(PROXIMOS[i][0]===code) return PROXIMOS[i][1]; }
+      return '';
+    }
     function paintCountries(){
       if(!countrySel) return;
       var antes=countrySel.value;
       var vivos=REGIONS.filter(function(r){ return r.live!==false; });
       if(!vivos.length) vivos=[{code:'US',name:'United States',live:true,base_usd:29}];
+      var yaVivo={}; vivos.forEach(function(r){ yaVivo[String(r.code).toUpperCase()]=1; });
+      var luego=REGIONS.filter(function(r){ return r.live===false; })
+                       .map(function(r){ return [String(r.code).toUpperCase(), r.name||r.code]; });
+      PROXIMOS.forEach(function(p){
+        if(yaVivo[p[0]]) return;
+        for(var i=0;i<luego.length;i++){ if(luego[i][0]===p[0]) return; }
+        luego.push(p);
+      });
+      luego.sort(function(a,b){ return a[1]<b[1]?-1:1; });
       countrySel.innerHTML=vivos.map(function(r){
         return '<option value="'+r.code+'">'+r.name+'</option>';
-      }).join('')+'<option value="OTHER">Another country · not yet</option>';
+      }).join('')
+        +'<optgroup label="Not open yet · we save your plan">'
+        +luego.map(function(p){ return '<option value="'+p[0]+'">'+p[1]+'</option>'; }).join('')
+        +'<option value="OTHER">Another country</option></optgroup>';
       countrySel.value=antes||DEFAULT_COUNTRY;
       if(!countrySel.value) countrySel.value=vivos[0].code;
     }
@@ -1631,11 +1746,18 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       if(len>=15) return 'quick';
       return 'checkin';
     }
+    /* El pais REAL que deja la persona. Si eligio "Another country", el pais es lo que
+       escribio en el campo de al lado: "OTHER" nunca viaja al backend. */
+    function paisReal(){
+      var c=paisElegido();
+      if(c!=='OTHER') return c;
+      return (otherInput && otherInput.value.trim()) || '';
+    }
     function datosDelPlan(){
       var f=function(n){ var el=form.querySelector('[name="'+n+'"]'); return el?el.value.trim():''; };
       return {
         email:f('email'), password:f('password'), full_name:f('yourname'), phone:f('phone'),
-        relationship:f('who'), country:f('country')||'US', elder_name:f('hername'),
+        relationship:f('who'), country:paisReal()||'US', elder_name:f('hername'),
         calls_per_week:selectedDays().length, call_length:packDelLargo(),
         specialties:shields.filter(function(c){ return c.checked && c.dataset.spec; }).map(function(c){ return c.dataset.spec; }).join(','), voice_kept:!!document.getElementById('sh-voice').checked,
         days:selectedDays().map(function(b){ return b.dataset.day; }).sort().join(',')
@@ -1649,34 +1771,47 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     function aLaLista(d, texto){
       return fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({name:d.full_name, email:d.email, phone:d.phone, country:d.country,
-          consent:true, elder_name:d.elder_name, relationship:d.relationship,
+          consent:!!(waitCb && waitCb.checked), elder_name:d.elder_name, relationship:d.relationship,
           calls_per_week:d.calls_per_week, call_length:d.call_length,
           specialties:d.specialties, voice_kept:d.voice_kept, days:d.days})
       }).then(function(w){ if(w.ok){ decir(texto); next.textContent='Saved'; return true; } return false; });
     }
     function submit(){
-      var bad=0;
+      var bad=0, esperando=!paisVivo();
+      if(esperando && paisElegido()==='OTHER'){
+        var ol=document.getElementById('otherLabel'), oe=ol&&ol.querySelector('.err');
+        if(!(otherInput && otherInput.value.trim())){
+          ol.classList.add('bad'); if(oe) oe.textContent='Tell us which country, so we know where to open next.'; bad++;
+        } else ol.classList.remove('bad');
+      }
       [].slice.call(form.querySelectorAll('input[required]')).forEach(function(inp){
         var lab=inp.parentNode, err=lab.querySelector('.err'), v=inp.value.trim(), msg='';
+        /* Un campo escondido no se valida: en la lista de espera no se crea cuenta, asi
+           que la contrasena ni se pide ni se guarda. */
+        if(lab.hidden) { lab.classList.remove('bad'); return; }
         if(!v) msg='This one is needed.';
         else if(inp.type==='email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg='That email does not look right.';
         else if(inp.type==='password' && v.length<8) msg='Use at least 8 characters.';
         else if(inp.type==='tel'){ var n=(v.match(/\d/g)||[]).length; if(n<7||n>15) msg='That mobile does not look right.'; }
         if(msg){ lab.classList.add('bad'); err.textContent=msg; bad++; } else lab.classList.remove('bad');
       });
-      if(bad){ form.querySelector('label.bad input').focus(); return; }
+      if(bad){ var f1=form.querySelector('label.bad input'); if(f1) f1.focus(); return; }
 
-      var d=datosDelPlan(), r0=regionByCode(d.country);
-      next.disabled=true; next.textContent='Creating…';
+      var d=datosDelPlan(), r0=paisVivo()?regionByCode(paisElegido()):null;
+      next.disabled=true; next.textContent=paisVivo()?'Creating…':'Saving…';
 
       /* Si todavia no llegamos a su pais, NO se crea la cuenta: se guarda el plan. Darle un
          portal que no puede recibir una llamada seria dejar a una familia esperando.
          Vale para "Another country" y para cualquier pais que el backend marque como no vivo. */
       if(!r0 || r0.live===false){
-        var donde = (r0 && r0.name) ? ' for '+r0.name : '';
-        aLaLista(d,'<b>You are on the list'+donde+'.</b> Elderly calls in the United States and Mexico today. '+
-          'We saved the plan you built, so when we reach you, you pick up where you left off. '+
-          'No card, and nothing is charged.')
+        var donde = nombrePais(paisElegido()) || d.country;
+        aLaLista(d,'<b>You are on the list'+(donde?' for '+donde:'')+'.</b> '+
+          'Elderly calls in the United States and Mexico today, and we saved the plan you built for '+
+          (d.elder_name||'them')+', so you pick up where you left off when we open in '+(donde||'your country')+'. '+
+          'No account was created, no card was asked for, and nothing is charged. '+
+          'We do not send a confirmation email, so this message is the receipt: the next time you hear from us at '+
+          (d.email||'your address')+' will be the day we open there. '+
+          'To be taken off the list, write to <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.')
           .catch(function(){ decir('We could not save that. Please try again.', true); })
           .then(function(){ next.disabled=false; });
         return;
@@ -1774,7 +1909,10 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     var cur=document.getElementById('pcur'), durEl=document.getElementById('pdur');
     var track=document.getElementById('track'), fill=document.getElementById('pfill'), knob=document.getElementById('pknob');
     var list=document.getElementById('moments'), err=document.getElementById('perr');
-    var dur=426, pending=null, dragging=false, pins=[], rows=[];
+    /* El largo real del mp3 (425,9 s). Estaba en 426, asi que el lector de pantalla decia
+       "de 7:06" mientras la etiqueta a la vista decia 7:05. Igual se corrige solo cuando
+       carga la metadata; esto arregla el rato en el que todavia no cargo. */
+    var dur=425, pending=null, dragging=false, pins=[], rows=[];
     var PLAY='M7 4.5v15l13-7.5z', PAUSE='M6 4.5h4.5v15H6zM13.5 4.5H18v15h-4.5z';
 
     function fmt(t){ t=Math.max(0,Math.floor(t||0)); var m=Math.floor(t/60), s=t%60; return m+':'+(s<10?'0':'')+s; }
@@ -1892,6 +2030,20 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     var track=document.getElementById('cards'), cards=[].slice.call(track.children);
     var dotsEl=document.getElementById('cdots'), prev=document.getElementById('cprev'), next=document.getElementById('cnext');
     var page=0, pages=1, per=3, timer=null, hold=false, DELAY=7000;
+    /* WCAG 2.2.2: algo que se mueve solo por mas de 5 segundos necesita una forma de
+       pararlo, y tiene que ser un control con nombre, no "toca cualquier flecha". Tambien
+       sirve para quien lee despacio, que es medio publico de esta pagina. */
+    var playBtn=document.getElementById('cplay'), playIcon=document.getElementById('cplayIcon');
+    var PAUSE_D='M8 5h3v14H8zM13 5h3v14h-3z', PLAY_D='M8 5l11 7-11 7z';
+    function syncPlay(){
+      if(!playBtn) return;
+      playBtn.setAttribute('aria-pressed', hold?'true':'false');
+      playBtn.setAttribute('aria-label', hold
+        ? 'Let the questions move on their own again'
+        : 'Pause the questions from moving on their own');
+      if(playIcon) playIcon.firstElementChild.setAttribute('d', hold?PLAY_D:PAUSE_D);
+      playBtn.hidden = !!RM;   /* con movimiento reducido nunca gira: no hay nada que pausar */
+    }
     function perView(){ var w=window.innerWidth; return w<=620?1:(w<=980?2:3); }
     function build(){
       per=perView(); pages=Math.ceil(cards.length/per); page=Math.min(page,pages-1);
@@ -1914,17 +2066,22 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       });
       [].slice.call(dotsEl.children).forEach(function(d,i){ d.setAttribute('aria-current',i===page?'true':'false'); });
       if(user) hold=true;
+      syncPlay();
       schedule();
     }
     function flipped(){ return cards.some(function(c){ return c.getAttribute('aria-pressed')==='true'; }); }
     function schedule(){ clearTimeout(timer); if(RM || hold) return; timer=setTimeout(function(){ if(!flipped()) go(page+1); else schedule(); }, DELAY); }
+    if(playBtn) playBtn.addEventListener('click',function(){
+      hold=!hold; syncPlay();
+      if(hold) clearTimeout(timer); else schedule();
+    });
     prev.addEventListener('click',function(){ go(page-1,true); });
     next.addEventListener('click',function(){ go(page+1,true); });
     root.addEventListener('mouseenter',function(){ clearTimeout(timer); });
     root.addEventListener('mouseleave',function(){ schedule(); });
     root.addEventListener('focusin',function(){ clearTimeout(timer); });
     var rt; addEventListener('resize',function(){ clearTimeout(rt); rt=setTimeout(build,150); });
-    build();
+    build(); syncPlay();
   })();
 
   /* ---------- flip cards ---------- */
