@@ -1807,8 +1807,13 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         if(n!==null){ e.preventDefault(); select(n,true,true); }
       });
     });
-    hw.addEventListener('mouseenter',function(){ paused=true; clearTimeout(timer); tabs[cur].querySelector('.prog').classList.remove('run'); });
-    hw.addEventListener('mouseleave',function(){ paused=false; select(cur); });
+    /* Se pausa solo con el mouse SOBRE LOS PASOS, para poder leer uno sin que se vaya.
+       Antes se pausaba con el mouse en cualquier parte de la seccion, que ocupa la
+       pantalla entera: el puntero quieto en el medio dejaba el efecto congelado y
+       parecia roto. */
+    var lista=hw.querySelector('.hw-list')||hw;
+    lista.addEventListener('mouseenter',function(){ paused=true; clearTimeout(timer); tabs[cur].querySelector('.prog').classList.remove('run'); });
+    lista.addEventListener('mouseleave',function(){ paused=false; select(cur); });
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){ es.forEach(function(e){ paused=!e.isIntersecting; if(!paused) select(cur); else clearTimeout(timer); }); },{threshold:.35}).observe(hw);
     }

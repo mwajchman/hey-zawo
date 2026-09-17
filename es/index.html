@@ -1283,12 +1283,24 @@ form label.chk.bad span{color:#A8320F}
             <select name="country" id="listaCountry" required>
               <option value="">Elige tu país</option>
               <option value="AR">Argentina</option>
+              <option value="BO">Bolivia</option>
               <option value="BR">Brasil</option>
               <option value="CL">Chile</option>
               <option value="CO">Colombia</option>
+              <option value="CR">Costa Rica</option>
+              <option value="CU">Cuba</option>
+              <option value="EC">Ecuador</option>
+              <option value="SV">El Salvador</option>
+              <option value="GT">Guatemala</option>
+              <option value="HN">Honduras</option>
+              <option value="NI">Nicaragua</option>
+              <option value="PA">Panamá</option>
+              <option value="PY">Paraguay</option>
               <option value="PE">Perú</option>
+              <option value="PR">Puerto Rico</option>
+              <option value="DO">República Dominicana</option>
               <option value="UY">Uruguay</option>
-              <option value="OTHER">Otro país</option>
+              <option value="VE">Venezuela</option>
             </select>
             <span class="err"></span>
           </label>
@@ -1752,13 +1764,13 @@ form label.chk.bad span{color:#A8320F}
     var lOk=document.getElementById('listaOk'), lBtn=document.getElementById('listaBtn');
     function paintLista(regs){
       if(!lSel) return;
-      var prev=lSel.value, fuera=regs.filter(function(r){ return r.live===false; });
-      if(!fuera.length) return;
-      fuera.sort(function(a,b){ return nombrePais(a).localeCompare(nombrePais(b),'es'); });
-      lSel.innerHTML='<option value="">Elige tu país</option>'+fuera.map(function(r){
-        return '<option value="'+r.code+'">'+nombrePais(r)+'</option>';
-      }).join('')+'<option value="OTHER">Otro país</option>';
-      if(prev && lSel.querySelector('option[value="'+prev+'"]')) lSel.value=prev;
+      /* La lista de Latinoamerica ya viene escrita en el HTML. Del servidor solo se usa
+         una cosa: sacar los paises donde YA estamos, para que nadie pida que le avisemos
+         de algo que puede contratar hoy. */
+      var vivos={}; regs.forEach(function(r){ if(r.live) vivos[String(r.code).toUpperCase()]=1; });
+      [].slice.call(lSel.options).forEach(function(op){
+        if(op.value && vivos[op.value.toUpperCase()]) op.remove();
+      });
     }
     function listaDecir(msg, mal){
       lOk.hidden=false; lOk.innerHTML=msg; lOk.classList.toggle('bad', !!mal);
@@ -1968,8 +1980,13 @@ form label.chk.bad span{color:#A8320F}
         if(n!==null){ e.preventDefault(); select(n,true,true); }
       });
     });
-    hw.addEventListener('mouseenter',function(){ paused=true; clearTimeout(timer); tabs[cur].querySelector('.prog').classList.remove('run'); });
-    hw.addEventListener('mouseleave',function(){ paused=false; select(cur); });
+    /* Se pausa solo con el mouse SOBRE LOS PASOS, para poder leer uno sin que se vaya.
+       Antes se pausaba con el mouse en cualquier parte de la seccion, que ocupa la
+       pantalla entera: el puntero quieto en el medio dejaba el efecto congelado y
+       parecia roto. */
+    var lista=hw.querySelector('.hw-list')||hw;
+    lista.addEventListener('mouseenter',function(){ paused=true; clearTimeout(timer); tabs[cur].querySelector('.prog').classList.remove('run'); });
+    lista.addEventListener('mouseleave',function(){ paused=false; select(cur); });
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){ es.forEach(function(e){ paused=!e.isIntersecting; if(!paused) select(cur); else clearTimeout(timer); }); },{threshold:.35}).observe(hw);
     }
