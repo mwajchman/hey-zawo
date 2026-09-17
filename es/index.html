@@ -208,7 +208,12 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 
 @media(max-width:1000px){
   .callstage{flex-direction:column;align-items:center;gap:1.4rem}
-  .bubbles{order:2;align-items:stretch;width:100%;max-width:26rem;height:auto;justify-content:flex-start}
+  /* En vertical la lista tiene alto fijo y crece desde abajo, como un chat: asi la
+     pagina no salta cada vez que entra o se va un mensaje. Arriba se desvanece. */
+  .bubbles{order:2;align-items:stretch;width:100%;max-width:26rem;
+    height:clamp(210px,30svh,280px);justify-content:flex-end;overflow:hidden;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 100%);
+            mask-image:linear-gradient(to bottom,transparent 0,#000 16%,#000 100%)}
   .b{max-width:none}
   .b::after{display:none}
   .b.her{margin-right:0;margin-left:2rem}
