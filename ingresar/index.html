@@ -2,445 +2,625 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Sign in · Elderly</title>
-<link rel="stylesheet" href="/motion/fx.css">
-<meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
 <meta name="theme-color" content="#01534C">
+<title>Sign in · Elderly</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<script>document.documentElement.setAttribute('data-theme','light')</script>
 <style>
-  :root{
-    /* paleta oficial */
-    --teal:#01534C; --forest:#06342F; --cream:#F7F2E7; --amber:#F0913E;
-    --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
-    --oat:#F0E8DA; --soft:#FBF8F1; --paper:#FFFDF8;
-    --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
-    --rule:rgba(18,48,44,.16); --rule-c:rgba(247,242,231,.24);
-    --error:#A8320F;
-    /* Alias de los nombres viejos: hay estilos en linea en el markup que todavia
-       los nombran (por ejemplo var(--muted) en el pie). Si se borran, ese texto
-       se queda sin color. */
-    --ground:var(--soft); --surface:var(--paper); --surface-2:var(--oat); --glow:var(--paper);
-    --line:var(--rule); --muted:var(--ink-soft); --rail:var(--forest);
-    --primary:var(--teal); --primary-ink:var(--cream); --crit:var(--error);
-    /* fx.css pinta la barra de progreso con var(--accent): sin esto usa su
-       color de reserva, que es de la paleta vieja. */
-    --accent:var(--amber-dp);
-    --font-sans:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    --font-display:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    --serif:"Instrument Serif",Georgia,serif;
-  }
-  *{box-sizing:border-box}
-  body{margin:0;min-height:100vh;font-family:var(--font-sans);color:var(--ink);
-    display:grid;place-items:center;padding:24px;background:var(--soft);
-    -webkit-font-smoothing:antialiased;line-height:1.55}
-  :focus-visible{outline:3px solid var(--amber-tx);outline-offset:3px}
-  .split{display:flex;width:100%;max-width:940px;border-radius:28px;overflow:hidden;
-    box-shadow:0 34px 80px -44px rgba(18,48,44,.42);border:1px solid var(--rule)}
+:root{
+  --teal:#01534C; --forest:#06342F; --cream:#F7F2E7; --amber:#F0913E;
+  --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
+  --oat:#F0E8DA; --soft:#FBF8F1; --paper:#FFFDF8;
+  --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
+  --rule:rgba(18,48,44,.16); --rule-c:rgba(247,242,231,.24);
+  --error:#A8320F;
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--soft);color:var(--ink);
+  font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--amber-tx);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--amber-tx);outline-offset:3px}
+:focus:not(:focus-visible){outline:none}
+[hidden]{display:none!important}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:var(--honey);color:#1B1406;padding:.6rem 1rem;border-radius:999px;z-index:99;font-weight:800}
 
-  /* ---------- panel de marca (izquierda) ---------- */
-  .brandside{flex:1 1 45%;position:relative;overflow:hidden;color:var(--cream);padding:46px 42px 40px;
-    background:linear-gradient(158deg,var(--teal) 0%,#04443E 55%,var(--forest) 100%);
-    display:flex;flex-direction:column;justify-content:space-between}
-  .brandside::before{content:"";position:absolute;width:360px;height:360px;border-radius:50%;
-    background:radial-gradient(circle,rgba(240,145,62,.26),transparent 70%);top:-130px;right:-110px;pointer-events:none}
-  .brandside::after{content:"\201C";position:absolute;font-family:var(--serif);font-size:200px;line-height:1;
-    color:rgba(247,242,231,.08);top:118px;left:24px;pointer-events:none}
-  .bs-brand{display:inline-flex;align-items:center;gap:11px;position:relative}
-  .bs-brand svg{width:34px;height:34px;border-radius:8px;box-shadow:0 0 0 1px rgba(247,242,231,.18)}
-  .bs-brand .word{font-weight:600;font-size:1.35rem;letter-spacing:-.02em}
-  .bs-brand .word b{color:var(--amber);font-weight:600}
-  /* Instrument Serif solo aca: es la cita destacada, no un titulo. */
-  .bs-pitch{font-family:var(--serif);font-style:italic;font-weight:400;font-size:2rem;line-height:1.16;
-    letter-spacing:-.01em;margin:0;position:relative;color:var(--cream)}
-  .bs-sub{color:rgba(247,242,231,.8);font-size:.98rem;line-height:1.55;margin:16px 0 0;position:relative}
-  /* Una sola linea: partida en dos se lee como dos promesas sueltas y pierde el remate. */
-  .bs-trust{color:var(--honey);font-size:.79rem;font-weight:800;letter-spacing:.01em;position:relative;white-space:nowrap}
+/* ================= split ================= */
+.split{display:grid;grid-template-columns:1fr 1fr;min-height:100dvh}
 
-  /* ---------- panel del formulario (derecha) ---------- */
-  .card{flex:1 1 55%;min-width:0;background:var(--paper);border:0;border-radius:0;overflow:hidden}
-  @media(max-width:800px){
-    .split{display:block;max-width:430px;border-radius:24px;box-shadow:0 30px 70px -40px rgba(18,48,44,.4)}
-    .brandside{display:none}
-  }
-  @media(max-width:440px){
-    body{padding:16px}
-    .head{padding:26px 22px 2px} .seg{margin:18px 22px 0} .body{padding:20px 22px 26px}
-    .foot{padding:14px 18px} h1{font-size:1.6rem}
-  }
-  @media(min-width:801px){ .card .head .brand{display:none} .card .head{padding-top:36px} }
-  .head{padding:30px 34px 2px;text-align:center;position:relative}
-  .brand{display:inline-flex;align-items:center;gap:11px;margin-bottom:16px}
-  .brand svg{width:32px;height:32px;border-radius:8px}
-  .brand .word{font-weight:600;font-size:1.35rem;letter-spacing:-.02em;color:var(--teal)}
-  .brand .word b{color:var(--amber-dp);font-weight:600}
-  h1{margin:0;font-weight:900;font-size:1.75rem;letter-spacing:-.04em;line-height:1.08;color:var(--teal)}
-  .sub{color:var(--ink-soft);font-size:.95rem;margin:8px 0 0}
+/* ---------- left: their week, already waiting ---------- */
+.world{position:relative;overflow:hidden;isolation:isolate;color:var(--cream);
+  background:radial-gradient(120% 80% at 85% 10%,rgba(232,181,74,.14),transparent 55%),
+             linear-gradient(165deg,var(--teal) 0%,#03473F 60%,var(--forest) 100%);
+  display:flex;flex-direction:column;padding:clamp(1.6rem,4vh,2.6rem) clamp(1.6rem,4vw,3.2rem)}
+.logo{display:inline-flex;align-items:center;gap:.6rem;color:var(--cream);text-decoration:none;
+  font-weight:600;font-size:1.35rem;letter-spacing:-.02em;align-self:flex-start;border-radius:10px}
+.logo svg{width:36px;height:36px;border-radius:8px;box-shadow:0 0 0 1px rgba(247,242,231,.18)}
+.world h2{margin:clamp(1.4rem,5vh,3.4rem) 0 0;font-size:clamp(2.2rem,4.4vw,3.9rem);font-weight:900;
+  letter-spacing:-.045em;line-height:.98;max-width:12ch}
+.world h2 span{display:block;color:var(--honey)}
+.world .lede{margin:1rem 0 0;max-width:30rem;font-size:1.02rem;color:rgba(247,242,231,.8)}
 
-  .seg{display:flex;gap:6px;background:var(--oat);padding:5px;border-radius:999px;margin:20px 34px 0}
-  .seg button{flex:1;border:0;background:transparent;color:var(--ink-soft);font-weight:800;font-size:.87rem;
-    font-family:var(--font-display);padding:9px;border-radius:999px;cursor:pointer;transition:.15s}
-  .seg button[aria-selected="true"]{background:var(--paper);color:var(--teal);box-shadow:0 1px 3px rgba(18,48,44,.14)}
+.scene{position:relative;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+  margin-top:clamp(1rem,3vh,2rem)}
+.scene-in{position:relative;width:min(100%,470px);height:min(100%,360px);min-height:300px}
 
-  .body{padding:22px 34px 30px}
-  .field{margin-bottom:15px}
-  .field .hint{margin:7px 0 0;font-size:.76rem;line-height:1.45;color:var(--ink-soft)}
-  .smsok{display:flex;gap:9px;align-items:flex-start;margin:10px 0 0;cursor:pointer}
-  .smsok input{margin:2px 0 0;flex:none;width:15px;height:15px;accent-color:var(--teal)}
-  .smsok span{font-size:.76rem;line-height:1.45;color:var(--ink-soft)}
-  .field label{display:block;font-size:.82rem;font-weight:800;color:var(--teal);margin-bottom:7px}
-  .field input,.field select{width:100%;padding:.78rem .85rem;border:2px solid var(--rule);background:var(--paper);
-    color:var(--ink);border-radius:14px;font-size:.98rem;font-family:inherit;transition:border-color .15s}
-  .field select{appearance:none;-webkit-appearance:none;cursor:pointer;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%2312302C' stroke-width='1.7'%3E%3Cpath d='M1 1.5l5 5 5-5'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 14px center;padding-right:36px}
-  .field input:focus,.field select:focus{outline:none;border-color:var(--amber-dp)}
-  .field input:focus-visible,.field select:focus-visible{outline:3px solid var(--amber-tx);outline-offset:3px}
+/* phone */
+.phone{position:absolute;right:4%;top:50%;transform:translateY(-50%);width:170px;height:320px;
+  border-radius:34px;background:var(--forest);padding:8px;box-shadow:0 30px 60px rgba(0,0,0,.34)}
+.phone .notch{position:absolute;left:50%;top:15px;transform:translateX(-50%);width:56px;height:13px;border-radius:7px;background:#000;z-index:2}
+.phone .screen{height:100%;border-radius:27px;background:#031F1B;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:.35rem;text-align:center;padding:0 .8rem}
+.phone .tag{position:absolute;top:-2.1rem;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-size:.72rem;font-weight:800;color:var(--honey);box-shadow:inset 0 0 0 1px var(--rule-c);
+  border-radius:999px;padding:.25rem .7rem;background:rgba(6,52,47,.6)}
+.av{width:50px;height:50px;border-radius:50%;background:rgba(232,181,74,.16);color:var(--honey);
+  display:grid;place-items:center;font-size:1.35rem;margin-bottom:.2rem}
+.phone b{font-size:.95rem}
+.clock{font-weight:900;font-size:1.45rem;color:var(--honey);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.wave{display:flex;align-items:center;gap:3px;height:22px}
+.wave i{width:3px;border-radius:2px;background:var(--honey);height:6px;transition:height .2s}
+.state{font-size:.74rem;font-weight:700;color:var(--honey)}
 
-  /* Un solo boton primario por pantalla: este. */
-  .btn{width:100%;border:0;background:var(--honey);color:#1B1406;font-weight:800;font-size:1rem;
-    font-family:var(--font-display);padding:.92rem 1.7rem;border-radius:999px;cursor:pointer;
-    transition:background .18s ease;margin-top:6px;line-height:1.2}
-  .btn:hover{background:var(--amber)}
-  .btn:active{transform:translateY(1px)}
+/* bubbles */
+.bubbles{position:absolute;right:calc(4% + 150px);top:14%;list-style:none;margin:0;padding:0;
+  display:flex;flex-direction:column;align-items:flex-end;gap:.55rem;width:250px}
+.b{position:relative;display:flex;gap:.55rem;align-items:center;background:var(--cream);color:var(--ink);
+  border-radius:15px;padding:.55rem .85rem;font-size:.85rem;line-height:1.3;
+  box-shadow:0 16px 34px rgba(0,0,0,.26);opacity:0;transform:translateY(8px)}
+.b::after{content:"";position:absolute;right:-8px;top:50%;margin-top:-8px;border:8px solid transparent;border-right:0;border-left-color:var(--cream)}
+.b.her{background:var(--honey);margin-right:1.6rem}
+.b.her::after{border-left-color:var(--honey)}
+.b.on{opacity:1;transform:none;transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.vb{display:flex;align-items:flex-end;gap:2px;height:14px;flex:none}
+.vb i{display:block;width:3px;border-radius:2px;background:var(--teal);opacity:.75}
+.vb i:nth-child(1){height:6px}.vb i:nth-child(2){height:13px}.vb i:nth-child(3){height:9px}.vb i:nth-child(4){height:14px}
+.b.her .vb i{background:#5E3A12}
 
-  .su-social{display:flex;flex-direction:column;gap:8px;margin-bottom:2px}
-  .btn-social{display:flex;align-items:center;justify-content:center;gap:9px;border:2px solid var(--rule);
-    border-radius:999px;padding:.72rem;background:var(--paper);font-weight:700;font-size:.94rem;color:var(--ink);
-    cursor:pointer;font-family:inherit;transition:border-color .15s,background .15s}
-  .btn-social:hover:not(:disabled){border-color:var(--teal);background:var(--oat)}
-  .btn-social:disabled{cursor:not-allowed;opacity:.62}
-  .btn-social svg{width:17px;height:17px;flex-shrink:0}
-  .soon-badge{margin-left:2px;font-size:.66rem;font-weight:800;background:var(--oat);color:var(--amber-tx);
-    border:1px solid var(--rule);border-radius:999px;padding:1px 8px}
-  .su-div{display:flex;align-items:center;gap:12px;color:var(--ink-soft);font-size:.78rem;font-weight:600;margin:16px 0}
-  .su-div::before,.su-div::after{content:"";flex:1;height:1px;background:var(--rule)}
+/* paper note */
+.note{position:absolute;left:0;bottom:2%;width:230px;background:var(--cream);color:var(--ink);
+  border-radius:5px;padding:.9rem 1rem .8rem;box-shadow:0 22px 46px rgba(0,0,0,.34);
+  transform:rotate(-1.6deg) translateY(10px);opacity:0;font-size:.85rem;line-height:1.35}
+.note.on{opacity:1;transform:rotate(-1.6deg);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.note .t{font-size:.7rem;font-weight:800;color:var(--amber-tx);margin-bottom:.35rem}
+.note .r{display:flex;justify-content:space-between;gap:.8rem;padding:.26rem 0;border-top:1px solid var(--rule)}
+.note .t+.r{border-top:0}
+.note .r b{color:var(--teal)}
 
-  .err{color:var(--error);font-size:.86rem;margin:0 0 12px;min-height:18px;font-weight:700}
-  .switch{text-align:center;font-size:.86rem;color:var(--ink-soft);margin:16px 0 0}
-  .switch a{color:var(--amber-tx);font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
-  .note{text-align:center;font-size:.82rem;color:var(--ink-soft);margin:15px 0 0}
+/* the thread */
+.cord{position:absolute;left:0;bottom:0;width:100%;height:auto;z-index:-1;pointer-events:none;opacity:.9}
+.cord path{fill:none;stroke:var(--amber);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:no-preference){
+  .cord path{stroke-dasharray:1600;stroke-dashoffset:1600;animation:draw 2.4s cubic-bezier(.5,0,.2,1) .3s forwards}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
 
-  .done{text-align:center;padding:6px 2px}
-  .done .ic{width:54px;height:54px;border-radius:50%;background:var(--teal);display:grid;place-items:center;margin:6px auto 16px}
-  .done .ic svg{width:26px;height:26px;color:var(--cream)}
-  .done b{display:block;font-weight:900;font-size:1.25rem;letter-spacing:-.03em;color:var(--teal);margin-bottom:8px}
-  .done p{color:var(--ink-soft);font-size:.94rem;margin:0}
+.world .foot{margin-top:clamp(1rem,3vh,1.8rem);font-size:.85rem;font-weight:700;color:rgba(247,242,231,.72);
+  display:flex;gap:.5rem;align-items:center}
+.world .foot i{width:8px;height:8px;border-radius:50%;background:var(--honey);flex:none}
 
-  .foot{display:flex;align-items:center;justify-content:space-between;padding:15px 20px;border-top:1px solid var(--rule);
-    background:var(--soft)}
-  .foot a{color:var(--amber-tx);font-size:.84rem;font-weight:700;text-decoration:none;padding:6px 8px;border-radius:999px;transition:.15s}
-  .foot a:hover{text-decoration:underline;text-underline-offset:3px}
-  [hidden]{display:none!important}
+/* ---------- right: the door ---------- */
+.door{display:flex;flex-direction:column;padding:clamp(1.4rem,3vh,2.2rem) clamp(1.4rem,5vw,4.4rem)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.back{font-weight:800;font-size:.9rem;text-decoration:none;color:var(--teal);display:inline-flex;align-items:center;gap:.4rem;border-radius:8px;min-height:44px}
+.back:hover{color:var(--amber-tx)}
+.lang{display:inline-flex;gap:.2rem;background:var(--oat);border-radius:999px;padding:.22rem}
+.lang button{border:0;background:transparent;font:inherit;font-size:.8rem;font-weight:800;color:var(--ink-soft);
+  padding:.35rem .85rem;border-radius:999px;cursor:pointer;min-height:36px}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--teal);box-shadow:0 2px 10px rgba(18,48,44,.1)}
 
-  .legal-name{max-width:640px;margin:26px auto 30px;padding:0 20px;text-align:center;
-    font-size:.76rem;line-height:1.7;color:var(--ink-soft)}
-  .legal-name strong{color:var(--ink)}
-  .legal-name a{color:var(--amber-tx);text-decoration:underline;text-underline-offset:3px}
+.panel{flex:1;display:flex;align-items:center;justify-content:center;padding:clamp(1.4rem,4vh,3rem) 0}
+.inner{width:100%;max-width:25rem}
+.bar{width:56px;height:7px;border-radius:4px;background:var(--amber-dp);margin-bottom:1.2rem}
+h1{margin:0;font-size:clamp(2.2rem,3.6vw,3rem);font-weight:900;letter-spacing:-.045em;line-height:1;color:var(--teal)}
+h1 .l2{display:block;color:var(--amber-dp)}
+.sub{margin:.8rem 0 0;color:var(--ink-soft);font-size:1rem}
+
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:.25rem;background:var(--oat);border-radius:999px;padding:.28rem;margin:1.6rem 0 1.4rem}
+.seg button{border:0;background:transparent;font:inherit;font-weight:800;font-size:.92rem;color:var(--ink-soft);
+  padding:.62rem 1rem;border-radius:999px;cursor:pointer;min-height:44px;transition:background .2s,color .2s}
+.seg button[aria-selected="true"]{background:#fff;color:var(--teal);box-shadow:0 2px 10px rgba(18,48,44,.1)}
+
+.notice{margin:0 0 1rem;padding:.75rem 1rem;border-radius:14px;background:rgba(1,83,76,.07);
+  border-left:4px solid var(--teal);font-size:.9rem;font-weight:700;color:var(--teal)}
+.notice.warn{background:rgba(168,50,15,.08);border-left-color:var(--error);color:var(--error)}
+.err{margin:0 0 .8rem;color:var(--error);font-weight:700;font-size:.88rem}
+.err:empty{display:none}
+
+.social{display:flex;justify-content:center;min-height:44px}
+.or{display:flex;align-items:center;gap:.8rem;margin:1.1rem 0;font-size:.82rem;font-weight:700;color:var(--ink-soft)}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--rule)}
+
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:.86rem;font-weight:800;color:var(--teal);margin-bottom:.4rem}
+.control{position:relative}
+.field input,.field select{display:block;width:100%;padding:.85rem 1rem;font:inherit;font-size:1rem;
+  border:2px solid var(--rule);border-radius:14px;background:var(--paper);color:var(--ink);min-height:50px;
+  transition:border-color .2s}
+.field input:focus,.field select:focus{border-color:var(--amber-dp);outline:none}
+.field .hint{margin:.35rem 0 0;font-size:.8rem;color:var(--ink-soft)}
+.show{position:absolute;right:.45rem;top:50%;transform:translateY(-50%);border:0;background:transparent;
+  font:inherit;font-size:.8rem;font-weight:800;color:var(--amber-tx);padding:.45rem .6rem;border-radius:999px;cursor:pointer;min-height:36px}
+.show:hover{background:var(--oat)}
+.has-show input{padding-right:5rem}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;width:100%;border:0;cursor:pointer;
+  background:var(--honey);color:#1B1406;font:inherit;font-weight:800;font-size:1.02rem;
+  padding:.95rem 1.7rem;border-radius:999px;min-height:52px;margin-top:.4rem;transition:background .2s,transform .1s}
+.btn:hover{background:var(--amber)}
+.btn:active{transform:translateY(1px)}
+.btn.dk{background:var(--teal);color:var(--cream)}
+.btn.dk:hover{background:var(--forest)}
+.btn[disabled]{opacity:.7;cursor:wait}
+
+.links{margin:1.1rem 0 0;text-align:center;font-size:.92rem;color:var(--ink-soft)}
+.links:empty{display:none}
+.links a{font-weight:800}
+.newhere{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:18px;background:var(--paper);border:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;gap:.6rem 1rem;flex-wrap:wrap}
+.newhere p{margin:0;font-size:.92rem;color:var(--ink-soft)}
+.newhere p b{display:block;color:var(--ink);font-size:.98rem}
+.newhere a{font-weight:800;white-space:nowrap}
+
+.teamnote{margin:1rem 0 0;font-size:.85rem;color:var(--ink-soft);display:flex;gap:.5rem;align-items:flex-start}
+.teamnote::before{content:"";flex:none;width:14px;height:5px;border-radius:3px;background:var(--amber);margin-top:.55rem}
+
+.done{text-align:center;padding:1rem 0}
+.done .ic{width:58px;height:58px;border-radius:50%;background:var(--teal);color:var(--cream);display:grid;place-items:center;margin:0 auto 1rem}
+.done .ic svg{width:26px;height:26px}
+.done b{display:block;font-size:1.2rem;color:var(--teal)}
+.done p{color:var(--ink-soft);margin:.4rem 0 0}
+
+.legal{border-top:1px solid var(--rule);padding-top:1rem;font-size:.78rem;color:var(--ink-soft);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.4rem 1rem}
+.legal a{color:var(--ink-soft)}
+.legal a:hover{color:var(--amber-tx)}
+
+/* ---------- responsive ---------- */
+@media(max-width:1100px){ .bubbles{right:auto;left:0;top:2%} .note{left:auto;right:0;bottom:0} .phone{right:auto;left:40%} }
+@media(max-width:1000px){
+  .split{grid-template-columns:1fr}
+  .world{padding:1.2rem 1.4rem 1.6rem}
+  .world h2{font-size:clamp(1.9rem,7vw,2.6rem);margin-top:1.2rem}
+  .world .lede,.scene,.world .foot,.cord{display:none}
+  .door{padding:1rem 1.4rem 1.4rem}
+  .panel{align-items:flex-start;padding-top:1.4rem}
+}
+@media(max-height:760px) and (min-width:1001px){ .world .lede{display:none} .note{display:none} }
+@media(max-height:640px) and (min-width:1001px){ .scene{display:none} }
+@media(prefers-reduced-motion:reduce){
+  .b{opacity:1;transform:none;transition:none}
+  .note{opacity:1;transform:rotate(-1.6deg);transition:none}
+}
 </style>
 </head>
 <body>
-  <div class="split">
-    <aside class="brandside">
-      <div class="bs-brand">
-        <svg viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg>
-        <span class="word">Elder<b>ly</b></span>
+<a class="skip" href="#door" id="skipLink">Skip to sign in</a>
+<div class="split">
+
+  <!-- ================= left ================= -->
+  <aside class="world">
+    <a class="logo" href="/" id="logoHome" aria-label="Elderly">
+      <svg viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg>
+      <span>Elderly</span>
+    </a>
+    <h2><span class="h1" id="wHead" style="display:inline;color:inherit">Their week</span><span id="wHead2">is waiting for you.</span></h2>
+    <p class="lede" id="bsSub">Today's call already happened. Sign in to hear how they sounded, and what they want to tell the family.</p>
+
+    <div class="scene" aria-hidden="true">
+      <div class="scene-in">
+        <ul class="bubbles" id="bubbles">
+          <li class="b"><span class="vb"><i></i><i></i><i></i><i></i></span><span data-t="b1">Good morning, Mari. How did you sleep?</span></li>
+          <li class="b her"><span class="vb"><i></i><i></i><i></i><i></i></span><span data-t="b2">Better than Tuesday.</span></li>
+          <li class="b"><span class="vb"><i></i><i></i><i></i><i></i></span><span data-t="b3">Emma sent you something from the recital.</span></li>
+        </ul>
+        <div class="phone">
+          <span class="tag" data-t="tag">Mari's phone · on a call</span>
+          <span class="notch"></span>
+          <div class="screen">
+            <span class="av">&#9742;</span>
+            <b data-t="friend">Their friend</b>
+            <span class="clock" id="clock">4:12</span>
+            <span class="wave" id="wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <span class="state" data-t="state">on the line</span>
+          </div>
+        </div>
+        <div class="note" id="note">
+          <div class="t" data-t="noteT">Today · 10:26 am · to you</div>
+          <div class="r"><span data-t="heart">Heart</span><b data-t="heartV">bright</b></div>
+          <div class="r"><span data-t="mind">Mind</span><b data-t="mindV">steady, sharp</b></div>
+          <div class="r"><span data-t="body">Body</span><b data-t="bodyV">slept well</b></div>
+        </div>
       </div>
-      <div class="bs-mid">
-        <p class="bs-pitch" id="bsPitch">A warm call, and a note for you after each one.</p>
-        <p class="bs-sub" id="bsSub">Elderly checks in on the people you love, and keeps you close, wherever you are.</p>
-      </div>
-      <p class="bs-trust" id="bsTrust">Real phone calls. Real peace of mind.</p>
-    </aside>
-    <div class="card">
-      <div class="head">
-      <div class="brand">
-        <svg viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg>
-        <span class="word">Elder<b>ly</b></span>
-      </div>
-      <h1 id="title">Welcome</h1>
-      <p class="sub" id="sub">Choose how to sign in</p>
     </div>
 
-    <div class="seg" role="tablist">
-      <button role="tab" aria-selected="true" data-tab="family" id="tabFamily">Families</button>
-      <button role="tab" aria-selected="false" data-tab="team" id="tabTeam">Team</button>
+    <p class="foot"><i></i><span id="bsTrust">It's an AI, and it says so on every call. Not a medical service.</span></p>
+    <svg class="cord" viewBox="0 0 760 200" aria-hidden="true"><path d="M0 190 C 150 170, 260 120, 360 100 C 420 88, 450 60, 440 40 C 430 20, 400 26, 402 46 C 380 26, 350 34, 362 60 L 402 92 C 520 60, 640 90, 760 40"/></svg>
+  </aside>
+
+  <!-- ================= right ================= -->
+  <main class="door" id="door">
+    <div class="top">
+      <a class="back" href="/" id="backHome">&larr; Back to home</a>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-lang="es" aria-pressed="false">ES</button>
+      </div>
     </div>
 
-    <div class="body">
-      <!-- ============ FAMILIES ============ -->
-      <div data-pane="family">
-        <div id="login">
-          <p id="verifiedNote" hidden style="color:var(--teal);font-weight:700;margin:0 0 10px;font-size:.9rem"></p>
-          <p class="err" id="err1"></p>
-          <!-- Google dibuja SU boton aca. Sus reglas de marca exigen usar el de ellos, y
-                 ademas es el que la gente reconoce: un boton propio que imita a Google
-                 en una pantalla de login se parece demasiado a lo que hace una estafa.
-                 Si el servidor no tiene client id configurado, esto queda vacio y no se
-                 muestra nada: mejor sin boton que con un boton que no anda. -->
-            <div class="su-social" id="gwrap" hidden>
-              <div id="gbtn"></div>
+    <div class="panel">
+      <div class="inner">
+        <div class="bar" aria-hidden="true"></div>
+        <h1><span id="title">Welcome back.</span><span class="l2" id="title2">Their week is here.</span></h1>
+        <p class="sub" id="sub">Sign in to your family portal.</p>
+
+        <div class="seg" role="tablist" aria-label="Who is signing in">
+          <button role="tab" aria-selected="true" data-tab="family" id="tabFamily" aria-controls="paneFamily">Families</button>
+          <button role="tab" aria-selected="false" data-tab="team" id="tabTeam" aria-controls="paneTeam" tabindex="-1">Team</button>
+        </div>
+
+        <!-- ============ FAMILIES ============ -->
+        <div data-pane="family" id="paneFamily" role="tabpanel" aria-labelledby="tabFamily">
+          <div id="login">
+            <p class="notice" id="verifiedNote" hidden role="status"></p>
+            <p class="err" id="err1" role="alert"></p>
+            <!-- Google dibuja SU boton aca: sus reglas de marca lo exigen, y un boton propio
+                 que imita a Google en un login se parece a una estafa. Sin client id en el
+                 servidor queda oculto: mejor sin boton que con uno que no anda. -->
+            <div class="social" id="gwrap" hidden><div id="gbtn"></div></div>
+            <div class="or" id="gdiv" hidden>or with your email</div>
+            <form id="formLogin" novalidate>
+              <div class="field"><label id="l-email" for="email">Email</label>
+                <input type="email" id="email" autocomplete="username" inputmode="email" placeholder="you@family.com"></div>
+              <div class="field"><label id="l-pass" for="pass">Password</label>
+                <div class="control has-show"><input type="password" id="pass" autocomplete="current-password">
+                <button type="button" class="show" data-show="pass" aria-controls="pass">Show</button></div></div>
+              <button class="btn" type="submit" id="loginBtn">Sign in</button>
+            </form>
+            <p class="links"><a id="toForgot" href="#">Forgot your password?</a></p>
+            <div class="newhere">
+              <p><b id="nhTitle">New to Elderly?</b><span id="nhSub">Build their plan in four short steps.</span></p>
+              <a id="toPlan" href="/#price">Build their plan</a>
             </div>
-          <div class="su-div" id="gdiv" hidden>or with your email</div>
-          <form id="formLogin" novalidate><div class="field"><label id="l-email" for="email">Email</label><input type="email" id="email" autocomplete="username"></div>
-          <div class="field"><label id="l-pass" for="pass">Password</label><input type="password" id="pass" autocomplete="current-password"></div>
-          <button class="btn" type="submit" id="loginBtn">Sign in</button></form>
-          <p class="switch" style="margin-top:12px"><a id="toForgot" href="#">Forgot your password?</a></p>
-          <p class="switch" id="sw1"></p>
-        </div>
-        <div id="forgot" hidden>
-          <p class="err" id="err3"></p>
-          <p class="sub" id="fgIntro" style="margin:0 0 14px">Enter your email and we'll send you a link to set a new password.</p>
-          <form id="formForgot" novalidate><div class="field"><label id="l-fgEmail" for="fgEmail">Email</label><input type="email" id="fgEmail" autocomplete="username"></div>
-          <button class="btn" type="submit" id="forgotBtn">Send reset link</button></form>
-          <p class="switch"><a id="toLogin2" href="#">Back to sign in</a></p>
-        </div>
-        <div id="reset" hidden>
-          <p class="err" id="err4"></p>
-          <p class="sub" id="rsIntro" style="margin:0 0 14px">Choose a new password for your account.</p>
-          <form id="formReset" novalidate><div class="field"><label id="l-rsPass" for="rsPass">New password</label><input type="password" id="rsPass" autocomplete="new-password"></div>
-          <button class="btn" type="submit" id="resetBtn">Save new password</button></form>
-        </div>
-        <div id="signup" hidden>
-          <p class="err" id="err2"></p>
-          <form id="formSignup" novalidate><div class="field"><label id="l-name" for="suName">Your name</label><input type="text" id="suName"></div>
-          <div class="field"><label id="l-country" for="suCountry">Country</label>
-            <select id="suCountry">
-              <option value="US">United States</option>
-              <option value="CA">Canada</option>
-              <option value="AR">Argentina</option>
-              <option value="MX">México</option>
-              <option value="CL">Chile</option>
-              <option value="CO">Colombia</option>
-              <option value="PE">Perú</option>
-              <option value="UY">Uruguay</option>
-              <option value="ES">España</option>
-              <option value="OTHER">Other / Otro</option>
-            </select>
+            <p class="links" id="sw1"></p>
           </div>
-          <div class="field"><label id="l-email2" for="suEmail">Email</label><input type="email" id="suEmail"></div>
-          <!-- El celular de QUIEN CONTRATA, no el de la persona mayor. Va en el alta y no
-               despues porque la primera llamada de todas es a este numero. Hoy solo se usa
-               para llamar: no sale ningun mensaje de texto. Queda guardado para cuando los
-               mensajes funcionen, y ese dia habra que pedir el si, no darlo por dado. -->
-          <div class="field"><label id="l-phone" for="suPhone">Your mobile</label>
-            <input type="tel" id="suPhone" inputmode="tel" autocomplete="tel"
-                   placeholder="+1 385 555 0100">
-            <p class="hint" id="l-phonehint">With the country and area code. This is the number we call first.</p>
-          </div>
-          <div class="field"><label id="l-pass2" for="suPass">Password</label><input type="password" id="suPass"></div>
-          <button class="btn" type="submit" id="signupBtn">Create account</button></form>
-          <p class="switch" id="sw2"></p>
-        </div>
-        <div id="done" class="done" hidden>
-          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div>
-          <b id="doneTitle">Thank you!</b>
-          <p id="doneMsg"></p>
-        </div>
-      </div>
 
-      <!-- ============ TEAM ============ -->
-      <div data-pane="team" hidden>
-        <p class="err" id="errT"></p>
-        <form id="formTeam" novalidate><div class="field"><label id="l-emailT" for="emailT">Email</label><input type="email" id="emailT" autocomplete="username"></div>
-        <div class="field"><label id="l-passT" for="passT">Password</label><input type="password" id="passT" autocomplete="current-password"></div>
-        <button class="btn" type="submit" id="teamBtn">Enter the panel</button></form>
-        <p class="note" id="teamNote">Private access for the Elderly team only.</p>
+          <div id="forgot" hidden>
+            <p class="err" id="err3" role="alert"></p>
+            <p class="sub" id="fgIntro" style="margin:0 0 1.2rem">Enter your email and we'll send you a link to set a new password.</p>
+            <form id="formForgot" novalidate>
+              <div class="field"><label id="l-fgEmail" for="fgEmail">Email</label><input type="email" id="fgEmail" autocomplete="username"></div>
+              <button class="btn" type="submit" id="forgotBtn">Send reset link</button>
+            </form>
+            <p class="links"><a id="toLogin2" href="#">Back to sign in</a></p>
+          </div>
+
+          <div id="reset" hidden>
+            <p class="err" id="err4" role="alert"></p>
+            <p class="sub" id="rsIntro" style="margin:0 0 1.2rem">Choose a new password for your account.</p>
+            <form id="formReset" novalidate>
+              <div class="field"><label id="l-rsPass" for="rsPass">New password</label>
+                <div class="control has-show"><input type="password" id="rsPass" autocomplete="new-password">
+                <button type="button" class="show" data-show="rsPass" aria-controls="rsPass">Show</button></div>
+                <p class="hint" id="rsHint">At least 8 characters.</p></div>
+              <button class="btn" type="submit" id="resetBtn">Save new password</button>
+            </form>
+          </div>
+
+          <!-- Alta directa (/ingresar?signup=1). El camino normal es el armador de la home. -->
+          <div id="signup" hidden>
+            <p class="err" id="err2" role="alert"></p>
+            <form id="formSignup" novalidate>
+              <div class="field"><label id="l-name" for="suName">Your name</label><input type="text" id="suName" autocomplete="name"></div>
+              <div class="field"><label id="l-country" for="suCountry">Where do you live?</label>
+                <select id="suCountry"><option value="US">United States</option><option value="MX">México</option></select></div>
+              <div class="field"><label id="l-email2" for="suEmail">Email</label><input type="email" id="suEmail" autocomplete="email"></div>
+              <div class="field"><label id="l-phone" for="suPhone">Your mobile</label>
+                <input type="tel" id="suPhone" inputmode="tel" autocomplete="tel" placeholder="+1 385 555 0100">
+                <p class="hint" id="l-phonehint">With the country and area code. This is the number we call first.</p></div>
+              <div class="field"><label id="l-pass2" for="suPass">Password</label>
+                <div class="control has-show"><input type="password" id="suPass" autocomplete="new-password">
+                <button type="button" class="show" data-show="suPass" aria-controls="suPass">Show</button></div></div>
+              <button class="btn" type="submit" id="signupBtn">Create account</button>
+            </form>
+            <p class="links" id="sw2"></p>
+          </div>
+
+          <div id="done" class="done" hidden>
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div>
+            <b id="doneTitle">Thank you!</b>
+            <p id="doneMsg"></p>
+          </div>
+        </div>
+
+        <!-- ============ TEAM ============ -->
+        <div data-pane="team" id="paneTeam" role="tabpanel" aria-labelledby="tabTeam" hidden>
+          <p class="err" id="errT" role="alert"></p>
+          <form id="formTeam" novalidate>
+            <div class="field"><label id="l-emailT" for="emailT">Email</label><input type="email" id="emailT" autocomplete="username"></div>
+            <div class="field"><label id="l-passT" for="passT">Password</label>
+              <div class="control has-show"><input type="password" id="passT" autocomplete="current-password">
+              <button type="button" class="show" data-show="passT" aria-controls="passT">Show</button></div></div>
+            <button class="btn dk" type="submit" id="teamBtn">Enter the panel</button>
+          </form>
+          <p class="teamnote" id="teamNote">Private access for the Elderly team only.</p>
+        </div>
       </div>
     </div>
 
-    <div class="foot">
-      <a href="/" id="backHome">← Back to home</a>
-      <span style="font-size:12px;color:var(--muted)"><a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></span>
-    </div>
-    </div>
-  </div>
+    <footer class="legal">
+      <span>Elderly, Inc. · <a href="mailto:hello@callelderly.com">hello@callelderly.com</a></span>
+      <span><a href="/privacy" id="lnkPrivacy">Privacy Policy</a> · <a href="/terms" id="lnkTerms">Terms of Service</a></span>
+    </footer>
+  </main>
+</div>
 
 <script>
 (function(){
   var el=function(id){return document.getElementById(id)};
-  var PORTAL_URL="/portal";
+  var RM=!!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
 
+  /* ---------------- textos ---------------- */
+  var STR={
+    en:{
+      pageTitle:'Sign in',skip:'Skip to sign in',
+      wHead:'Their week', wHead2:'is waiting for you.',
+      pitchSub:"Today's call already happened. Sign in to hear how they sounded, and what they want to tell the family.",
+      trust:"It's an AI, and it says so on every call. Not a medical service.",
+      scene:{b1:'Good morning, Mari. How did you sleep?',b2:'Better than Tuesday.',b3:'Emma sent you something from the recital.',
+        tag:"Mari's phone · on a call",friend:'Their friend',state:'on the line',noteT:'Today · 10:26 am · to you',
+        heart:'Heart',heartV:'bright',mind:'Mind',mindV:'steady, sharp',body:'Body',bodyV:'slept well'},
+      tabFamily:'Families',tabTeam:'Team',
+      famTitle:'Welcome back.',famTitle2:'Their week is here.',famSub:'Sign in to your family portal.',
+      suTitle:'Create your account.',suTitle2:'It takes a minute.',suSub:'You set everything up in the family portal.',
+      teamTitle:'Team panel.',teamTitle2:'Good to see you.',teamSub:'Sign in with your Elderly account.',
+      fgTitle:'Reset your password.',fgTitle2:'We will send you a link.',
+      rsTitle:'Choose a new password.',rsTitle2:'Then you are in.',
+      email:'Email',pass:'Password',emailPh:'you@family.com',login:'Sign in',name:'Your name',country:'Where do you live?',signup:'Create account',
+      phone:'Your mobile',phonePh:'+1 385 555 0100',
+      phoneHint:'With the country and area code. This is the number we call first.',
+      needPhone:'Please add your mobile number, with the country code.',
+      forgot:'Forgot your password?',fgIntro:"Enter your email and we'll send you a link to set a new password.",
+      fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
+      rsIntro:'Choose a new password for your account.',rsPass:'New password',rsSave:'Save new password',rsHint:'At least 8 characters.',
+      minPass:'Use at least 8 characters.',
+      teamBtn:'Enter the panel',teamNote:'Private access for the Elderly team only.',
+      or:'or with your email',show:'Show',hide:'Hide',
+      nhTitle:'New to Elderly?',nhSub:'Build their plan in four short steps.',toPlan:'Build their plan',planHref:'/#price',
+      sw2:'Already have an account? <a id="toLogin" href="#">Sign in</a>',
+      doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
+      back:'← Back to home',home:'/',
+      needEmail:'Please enter your email.',needAll:'Please add your name and email.',
+      noAccess:'This email is not on the team.',badPass:'That email and password do not match.',
+      privacy:'Privacy Policy',terms:'Terms of Service',
+      emailChangedOk:'Done, your email is changed. Sign in with the new one.',
+      emailChangedBad:'That confirmation link has expired. Ask for the change again from your portal.',
+      verifiedOk:'Your email is verified. You can sign in now.',
+      verifiedBad:'That verification link expired. Resend it from your portal.',
+      working:'One moment…'
+    },
+    es:{
+      pageTitle:'Ingresar',skip:'Ir al ingreso',
+      wHead:'Su semana', wHead2:'te está esperando.',
+      pitchSub:'La llamada de hoy ya pasó. Entra para escuchar cómo se le oía y lo que le quiere contar a la familia.',
+      trust:'Es una IA, y lo dice en cada llamada. No es un servicio médico.',
+      scene:{b1:'Buenos días, Mari. ¿Cómo dormiste?',b2:'Mejor que el martes.',b3:'Emma te mandó algo del recital.',
+        tag:'Teléfono de Mari · en llamada',friend:'Elderly',state:'en llamada',noteT:'Hoy · 10:26 am · para ti',
+        heart:'Ánimo',heartV:'alegre',mind:'Mente',mindV:'clara, atenta',body:'Cuerpo',bodyV:'durmió bien'},
+      tabFamily:'Familias',tabTeam:'Equipo',
+      famTitle:'Qué bueno verte.',famTitle2:'Su semana está aquí.',famSub:'Entra al portal de tu familia.',
+      suTitle:'Crea tu cuenta.',suTitle2:'Toma un minuto.',suSub:'Todo lo configuras en el portal familiar.',
+      teamTitle:'Panel del equipo.',teamTitle2:'Qué bueno verte.',teamSub:'Entra con tu cuenta de Elderly.',
+      fgTitle:'Recupera tu contraseña.',fgTitle2:'Te mandamos un enlace.',
+      rsTitle:'Elige una contraseña nueva.',rsTitle2:'Y listo, ya entras.',
+      email:'Email',pass:'Contraseña',emailPh:'tu@familia.com',login:'Entrar',name:'Tu nombre',country:'¿Dónde vives?',signup:'Crear cuenta',
+      phone:'Tu celular',phonePh:'+52 55 1234 5678',
+      phoneHint:'Con el código de país y de área. A ese número te llamamos primero.',
+      needPhone:'Escribe tu celular, con el código de país.',
+      forgot:'¿Olvidaste tu contraseña?',fgIntro:'Escribe tu email y te mandamos un enlace para crear una nueva.',
+      fgSend:'Enviar enlace',backLogin:'Volver a entrar',fgSent:'Revisa tu correo. Si ese email tiene una cuenta, el enlace ya va en camino.',
+      rsIntro:'Elige una contraseña nueva para tu cuenta.',rsPass:'Contraseña nueva',rsSave:'Guardar contraseña',rsHint:'Al menos 8 caracteres.',
+      minPass:'Usa al menos 8 caracteres.',
+      teamBtn:'Entrar al panel',teamNote:'Acceso privado, solo para el equipo de Elderly.',
+      or:'o con tu email',show:'Ver',hide:'Ocultar',
+      nhTitle:'¿Eres nuevo en Elderly?',nhSub:'Arma su plan en cuatro pasos cortos.',toPlan:'Arma su plan',planHref:'/es#price',
+      sw2:'¿Ya tienes cuenta? <a id="toLogin" href="#">Entrar</a>',
+      doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te escribimos apenas tu portal esté listo.',
+      back:'← Volver al inicio',home:'/es',
+      needEmail:'Escribe tu email.',needAll:'Completa tu nombre y tu email.',
+      noAccess:'Ese email no es del equipo.',badPass:'El email y la contraseña no coinciden.',
+      privacy:'Política de privacidad (en inglés)',terms:'Términos del servicio (en inglés)',
+      emailChangedOk:'Listo, tu email ya cambió. Entra con el nuevo.',
+      emailChangedBad:'Ese enlace de confirmación venció. Pide el cambio de nuevo desde tu portal.',
+      verifiedOk:'Tu email quedó verificado. Ya puedes entrar.',
+      verifiedBad:'El enlace de verificación venció. Reenvíalo desde tu portal.',
+      working:'Un momento…'
+    }
+  };
 
+  /* Idioma: ?lang= manda, despues lo que eligio en el sitio, despues si viene de /es. */
+  var lang='en';
+  try{
+    var qs=new URLSearchParams(location.search).get('lang');
+    var saved=localStorage.getItem('elderlyLang')||localStorage.getItem('elderly_lang');
+    if(qs==='es'||qs==='en') lang=qs;
+    else if(saved==='es'||saved==='en') lang=saved;
+    else if(/\/es(\/|$|#|\?)/.test(document.referrer||'')) lang='es';
+  }catch(e){}
+  function s(){return STR[lang]}
 
-  /* ENTRAR CON GOOGLE.
-     El boton solo aparece si el servidor tiene client id: sin eso quedaria uno que no
-     hace nada, que es peor que no tenerlo. El id_token que devuelve Google se manda al
-     backend y ALLA se verifica contra Google; nada de confiar en lo que dice el token
-     del lado del navegador, que es exactamente por donde se entra a una cuenta ajena. */
+  var tab='family', famView='login';
+
+  /* ---------------- Google ---------------- */
   (function(){
     var wrap=el('gwrap'), box=el('gbtn'); if(!wrap||!box) return;
     fetch('/api/config').then(function(r){return r.json()}).then(function(cfg){
       var cid=cfg&&cfg.google_client_id; if(!cid) return;
       var sc=document.createElement('script');
-      /* ?hl=en y no la opcion locale del renderButton: esa la ignora si la cuenta de
-         Google del navegador tiene otro idioma, y el boton salia en español dentro de
-         una pagina en ingles. El idioma del script si manda. */
-      sc.src='https://accounts.google.com/gsi/client?hl=en'; sc.async=true; sc.defer=true;
+      /* ?hl= del script y no la opcion locale: esa la ignora si la cuenta de Google del
+         navegador tiene otro idioma, y el boton salia en otro idioma que la pagina. */
+      sc.src='https://accounts.google.com/gsi/client?hl='+lang; sc.async=true; sc.defer=true;
       sc.onload=function(){
         try{
           google.accounts.id.initialize({
             client_id:cid,
             callback:function(resp){
               var err=el('err1'); if(err) err.textContent='';
-              authAndGo('/api/auth/google',{credential:resp.credential},
-                        'elderly_token','/app',err,null,'');
+              authAndGo('/api/auth/google',{credential:resp.credential},'elderly_token','/app',err,null,'');
             }
           });
-          google.accounts.id.renderButton(box,{theme:'outline',size:'large',
-                                               text:'continue_with',width:320});
-          wrap.hidden=false;
-          var div=el('gdiv'); if(div) div.hidden=false;
+          wrap.hidden=false; var div=el('gdiv'); if(div) div.hidden=false;
+          var w=Math.min(400, Math.max(220, wrap.clientWidth||320));
+          google.accounts.id.renderButton(box,{theme:'outline',size:'large',shape:'pill',text:'continue_with',width:w});
         }catch(e){}
       };
       document.head.appendChild(sc);
     }).catch(function(){});
   })();
 
-  var STR={
-    en:{tabFamily:'Families',tabTeam:'Team',
-      famTitle:'Welcome back',famSub:'Sign in to your family portal',
-      suTitle:'Create your account',suSub:'Start bringing Elderly to your family',
-      teamTitle:'Team portal',teamSub:'Sign in with your account',
-      email:'Email',pass:'Password',login:'Sign in',name:'Your name',country:'Country',signup:'Create account',
-      phone:'Your mobile',phonePh:'+1 385 555 0100',
-      phoneHint:'With the country and area code. This is the number we call first.',
-      needPhone:'Please add your mobile number, with the country code.',
-      forgot:'Forgot your password?',fgTitle:'Reset password',fgIntro:"Enter your email and we'll send you a link to set a new password.",
-      fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
-      rsTitle:'New password',rsIntro:'Choose a new password for your account.',rsSave:'Save new password',
-      minPass:'Password must be at least 8 characters.',
-      teamBtn:'Enter the panel',teamNote:'Private access for the Elderly team only.',
-      sw1:'New here? <a id="toSignup" href="#">Create your account</a>',
-      sw2:'Already have an account? <a id="toLogin">Sign in</a>',
-      doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
-      back:'← Back to home',needEmail:'Please enter your email.',needAll:'Please add your name and email.',
-      noAccess:'This email is not on the team.',badPass:'Wrong password.',lang:'ES',
-      pitch:'A warm call, and a note for you after each one.',
-      pitchSub:'Elderly checks in on the people you love, and keeps you close, wherever you are.',
-      trust:'Real phone calls. Real peace of mind.'},
-    es:{tabFamily:'Familias',tabTeam:'Equipo',
-      famTitle:'Hola de nuevo',famSub:'Ingresá al portal de tu familia',
-      suTitle:'Creá tu cuenta',suSub:'Empezá a traer Elderly a tu familia',
-      teamTitle:'Portal del equipo',teamSub:'Ingresá con tu cuenta',
-      email:'Email',pass:'Contraseña',login:'Iniciar sesión',name:'Tu nombre',country:'País',signup:'Crear cuenta',
-      phone:'Tu celular',phonePh:'+54 9 261 555 0100',
-      phoneHint:'Con el código de país y de área. A ese número te llamamos primero.',
-      needPhone:'Poné tu celular, con el código de país.',
-      forgot:'¿Olvidaste tu contraseña?',fgTitle:'Recuperar contraseña',fgIntro:'Poné tu email y te mandamos un link para crear una nueva.',
-      fgSend:'Enviar link',backLogin:'Volver a iniciar sesión',fgSent:'Revisá tu correo. Si ese email tiene cuenta, el link ya va en camino.',
-      rsTitle:'Contraseña nueva',rsIntro:'Elegí una contraseña nueva para tu cuenta.',rsSave:'Guardar contraseña',
-      minPass:'La contraseña debe tener al menos 8 caracteres.',
-      teamBtn:'Entrar al panel',teamNote:'Acceso privado, solo para el equipo de Elderly.',
-      sw1:'¿Nuevo por acá? <a id="toSignup" href="#">Creá tu cuenta</a>',
-      sw2:'¿Ya tenés cuenta? <a id="toLogin">Iniciá sesión</a>',
-      doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te vamos a escribir apenas tu portal esté listo.',
-      back:'← Volver al inicio',needEmail:'Poné tu email.',needAll:'Completá tu nombre y email.',
-      noAccess:'Ese email no es del equipo.',badPass:'Contraseña incorrecta.',lang:'EN',
-      pitch:'Una llamada cálida cada día, y una nota para vos después de cada una.',
-      pitchSub:'Elderly acompaña a quienes querés y te mantiene cerca, estés donde estés.',
-      trust:'Llamadas de verdad. Tranquilidad de verdad.'}
-  };
-  var lang='en';
-  try{ var g=localStorage.getItem('elderlyLang')||localStorage.getItem('elderly_lang');
-        if(g==='es') lang='es'; }catch(e){}
-  var tab='family', famView='login';
-
-  function s(){return STR[lang]}
-  var root=document.documentElement;
+  /* ---------------- idioma en pantalla ---------------- */
+  function txt(id,v){var n=el(id); if(n) n.textContent=v;}
   function applyLang(){
-    root.setAttribute('lang',lang);
-    document.title=(lang==='es'?'Ingresar':'Sign in')+' · Elderly';
-    el('tabFamily').textContent=s().tabFamily; el('tabTeam').textContent=s().tabTeam;
-    el('l-email').textContent=s().email; el('l-pass').textContent=s().pass; el('loginBtn').textContent=s().login;
-    el('l-name').textContent=s().name; el('l-country').textContent=s().country; el('l-email2').textContent=s().email; el('l-pass2').textContent=s().pass; el('signupBtn').textContent=s().signup;
-    el('l-phone').textContent=s().phone; el('l-phonehint').textContent=s().phoneHint;
-    el('suPhone').setAttribute('placeholder', s().phonePh);
-    el('l-emailT').textContent=s().email; el('l-passT').textContent=s().pass; el('teamBtn').textContent=s().teamBtn; el('teamNote').textContent=s().teamNote;
-    el('toForgot').textContent=s().forgot; el('fgIntro').textContent=s().fgIntro; el('l-fgEmail').textContent=s().email;
-    el('forgotBtn').textContent=s().fgSend; el('toLogin2').textContent=s().backLogin;
-    el('rsIntro').textContent=s().rsIntro; el('l-rsPass').textContent=s().rsTitle; el('resetBtn').textContent=s().rsSave;
-    el('sw1').innerHTML=s().sw1; el('sw2').innerHTML=s().sw2;
-    el('doneTitle').textContent=s().doneTitle; el('doneMsg').textContent=s().doneMsg;
-    el('backHome').textContent=s().back; el('backHome').setAttribute('href','/');
-    var bp=el('bsPitch'); if(bp)bp.textContent=s().pitch;
-    var bsu=el('bsSub'); if(bsu)bsu.textContent=s().pitchSub;
-    var bt=el('bsTrust'); if(bt)bt.textContent=s().trust;
+    var S=s();
+    document.documentElement.setAttribute('lang',lang);
+    document.title=S.pageTitle+' · Elderly';
+    [].forEach.call(document.querySelectorAll('.lang button'),function(b){b.setAttribute('aria-pressed',b.dataset.lang===lang?'true':'false')});
+    txt('skipLink',S.skip);
+    txt('wHead',S.wHead); txt('wHead2',S.wHead2);
+    txt('bsSub',S.pitchSub); txt('bsTrust',S.trust);
+    [].forEach.call(document.querySelectorAll('[data-t]'),function(n){ var k=n.getAttribute('data-t'); if(S.scene[k]) n.textContent=S.scene[k]; });
+    txt('tabFamily',S.tabFamily); txt('tabTeam',S.tabTeam);
+    txt('l-email',S.email); txt('l-pass',S.pass); txt('loginBtn',S.login);
+    el('email').setAttribute('placeholder',S.emailPh);
+    txt('gdiv',S.or);
+    txt('l-name',S.name); txt('l-country',S.country); txt('l-email2',S.email); txt('l-pass2',S.pass); txt('signupBtn',S.signup);
+    txt('l-phone',S.phone); txt('l-phonehint',S.phoneHint); el('suPhone').setAttribute('placeholder',S.phonePh);
+    txt('l-emailT',S.email); txt('l-passT',S.pass); txt('teamBtn',S.teamBtn); txt('teamNote',S.teamNote);
+    txt('toForgot',S.forgot); txt('fgIntro',S.fgIntro); txt('l-fgEmail',S.email);
+    txt('forgotBtn',S.fgSend); txt('toLogin2',S.backLogin);
+    txt('rsIntro',S.rsIntro); txt('l-rsPass',S.rsPass); txt('resetBtn',S.rsSave); txt('rsHint',S.rsHint);
+    txt('nhTitle',S.nhTitle); txt('nhSub',S.nhSub); txt('toPlan',S.toPlan); el('toPlan').setAttribute('href',S.planHref);
+    el('sw1').innerHTML=''; el('sw2').innerHTML=S.sw2;
+    txt('doneTitle',S.doneTitle); txt('doneMsg',S.doneMsg);
+    txt('backHome',S.back); el('backHome').setAttribute('href',S.home); el('logoHome').setAttribute('href',S.home);
+    txt('lnkPrivacy',S.privacy); txt('lnkTerms',S.terms);
+    [].forEach.call(document.querySelectorAll('.show'),function(b){
+      var inp=el(b.dataset.show), vis=inp&&inp.type==='text';
+      b.textContent=vis?S.hide:S.show; b.setAttribute('aria-pressed',vis?'true':'false');
+    });
     bindSwitch(); syncTitle();
   }
+  function setLang(l){
+    lang=l;
+    try{localStorage.setItem('elderlyLang',l); localStorage.setItem('elderly_lang',l);}catch(e){}
+    try{ var u=new URL(location.href); u.searchParams.set('lang',l); history.replaceState(null,'',u); }catch(e){}
+    applyLang();
+  }
+  [].forEach.call(document.querySelectorAll('.lang button'),function(b){ b.onclick=function(){ setLang(b.dataset.lang); }; });
+
   function bindSwitch(){
-    var a=document.getElementById('toSignup'); if(a)a.onclick=function(e){e.preventDefault();famShow('signup')};
     var b=document.getElementById('toLogin'); if(b)b.onclick=function(e){e.preventDefault();famShow('login')};
   }
+  function setTitle(a,b,c){ txt('title',a); txt('title2',b||''); el('title2').hidden=!b; txt('sub',c||''); el('sub').hidden=!c; }
   function syncTitle(){
-    if(tab==='team'){el('title').textContent=s().teamTitle;el('sub').textContent=s().teamSub;return}
-    if(famView==='signup'){el('title').textContent=s().suTitle;el('sub').textContent=s().suSub;}
-    else if(famView==='login'){el('title').textContent=s().famTitle;el('sub').textContent=s().famSub;}
-    else if(famView==='forgot'){el('title').textContent=s().fgTitle;el('sub').textContent='';}
-    else if(famView==='reset'){el('title').textContent=s().rsTitle;el('sub').textContent='';}
-    else{el('title').textContent='';el('sub').textContent='';}
+    var S=s();
+    if(tab==='team'){ setTitle(S.teamTitle,S.teamTitle2,S.teamSub); return; }
+    if(famView==='signup') setTitle(S.suTitle,S.suTitle2,S.suSub);
+    else if(famView==='login') setTitle(S.famTitle,S.famTitle2,S.famSub);
+    else if(famView==='forgot') setTitle(S.fgTitle,S.fgTitle2,'');
+    else if(famView==='reset') setTitle(S.rsTitle,S.rsTitle2,'');
+    else setTitle('','','');
   }
-  function famShow(v){famView=v;
+  function famShow(v,focus){ famView=v;
     el('login').hidden=v!=='login'; el('signup').hidden=v!=='signup'; el('done').hidden=v!=='done';
-    el('forgot').hidden=v!=='forgot'; el('reset').hidden=v!=='reset'; syncTitle();}
-  function setTab(t){tab=t;
-    document.querySelectorAll('.seg button').forEach(function(x){x.setAttribute('aria-selected',x.dataset.tab===t)});
-    document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==t});
-    if(t==='family')famShow('login'); else syncTitle();
+    el('forgot').hidden=v!=='forgot'; el('reset').hidden=v!=='reset'; syncTitle();
+    var first={login:'email',forgot:'fgEmail',reset:'rsPass',signup:'suName'}[v];
+    if(focus && first){ try{el(first).focus({preventScroll:true});}catch(e){} }
   }
-  document.querySelectorAll('.seg button').forEach(function(b){b.onclick=function(){setTab(b.dataset.tab)}});
-  /* Enter envia. Se invoca el manejador del boton en vez de simular un clic: el boton es
-     type=submit, y un .click() volveria a disparar este mismo submit. */
-  [['formLogin','loginBtn'],['formForgot','forgotBtn'],['formReset','resetBtn'],
-   ['formSignup','signupBtn'],['formTeam','teamBtn']].forEach(function(par){
-    var f=document.getElementById(par[0]), b=document.getElementById(par[1]);
-    if(f&&b) f.addEventListener('submit', function(e){ e.preventDefault(); if(b.onclick) b.onclick(); });
+  var tabs=[].slice.call(document.querySelectorAll('.seg button'));
+  function setTab(t,focus){ tab=t;
+    tabs.forEach(function(x){ var on=x.dataset.tab===t; x.setAttribute('aria-selected',on?'true':'false'); x.tabIndex=on?0:-1; if(on&&focus) x.focus(); });
+    [].forEach.call(document.querySelectorAll('[data-pane]'),function(p){p.hidden=p.dataset.pane!==t});
+    if(t==='family') famShow('login'); else syncTitle();
+  }
+  tabs.forEach(function(b,i){
+    b.onclick=function(){setTab(b.dataset.tab)};
+    b.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){ e.preventDefault(); setTab(tabs[(i+1)%2].dataset.tab,true); }
+    });
   });
 
-  /* Login unificado contra el backend real (mismo dominio via proxy de Vercel). */
+  /* Mostrar / ocultar contraseña */
+  [].forEach.call(document.querySelectorAll('.show'),function(b){
+    b.addEventListener('click',function(){
+      var inp=el(b.dataset.show); if(!inp) return;
+      inp.type = inp.type==='password' ? 'text' : 'password';
+      var vis=inp.type==='text';
+      b.textContent = vis ? s().hide : s().show;
+      b.setAttribute('aria-pressed', vis?'true':'false');
+      inp.focus();
+    });
+  });
+
+  /* Enter envia: se llama al manejador del boton, no a .click(), para no disparar dos veces. */
+  [['formLogin','loginBtn'],['formForgot','forgotBtn'],['formReset','resetBtn'],
+   ['formSignup','signupBtn'],['formTeam','teamBtn']].forEach(function(par){
+    var f=el(par[0]), b=el(par[1]);
+    if(f&&b) f.addEventListener('submit',function(e){ e.preventDefault(); if(b.onclick) b.onclick(); });
+  });
+
+  /* ---------------- backend ---------------- */
+  function busy(btn,on,label){ if(!btn) return; btn.disabled=on; btn.textContent=on?s().working:label; }
   function authAndGo(path, body, tokenKey, dest, errEl, btn, btnText){
-    errEl.textContent=''; if(btn) btn.textContent='...';
+    errEl.textContent=''; busy(btn,true,btnText);
     fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
-      .then(function(r){ return r.json().then(function(d){ if(!r.ok) throw {detail:(d&&d.detail)}; return d; }); })
+      .then(function(r){ return r.json().catch(function(){return {};}).then(function(d){ if(!r.ok) throw {detail:(d&&d.detail),status:r.status}; return d; }); })
       .then(function(d){ try{localStorage.setItem(tokenKey, d.token)}catch(e){} location.href=dest; })
-      .catch(function(e){ if(btn) btn.textContent=btnText; errEl.textContent=(e&&e.detail)?e.detail:s().badPass; });
+      .catch(function(e){
+        busy(btn,false,btnText);
+        var msg=(e&&typeof e.detail==='string')?e.detail:'';
+        /* El backend contesta en ingles: en español, los casos comunes se dicen en español. */
+        if(!msg || (lang==='es' && e && e.status===401)) msg=s().badPass;
+        errEl.textContent=msg;
+      });
   }
   el('loginBtn').onclick=function(){
-    if(!el('email').value.trim()){el('err1').textContent=s().needEmail;return}
+    if(!el('email').value.trim()){el('err1').textContent=s().needEmail; el('email').focus(); return}
     authAndGo("/api/login",{email:el('email').value.trim(),password:el('pass').value},
       "elderly_token","/app",el('err1'),el('loginBtn'),s().login);
   };
-  /* El celular se limpia y se completa aca tambien, no solo en el servidor: quien
-     escribe "(385) 555-0100" no tiene por que ver un error de formato. Diez digitos con
-     pais US o CA son un numero de alla; cualquier otra cosa se manda tal cual y decide
-     el backend, que es el que sabe. */
+  /* El celular se completa aca tambien: quien escribe "(385) 555-0100" no tiene por que
+     ver un error de formato. Diez digitos son un numero local del pais elegido. */
   function telNormalizar(v, pais){
-    var s=String(v||'').trim(); if(!s) return '';
-    if(s.charAt(0)==='+') return '+'+s.slice(1).replace(/[^0-9]/g,'');
-    var d=s.replace(/[^0-9]/g,''); if(!d) return '';
-    if(pais==='US'||pais==='CA'||!pais){
+    var t=String(v||'').trim(); if(!t) return '';
+    if(t.charAt(0)==='+') return '+'+t.slice(1).replace(/[^0-9]/g,'');
+    var d=t.replace(/[^0-9]/g,''); if(!d) return '';
+    if(pais==='US'||!pais){
       if(d.length===10) return '+1'+d;
       if(d.length===11 && d.charAt(0)==='1') return '+'+d;
     }
+    if(pais==='MX' && d.length===10) return '+52'+d;
     return d;
   }
-
   el('signupBtn').onclick=function(){
     if(!el('suName').value.trim()||!el('suEmail').value.trim()){el('err2').textContent=s().needAll;return}
-    var _pais=el('suCountry').value;
-    var _tel=telNormalizar(el('suPhone').value, _pais);
-    if(!_tel){ el('err2').textContent=s().needPhone; return; }
-    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:_pais,phone:_tel},
+    if((el('suPass').value||'').length<8){el('err2').textContent=s().minPass;return}
+    var pais=el('suCountry').value, tel=telNormalizar(el('suPhone').value,pais);
+    if(!tel){ el('err2').textContent=s().needPhone; return; }
+    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:pais,phone:tel,language:lang},
       "elderly_token","/app",el('err2'),el('signupBtn'),s().signup);
   };
   el('teamBtn').onclick=function(){
     var email=el('emailT').value.trim().toLowerCase(), pass=el('passT').value;
-    if(!email){el('errT').textContent=s().noAccess;return}
-    el('errT').textContent=''; el('teamBtn').textContent='...';
+    if(!email){el('errT').textContent=s().needEmail;return}
+    el('errT').textContent=''; busy(el('teamBtn'),true,s().teamBtn);
     fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,password:pass})})
       .then(function(r){ if(!r.ok) throw {bad:true}; return r.json(); })
       .then(function(d){
@@ -448,64 +628,68 @@
           .then(function(r2){ if(r2.status===403) throw {team:false}; if(!r2.ok) throw {bad:true}; return d.token; });
       })
       .then(function(token){ try{localStorage.setItem("elderly_admin_token",token)}catch(e){} location.href="/admin"; })
-      .catch(function(e){ el('teamBtn').textContent=s().teamBtn; el('errT').textContent=(e&&e.team===false)?s().noAccess:s().badPass; });
+      .catch(function(e){ busy(el('teamBtn'),false,s().teamBtn); el('errT').textContent=(e&&e.team===false)?s().noAccess:s().badPass; });
   };
 
   /* Olvidé mi contraseña */
   var RESET_TOKEN='';
-  el('toForgot').onclick=function(e){e.preventDefault();el('err3').textContent='';el('fgEmail').value=el('email').value;famShow('forgot')};
-  el('toLogin2').onclick=function(e){e.preventDefault();famShow('login')};
+  el('toForgot').onclick=function(e){e.preventDefault();el('err3').textContent='';el('fgEmail').value=el('email').value;famShow('forgot',true)};
+  el('toLogin2').onclick=function(e){e.preventDefault();famShow('login',true)};
   el('forgotBtn').onclick=function(){
     var email=el('fgEmail').value.trim();
     if(!email){el('err3').textContent=s().needEmail;return}
-    el('err3').textContent='';el('forgotBtn').textContent='...';
+    el('err3').textContent=''; busy(el('forgotBtn'),true,s().fgSend);
     fetch("/api/password/forgot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})})
-      .then(function(){ el('title').textContent=s().fgTitle; el('sub').textContent='';
-        el('forgot').innerHTML='<div class="done"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div><p>'+s().fgSent+'</p></div>'; })
-      .catch(function(){ el('forgotBtn').textContent=s().fgSend; el('err3').textContent=s().badPass; });
+      .then(function(){
+        el('forgot').innerHTML='<div class="done" role="status"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div><p>'+s().fgSent+'</p><p class="links"><a href="#" id="fgBack">'+s().backLogin+'</a></p></div>';
+        var fb=el('fgBack'); if(fb) fb.onclick=function(e){e.preventDefault(); location.reload();};
+      })
+      .catch(function(){ busy(el('forgotBtn'),false,s().fgSend); el('err3').textContent=s().badPass; });
   };
   el('resetBtn').onclick=function(){
     var pw=el('rsPass').value;
     if((pw||'').length<8){el('err4').textContent=s().minPass;return}
     authAndGo("/api/password/reset",{token:RESET_TOKEN,password:pw},"elderly_token","/app",el('err4'),el('resetBtn'),s().rsSave);
   };
-  // Aviso de verificación de email (?verified=1 ok, =0 expiró) y de cambio de email
-  // (?email_changed). El backend ya mandaba a esta página con ese segundo parámetro y
-  // nadie lo leía: quien cambiaba su correo hacía clic en el link de confirmación y
-  // aterrizaba en un login pelado, sin saber si había funcionado.
-  (function(){ var q=new URLSearchParams(location.search);
-    var ec=q.get('email_changed');
-    if(ec!==null){ var m=el('verifiedNote');
-      if(ec==='1'){ m.textContent=(lang==='es')?'Listo, tu email quedó cambiado. Entrá con el nuevo.':'Done, your email is changed. Sign in with the new one.'; }
-      else{ m.textContent=(lang==='es')?'Ese link de confirmación ya venció. Pedí el cambio de nuevo desde tu portal.':'That confirmation link has expired. Ask for the change again from your portal.'; }
-      m.hidden=false;
-      var u2=new URL(location.href); u2.searchParams.delete('email_changed'); history.replaceState(null,'',u2);
-    }
-    var v=q.get('verified');
-    if(v!==null){ var n=el('verifiedNote');
-      if(v==='1'){ n.textContent=(lang==='es')?'¡Tu email quedó verificado! Ya podés iniciar sesión.':'Your email is verified! You can sign in now.'; n.style.color='#01534C'; }
-      else{ n.textContent=(lang==='es')?'El link de verificación expiró. Reenvialo desde tu portal.':'That verification link expired. Resend it from your portal.'; n.style.color='#A8320F'; }
-      n.hidden=false;
-      var u=new URL(location.href); u.searchParams.delete('verified'); history.replaceState(null,'',u);
-    } })();
 
-  // Si el link del email trae #reset=<token>, mostramos el form de nueva contraseña.
+  applyLang();
+
+  /* Avisos que llegan por la URL: ?verified= y ?email_changed= */
+  (function(){ var q=new URLSearchParams(location.search), n=el('verifiedNote'), u=new URL(location.href), tocado=false;
+    var ec=q.get('email_changed');
+    if(ec!==null){ n.textContent=ec==='1'?s().emailChangedOk:s().emailChangedBad; n.classList.toggle('warn',ec!=='1'); n.hidden=false; u.searchParams.delete('email_changed'); tocado=true; }
+    var v=q.get('verified');
+    if(v!==null){ n.textContent=v==='1'?s().verifiedOk:s().verifiedBad; n.classList.toggle('warn',v!=='1'); n.hidden=false; u.searchParams.delete('verified'); tocado=true; }
+    if(tocado) history.replaceState(null,'',u);
+  })();
+
+  /* El link del correo trae #reset=<token>: se abre el formulario de contraseña nueva. */
   (function(){ var m=location.hash.match(/[#&]reset=([^&]+)/);
     if(m){ RESET_TOKEN=decodeURIComponent(m[1]); history.replaceState(null,'',location.pathname+location.search);
       setTab('family'); famShow('reset'); } })();
 
-  // Alta de cuentas nuevas en pausa: por ahora vamos a lista de acceso temprano.
-  // /ingresar?signup=1 abre directo el alta. Mientras el alta estuvo en pausa esto
-  // mandaba a la lista de acceso temprano; ya no, porque las cuentas estan abiertas.
-  (function(){ if(new URLSearchParams(location.search).get('signup')!=null){ famShow('signup'); } })();
+  /* /ingresar?signup=1 abre el alta directa; ?team=1 abre la pestaña del equipo. */
+  (function(){ var q=new URLSearchParams(location.search);
+    if(q.get('signup')!=null) famShow('signup');
+    if(q.get('team')!=null) setTab('team');
+  })();
 
-  applyLang();
+  /* ---------------- la escena: un solo momento orquestado ---------------- */
+  (function(){
+    var bubbles=[].slice.call(document.querySelectorAll('#bubbles .b')), note=el('note');
+    var bars=[].slice.call(document.querySelectorAll('#wave i')), clock=el('clock');
+    if(RM){ bubbles.forEach(function(b){b.classList.add('on')}); note.classList.add('on');
+      bars.forEach(function(w,i){w.style.height=(6+((i*7)%14))+'px'}); return; }
+    bubbles.forEach(function(b,i){ setTimeout(function(){ b.classList.add('on'); }, 700+i*1000); });
+    setTimeout(function(){ note.classList.add('on'); }, 700+bubbles.length*1000+300);
+    var sec=252, ticks=0;
+    setInterval(function(){
+      if(document.hidden) return;
+      bars.forEach(function(w){ w.style.height=(5+Math.round(Math.random()*16))+'px'; });
+      if(++ticks%4===0){ sec++; clock.textContent=Math.floor(sec/60)+':'+('0'+(sec%60)).slice(-2); }
+    },250);
+  })();
 })();
 </script>
-<footer class="legal-name">
-  2809 N Dandelion Dr, Saratoga Springs, UT 84045, United States &middot;
-  <a href="mailto:hello@callelderly.com">hello@callelderly.com</a><br>
-  <a href="/privacy">Privacy Policy</a> &middot; <a href="/terms">Terms of Service</a>
-</footer>
 </body>
 </html>

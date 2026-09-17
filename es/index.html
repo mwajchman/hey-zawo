@@ -797,7 +797,7 @@ form label.chk.bad span{color:#A8320F}
         <li class="hs"><a href="#how">Cómo funciona</a></li>
         <li class="hs"><a href="#price">Precios</a></li>
         <li class="lang"><a href="https://www.callelderly.com/" hreflang="en" lang="en">EN</a><span style="opacity:.4">/</span><a href="#" aria-current="true">ES</a></li>
-        <li class="hs"><a href="https://www.callelderly.com/ingresar">Ingresar</a></li>
+        <li class="hs"><a href="https://www.callelderly.com/ingresar?lang=es">Ingresar</a></li>
         <li><a class="btn sm hs" href="#price">Arma su plan</a></li>
         <li><button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Abrir menú"><span></span><span></span><span></span></button></li>
       </menu>
@@ -1381,7 +1381,7 @@ form label.chk.bad span{color:#A8320F}
   <a href="#lista">¿Vives en otro país?</a>
   <a href="#faq">Preguntas</a>
   <a href="https://www.callelderly.com/" hreflang="en" lang="en">English</a>
-  <a href="https://www.callelderly.com/ingresar">Ingresar</a>
+  <a href="https://www.callelderly.com/ingresar?lang=es">Ingresar</a>
   <a href="#price">Arma su plan</a>
 </nav>
 
@@ -1413,7 +1413,7 @@ form label.chk.bad span{color:#A8320F}
       <div>
         <h4>Cuenta</h4>
         <ul>
-          <li><a href="https://www.callelderly.com/ingresar">Ingresar</a></li>
+          <li><a href="https://www.callelderly.com/ingresar?lang=es">Ingresar</a></li>
           <li><a href="https://www.callelderly.com/privacy">Política de privacidad (en inglés)</a></li>
           <li><a href="https://www.callelderly.com/terms">Términos del servicio (en inglés)</a></li>
           <li><a href="https://www.callelderly.com/" hreflang="en" lang="en">English</a></li>
@@ -1731,7 +1731,7 @@ form label.chk.bad span{color:#A8320F}
     }
     /* El backend responde en ingles: aca se traduce lo que conocemos y el resto queda generico. */
     function motivoEnEspanol(status, detail){
-      if(status===409) return 'Ya existe una cuenta con ese email. <a href="https://www.callelderly.com/ingresar">Ingresa aquí</a>';
+      if(status===409) return 'Ya existe una cuenta con ese email. <a href="https://www.callelderly.com/ingresar?lang=es">Ingresa aquí</a>';
       if(status===429) return 'Hubo demasiados intentos. Espera unos minutos y vuelve a probar';
       var t=String(detail||'').toLowerCase();
       if(t.indexOf('password')>=0) return 'La contraseña debe tener al menos 8 caracteres';
