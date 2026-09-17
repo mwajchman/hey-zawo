@@ -1130,13 +1130,19 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 
         <div class="wstep" data-step="3" role="group" aria-label="Step 3 of 4: shields" hidden>
           <h3 class="d3">Anything to add?</h3>
-          <p>All optional, and you can turn them on later. The calls stay the same. A shield changes what the friend listens for.</p>
+          <p>All optional, and you can turn them on later. The calls stay the same. A shield changes what the friend listens for. <b>All three together cost $15, not $30.</b></p>
+          <label class="sw"><input type="checkbox" id="sh-scam" data-spec="scam" data-add="10">
+            <span><b>Scam Shield</b><small>For the parent who answers every call. Spots the scams that target older adults, and finds out what they were too embarrassed to tell you.</small></span>
+            <span class="amt">+$10</span></label>
+          <label class="sw"><input type="checkbox" id="sh-health" data-spec="health" data-add="10">
+            <span><b>Health Signals</b><small>For a chronic condition, or after a fall. Sleep, meals, meds and pain, asked like a friend. Their family's early signal, not their doctor.</small></span>
+            <span class="amt">+$10</span></label>
+          <label class="sw"><input type="checkbox" id="sh-memory" data-spec="memory" data-add="10">
+            <span><b>Mind &amp; Memory</b><small>For the first repeated stories. Gently tracks memory over time and keeps their mind busy.</small></span>
+            <span class="amt">+$10</span></label>
           <label class="sw"><input type="checkbox" id="sh-voice" data-add="6">
             <span><b>Their voice, kept</b><small>Stories surface mid-conversation and are saved as they are told. Yours to download any time.</small></span>
             <span class="amt">+$6</span></label>
-          <label class="sw"><input type="checkbox" id="sh-inbound" data-add="4">
-            <span><b>They can call back</b><small>The friend gets a name and a place in their contacts, day or night.</small></span>
-            <span class="amt">+$4</span></label>
           <label class="sw"><input type="checkbox" id="sh-second" data-add="0">
             <span><b>A second parent</b><small>Their own friend, their own reports, their own memories. Family discount applied at checkout.</small></span>
             <span class="amt">discount</span></label>
@@ -1481,7 +1487,9 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     function price(){
       var n=selectedDays().length, len=chosenLen();
       var extra=Math.max(0,n-INCLUDED), p=BASE+extra*EXTRA+parseInt(len.dataset.add,10);
-      shields.forEach(function(c){ if(c.checked) p+=parseInt(c.dataset.add,10); });
+      var nSpec=shields.filter(function(c){ return c.checked && c.dataset.spec; }).length;
+      p+= nSpec===0?0:(nSpec===1?10:15);           /* los escudos: $10 uno, $15 dos o tres (backend) */
+      shields.forEach(function(c){ if(c.checked && !c.dataset.spec) p+=parseInt(c.dataset.add,10); });
       return {n:n, extra:extra, len:len, p:p};
     }
     function render(){
@@ -1496,8 +1504,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       bd.appendChild(row(s.n+(s.n===1?' call a week':' calls a week'), '$'+BASE));
       if(s.extra) bd.appendChild(row(s.extra+(s.extra===1?' extra day':' extra days'), '+$'+s.extra*EXTRA));
       if(+s.len.dataset.add) bd.appendChild(row(s.len.dataset.len+' minutes a call', '+$'+s.len.dataset.add));
+      var specOn=shields.filter(function(c){ return c.checked && c.dataset.spec; });
+      if(specOn.length===1) bd.appendChild(row(specOn[0].parentNode.querySelector('b').textContent, '+$10'));
+      if(specOn.length>1) bd.appendChild(row(specOn.map(function(c){ return c.parentNode.querySelector('b').textContent; }).join(' + '), '+$15'));
       shields.forEach(function(c){
-        if(!c.checked) return;
+        if(!c.checked || c.dataset.spec) return;
         var name=c.parentNode.querySelector('b').textContent, add=parseInt(c.dataset.add,10);
         bd.appendChild(row(name, add? '+$'+add : 'discount'));
       });
@@ -1559,7 +1570,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         email:f('email'), password:f('password'), full_name:f('yourname'), phone:f('phone'),
         relationship:f('who'), country:f('country')||'US', elder_name:f('hername'),
         calls_per_week:selectedDays().length, call_length:packDelLargo(),
-        specialties:'', voice_kept:!!document.getElementById('sh-voice').checked,
+        specialties:shields.filter(function(c){ return c.checked && c.dataset.spec; }).map(function(c){ return c.dataset.spec; }).join(','), voice_kept:!!document.getElementById('sh-voice').checked,
         days:selectedDays().map(function(b){ return b.dataset.day; }).sort().join(',')
       };
     }
