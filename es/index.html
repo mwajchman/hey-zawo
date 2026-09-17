@@ -414,7 +414,9 @@ form label.bad .err{display:block}
 #sticky .lbl{font-size:.88rem;font-weight:700;color:rgba(247,242,231,.78)}
 #sticky b{color:var(--honey);font-weight:900}
 #sticky .btn{margin-left:auto;padding:.6rem 1.25rem;font-size:.92rem}
-@media(max-width:520px){#sticky .lbl{display:none}#sticky .btn{margin-left:0;width:100%;justify-content:center}}
+#sticky{padding-bottom:calc(.75rem + env(safe-area-inset-bottom, 0px))}
+#sticky .lm{display:none}
+@media(max-width:520px){#sticky .w{gap:.75rem}#sticky .lx{display:none}#sticky .lbl{font-size:.9rem;line-height:1.2;color:var(--cream)}#sticky b{font-size:1.35rem}#sticky .lm{display:block;font-size:.76rem;font-weight:700;color:rgba(247,242,231,.72);margin-top:.1rem}#sticky .btn{flex:0 0 auto;padding:.65rem 1.05rem;white-space:nowrap}}
 
 /* nav active state */
 .nav menu a[data-active]{opacity:1;color:var(--honey)}
@@ -1387,7 +1389,7 @@ form label.chk.bad span{color:#A8320F}
 
 <div id="sticky" aria-hidden="true">
   <div class="w">
-    <span class="lbl">Su plan hasta ahora · <b id="stickyPrice">$25</b> USD al mes · primera semana gratis</span>
+    <span class="lbl"><span class="lx">Su plan hasta ahora · </span><b id="stickyPrice">$25</b> USD al mes<span class="lx"> · primera semana gratis</span><span class="lm">Primera semana gratis</span></span>
     <a class="btn" href="#price">Arma su plan</a>
   </div>
 </div>
