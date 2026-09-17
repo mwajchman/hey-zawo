@@ -197,7 +197,11 @@ h1 .l2{display:block;color:var(--amber-dp)}
    mundo de la izquierda pasa arriba, todo el lado derecho se comprime. Se ajusta
    el aire, nunca el tamaño de los campos ni de los botones, que se siguen tocando
    igual de facil. */
-@media(max-width:1000px),(max-height:860px){
+/* Sin condicion: el aire compacto vale SIEMPRE. Cuando esto colgaba de una media
+   query por alto quedaba una banda muerta (pantallas de mas de 860px de alto no se
+   comprimian) y ahi, con el boton de Google, el login pedia scroll. */
+.door-compacta{display:contents}
+@media all{
   .panel{padding-top:clamp(.6rem,2vh,1.4rem);padding-bottom:0}
   .bar{margin-bottom:.7rem;height:6px}
   h1{font-size:clamp(1.7rem,2.8vw,2.2rem)}
@@ -215,14 +219,14 @@ h1 .l2{display:block;color:var(--amber-dp)}
   .teamnote{margin-top:.7rem}
   .legal{padding-top:.7rem}
 }
-@media(max-height:830px) and (max-width:1000px){
+@media(max-height:900px) and (max-width:1000px){
   .world h2{display:none}
   .panel{padding-top:.4rem}
   .sub{display:none}
   .seg{margin:.7rem 0}
 }
 /* Un escalon mas: pantallas bajas o angostas de verdad. */
-@media(max-height:860px) and (max-width:1000px),(max-height:720px),(max-width:420px){
+@media(max-height:900px) and (max-width:1000px),(max-height:820px),(max-width:480px){
   h1{font-size:1.6rem}
   .sub{display:none}
   .or{margin:.55rem 0}
@@ -235,6 +239,15 @@ h1 .l2{display:block;color:var(--amber-dp)}
   .legal{padding-top:.55rem;font-size:.74rem}
 }
 /* Telefonos chicos y apaisados: se recorta el aire que queda, sin sacar nada. */
+/* Telefono angosto: el ultimo aire que queda. Los legales siguen (la ley), lo que se
+   va es la linea de la empresa, que esta en el pie de todas las demas paginas. */
+@media(max-width:480px){
+  h1{font-size:1.45rem}
+  .or{margin:.35rem 0;font-size:.78rem}
+  .back{min-height:38px}
+  .legal{font-size:.72rem;padding-top:.5rem}
+  .legal span:first-child{display:none}
+}
 @media(max-height:700px) and (max-width:480px){
   .world{padding:.6rem 1.2rem}
   .door{padding:.7rem 1.2rem .55rem}
@@ -249,6 +262,23 @@ h1 .l2{display:block;color:var(--amber-dp)}
   .btn{min-height:48px;padding:.8rem 1.6rem}
   .seg{margin:.6rem 0}
   .seg button{min-height:42px;padding:.5rem 1rem}
+}
+/* Pantallas de verdad bajas (un iPhone SE con la barra de Safari deja 553px utiles):
+   se saca la franja teal, que es decoracion, y se achica el titulo. Los campos y los
+   botones siguen enteros: ahi no se toca nada. */
+@media(max-height:640px){
+  .world{display:none}
+  .seg{margin:.6rem 0}
+  .field label{font-size:.82rem}
+  .btn{min-height:46px;margin-top:.2rem}
+  .links{margin-top:.35rem}
+  .split{grid-template-rows:1fr}
+  .door{padding-top:.6rem}
+  h1{font-size:1.35rem;line-height:1.05}
+  .bar{margin-bottom:.5rem}
+  .newhere{display:none}
+  .legal{font-size:.68rem;padding-top:.4rem}
+  .seg button{min-height:40px}
 }
 @media(max-height:760px) and (min-width:1001px){ .world .lede{display:none} .note{display:none} }
 @media(max-height:640px) and (min-width:1001px){ .scene{display:none} }
@@ -369,6 +399,8 @@ h1 .l2{display:block;color:var(--amber-dp)}
                 <p class="hint" id="rsHint">At least 8 characters.</p></div>
               <button class="btn" type="submit" id="resetBtn">Save new password</button>
             </form>
+            <!-- Salidas: si el enlace venció, sin esto la pantalla era un callejón. -->
+            <p class="links"><a href="#" id="rsAgain">Send me a new link</a> · <a href="#" id="rsBack">Back to sign in</a></p>
           </div>
 
           <!-- Alta directa (/ingresar?signup=1). El camino normal es el armador de la home. -->
@@ -455,7 +487,17 @@ h1 .l2{display:block;color:var(--amber-dp)}
       doneTitle:'Thank you!',doneMsg:"We're getting Elderly ready for your family. We'll email you the moment your portal is live.",
       back:'← Back to home',home:'/',
       needEmail:'Please enter your email.',needAll:'Please add your name and email.',
+      badEmail:'Check the email, it looks like it has a typo.',
+      tooMany:'Too many tries. Please wait a few minutes and try again.',
+      linkDead:'That link expired or was already used. Ask for a new one.',
+      closed:'This account is closed. Write to us and we will bring it back.',
+      notOpen:'We are opening slowly. Leave your email on the home page and we will write you.',
+      googleOff:'Google sign-in is not available right now. Use your email and password.',
+      oops:'Something went wrong on our side. Please try again.',
+      fgFailed:'We could not send the email. Check the address and try again.',
+      teamHere:'That account is on the Elderly team. Use the Team tab.',
       noAccess:'This email is not on the team.',badPass:'That email and password do not match.',
+      rsAgain:'Send me a new link',rsBack:'Back to sign in',
       privacy:'Privacy Policy',terms:'Terms of Service',
       emailChangedOk:'Done, your email is changed. Sign in with the new one.',
       emailChangedBad:'That confirmation link has expired. Ask for the change again from your portal.',
@@ -492,7 +534,17 @@ h1 .l2{display:block;color:var(--amber-dp)}
       doneTitle:'¡Gracias!',doneMsg:'Estamos preparando Elderly para tu familia. Te escribimos apenas tu portal esté listo.',
       back:'← Volver al inicio',home:'/es',
       needEmail:'Escribe tu email.',needAll:'Completa tu nombre y tu email.',
+      badEmail:'Revisa el email, parece que tiene un error.',
+      tooMany:'Demasiados intentos. Espera unos minutos y vuelve a probar.',
+      linkDead:'Ese enlace venció o ya se usó. Pide uno nuevo.',
+      closed:'Esta cuenta está cerrada. Escríbenos y la reabrimos.',
+      notOpen:'Estamos abriendo de a poco. Deja tu email en la página principal y te escribimos.',
+      googleOff:'Entrar con Google no está disponible ahora. Usa tu email y tu contraseña.',
+      oops:'Algo falló de nuestro lado. Vuelve a intentar, por favor.',
+      fgFailed:'No pudimos enviar el correo. Revisa la dirección y vuelve a probar.',
+      teamHere:'Esa cuenta es del equipo de Elderly. Entra por la pestaña Equipo.',
       noAccess:'Ese email no es del equipo.',badPass:'El email y la contraseña no coinciden.',
+      rsAgain:'Envíame un enlace nuevo',rsBack:'Volver a entrar',
       privacy:'Política de privacidad (en inglés)',terms:'Términos del servicio (en inglés)',
       emailChangedOk:'Listo, tu email ya cambió. Entra con el nuevo.',
       emailChangedBad:'Ese enlace de confirmación venció. Pide el cambio de nuevo desde tu portal.',
@@ -563,6 +615,7 @@ h1 .l2{display:block;color:var(--amber-dp)}
     txt('toForgot',S.forgot); txt('fgIntro',S.fgIntro); txt('l-fgEmail',S.email);
     txt('forgotBtn',S.fgSend); txt('toLogin2',S.backLogin);
     txt('rsIntro',S.rsIntro); txt('l-rsPass',S.rsPass); txt('resetBtn',S.rsSave); txt('rsHint',S.rsHint);
+    txt('rsAgain',S.rsAgain); txt('rsBack',S.rsBack);
     txt('nhTitle',S.nhTitle); txt('nhSub',S.nhSub); txt('toPlan',S.toPlan); el('toPlan').setAttribute('href',S.planHref);
     el('sw1').innerHTML=''; el('sw2').innerHTML=S.sw2;
     txt('doneTitle',S.doneTitle); txt('doneMsg',S.doneMsg);
@@ -635,23 +688,44 @@ h1 .l2{display:block;color:var(--amber-dp)}
 
   /* ---------------- backend ---------------- */
   function busy(btn,on,label){ if(!btn) return; btn.disabled=on; btn.textContent=on?s().working:label; }
-  function authAndGo(path, body, tokenKey, dest, errEl, btn, btnText){
+  /* El backend contesta SIEMPRE en ingles. Acá se traduce por código de estado, no por
+     el texto: así la página en español nunca muestra una frase en inglés, y un 422 (el
+     email está mal escrito) deja de decir que la contraseña no coincide. */
+  function mensajeDeError(e, porDefecto){
+    var st=(e&&e.status)||0, S=s();
+    if(st===422) return S.badEmail;
+    if(st===401) return S.badPass;
+    if(st===429) return S.tooMany;
+    if(st===400) return S.linkDead;
+    if(st===503) return S.googleOff;
+    if(st===403){
+      var d=(e&&typeof e.detail==='string')?e.detail.toLowerCase():'';
+      if(d.indexOf('closed')>=0) return S.closed;
+      return S.notOpen;
+    }
+    if(st>=500) return S.oops;
+    if(lang!=='es' && e && typeof e.detail==='string' && e.detail) return e.detail;
+    return porDefecto||S.oops;
+  }
+  function authAndGo(path, body, tokenKey, dest, errEl, btn, btnText, rechazar, msgRechazo){
     errEl.textContent=''; busy(btn,true,btnText);
     fetch(path,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
       .then(function(r){ return r.json().catch(function(){return {};}).then(function(d){ if(!r.ok) throw {detail:(d&&d.detail),status:r.status}; return d; }); })
-      .then(function(d){ try{localStorage.setItem(tokenKey, d.token)}catch(e){} location.href=dest; })
+      .then(function(d){
+        if(rechazar && rechazar(d)){ busy(btn,false,btnText); errEl.textContent=msgRechazo; return; }
+        try{localStorage.setItem(tokenKey, d.token)}catch(e){} location.href=dest; })
       .catch(function(e){
         busy(btn,false,btnText);
-        var msg=(e&&typeof e.detail==='string')?e.detail:'';
-        /* El backend contesta en ingles: en español, los casos comunes se dicen en español. */
-        if(!msg || (lang==='es' && e && e.status===401)) msg=s().badPass;
-        errEl.textContent=msg;
+        errEl.textContent=mensajeDeError(e, s().badPass);
       });
   }
   el('loginBtn').onclick=function(){
     if(!el('email').value.trim()){el('err1').textContent=s().needEmail; el('email').focus(); return}
+    /* Una cuenta del equipo entrando por acá terminaba en un portal vacío, invitada a
+       crear una persona colgada de la cuenta del equipo. Se la manda a su puerta. */
     authAndGo("/api/login",{email:el('email').value.trim(),password:el('pass').value},
-      "elderly_token","/app",el('err1'),el('loginBtn'),s().login);
+      "elderly_token","/app",el('err1'),el('loginBtn'),s().login,
+      function(d){ return d && d.user && d.user.role === 'team'; }, s().teamHere);
   };
   /* El celular se completa aca tambien: quien escribe "(385) 555-0100" no tiene por que
      ver un error de formato. Diez digitos son un numero local del pais elegido. */
@@ -697,12 +771,17 @@ h1 .l2{display:block;color:var(--amber-dp)}
     if(!email){el('err3').textContent=s().needEmail;return}
     el('err3').textContent=''; busy(el('forgotBtn'),true,s().fgSend);
     fetch("/api/password/forgot",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email})})
+      .then(function(r){ if(!r.ok) throw {status:r.status}; })
       .then(function(){
         el('forgot').innerHTML='<div class="done" role="status"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div><p>'+s().fgSent+'</p><p class="links"><a href="#" id="fgBack">'+s().backLogin+'</a></p></div>';
         var fb=el('fgBack'); if(fb) fb.onclick=function(e){e.preventDefault(); location.reload();};
       })
-      .catch(function(){ busy(el('forgotBtn'),false,s().fgSend); el('err3').textContent=s().badPass; });
+      .catch(function(e){ busy(el('forgotBtn'),false,s().fgSend);
+        el('err3').textContent=mensajeDeError(e, s().fgFailed); });
   };
+  var ra=el('rsAgain'), rb=el('rsBack');
+  if(ra) ra.onclick=function(e){ e.preventDefault(); el('err3').textContent=''; el('fgEmail').value=''; famShow('forgot',true); };
+  if(rb) rb.onclick=function(e){ e.preventDefault(); famShow('login',true); };
   el('resetBtn').onclick=function(){
     var pw=el('rsPass').value;
     if((pw||'').length<8){el('err4').textContent=s().minPass;return}
