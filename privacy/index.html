@@ -2,200 +2,370 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Privacy Policy · Elderly</title>
 <meta name="description" content="What Elderly records, why, who can see it, and how to delete it.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/legal.css">
+<meta name="theme-color" content="#01534C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#01534C; --forest:#06342F; --cream:#F7F2E7; --amber:#F0913E;
+  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
+  --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
+  --rule:rgba(18,48,44,.16); --rule-c:rgba(247,242,231,.24);
+  --w:min(100% - 3rem, 72rem);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:#FBF8F1;color:var(--ink);font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:18px;line-height:1.68;-webkit-font-smoothing:antialiased}
+a{color:var(--amber-tx);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--amber-tx);outline-offset:3px}
+.w{width:var(--w);margin-inline:auto}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:var(--amber);color:#1B1406;padding:.6rem 1rem;border-radius:999px;z-index:99}
+
+/* progress */
+.progress{position:fixed;left:0;top:0;height:4px;width:0;background:var(--amber);z-index:50}
+
+/* ---------- header ---------- */
+.top{background:var(--teal);color:var(--cream);position:relative;overflow:hidden;isolation:isolate}
+.nav{display:flex;align-items:center;gap:1.2rem;height:78px}
+.logo{display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--cream);font-weight:600;font-size:1.35rem;letter-spacing:-.02em}
+.logo .mark{width:36px;height:36px;border-radius:8px;box-shadow:0 0 0 1px rgba(247,242,231,.18)}
+.nav .links{margin-left:auto;display:flex;align-items:center;gap:1.3rem;font-size:.9rem;font-weight:700}
+.nav .links a{color:var(--cream);text-decoration:none;opacity:.8}
+.nav .links a:hover{opacity:1}
+.nav .links .btn{background:var(--honey);color:#1B1406;opacity:1;padding:.5rem 1.1rem;border-radius:999px}
+.nav .links .btn:hover{background:var(--amber)}
+@media(max-width:640px){.nav .links .hs{display:none}}
+.hero{padding:3.2rem 0 4.2rem}
+.switch{display:inline-flex;gap:.25rem;background:rgba(6,52,47,.55);box-shadow:inset 0 0 0 1px var(--rule-c);border-radius:999px;padding:.25rem;margin-bottom:1.8rem}
+.switch a{padding:.45rem 1rem;border-radius:999px;color:var(--cream);text-decoration:none;font-size:.88rem;font-weight:800;opacity:.75}
+.switch a[aria-current="page"]{background:var(--cream);color:var(--teal);opacity:1}
+.hero h1{margin:0;font-size:clamp(2.8rem,6.5vw,5.4rem);font-weight:900;letter-spacing:-.05em;line-height:.96;color:var(--cream)}
+.hero .desc{margin:1.1rem 0 0;font-size:1.15rem;color:rgba(247,242,231,.84);max-width:36rem}
+.hero .meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.hero .meta span{font-size:.8rem;font-weight:800;color:var(--honey);box-shadow:inset 0 0 0 1px var(--rule-c);border-radius:999px;padding:.3rem .8rem}
+.cord{position:absolute;right:0;bottom:0;width:min(60%,760px);height:auto;z-index:-1;pointer-events:none}
+.cord path{fill:none;stroke:var(--amber);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:no-preference){
+  .cord path{stroke-dasharray:1500;stroke-dashoffset:1500;animation:draw 2.2s cubic-bezier(.5,0,.2,1) .2s forwards}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(max-width:760px){.cord{opacity:.45}}
+
+/* ---------- layout ---------- */
+.doc{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:4rem;padding:3.5rem 0 5rem}
+@media(max-width:960px){.doc{grid-template-columns:1fr;gap:1.2rem;padding-top:1.6rem}}
+
+/* table of contents */
+.toc{position:sticky;top:1.5rem;align-self:start;max-height:calc(100vh - 3rem);overflow:auto}
+.toc .h{font-size:.8rem;font-weight:800;color:var(--amber-tx);margin:0 0 .6rem}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--rule)}
+.toc a{display:block;padding:.34rem 0 .34rem 1rem;margin-left:-2px;border-left:2px solid transparent;color:var(--ink-soft);
+  text-decoration:none;font-size:.9rem;font-weight:600;line-height:1.35}
+.toc a:hover{color:var(--teal)}
+.toc a[aria-current="true"]{color:var(--teal);border-left-color:var(--amber-dp);font-weight:800}
+.toc details summary{display:none}
+@media(max-width:960px){
+  .toc{position:static;max-height:none;overflow:visible}
+  .toc details{background:#FFFDF8;border:1px solid var(--rule);border-radius:16px;padding:.2rem 1rem}
+  .toc details summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;list-style:none;padding:.7rem 0;font-weight:800;color:var(--teal)}
+  .toc details summary::-webkit-details-marker{display:none}
+  .toc details summary::after{content:"+";color:var(--amber-tx);font-weight:900;font-size:1.2rem}
+  .toc details[open] summary::after{content:"\2013"}
+  .toc .h{display:none}
+  .toc ol{margin-bottom:.8rem}
+}
+
+/* article */
+article{max-width:44rem}
+.intro{font-size:1.22rem;line-height:1.6;color:var(--ink);margin:0 0 1rem}
+section{padding-top:2.6rem;margin-top:2.6rem;border-top:1px solid var(--rule)}
+section:first-of-type{margin-top:2rem}
+h2{margin:0 0 1rem;font-size:clamp(1.55rem,2.6vw,2rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;color:var(--teal)}
+h2 .num{display:inline-block;margin-right:.6rem;color:var(--amber-dp);font-variant-numeric:tabular-nums}
+h3{margin:1.6rem 0 .5rem;font-size:1.08rem;font-weight:800;color:var(--teal);letter-spacing:-.01em}
+article p{margin:0 0 1rem;color:var(--ink-soft)}
+article b{color:var(--ink);font-weight:800}
+article ul{margin:0 0 1rem;padding:0;list-style:none}
+article li{position:relative;padding:.45rem 0 .45rem 2rem;color:var(--ink-soft)}
+article li::before{content:"";position:absolute;left:0;top:1.05rem;width:16px;height:5px;border-radius:3px;background:var(--amber)}
+.callout{margin:1.2rem 0;padding:1.1rem 1.3rem;border-radius:18px;background:rgba(1,83,76,.07);border-left:5px solid var(--teal)}
+.callout p{margin:0;color:var(--ink)}
+.callout.warn{background:rgba(240,145,62,.13);border-left-color:var(--amber-dp)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1rem 0}
+@media(max-width:620px){.duo{grid-template-columns:1fr}}
+.duo>div{background:#FFFDF8;border:1px solid var(--rule);border-radius:18px;padding:1.1rem 1.2rem}
+.duo p{margin:.7rem 0 0;font-size:.97rem}
+.av{width:36px;height:36px;border-radius:50%;background:var(--teal);color:var(--cream);display:grid;place-items:center;font-weight:900}
+.av.h{background:var(--honey);color:#1B1406}
+.tablewrap{overflow-x:auto;margin:1rem 0 1.2rem;border:1px solid var(--rule);border-radius:18px;background:#FFFDF8}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:.8rem 1.1rem;border-top:1px solid var(--rule)}
+thead th{border-top:0;font-size:.8rem;font-weight:800;color:var(--amber-tx);background:var(--oat)}
+tbody th{font-weight:800;color:var(--teal);white-space:nowrap;width:9rem}
+td{color:var(--ink-soft)}
+.keep{margin:1rem 0;display:grid;gap:.6rem}
+.keep>div{display:grid;grid-template-columns:13rem 1fr;gap:1rem;padding:.9rem 1.1rem;background:#FFFDF8;border:1px solid var(--rule);border-radius:16px}
+@media(max-width:620px){.keep>div{grid-template-columns:1fr;gap:.2rem}}
+.keep dt{font-weight:800;color:var(--teal)}
+.keep dd{margin:0;color:var(--ink-soft)}
+.rights{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0 1.2rem}
+@media(max-width:620px){.rights{grid-template-columns:1fr}}
+.rights>div{background:#FFFDF8;border:1px solid var(--rule);border-radius:18px;padding:1rem 1.2rem}
+.rights b{display:block;color:var(--teal);font-size:1.05rem}
+.rights p{margin:.3rem 0 0;font-size:.95rem}
+
+.contact{margin-top:3rem;background:var(--teal);color:var(--cream);border-radius:26px;padding:1.8rem 2rem;display:flex;gap:1.5rem 3rem;flex-wrap:wrap;align-items:center}
+.contact h2{color:var(--cream);margin:0 0 .5rem}
+.contact address{font-style:normal;line-height:1.6;color:rgba(247,242,231,.84)}
+.contact address b{color:var(--cream)}
+.contact a{color:var(--honey)}
+.contact .btn{margin-left:auto;background:var(--honey);color:#1B1406;text-decoration:none;font-weight:800;padding:.85rem 1.4rem;border-radius:999px;white-space:nowrap}
+.contact .btn:hover{background:var(--amber)}
+.totop{display:inline-block;margin-top:1.6rem;font-weight:800;font-size:.9rem;color:var(--teal)}
+
+footer{background:var(--forest);color:rgba(247,242,231,.7);font-size:.85rem;padding:2rem 0}
+footer .w{display:flex;flex-wrap:wrap;gap:.8rem 2rem;justify-content:space-between;align-items:center}
+footer a{color:var(--cream);text-decoration:none;opacity:.8}
+footer a:hover{opacity:1;text-decoration:underline}
+footer nav{display:flex;gap:1.2rem}
+@media print{.progress,.top .cord,.toc,.nav .links,footer{display:none}.top{background:none;color:#000}.hero h1,.hero .desc{color:#000}.doc{display:block}}
+</style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-<div class="top">
-  <a class="brand" href="/">
-    <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg>
-    <span class="word">Elder<b>ly</b></span>
-  </a>
-  <a class="back" href="/">&larr; Back to home</a>
+<header class="top">
+  <div class="w nav">
+    <a class="logo" href="https://www.callelderly.com/" aria-label="Elderly home">
+      <svg class="mark" viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg>
+      <span>Elderly</span>
+    </a>
+    <div class="links">
+      <a class="hs" href="https://www.callelderly.com/">Back to home</a>
+      <a class="hs" href="https://www.callelderly.com/ingresar">Log in</a>
+      <a class="btn" href="https://www.callelderly.com/#price">Build their plan</a>
+    </div>
+  </div>
+  <div class="w hero">
+    <nav class="switch" aria-label="Legal pages">
+      <a href="https://www.callelderly.com/terms">Terms of Service</a>
+      <a href="https://www.callelderly.com/privacy" aria-current="page">Privacy Policy</a>
+    </nav>
+    <h1>Privacy Policy</h1>
+    <p class="desc">What Elderly records, why, who can see it, and how to delete it.</p>
+    <div class="meta"><span>Last updated: September 14, 2026</span><span id="readtime">Reading time</span></div>
+  </div>
+  <svg class="cord" viewBox="0 0 760 200" aria-hidden="true">
+    <path d="M0 190 C 150 170, 260 120, 360 100 C 420 88, 450 60, 440 40 C 430 20, 400 26, 402 46 C 380 26, 350 34, 362 60 L 402 92 C 520 60, 640 90, 760 40"/>
+  </svg>
+</header>
+
+<main id="main" class="w doc">
+  <nav class="toc" aria-label="On this page">
+    <details id="tocd" open>
+      <summary>On this page</summary>
+      <p class="h">On this page</p>
+      <ol id="toclist"></ol>
+    </details>
+  </nav>
+
+  <article id="doc">
+<p class="intro">Elderly calls an older adult you love, and sends you a short note afterward. That means we handle recordings of real conversations with someone who may not be the person paying us. This page explains exactly what we keep, who can see it, and how to make it go away.</p>
+
+<section id="who-we-are"><h2>Who we are</h2>
+<p>Elderly is operated by <b>Elderly, Inc.</b>, a Delaware corporation. You can reach a human at <a href="mailto:matias@callelderly.com">matias@callelderly.com</a>. Elderly is available in the United States only.</p>
+</section>
+
+<section id="two-people"><h2>The two people in every account</h2>
+<p>Almost every account involves two people, and they are not treated the same way:</p>
+<div class="duo">
+  <div><span class="av">Y</span><p><b>The family member</b> who signs up, pays, and reads the notes. That is the account holder.</p></div>
+  <div><span class="av h">&#9742;</span><p><b>The older adult</b> who receives the calls. They are not our customer, but the conversation is theirs. We ask for their permission out loud, on the first call, before we keep any recording.</p></div>
 </div>
+</section>
 
-<main>
-  <h1>Privacy Policy</h1>
-  <p class="stamp">Last updated: September 14, 2026</p>
+<section id="what-we-collect"><h2>What we collect</h2>
+<h3>From the family member</h3>
+<ul>
+<li>Name, email address, and phone number.</li>
+<li>Password (stored only as a one-way hash) or, if you sign in with Google, your Google account email and name. We never receive your Google password.</li>
+<li>What you tell us about the older adult when setting up: their name, phone number, time zone, preferred call times, and any context you want the calls to include (interests, family names, health topics to avoid).</li>
+<li>Requests you make, such as asking us to bring up a specific memory or question on an upcoming call.</li>
+<li>Payment records. Card numbers are handled by Stripe and never reach our servers.</li>
+</ul>
+<h3>From the calls</h3>
+<ul>
+<li><b>An audio recording of each call</b>, and a written transcript of it.</li>
+<li>Call metadata: date, time, length, whether the call was answered, and by whom (person or voicemail).</li>
+<li>A short written summary of each call, generated automatically from the transcript, plus flags for things worth your attention (for example: they mentioned pain, or they sounded down).</li>
+</ul>
+<h3>From the website</h3>
+<ul>
+<li>Basic usage analytics on our public pages, so we know which pages people read. We do not use advertising trackers, and we do not sell or share data for advertising.</li>
+</ul>
+</section>
 
-  <p class="lede">Elderly calls an older adult you love, and sends you a short note afterward. That means we handle
-  recordings of real conversations with someone who may not be the person paying us. This page explains exactly what we
-  keep, who can see it, and how to make it go away.</p>
+<section id="consent"><h2>Consent from the older adult</h2>
+<p>On the very first call, before anything is stored as part of their profile, the caller says plainly that the calls are recorded and that a note goes to their family, and asks whether that is alright. Their answer is recorded and kept as part of the account.</p>
+<div class="callout"><p><b>If they say no, the account cannot proceed.</b> We do not keep calling someone who declined, and we do not deliver notes about them. The family member is told.</p></div>
+<p>Either person can withdraw that permission later. The older adult can say so on any call, or anyone can email us. We stop within one business day.</p>
+</section>
 
-  <h2>Who we are</h2>
-  <p>Elderly is operated by <strong>Elderly, Inc.</strong>, a Delaware corporation. You can reach a
-  human at
-  <a href="mailto:matias@callelderly.com">matias@callelderly.com</a>. Elderly is available in the United States only.</p>
+<section id="how-we-use-it"><h2>How we use it</h2>
+<ul>
+<li>To place the calls, hold the conversation, and write the note you receive afterward.</li>
+<li>To let the calls remember earlier conversations, so the older adult is not asked the same thing every day.</li>
+<li>To alert you when something in a call warrants attention.</li>
+<li>To send you an email after each call with a link to that call's note.</li>
+<li>To bill you, support you, and keep the service running and secure.</li>
+</ul>
+<p>We do <b>not</b> sell personal information, share it with data brokers, or use call content to advertise anything to anyone. We do not use your recordings or transcripts to train our own general-purpose AI models.</p>
+</section>
 
-  <h2>The two people in every account</h2>
-  <p>Almost every account involves two people, and they are not treated the same way:</p>
-  <ul>
-    <li><strong>The family member</strong> who signs up, pays, and reads the notes. That is the account holder.</li>
-    <li><strong>The older adult</strong> who receives the calls. They are not our customer, but the conversation is
-    theirs. We ask for their permission out loud, on the first call, before we keep any recording.</li>
-  </ul>
+<section id="email"><h2>Email</h2>
+<p>Everything we send you goes to the email address on your account, which you confirm with a one-time code when you sign up. Three kinds of message, and nothing else:</p>
+<ul>
+<li>A <b>verification code</b> when you create your account or change your email.</li>
+<li>A <b>note after each completed call</b>, with a link that opens that call's summary inside your portal.</li>
+<li>An <b>alert</b> when a call could not be completed, or when something in a call is worth your attention the same day.</li>
+<li>Once in a while, a <b>service announcement</b> when something about the calls changes: new days you can pick, a change to how the reports work. Never an offer, never a promotion.</li>
+</ul>
+<p><b>Frequency:</b> one email per completed call, up to seven per week depending on the schedule you chose, plus the occasional verification code, alert or announcement.</p>
+<div class="callout"><p><b>We never send marketing or promotional email.</b> Every message we send is transactional: a code you asked for, or something that just happened on a call. There is no marketing consent bundled into signing up, because there is no marketing. Every email carries an unsubscribe link, and unsubscribing does not stop the calls or close your account.</p></div>
+<p><b>We never send marketing text messages, and we never share mobile numbers.</b> We ask for your mobile number so we can reach you if something goes wrong with the calls; we do not text it today. No phone number is sold, rented, or shared with third parties or affiliates for marketing or promotional purposes.</p>
+</section>
 
-  <h2>What we collect</h2>
+<section id="website"><h2>What we count on the website</h2>
+<p>On the public site there is one thing we count, and only one: <b>when someone picks a country where Elderly has not opened yet</b>. We store the country and the date. That is the whole record.</p>
+<p>We do <b>not</b> store your name, your email, your IP address, or any identifier that could point back to you, and we do not use cookies, trackers or third-party analytics anywhere on this site. We count this because it is how we decide which country to open next, and we would rather decide it with real numbers than with guesses.</p>
+</section>
 
-  <h3>From the family member</h3>
-  <ul>
-    <li>Name, email address, and phone number.</li>
-    <li>Password (stored only as a one-way hash) or, if you sign in with Google, your Google account email and name.
-    We never receive your Google password.</li>
-    <li>What you tell us about the older adult when setting up: their name, phone number, time zone, preferred call
-    times, and any context you want the calls to include (interests, family names, health topics to avoid).</li>
-    <li>Requests you make, such as asking us to bring up a specific memory or question on an upcoming call.</li>
-    <li>Payment records. Card numbers are handled by Stripe and never reach our servers.</li>
-  </ul>
+<section id="vendors"><h2>Who else touches this data</h2>
+<p>We use a small number of vendors to run the service. Each receives only what it needs to do its job.</p>
+<div class="tablewrap"><table>
+<thead><tr><th scope="col">Vendor</th><th scope="col">What it handles</th></tr></thead>
+<tbody>
+<tr><th scope="row">Retell AI</th><td>Places the phone calls, provides the voice, records the audio, and transcribes it.</td></tr>
+<tr><th scope="row">OpenAI</th><td>Turns each transcript into the written summary you read. Under our agreement, this content is not used to train their models.</td></tr>
+<tr><th scope="row">Twilio</th><td>Carries the phone calls.</td></tr>
+<tr><th scope="row">Resend</th><td>Sends account emails and reports.</td></tr>
+<tr><th scope="row">Stripe</th><td>Processes payments. Card details go directly to Stripe.</td></tr>
+<tr><th scope="row">Railway</th><td>Hosts the application and the database, in the United States.</td></tr>
+<tr><th scope="row">Vercel</th><td>Serves the public website.</td></tr>
+<tr><th scope="row">Cloudflare</th><td>Holds a second copy of the database backups, so a failure at our host cannot erase everything. The storage is private and encrypted at rest.</td></tr>
+<tr><th scope="row">Google</th><td>Only if you choose to sign in with Google: verifies who you are and gives us your email and name.</td></tr>
+</tbody></table></div>
+<p>We may also disclose information if the law requires it, or if we believe someone is in immediate danger.</p>
+</section>
 
-  <h3>From the calls</h3>
-  <ul>
-    <li><strong>An audio recording of each call</strong>, and a written transcript of it.</li>
-    <li>Call metadata: date, time, length, whether the call was answered, and by whom (person or voicemail).</li>
-    <li>A short written summary of each call, generated automatically from the transcript, plus flags for things worth
-    your attention (for example: they mentioned pain, or they sounded down).</li>
-  </ul>
+<section id="family-access"><h2>Who in your family can see what</h2>
+<p>The account holder can invite other family members. Invited people see the notes and call history for the older adults they were given access to, and nothing else. The account holder can remove anyone's access at any time, and removal takes effect immediately.</p>
+</section>
 
-  <h3>From the website</h3>
-  <ul>
-    <li>Basic usage analytics on our public pages, so we know which pages people read. We do not use advertising
-    trackers, and we do not sell or share data for advertising.</li>
-  </ul>
+<section id="retention"><h2>How long we keep it</h2>
+<dl class="keep">
+<div><dt>Recordings and transcripts</dt><dd>Kept while the account is active, so the calls can remember. They are not erased automatically when you stop using the service. Ask us to delete them, from your portal or by email, and we do it within 30 days.</dd></div>
+<div><dt>Notes and summaries</dt><dd>The same.</dd></div>
+<div><dt>Billing records</dt><dd>Kept as long as tax and accounting law requires, typically seven years.</dd></div>
+<div><dt>Consent recordings</dt><dd>Kept for as long as we called that person, plus one year, because they are the record that we had permission.</dd></div>
+</dl>
+</section>
 
-  <h2>Consent from the older adult</h2>
-  <p>On the very first call, before anything is stored as part of their profile, the caller says plainly that the calls
-  are recorded and that a note goes to their family, and asks whether that is alright. Their answer is recorded and kept
-  as part of the account.</p>
-  <div class="note">
-    <p><strong>If they say no, the account cannot proceed.</strong> We do not keep calling someone who declined, and we
-    do not deliver notes about them. The family member is told.</p>
-  </div>
-  <p>Either person can withdraw that permission later. The older adult can say so on any call, or anyone can email us.
-  We stop within one business day.</p>
+<section id="rights"><h2>Your rights</h2>
+<p>Wherever you live in the United States, and regardless of whether your state has a privacy law, we will honor these requests:</p>
+<div class="rights">
+  <div><b>See it.</b><p>Ask us for a copy of everything we hold about you or your family member.</p></div>
+  <div><b>Correct it.</b><p>Fix anything that is wrong.</p></div>
+  <div><b>Delete it.</b><p>Close the account and have the data erased. Ask us from the support form in your portal, or write to us, and we do it.</p></div>
+  <div><b>Stop the emails.</b><p>Every email we send has an unsubscribe link, or write to us at <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.</p></div>
+</div>
+<p>Write to <a href="mailto:matias@callelderly.com">matias@callelderly.com</a> and we will respond within 30 days. We will not charge you or degrade your service for asking.</p>
+<p>If you are the older adult being called, these rights are yours too, and you do not need the account holder's permission to use them.</p>
+</section>
 
-  <h2>How we use it</h2>
-  <ul>
-    <li>To place the calls, hold the conversation, and write the note you receive afterward.</li>
-    <li>To let the calls remember earlier conversations, so the older adult is not asked the same thing every day.</li>
-    <li>To alert you when something in a call warrants attention.</li>
-    <li>To send you an email after each call with a link to that call's note.</li>
-    <li>To bill you, support you, and keep the service running and secure.</li>
-  </ul>
-  <p>We do <strong>not</strong> sell personal information, share it with data brokers, or use call content to advertise
-  anything to anyone. We do not use your recordings or transcripts to train our own general-purpose AI models.</p>
+<section id="security"><h2>Security</h2>
+<p>Data is encrypted in transit and at rest. Access to the production database is limited to the people who operate the service. Recordings are never public: they are served only to a signed-in account, and the link alone is not enough to open one. The database is backed up automatically several times an hour.</p>
+<p>No system is perfect. If we ever have a breach that affects you, we will tell you what happened, what was exposed, and what we are doing about it.</p>
+</section>
 
-  <h2>Email</h2>
-  <p>Everything we send you goes to the email address on your account, which you confirm
-  with a one-time code when you sign up. Three kinds of message, and nothing else:</p>
-  <ul>
-    <li>A <strong>verification code</strong> when you create your account or change your email.</li>
-    <li>A <strong>note after each completed call</strong>, with a link that opens that call's
-    summary inside your portal.</li>
-    <li>An <strong>alert</strong> when a call could not be completed, or when something in a
-    call is worth your attention the same day.</li>
-    <li>Once in a while, a <strong>service announcement</strong> when something about the
-    calls changes: new days you can pick, a change to how the reports work. Never an offer,
-    never a promotion.</li>
-  </ul>
-  <p><strong>Frequency:</strong> one email per completed call, up to seven per week depending
-  on the schedule you chose, plus the occasional verification code, alert or announcement.</p>
-  <p><strong>We never send marketing or promotional email.</strong> Every message we send is
-  transactional: a code you asked for, or something that just happened on a call. There is no
-  marketing consent bundled into signing up, because there is no marketing. Every email carries
-  an unsubscribe link, and unsubscribing does not stop the calls or close your account.</p>
-  <div class="note">
-    <p><strong>We never send marketing text messages, and we never share mobile numbers.</strong> We
-    ask for your mobile number so we can reach you if something goes wrong with the calls; we
-    do not text it today. No phone number is sold, rented, or shared with third parties or
-    affiliates for marketing or promotional purposes.</p>
-  </div>
+<section id="children"><h2>Children</h2>
+<p>Elderly is not for anyone under 18, and we do not knowingly collect information from children.</p>
+</section>
 
-  <h2>What we count on the website</h2>
-  <p>On the public site there is one thing we count, and only one: <strong>when someone
-  picks a country where Elderly has not opened yet</strong>. We store the country and the
-  date. That is the whole record.</p>
-  <p>We do <strong>not</strong> store your name, your email, your IP address, or any
-  identifier that could point back to you, and we do not use cookies, trackers or
-  third-party analytics anywhere on this site. We count this because it is how we decide
-  which country to open next, and we would rather decide it with real numbers than with
-  guesses.</p>
+<section id="changes"><h2>Changes to this policy</h2>
+<p>If we change something that matters, we will email the account holder before it takes effect, and update the date at the top of this page.</p>
+</section>
 
-  <h2>Who else touches this data</h2>
-  <p>We use a small number of vendors to run the service. Each receives only what it needs to do its job.</p>
-  <table>
-    <thead><tr><th>Vendor</th><th>What it handles</th></tr></thead>
-    <tbody>
-      <tr><td>Retell AI</td><td>Places the phone calls, provides the voice, records the audio, and transcribes it.</td></tr>
-      <tr><td>OpenAI</td><td>Turns each transcript into the written summary you read. Under our agreement, this content is not used to train their models.</td></tr>
-      <tr><td>Twilio</td><td>Carries the phone calls.</td></tr>
-      <tr><td>Resend</td><td>Sends account emails and reports.</td></tr>
-      <tr><td>Stripe</td><td>Processes payments. Card details go directly to Stripe.</td></tr>
-      <tr><td>Railway</td><td>Hosts the application and the database, in the United States.</td></tr>
-      <tr><td>Vercel</td><td>Serves the public website.</td></tr>
-      <tr><td>Cloudflare</td><td>Holds a second copy of the database backups, so a failure at our host cannot erase everything. The storage is private and encrypted at rest.</td></tr>
-      <tr><td>Google</td><td>Only if you choose to sign in with Google: verifies who you are and gives us your email and name.</td></tr>
-    </tbody>
-  </table>
-  <p>We may also disclose information if the law requires it, or if we believe someone is in immediate danger.</p>
-
-  <h2>Who in your family can see what</h2>
-  <p>The account holder can invite other family members. Invited people see the notes and call history for the older
-  adults they were given access to, and nothing else. The account holder can remove anyone's access at any time, and
-  removal takes effect immediately.</p>
-
-  <h2>How long we keep it</h2>
-  <ul>
-    <li><strong>Recordings and transcripts:</strong> kept while the account is active, so the calls can remember. They
-    are not erased automatically when you stop using the service. Ask us to delete them, from your portal or by email,
-    and we do it within 30 days.</li>
-    <li><strong>Notes and summaries:</strong> the same.</li>
-    <li><strong>Billing records:</strong> kept as long as tax and accounting law requires, typically seven years.</li>
-    <li><strong>Consent recordings:</strong> kept for as long as we called that person, plus one year, because they are
-    the record that we had permission.</li>
-  </ul>
-
-  <h2>Your rights</h2>
-  <p>Wherever you live in the United States, and regardless of whether your state has a privacy law, we will honor these
-  requests:</p>
-  <ul>
-    <li><strong>See it.</strong> Ask us for a copy of everything we hold about you or your family member.</li>
-    <li><strong>Correct it.</strong> Fix anything that is wrong.</li>
-    <li><strong>Delete it.</strong> Close the account and have the data erased. Ask us from the support form in your
-    portal, or write to us, and we do it.</li>
-    <li><strong>Stop the emails.</strong> Every email we send has an unsubscribe link, or write to us at hello@callelderly.com.</li>
-  </ul>
-  <p>Write to <a href="mailto:matias@callelderly.com">matias@callelderly.com</a> and we will respond within 30 days. We
-  will not charge you or degrade your service for asking.</p>
-  <p>If you are the older adult being called, these rights are yours too, and you do not need the account holder's
-  permission to use them.</p>
-
-  <h2>Security</h2>
-  <p>Data is encrypted in transit and at rest. Access to the production database is limited to the people who operate
-  the service. Recordings are never public: they are served only to a signed-in account, and the link alone is not
-  enough to open one. The database is backed up automatically several times an hour.</p>
-  <p>No system is perfect. If we ever have a breach that affects you, we will tell you what happened, what was exposed,
-  and what we are doing about it.</p>
-
-  <h2>Children</h2>
-  <p>Elderly is not for anyone under 18, and we do not knowingly collect information from children.</p>
-
-  <h2>Changes to this policy</h2>
-  <p>If we change something that matters, we will email the account holder before it takes effect, and update the date
-  at the top of this page.</p>
-
-  <h2>Contact</h2>
-  <p>Elderly, Inc.<br>2809 N Dandelion Dr, Saratoga Springs, UT 84045<br>
-  <a href="mailto:matias@callelderly.com">matias@callelderly.com</a></p>
+    <section id="contact" class="contact">
+      <div>
+        <h2>Contact</h2>
+        <address><b>Elderly, Inc.</b><br>2809 N Dandelion Dr, Saratoga Springs, UT 84045<br><a href="mailto:matias@callelderly.com">matias@callelderly.com</a></address>
+      </div>
+      <a class="btn" href="mailto:matias@callelderly.com">Write to us</a>
+    </section>
+    <a class="totop" href="#main">Back to top</a>
+  </article>
 </main>
 
 <footer>
-  <span>&copy; 2026 Elderly</span>
-  <span><a href="/terms">Terms of Service</a> &middot; <a href="/">Home</a></span>
+  <div class="w">
+    <span>© 2026 Elderly</span>
+    <nav aria-label="Footer"><a href="https://www.callelderly.com/terms">Terms of Service</a><a href="https://www.callelderly.com/">Home</a></nav>
+  </div>
 </footer>
 
+<script>
+(function(){
+  var doc=document.getElementById('doc'), list=document.getElementById('toclist');
+  var secs=[].slice.call(doc.querySelectorAll('section[id]')), links=[];
+
+  /* numbered headings and the table of contents, built from the sections */
+  secs.forEach(function(sec,i){
+    var h=sec.querySelector('h2'); if(!h) return;
+    var label=h.textContent;
+    if(sec.id!=='contact'){ var n=document.createElement('span'); n.className='num'; n.textContent=(i+1<10?'0':'')+(i+1); h.insertBefore(n,h.firstChild); }
+    var li=document.createElement('li'), a=document.createElement('a');
+    a.href='#'+sec.id; a.textContent=label; li.appendChild(a); list.appendChild(li); links.push(a);
+  });
+
+  /* reading time */
+  var words=doc.textContent.trim().split(/\s+/).length;
+  document.getElementById('readtime').textContent=Math.max(1,Math.round(words/230))+' min read';
+
+  /* collapse the contents on small screens, close after picking */
+  var d=document.getElementById('tocd'), mq=window.matchMedia('(max-width:960px)');
+  function setOpen(){ d.open=!mq.matches; } setOpen();
+  if(mq.addEventListener) mq.addEventListener('change',setOpen);
+  list.addEventListener('click',function(){ if(mq.matches) d.open=false; });
+
+  /* active section */
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var i=secs.indexOf(e.target);
+        links.forEach(function(l,j){ if(j===i) l.setAttribute('aria-current','true'); else l.removeAttribute('aria-current'); });
+      });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    secs.forEach(function(s){ io.observe(s); });
+  }
+
+  /* reading progress */
+  var bar=document.getElementById('progress');
+  function prog(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0? Math.min(100,h.scrollTop/max*100):0)+'%';
+  }
+  addEventListener('scroll',prog,{passive:true}); addEventListener('resize',prog); prog();
+})();
+</script>
 </body>
 </html>

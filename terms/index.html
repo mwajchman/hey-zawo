@@ -2,119 +2,314 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Terms of Service · Elderly</title>
 <meta name="description" content="The agreement between you and Elderly: what we promise, what we do not, and how to leave.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/legal.css">
+<meta name="theme-color" content="#01534C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --teal:#01534C; --forest:#06342F; --cream:#F7F2E7; --amber:#F0913E;
+  --oat:#F0E8DA; --honey:#E8B54A; --amber-dp:#C9661F; --amber-tx:#A8520F;
+  --ink:#12302C; --ink-soft:rgba(18,48,44,.74);
+  --rule:rgba(18,48,44,.16); --rule-c:rgba(247,242,231,.24);
+  --w:min(100% - 3rem, 72rem);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:1.5rem}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:#FBF8F1;color:var(--ink);font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:18px;line-height:1.68;-webkit-font-smoothing:antialiased}
+a{color:var(--amber-tx);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--amber-tx);outline-offset:3px}
+.w{width:var(--w);margin-inline:auto}
+.skip{position:absolute;left:-9999px}
+.skip:focus{left:1rem;top:1rem;position:fixed;background:var(--amber);color:#1B1406;padding:.6rem 1rem;border-radius:999px;z-index:99}
+
+/* progress */
+.progress{position:fixed;left:0;top:0;height:4px;width:0;background:var(--amber);z-index:50}
+
+/* ---------- header ---------- */
+.top{background:var(--teal);color:var(--cream);position:relative;overflow:hidden;isolation:isolate}
+.nav{display:flex;align-items:center;gap:1.2rem;height:78px}
+.logo{display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;color:var(--cream);font-weight:600;font-size:1.35rem;letter-spacing:-.02em}
+.logo .mark{width:36px;height:36px;border-radius:8px;box-shadow:0 0 0 1px rgba(247,242,231,.18)}
+.nav .links{margin-left:auto;display:flex;align-items:center;gap:1.3rem;font-size:.9rem;font-weight:700}
+.nav .links a{color:var(--cream);text-decoration:none;opacity:.8}
+.nav .links a:hover{opacity:1}
+.nav .links .btn{background:var(--honey);color:#1B1406;opacity:1;padding:.5rem 1.1rem;border-radius:999px}
+.nav .links .btn:hover{background:var(--amber)}
+@media(max-width:640px){.nav .links .hs{display:none}}
+.hero{padding:3.2rem 0 4.2rem}
+.switch{display:inline-flex;gap:.25rem;background:rgba(6,52,47,.55);box-shadow:inset 0 0 0 1px var(--rule-c);border-radius:999px;padding:.25rem;margin-bottom:1.8rem}
+.switch a{padding:.45rem 1rem;border-radius:999px;color:var(--cream);text-decoration:none;font-size:.88rem;font-weight:800;opacity:.75}
+.switch a[aria-current="page"]{background:var(--cream);color:var(--teal);opacity:1}
+.hero h1{margin:0;font-size:clamp(2.8rem,6.5vw,5.4rem);font-weight:900;letter-spacing:-.05em;line-height:.96;color:var(--cream)}
+.hero .desc{margin:1.1rem 0 0;font-size:1.15rem;color:rgba(247,242,231,.84);max-width:36rem}
+.hero .meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.4rem}
+.hero .meta span{font-size:.8rem;font-weight:800;color:var(--honey);box-shadow:inset 0 0 0 1px var(--rule-c);border-radius:999px;padding:.3rem .8rem}
+.cord{position:absolute;right:0;bottom:0;width:min(60%,760px);height:auto;z-index:-1;pointer-events:none}
+.cord path{fill:none;stroke:var(--amber);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:no-preference){
+  .cord path{stroke-dasharray:1500;stroke-dashoffset:1500;animation:draw 2.2s cubic-bezier(.5,0,.2,1) .2s forwards}
+}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media(max-width:760px){.cord{opacity:.45}}
+
+/* ---------- layout ---------- */
+.doc{display:grid;grid-template-columns:15rem minmax(0,1fr);gap:4rem;padding:3.5rem 0 5rem}
+@media(max-width:960px){.doc{grid-template-columns:1fr;gap:1.2rem;padding-top:1.6rem}}
+
+/* table of contents */
+.toc{position:sticky;top:1.5rem;align-self:start;max-height:calc(100vh - 3rem);overflow:auto}
+.toc .h{font-size:.8rem;font-weight:800;color:var(--amber-tx);margin:0 0 .6rem}
+.toc ol{list-style:none;margin:0;padding:0;border-left:2px solid var(--rule)}
+.toc a{display:block;padding:.34rem 0 .34rem 1rem;margin-left:-2px;border-left:2px solid transparent;color:var(--ink-soft);
+  text-decoration:none;font-size:.9rem;font-weight:600;line-height:1.35}
+.toc a:hover{color:var(--teal)}
+.toc a[aria-current="true"]{color:var(--teal);border-left-color:var(--amber-dp);font-weight:800}
+.toc details summary{display:none}
+@media(max-width:960px){
+  .toc{position:static;max-height:none;overflow:visible}
+  .toc details{background:#FFFDF8;border:1px solid var(--rule);border-radius:16px;padding:.2rem 1rem}
+  .toc details summary{display:flex;justify-content:space-between;align-items:center;cursor:pointer;list-style:none;padding:.7rem 0;font-weight:800;color:var(--teal)}
+  .toc details summary::-webkit-details-marker{display:none}
+  .toc details summary::after{content:"+";color:var(--amber-tx);font-weight:900;font-size:1.2rem}
+  .toc details[open] summary::after{content:"\2013"}
+  .toc .h{display:none}
+  .toc ol{margin-bottom:.8rem}
+}
+
+/* article */
+article{max-width:44rem}
+.intro{font-size:1.22rem;line-height:1.6;color:var(--ink);margin:0 0 1rem}
+section{padding-top:2.6rem;margin-top:2.6rem;border-top:1px solid var(--rule)}
+section:first-of-type{margin-top:2rem}
+h2{margin:0 0 1rem;font-size:clamp(1.55rem,2.6vw,2rem);font-weight:900;letter-spacing:-.03em;line-height:1.1;color:var(--teal)}
+h2 .num{display:inline-block;margin-right:.6rem;color:var(--amber-dp);font-variant-numeric:tabular-nums}
+h3{margin:1.6rem 0 .5rem;font-size:1.08rem;font-weight:800;color:var(--teal);letter-spacing:-.01em}
+article p{margin:0 0 1rem;color:var(--ink-soft)}
+article b{color:var(--ink);font-weight:800}
+article ul{margin:0 0 1rem;padding:0;list-style:none}
+article li{position:relative;padding:.45rem 0 .45rem 2rem;color:var(--ink-soft)}
+article li::before{content:"";position:absolute;left:0;top:1.05rem;width:16px;height:5px;border-radius:3px;background:var(--amber)}
+.callout{margin:1.2rem 0;padding:1.1rem 1.3rem;border-radius:18px;background:rgba(1,83,76,.07);border-left:5px solid var(--teal)}
+.callout p{margin:0;color:var(--ink)}
+.callout.warn{background:rgba(240,145,62,.13);border-left-color:var(--amber-dp)}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin:1rem 0}
+@media(max-width:620px){.duo{grid-template-columns:1fr}}
+.duo>div{background:#FFFDF8;border:1px solid var(--rule);border-radius:18px;padding:1.1rem 1.2rem}
+.duo p{margin:.7rem 0 0;font-size:.97rem}
+.av{width:36px;height:36px;border-radius:50%;background:var(--teal);color:var(--cream);display:grid;place-items:center;font-weight:900}
+.av.h{background:var(--honey);color:#1B1406}
+.tablewrap{overflow-x:auto;margin:1rem 0 1.2rem;border:1px solid var(--rule);border-radius:18px;background:#FFFDF8}
+table{width:100%;border-collapse:collapse;font-size:.95rem}
+th,td{text-align:left;vertical-align:top;padding:.8rem 1.1rem;border-top:1px solid var(--rule)}
+thead th{border-top:0;font-size:.8rem;font-weight:800;color:var(--amber-tx);background:var(--oat)}
+tbody th{font-weight:800;color:var(--teal);white-space:nowrap;width:9rem}
+td{color:var(--ink-soft)}
+.keep{margin:1rem 0;display:grid;gap:.6rem}
+.keep>div{display:grid;grid-template-columns:13rem 1fr;gap:1rem;padding:.9rem 1.1rem;background:#FFFDF8;border:1px solid var(--rule);border-radius:16px}
+@media(max-width:620px){.keep>div{grid-template-columns:1fr;gap:.2rem}}
+.keep dt{font-weight:800;color:var(--teal)}
+.keep dd{margin:0;color:var(--ink-soft)}
+.rights{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0 1.2rem}
+@media(max-width:620px){.rights{grid-template-columns:1fr}}
+.rights>div{background:#FFFDF8;border:1px solid var(--rule);border-radius:18px;padding:1rem 1.2rem}
+.rights b{display:block;color:var(--teal);font-size:1.05rem}
+.rights p{margin:.3rem 0 0;font-size:.95rem}
+
+.contact{margin-top:3rem;background:var(--teal);color:var(--cream);border-radius:26px;padding:1.8rem 2rem;display:flex;gap:1.5rem 3rem;flex-wrap:wrap;align-items:center}
+.contact h2{color:var(--cream);margin:0 0 .5rem}
+.contact address{font-style:normal;line-height:1.6;color:rgba(247,242,231,.84)}
+.contact address b{color:var(--cream)}
+.contact a{color:var(--honey)}
+.contact .btn{margin-left:auto;background:var(--honey);color:#1B1406;text-decoration:none;font-weight:800;padding:.85rem 1.4rem;border-radius:999px;white-space:nowrap}
+.contact .btn:hover{background:var(--amber)}
+.totop{display:inline-block;margin-top:1.6rem;font-weight:800;font-size:.9rem;color:var(--teal)}
+
+footer{background:var(--forest);color:rgba(247,242,231,.7);font-size:.85rem;padding:2rem 0}
+footer .w{display:flex;flex-wrap:wrap;gap:.8rem 2rem;justify-content:space-between;align-items:center}
+footer a{color:var(--cream);text-decoration:none;opacity:.8}
+footer a:hover{opacity:1;text-decoration:underline}
+footer nav{display:flex;gap:1.2rem}
+@media print{.progress,.top .cord,.toc,.nav .links,footer{display:none}.top{background:none;color:#000}.hero h1,.hero .desc{color:#000}.doc{display:block}}
+</style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-<div class="top">
-  <a class="brand" href="/">
-    <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22" fill="#1D4A3E"/><rect x="14" y="14.5" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/><rect x="14" y="21.75" width="13" height="4.5" rx="2.25" fill="#E07E39"/><rect x="14" y="29" width="20" height="4.5" rx="2.25" fill="#F1ECDE"/></svg>
-    <span class="word">Elder<b>ly</b></span>
-  </a>
-  <a class="back" href="/">&larr; Back to home</a>
-</div>
-
-<main>
-  <h1>Terms of Service</h1>
-  <p class="stamp">Last updated: September 14, 2026</p>
-
-  <p class="lede">This is the agreement between you and <strong>Elderly, Inc.</strong>, a Delaware
-  corporation, which operates <strong>Elderly</strong>. It is written to be read, not to be skipped. By creating an
-  account you accept it.</p>
-
-  <h2>What Elderly does</h2>
-  <p>Elderly places friendly phone calls to an older adult you name, on a schedule you choose, and sends you a short
-  written note after each call. The calls are held by an artificial voice, not by a person.</p>
-
-  <div class="note">
-    <p><strong>Elderly is not a medical service and not an emergency service.</strong> It does not diagnose, treat, or
-    monitor any condition. It cannot call 911, and no one is watching the calls in real time. If someone may be in
-    danger, call emergency services yourself.</p>
+<header class="top">
+  <div class="w nav">
+    <a class="logo" href="https://www.callelderly.com/" aria-label="Elderly home">
+      <svg class="mark" viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg>
+      <span>Elderly</span>
+    </a>
+    <div class="links">
+      <a class="hs" href="https://www.callelderly.com/">Back to home</a>
+      <a class="hs" href="https://www.callelderly.com/ingresar">Log in</a>
+      <a class="btn" href="https://www.callelderly.com/#price">Build their plan</a>
+    </div>
   </div>
+  <div class="w hero">
+    <nav class="switch" aria-label="Legal pages">
+      <a href="https://www.callelderly.com/terms" aria-current="page">Terms of Service</a>
+      <a href="https://www.callelderly.com/privacy">Privacy Policy</a>
+    </nav>
+    <h1>Terms of Service</h1>
+    <p class="desc">The agreement between you and Elderly: what we promise, what we do not, and how to leave.</p>
+    <div class="meta"><span>Last updated: September 14, 2026</span><span id="readtime">Reading time</span></div>
+  </div>
+  <svg class="cord" viewBox="0 0 760 200" aria-hidden="true">
+    <path d="M0 190 C 150 170, 260 120, 360 100 C 420 88, 450 60, 440 40 C 430 20, 400 26, 402 46 C 380 26, 350 34, 362 60 L 402 92 C 520 60, 640 90, 760 40"/>
+  </svg>
+</header>
 
-  <h2>Who can use it</h2>
-  <p>You must be 18 or older and live in the United States. You may only sign up an older adult if you have a genuine
-  family or caregiving relationship with them, and you must be able to tell them honestly that these calls are coming.</p>
+<main id="main" class="w doc">
+  <nav class="toc" aria-label="On this page">
+    <details id="tocd" open>
+      <summary>On this page</summary>
+      <p class="h">On this page</p>
+      <ol id="toclist"></ol>
+    </details>
+  </nav>
 
-  <h2>The permission that matters most</h2>
-  <p>Before we keep recordings of anyone, the first call asks the older adult, out loud, whether they are alright with
-  being called and recorded and with a note going to their family. If they say no, the account stops there. You may not
-  use Elderly to call someone who has refused, or to call someone under a false pretense.</p>
-  <p>Many states require every party to a recorded call to consent. That is why we ask. Do not ask us to work around it.</p>
+  <article id="doc">
+<p class="intro">This is the agreement between you and <b>Elderly, Inc.</b>, a Delaware corporation, which operates <b>Elderly</b>. It is written to be read, not to be skipped. By creating an account you accept it.</p>
 
-  <h2>Your account</h2>
-  <ul>
-    <li>Keep your password to yourself. You are responsible for what happens under your login.</li>
-    <li>The information you give us about the older adult must be accurate. We call the number you provide.</li>
-    <li>You may invite other family members. Whatever they do with the access you grant is on you as well.</li>
-  </ul>
+<section id="what-elderly-does"><h2>What Elderly does</h2>
+<p>Elderly places friendly phone calls to an older adult you name, on a schedule you choose, and sends you a short written note after each call. The calls are held by an artificial voice, not by a person.</p>
+<div class="callout warn"><p><b>Elderly is not a medical service and not an emergency service.</b> It does not diagnose, treat, or monitor any condition. It cannot call 911, and no one is watching the calls in real time. If someone may be in danger, call emergency services yourself.</p></div>
+</section>
 
-  <h2>What you may not do</h2>
-  <ul>
-    <li>Use Elderly to harass, deceive, monitor, or pressure anyone.</li>
-    <li>Sign up someone who has not been told, or who has said no.</li>
-    <li>Use the calls for sales, collections, surveys, political outreach, or any commercial purpose.</li>
-    <li>Resell the service, or try to extract our prompts, models, or recordings by automated means.</li>
-  </ul>
-  <p>If you do any of this, we may close the account immediately.</p>
+<section id="who-can-use-it"><h2>Who can use it</h2>
+<p>You must be 18 or older and live in the United States. You may only sign up an older adult if you have a genuine family or caregiving relationship with them, and you must be able to tell them honestly that these calls are coming.</p>
+</section>
 
-  <h2>Paying for it</h2>
-  <ul>
-    <li>The price and what it includes are shown when you sign up. Subscriptions renew monthly on the same date until
-    you cancel.</li>
-    <li>Payments are handled by Stripe. We never see your full card number.</li>
-    <li>You can cancel at any time from your portal. Cancelling stops the next charge; the calls continue until the end
-    of the period you already paid for.</li>
-    <li>If Elderly fails to deliver the calls you paid for, write to us and we will refund that period. We would rather
-    give the money back than argue about it.</li>
-    <li>If a price changes, we will email you at least 30 days ahead. You can cancel before it takes effect.</li>
-  </ul>
+<section id="permission"><h2>The permission that matters most</h2>
+<p>Before we keep recordings of anyone, the first call asks the older adult, out loud, whether they are alright with being called and recorded and with a note going to their family. If they say no, the account stops there. You may not use Elderly to call someone who has refused, or to call someone under a false pretense.</p>
+<p>Many states require every party to a recorded call to consent. That is why we ask. Do not ask us to work around it.</p>
+</section>
 
-  <h2>What we promise, and what we do not</h2>
-  <p>We will make an honest, continuing effort to place every scheduled call and deliver every note. We will tell you
-  when something breaks.</p>
-  <p>We cannot promise that every call connects. Phones go unanswered, numbers change, carriers drop calls, and voices
-  are sometimes misheard. The written notes are generated automatically and can be incomplete or wrong. Read them as a
-  starting point for your own conversation, never as a substitute for talking to the person yourself, and never as a
-  medical or clinical assessment.</p>
-  <p>The service is provided as it is, without warranties beyond what the law requires of us.</p>
+<section id="your-account"><h2>Your account</h2>
+<ul>
+<li>Keep your password to yourself. You are responsible for what happens under your login.</li>
+<li>The information you give us about the older adult must be accurate. We call the number you provide.</li>
+<li>You may invite other family members. Whatever they do with the access you grant is on you as well.</li>
+</ul>
+</section>
 
-  <h2>If something goes wrong</h2>
-  <p>To the extent the law allows, our total liability to you for any claim is limited to the amount you paid us in the
-  twelve months before the claim. We are not liable for indirect or consequential losses. Nothing here limits liability
-  for fraud, or for anything that cannot be limited by law.</p>
+<section id="may-not"><h2>What you may not do</h2>
+<ul>
+<li>Use Elderly to harass, deceive, monitor, or pressure anyone.</li>
+<li>Sign up someone who has not been told, or who has said no.</li>
+<li>Use the calls for sales, collections, surveys, political outreach, or any commercial purpose.</li>
+<li>Resell the service, or try to extract our prompts, models, or recordings by automated means.</li>
+</ul>
+<p>If you do any of this, we may close the account immediately.</p>
+</section>
 
-  <h2>Your content</h2>
-  <p>The recordings, transcripts, and notes belong to your family, not to us. You give us permission to store and
-  process them only in order to run the service for you, as described in our
-  <a href="/privacy">Privacy Policy</a>. We do not use them to train general-purpose AI models.</p>
+<section id="paying"><h2>Paying for it</h2>
+<ul>
+<li>The price and what it includes are shown when you sign up. Subscriptions renew monthly on the same date until you cancel.</li>
+<li>Payments are handled by Stripe. We never see your full card number.</li>
+<li>You can cancel at any time from your portal. Cancelling stops the next charge; the calls continue until the end of the period you already paid for.</li>
+<li>If Elderly fails to deliver the calls you paid for, write to us and we will refund that period. We would rather give the money back than argue about it.</li>
+<li>If a price changes, we will email you at least 30 days ahead. You can cancel before it takes effect.</li>
+</ul>
+</section>
 
-  <h2>Ending the agreement</h2>
-  <p>You can close your account at any time from the portal, and ask us to delete the data with it. We can suspend or
-  close an account that breaks these terms, that we are required to close, or that we can no longer serve. If we close
-  your account without your having broken anything, we refund the unused portion.</p>
+<section id="promise"><h2>What we promise, and what we do not</h2>
+<p>We will make an honest, continuing effort to place every scheduled call and deliver every note. We will tell you when something breaks.</p>
+<p>We cannot promise that every call connects. Phones go unanswered, numbers change, carriers drop calls, and voices are sometimes misheard. The written notes are generated automatically and can be incomplete or wrong. Read them as a starting point for your own conversation, never as a substitute for talking to the person yourself, and never as a medical or clinical assessment.</p>
+<p>The service is provided as it is, without warranties beyond what the law requires of us.</p>
+</section>
 
-  <h2>Changes</h2>
-  <p>If we change these terms in a way that matters, we will email you before the change takes effect. Continuing to use
-  Elderly after that means you accept the new version.</p>
+<section id="liability"><h2>If something goes wrong</h2>
+<p>To the extent the law allows, our total liability to you for any claim is limited to the amount you paid us in the twelve months before the claim. We are not liable for indirect or consequential losses. Nothing here limits liability for fraud, or for anything that cannot be limited by law.</p>
+</section>
 
-  <h2>Law and disputes</h2>
-  <p>These terms are governed by the laws of the State of Utah, without regard to conflict-of-law rules. Before
-  filing anything, email us; almost everything gets resolved that way.</p>
+<section id="your-content"><h2>Your content</h2>
+<p>The recordings, transcripts, and notes belong to your family, not to us. You give us permission to store and process them only in order to run the service for you, as described in our <a href="https://www.callelderly.com/privacy">Privacy Policy</a>. We do not use them to train general-purpose AI models.</p>
+</section>
 
-  <h2>Contact</h2>
-  <p>Elderly, Inc.<br>2809 N Dandelion Dr, Saratoga Springs, UT 84045<br>
-  <a href="mailto:matias@callelderly.com">matias@callelderly.com</a></p>
+<section id="ending"><h2>Ending the agreement</h2>
+<p>You can close your account at any time from the portal, and ask us to delete the data with it. We can suspend or close an account that breaks these terms, that we are required to close, or that we can no longer serve. If we close your account without your having broken anything, we refund the unused portion.</p>
+</section>
+
+<section id="changes"><h2>Changes</h2>
+<p>If we change these terms in a way that matters, we will email you before the change takes effect. Continuing to use Elderly after that means you accept the new version.</p>
+</section>
+
+<section id="law"><h2>Law and disputes</h2>
+<p>These terms are governed by the laws of the State of Utah, without regard to conflict-of-law rules. Before filing anything, email us; almost everything gets resolved that way.</p>
+</section>
+
+    <section id="contact" class="contact">
+      <div>
+        <h2>Contact</h2>
+        <address><b>Elderly, Inc.</b><br>2809 N Dandelion Dr, Saratoga Springs, UT 84045<br><a href="mailto:matias@callelderly.com">matias@callelderly.com</a></address>
+      </div>
+      <a class="btn" href="mailto:matias@callelderly.com">Write to us</a>
+    </section>
+    <a class="totop" href="#main">Back to top</a>
+  </article>
 </main>
 
 <footer>
-  <span>&copy; 2026 Elderly</span>
-  <span><a href="/privacy">Privacy Policy</a> &middot; <a href="/">Home</a></span>
+  <div class="w">
+    <span>© 2026 Elderly</span>
+    <nav aria-label="Footer"><a href="https://www.callelderly.com/privacy">Privacy Policy</a><a href="https://www.callelderly.com/">Home</a></nav>
+  </div>
 </footer>
 
+<script>
+(function(){
+  var doc=document.getElementById('doc'), list=document.getElementById('toclist');
+  var secs=[].slice.call(doc.querySelectorAll('section[id]')), links=[];
+
+  /* numbered headings and the table of contents, built from the sections */
+  secs.forEach(function(sec,i){
+    var h=sec.querySelector('h2'); if(!h) return;
+    var label=h.textContent;
+    if(sec.id!=='contact'){ var n=document.createElement('span'); n.className='num'; n.textContent=(i+1<10?'0':'')+(i+1); h.insertBefore(n,h.firstChild); }
+    var li=document.createElement('li'), a=document.createElement('a');
+    a.href='#'+sec.id; a.textContent=label; li.appendChild(a); list.appendChild(li); links.push(a);
+  });
+
+  /* reading time */
+  var words=doc.textContent.trim().split(/\s+/).length;
+  document.getElementById('readtime').textContent=Math.max(1,Math.round(words/230))+' min read';
+
+  /* collapse the contents on small screens, close after picking */
+  var d=document.getElementById('tocd'), mq=window.matchMedia('(max-width:960px)');
+  function setOpen(){ d.open=!mq.matches; } setOpen();
+  if(mq.addEventListener) mq.addEventListener('change',setOpen);
+  list.addEventListener('click',function(){ if(mq.matches) d.open=false; });
+
+  /* active section */
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        var i=secs.indexOf(e.target);
+        links.forEach(function(l,j){ if(j===i) l.setAttribute('aria-current','true'); else l.removeAttribute('aria-current'); });
+      });
+    },{rootMargin:'-20% 0px -70% 0px'});
+    secs.forEach(function(s){ io.observe(s); });
+  }
+
+  /* reading progress */
+  var bar=document.getElementById('progress');
+  function prog(){
+    var h=document.documentElement, max=h.scrollHeight-h.clientHeight;
+    bar.style.width=(max>0? Math.min(100,h.scrollTop/max*100):0)+'%';
+  }
+  addEventListener('scroll',prog,{passive:true}); addEventListener('resize',prog); prog();
+})();
+</script>
 </body>
 </html>
