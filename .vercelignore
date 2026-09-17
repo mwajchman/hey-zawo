@@ -6,3 +6,9 @@ index.landing-viejo.html.bak
 
 # El portal viejo del equipo, tapado por el redirect /portal → /ingresar.
 portal/
+
+# Plantilla de trabajo del portal de familias: estaba publica, en espanol con voseo, con
+# la paleta vieja y con datos inventados que se leen como reales. La demo buena es /demo,
+# y /family-portal ahora redirige ahi. El archivo queda en el repo para seguir editandolo,
+# pero no se publica.
+family-portal.html

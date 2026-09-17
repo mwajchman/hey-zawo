@@ -8,7 +8,8 @@ Disallow: /manage
 Disallow: /welcome
 Disallow: /portal
 
-# Plantilla de trabajo con datos inventados. Se lee como un portal real.
+# /family-portal ya no es una pagina: redirige a /demo (la plantilla de trabajo salio del
+# sitio). Queda bloqueada por si algun buscador todavia guarda la URL vieja.
 Disallow: /family-portal
 
 # La demo publica del portal (familia de ejemplo). No es privada, pero no se indexa:

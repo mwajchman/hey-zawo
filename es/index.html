@@ -5,11 +5,29 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Elderly · Una llamada al día, y sabes cómo está</title>
-<meta name="description" content="Llamadas diarias y cálidas para tus papás o abuelos, con toda la familia presente. Después de cada llamada recibes un resumen claro de cómo está. Por ahora, solo en México. Desde $25 USD al mes.">
+<meta name="description" content="Llamadas diarias y cálidas para tus papás o abuelos, con toda la familia presente. Después de cada llamada recibes un resumen claro de cómo está. Funciona en México y en Estados Unidos. Desde $25 USD al mes.">
 <meta name="theme-color" content="#01534C">
 <link rel="canonical" href="https://www.callelderly.com/es">
 <link rel="alternate" hreflang="es" href="https://www.callelderly.com/es">
 <link rel="alternate" hreflang="en" href="https://www.callelderly.com/">
+<link rel="alternate" hreflang="x-default" href="https://www.callelderly.com/">
+<!-- Como se ve el enlace cuando una hija se lo manda a su hermano por WhatsApp. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Elderly">
+<meta property="og:locale" content="es_MX">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:url" content="https://www.callelderly.com/es">
+<meta property="og:title" content="Elderly · Una llamada al día, y sabes cómo está">
+<meta property="og:description" content="Llamadas diarias y cálidas para tus papás o abuelos, con toda la familia presente. Después de cada llamada recibes un resumen claro de cómo está. Desde $25 USD al mes.">
+<meta property="og:image" content="https://www.callelderly.com/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Una señora mayor sonríe mientras habla por teléfono, al aire libre.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Elderly · Una llamada al día, y sabes cómo está">
+<meta name="twitter:description" content="Llamadas diarias y cálidas para tus papás o abuelos, con toda la familia presente. Después de cada llamada recibes un resumen claro de cómo está. Desde $25 USD al mes.">
+<meta name="twitter:image" content="https://www.callelderly.com/og.jpg">
+<meta name="twitter:image:alt" content="Una señora mayor sonríe mientras habla por teléfono, al aire libre.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -78,10 +96,19 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 .logo .mark{width:36px;height:36px;flex:none;border-radius:8px;box-shadow:0 0 0 1px rgba(247,242,231,.18)}
 .logo i{font-style:normal;color:var(--amber)}
 .nav menu{margin:0;padding:0;margin-left:auto;list-style:none;display:flex;align-items:center;gap:1.5rem;font-size:.9rem;font-weight:700}
-.nav menu a{color:var(--cream);text-decoration:none;opacity:.75}
-.nav menu a:hover{opacity:1}
-.lang{display:flex;gap:.15rem;font-size:.78rem;opacity:.85}
-.lang a{opacity:.55}.lang a[aria-current]{opacity:1;color:var(--honey)!important}
+/* El :not(.btn) importa: sin el, el color crema y el opacity .75 le ganaban al boton
+   "Arma su plan" del menu (mas especifico que .btn) y lo dejaban en 1.49:1 de contraste,
+   lavado. El boton del menu tiene que leerse igual que el del hero.
+   El min-height es el area de toque: los enlaces median 17px de alto. */
+.nav menu a:not(.btn){color:var(--cream);text-decoration:none;opacity:.75;
+  display:inline-flex;align-items:center;min-height:24px}
+.nav menu a:not(.btn):hover{opacity:1}
+.lang{display:flex;gap:.15rem;font-size:.78rem}
+/* El selector de idioma: el activo en miel, el otro apagado, como estaba. Va con la
+   especificidad de .nav menu (si no, la regla de arriba le gana y apaga el activo).
+   Antes el conjunto iba a opacity .85 y el inactivo a .55: 2.4:1 en texto de 12px. */
+.nav menu .lang a{opacity:.75}
+.nav menu .lang a[aria-current]{opacity:1;color:var(--honey)!important}
 @media(max-width:920px){.nav menu .hs{display:none}}
 
 /* ---------------- HERO ---------------- */
@@ -635,9 +662,12 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .cbtn{width:46px;height:46px;border-radius:50%;border:2px solid var(--rule);background:transparent;color:var(--teal);display:grid;place-items:center;cursor:pointer}
 .cbtn:hover{border-color:var(--amber-dp)}
 .cbtn svg{width:20px;height:20px}
-.cdots{display:flex;gap:.45rem}
-.cdots button{width:10px;height:10px;border-radius:5px;border:0;padding:0;background:var(--rule);cursor:pointer;transition:width .3s}
-.cdots button[aria-current="true"]{width:28px;background:var(--amber-dp)}
+.cdots{display:flex;gap:0}
+/* El punto se sigue viendo de 10px, pero el boton mide 24x24, que es el area de toque
+   minima. El padding hace el area y background-clip pinta solo el punto. */
+.cdots button{width:24px;height:24px;border-radius:12px;border:0;padding:7px;background:var(--rule);
+  background-clip:content-box;cursor:pointer;transition:width .3s}
+.cdots button[aria-current="true"]{width:42px;background:var(--amber-dp);background-clip:content-box}
 
 /* how it works phone */
 .hp-wrap{display:flex;flex-direction:column;align-items:center;gap:.8rem}
@@ -788,10 +818,10 @@ form label.chk.bad span{color:#A8320F}
 <body>
 <a class="skip" href="#main">Saltar al contenido</a>
 
-<!-- ============ AVISO: SOLO MEXICO ============ -->
+<!-- ============ AVISO: DONDE FUNCIONA ============ -->
 <div class="mxbar" id="mxbar" role="region" aria-label="Aviso de disponibilidad">
   <div class="w">
-    <p>Por ahora Elderly está disponible solo en México. ¿Estás en otro país? <a href="#lista">Déjanos tus datos</a> y te avisamos.</p>
+    <p>Elderly funciona en México y en Estados Unidos. Desde esta página atendemos México. ¿Vives en otro país? <a href="#lista">Déjanos tus datos</a> y te avisamos.</p>
   </div>
 </div>
 
@@ -814,7 +844,7 @@ form label.chk.bad span{color:#A8320F}
   <div class="w">
    <div class="grid">
     <div>
-    <p class="mxpill"><i aria-hidden="true">MX</i>Disponible solo en México</p>
+    <p class="mxpill"><i aria-hidden="true">MX</i>Disponible en México y en Estados Unidos</p>
     <p class="kicker">
       <svg width="20" height="16" viewBox="0 0 22 18" aria-hidden="true"><g stroke="#E8B54A" stroke-width="2.6" stroke-linecap="round"><line x1="2" y1="9" x2="8" y2="9"/><line x1="4" y1="3" x2="9" y2="5.5"/><line x1="4" y1="15" x2="9" y2="12.5"/></g></svg>
       Una compañía por teléfono, con toda su familia adentro
@@ -1082,7 +1112,7 @@ form label.chk.bad span{color:#A8320F}
       </span></button>
       <button class="fc" type="button" aria-pressed="false"><span class="fc-in">
         <span class="face front"><span class="lbl">La llamada de las 2 de la mañana</span><span class="q">Mi teléfono suena a las 2 de la mañana y es ansiedad, no una emergencia. ¿Puede llamar a alguien que no sea yo?</span><span class="turn">Nuestra respuesta honesta ↻</span></span>
-        <span class="face back" aria-hidden="true"><span class="lbl">La llamada de las 2 de la mañana</span><span class="a">Sí, a cualquier hora, de día o de noche. Elderly queda guardado en su teléfono como un contacto más, y siempre contesta. Es un extra, y ves el precio antes de activarlo.</span><span class="turn">Volver a la pregunta ↺</span></span>
+        <span class="face back" aria-hidden="true"><span class="lbl">La llamada de las 2 de la mañana</span><span class="a">Sí, a cualquier hora, de día o de noche. Elderly queda guardado en su teléfono como un contacto más, y siempre contesta. Tener su propia línea de entrada es un extra que todavía estamos armando: pídelo y te escribimos el día que esté listo.</span><span class="turn">Volver a la pregunta ↺</span></span>
       </span></button>
       <button class="fc" type="button" aria-pressed="false"><span class="fc-in">
         <span class="face front"><span class="lbl">La persona de pocas palabras</span><span class="q">Mi papá contesta con monosílabos. ¿De verdad va a conversar?</span><span class="turn">Nuestra respuesta honesta ↻</span></span>
@@ -1116,7 +1146,7 @@ form label.chk.bad span{color:#A8320F}
     </div>
 
     <div class="browser" aria-hidden="true">
-      <div class="bbar"><i></i><i></i><i></i><span class="url">app.callelderly.com</span><span class="tag">Familia de ejemplo</span></div>
+      <div class="bbar"><i></i><i></i><i></i><span class="url">callelderly.com/demo</span><span class="tag">Familia de ejemplo</span></div>
       <div class="bbody">
         <div class="phead"><b>Rosa, 78</b><small>5 llamadas esta semana</small></div>
         <div class="wk" style="margin-top:.9rem"><i class="c">L</i><i class="c">M</i><i class="c">M</i><i class="c">J</i><i class="c">V</i><i>S</i><i>D</i></div>
@@ -1272,7 +1302,7 @@ form label.chk.bad span{color:#A8320F}
     <div>
       <div class="bar t" style="margin-bottom:1.6rem"></div>
       <h2 class="d2" style="max-width:14ch">¿Vives en otro país?<br><span class="ter">Te avisamos apenas abramos.</span></h2>
-      <p style="margin-top:1.2rem;font-size:1.06rem">Por ahora Elderly funciona solo en México. Estamos preparando los próximos países de Latinoamérica. Déjanos tus datos y te escribimos en cuanto lleguemos al tuyo.</p>
+      <p style="margin-top:1.2rem;font-size:1.06rem">Hoy Elderly funciona en México y en Estados Unidos. Estamos preparando los próximos países de Latinoamérica. Déjanos tus datos y te escribimos en cuanto lleguemos al tuyo.</p>
       <p class="tiny">Solo te vamos a escribir para avisarte cuando abramos en tu país.</p>
     </div>
 
@@ -1345,7 +1375,7 @@ form label.chk.bad span{color:#A8320F}
 
     <div class="tpanel" role="tabpanel" id="p-exp" aria-labelledby="t-exp" hidden>
       <div class="qa"><h3>¿Sabe que habla con una IA?</h3><p>Sí, y se entera por ti, no por un desconocido al teléfono. Antes de la primera llamada se lo cuentas tú, con las palabras que te damos. Después, cada vez que pregunta, Elderly le dice con claridad que es una computadora. Nunca se hace pasar por una persona.</p></div>
-      <div class="qa"><h3>¿Puede llamar a Elderly cuando quiera?</h3><p>Sí, a cualquier hora, de día o de noche. Elderly queda guardado como contacto en su celular (o anotado junto al teléfono fijo), para que llame cuando quiera compañía. Recibir llamadas es un extra con su propio precio, y lo ves claramente antes de activarlo.</p></div>
+      <div class="qa"><h3>¿Puede llamar a Elderly cuando quiera?</h3><p>Sí, a cualquier hora, de día o de noche. Elderly queda guardado como contacto en su celular (o anotado junto al teléfono fijo), para que llame cuando quiera compañía. Darle su propia línea para recibir llamadas es un extra que todavía estamos armando. Escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a> y te anotamos: cuando abra te decimos cuánto cuesta, y no se suma nada a tu plan hasta que digas que sí.</p></div>
       <div class="qa"><h3>¿Funciona si no escucha bien?</h3><p>Elderly se adapta: habla más fuerte, más despacio, y repite con paciencia todas las veces que haga falta. Si en varias llamadas notamos un patrón de audición, te lo contamos para que lo consulten con su médico.</p></div>
       <div class="qa"><h3>¿Y si le cuesta hablar, por una embolia o Parkinson?</h3><p>Siendo honestos: todavía no. Hoy Elderly no es lo bastante confiable con un habla muy afectada, y preferimos decírtelo antes que cobrarte. Estamos trabajando en eso.</p></div>
       <div class="qa"><h3>Contesta con monosílabos. ¿Va a funcionar?</h3><p>Las personas calladas necesitan otro comienzo. Mientras más nos cuentes de su equipo, su oficio y sus historias, mejor rompe el hielo Elderly, con preguntas que no se contestan con una palabra. Mira los primeros resúmenes: si no entra en confianza, te vamos a recomendar cancelar. Esto funciona cuando las llamadas le gustan, no cuando las aguanta.</p></div>
@@ -1427,6 +1457,7 @@ form label.chk.bad span{color:#A8320F}
           <li><a href="#faq">Preguntas</a></li>
           <li><a href="#price">Precios</a></li>
           <li><a href="#lista">¿Vives en otro país?</a></li>
+          <li><a href="https://www.callelderly.com/blog" hreflang="en">Blog (en inglés)</a></li>
         </ul>
       </div>
       <div>
@@ -1567,7 +1598,11 @@ form label.chk.bad span{color:#A8320F}
   var selectedDays, chosenLen, NAMES;
   (function(){
     var wiz=document.getElementById('wiz'); if(!wiz) return;
-    var BASE=25, INCLUDED=3, EXTRA=7, step=1, LAST=4;
+    /* La base cambia con el país: $25 en México, $29 en Estados Unidos. El número real lo
+       manda el backend en /api/regions (base_usd) y es el mismo que usa /api/quote para
+       cobrar. BASE_FALLBACK y la lista de abajo son el plan B si esa llamada no responde,
+       y tienen que seguir coincidiendo con regions.py. */
+    var BASE_FALLBACK=25, DEFAULT_COUNTRY='MX', INCLUDED=3, EXTRA=7, step=1, LAST=4, booting=true;
     NAMES=['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
     var steps=[].slice.call(wiz.querySelectorAll('.wstep'));
     var rail=[].slice.call(document.getElementById('rail').children);
@@ -1589,13 +1624,22 @@ form label.chk.bad span{color:#A8320F}
       var b=document.createElement('b'); b.textContent=amount;
       li.appendChild(a); li.appendChild(b); return li;
     }
+    /* El país que está eligiendo la persona ahora mismo. Antes de llegar al paso 4 todavía
+       no eligió nada, y ahí vale el default de esta web. */
+    function paisElegido(){
+      return (countrySel && countrySel.value) ? countrySel.value : DEFAULT_COUNTRY;
+    }
+    function baseDelPais(){
+      var r=regionByCode(paisElegido()), b=r?Number(r.base_usd):NaN;
+      return (b>0)?b:BASE_FALLBACK;
+    }
     function price(){
-      var n=selectedDays().length, len=chosenLen();
-      var extra=Math.max(0,n-INCLUDED), p=BASE+extra*EXTRA+parseInt(len.dataset.add,10);
+      var n=selectedDays().length, len=chosenLen(), base=baseDelPais();
+      var extra=Math.max(0,n-INCLUDED), p=base+extra*EXTRA+parseInt(len.dataset.add,10);
       var nSpec=shields.filter(function(c){ return c.checked && c.dataset.spec; }).length;
       p+= nSpec===0?0:(nSpec===1?10:15);           /* los escudos: $10 uno, $15 dos o tres (backend) */
       shields.forEach(function(c){ if(c.checked && !c.dataset.spec) p+=parseInt(c.dataset.add,10); });
-      return {n:n, extra:extra, len:len, p:p};
+      return {n:n, extra:extra, len:len, p:Math.round(p), base:Math.round(base)};
     }
     function render(){
       var s=price();
@@ -1606,7 +1650,7 @@ form label.chk.bad span{color:#A8320F}
         : (s.extra ? 'Tres días vienen incluidos. '+(s.extra===1?'El día extra suma $7':'Los '+s.extra+' días extra suman $'+s.extra*EXTRA)+' al mes.'
                    : 'Cada día extra, además de los tres incluidos, suma $7 al mes.');
       bd.innerHTML='';
-      bd.appendChild(row('Plan base, hasta 3 llamadas por semana', '$'+BASE+' USD'));
+      bd.appendChild(row('Plan base, hasta 3 llamadas por semana', '$'+s.base+' USD'));
       if(s.extra) bd.appendChild(row(s.extra+(s.extra===1?' día extra':' días extra'), '+$'+s.extra*EXTRA));
       if(+s.len.dataset.add) bd.appendChild(row('Llamadas de '+s.len.dataset.len+' minutos', '+$'+s.len.dataset.add));
       var specOn=shields.filter(function(c){ return c.checked && c.dataset.spec; });
@@ -1629,7 +1673,11 @@ form label.chk.bad span{color:#A8320F}
       });
       back.hidden = step===1;
       next.textContent = step===LAST ? 'Crear su cuenta' : 'Seguir';
-      var h=steps[step-1].querySelector('h3'); if(h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
+      /* Solo movemos el foco cuando la persona cambia de paso. Al cargar la página no:
+         si no, el primer Tab caía adentro del armador, a miles de píxeles de scroll, y quien
+         navega con teclado o lector de pantalla se saltaba el salto al contenido y el menú. */
+      var h=steps[step-1].querySelector('h3');
+      if(h && !booting){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
     }
     function forward(){
       if(step===1 && selectedDays().length===0){ render(); dayBtns[0].focus(); return; }
@@ -1644,16 +1692,25 @@ form label.chk.bad span{color:#A8320F}
       BO:'Bolivia',EC:'Ecuador',PY:'Paraguay',VE:'Venezuela',CR:'Costa Rica',GT:'Guatemala',DO:'República Dominicana',
       PA:'Panamá',SV:'El Salvador',HN:'Honduras',NI:'Nicaragua',PR:'Puerto Rico',ES:'España',CU:'Cuba'};
     function nombrePais(r){ return ES_NAMES[r.code] || r.name; }
-    var REGIONS=[{code:'MX',name:'Mexico',live:true},{code:'US',name:'United States',live:true}], countrySel=document.getElementById('acctCountry');
+    var REGIONS=[{code:'MX',name:'Mexico',live:true,base_usd:25},{code:'US',name:'United States',live:true,base_usd:29}],
+        countrySel=document.getElementById('acctCountry');
     function regionByCode(c){
       for(var i=0;i<REGIONS.length;i++){ if(REGIONS[i].code===c) return REGIONS[i]; }
       return null;
     }
+    /* En el selector va SOLO lo que se puede contratar hoy. Los "próximamente" del backend
+       hacían elegir un país al que todavía no llegamos y prometían una llamada que no sale.
+       Quien vive en otro lado tiene la lista de espera de esta misma página (#lista). */
     function paintCountries(){
       if(!countrySel) return;
-      countrySel.innerHTML=REGIONS.map(function(r){
-        return '<option value="'+r.code+'">'+nombrePais(r)+(r.live?'':' · próximamente')+'</option>';
-      }).join('');
+      var antes=countrySel.value;
+      var vivos=REGIONS.filter(function(r){ return r.live!==false; });
+      if(!vivos.length) vivos=[{code:'MX',name:'Mexico',live:true,base_usd:25}];
+      countrySel.innerHTML=vivos.map(function(r){
+        return '<option value="'+r.code+'">'+nombrePais(r)+'</option>';
+      }).join('')+'<option value="OTHER">Otro país · todavía no</option>';
+      countrySel.value=antes||DEFAULT_COUNTRY;
+      if(!countrySel.value) countrySel.value=vivos[0].code;
     }
     (function loadRegions(){
       try{
@@ -1662,10 +1719,14 @@ form label.chk.bad span{color:#A8320F}
             REGIONS=j.regions; paintCountries();
             if(countrySel && regionByCode('MX')) countrySel.value='MX';
             paintLista(j.regions);
+            render();   /* la base puede haber cambiado: el precio se vuelve a dibujar */
           }
         }).catch(function(){});
       }catch(e){}
     })();
+    paintCountries();
+    /* Cambiar de país cambia la base, así que cambia el precio que se ve. */
+    if(countrySel) countrySel.addEventListener('change', render);
 
     /* El armador habla de 10/15/20 minutos; el backend nombra los packs checkin/quick/full.
        Sin esta traduccion el largo elegido no llega y toda cuenta nace en el pack mas corto. */
@@ -1714,9 +1775,10 @@ form label.chk.bad span{color:#A8320F}
       next.disabled=true; next.textContent='Creando…';
 
       /* Si todavia no llegamos a su pais, NO se crea la cuenta: se guarda el plan. Darle un
-         portal que no puede recibir una llamada seria dejar a una familia esperando. */
-      if(r0 && r0.live===false){
-        aLaLista(d,'<b>Estás en la lista para '+nombrePais(r0)+'.</b> Guardamos el plan que armaste, así cuando lleguemos sigues donde lo dejaste.')
+         portal que no puede recibir una llamada seria dejar a una familia esperando.
+         Vale para "Otro país" y para cualquier pais que el backend marque como no vivo. */
+      if(!r0 || r0.live===false){
+        aLaLista(d,'<b>Estás en la lista'+(r0?' para '+nombrePais(r0):'')+'.</b> Hoy Elderly llama en México y en Estados Unidos. Guardamos el plan que armaste, así cuando lleguemos sigues donde lo dejaste. No pedimos tarjeta y no se cobra nada.')
           .then(function(ok){ if(!ok) decir('No pudimos guardar tus datos. Intenta de nuevo, o escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.', true); })
           .catch(function(){ decir('No pudimos guardar tus datos. Intenta de nuevo, o escríbenos a <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.', true); })
           .then(function(){ next.disabled=false; });
@@ -1834,8 +1896,7 @@ form label.chk.bad span{color:#A8320F}
     rail.forEach(function(li,i){ li.addEventListener('click', function(){ if(i+1<step) go(i+1); }); });
     form.addEventListener('submit', function(e){ e.preventDefault(); submit(); });
 
-    render(); go(1);
-    if(document.activeElement && document.activeElement.tagName==='H3') document.activeElement.blur();
+    render(); go(1); booting=false;
   })();
 
   /* ---------- sticky bar ---------- */

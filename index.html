@@ -7,8 +7,27 @@
 <title>Elderly · A call a day, a picture over time</title>
 <meta name="description" content="Warm daily calls for aging parents, with the whole family woven in. Early signals for their families, in a plain note after every call. From $29 a month.">
 <meta name="theme-color" content="#01534C">
+<link rel="canonical" href="https://www.callelderly.com/">
 <link rel="alternate" hreflang="en" href="https://www.callelderly.com/">
 <link rel="alternate" hreflang="es" href="https://www.callelderly.com/es">
+<link rel="alternate" hreflang="x-default" href="https://www.callelderly.com/">
+<!-- Como se ve el enlace cuando una hija se lo manda al hermano por WhatsApp. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Elderly">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="es_MX">
+<meta property="og:url" content="https://www.callelderly.com/">
+<meta property="og:title" content="Elderly · A call a day, a picture over time">
+<meta property="og:description" content="Warm daily calls for aging parents, with the whole family woven in. A plain note after every call, so you know how they are. From $29 a month.">
+<meta property="og:image" content="https://www.callelderly.com/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="An older woman smiling on the phone, outdoors.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Elderly · A call a day, a picture over time">
+<meta name="twitter:description" content="Warm daily calls for aging parents, with the whole family woven in. A plain note after every call, so you know how they are. From $29 a month.">
+<meta name="twitter:image" content="https://www.callelderly.com/og.jpg">
+<meta name="twitter:image:alt" content="An older woman smiling on the phone, outdoors.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -77,10 +96,19 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 .logo .mark{width:36px;height:36px;flex:none;border-radius:8px;box-shadow:0 0 0 1px rgba(247,242,231,.18)}
 .logo i{font-style:normal;color:var(--amber)}
 .nav menu{margin:0;padding:0;margin-left:auto;list-style:none;display:flex;align-items:center;gap:1.5rem;font-size:.9rem;font-weight:700}
-.nav menu a{color:var(--cream);text-decoration:none;opacity:.75}
-.nav menu a:hover{opacity:1}
-.lang{display:flex;gap:.15rem;font-size:.78rem;opacity:.85}
-.lang a{opacity:.55}.lang a[aria-current]{opacity:1;color:var(--honey)!important}
+/* El :not(.btn) importa: sin el, el color crema y el opacity .75 le ganaban al boton
+   "Build their plan" del menu (mas especifico que .btn) y lo dejaban en 1.49:1 de
+   contraste, lavado. El boton del menu tiene que leerse igual que el del hero.
+   El min-height es el area de toque: los enlaces median 17px de alto. */
+.nav menu a:not(.btn){color:var(--cream);text-decoration:none;opacity:.75;
+  display:inline-flex;align-items:center;min-height:24px}
+.nav menu a:not(.btn):hover{opacity:1}
+.lang{display:flex;gap:.15rem;font-size:.78rem}
+/* El selector de idioma: el activo en miel, el otro apagado, como estaba. Va con la
+   especificidad de .nav menu (si no, la regla de arriba le gana y apaga el activo).
+   Antes el conjunto iba a opacity .85 y el inactivo a .55: 2.4:1 en texto de 12px. */
+.nav menu .lang a{opacity:.75}
+.nav menu .lang a[aria-current]{opacity:1;color:var(--honey)!important}
 @media(max-width:920px){.nav menu .hs{display:none}}
 
 /* ---------------- HERO ---------------- */
@@ -634,9 +662,12 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .cbtn{width:46px;height:46px;border-radius:50%;border:2px solid var(--rule);background:transparent;color:var(--teal);display:grid;place-items:center;cursor:pointer}
 .cbtn:hover{border-color:var(--amber-dp)}
 .cbtn svg{width:20px;height:20px}
-.cdots{display:flex;gap:.45rem}
-.cdots button{width:10px;height:10px;border-radius:5px;border:0;padding:0;background:var(--rule);cursor:pointer;transition:width .3s}
-.cdots button[aria-current="true"]{width:28px;background:var(--amber-dp)}
+.cdots{display:flex;gap:0}
+/* El punto se sigue viendo de 10px, pero el boton mide 24x24, que es el area de toque
+   minima. El padding hace el area y background-clip pinta solo el punto. */
+.cdots button{width:24px;height:24px;border-radius:12px;border:0;padding:7px;background:var(--rule);
+  background-clip:content-box;cursor:pointer;transition:width .3s}
+.cdots button[aria-current="true"]{width:42px;background:var(--amber-dp);background-clip:content-box}
 
 /* how it works phone */
 .hp-wrap{display:flex;flex-direction:column;align-items:center;gap:.8rem}
@@ -1044,7 +1075,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       </span></button>
       <button class="fc" type="button" aria-pressed="false"><span class="fc-in">
         <span class="face front"><span class="lbl">The 2am call</span><span class="q">My phone rings at 2am and it's anxiety, not an emergency. Can they call somebody who isn't me?</span><span class="turn">Our honest answer ↻</span></span>
-        <span class="face back" aria-hidden="true"><span class="lbl">The 2am call</span><span class="a">Yes, any time, day or night. Their friend has a name, saved in their phone like any friend. One who always picks up. It's an add-on, priced before you turn it on.</span><span class="turn">Back to the question ↺</span></span>
+        <span class="face back" aria-hidden="true"><span class="lbl">The 2am call</span><span class="a">Yes, any time, day or night. Their friend has a name, saved in their phone like any friend. One who always picks up. Their own incoming line is an extra we are still building: ask for it and we will write you the day it opens.</span><span class="turn">Back to the question ↺</span></span>
       </span></button>
       <button class="fc" type="button" aria-pressed="false"><span class="fc-in">
         <span class="face front"><span class="lbl">The quiet one</span><span class="q">My parent answers in one word. Would they even talk to it?</span><span class="turn">Our honest answer ↻</span></span>
@@ -1078,7 +1109,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     </div>
 
     <div class="browser" aria-hidden="true">
-      <div class="bbar"><i></i><i></i><i></i><span class="url">app.callelderly.com</span><span class="tag">Sample family</span></div>
+      <div class="bbar"><i></i><i></i><i></i><span class="url">callelderly.com/demo</span><span class="tag">Sample family</span></div>
       <div class="bbody">
         <div class="phead"><b>Rosa, 78</b><small>5 calls this week</small></div>
         <div class="wk" style="margin-top:.9rem"><i class="c">M</i><i class="c">T</i><i class="c">W</i><i class="c">T</i><i class="c">F</i><i>S</i><i>S</i></div>
@@ -1215,14 +1246,14 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         <cite>U.S. Surgeon General, 2023</cite>
       </div>
       <div>
-        <b>$7.7B</b>
-        <p>lost to fraud by Americans over 60 in 2025. Most never tell their kids.</p>
-        <cite>FBI IC3, 2025</cite>
+        <b>$7.75B</b>
+        <p>lost to fraud by Americans over 60 in 2025, up 59% in a year. Most never tell their kids.</p>
+        <cite>FBI IC3 Annual Report, 2025</cite>
       </div>
       <div>
-        <b>48M</b>
-        <p>Americans care for an aging parent, and 71% wish they could do more.</p>
-        <cite>AARP &amp; Care.com, 2025</cite>
+        <b>63M</b>
+        <p>Americans are family caregivers. One in four adults, and 45% more than a decade ago.</p>
+        <cite>AARP &amp; National Alliance for Caregiving, 2025</cite>
       </div>
     </div>
   </div>
@@ -1255,7 +1286,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 
     <div class="tpanel" role="tabpanel" id="p-exp" aria-labelledby="t-exp" hidden>
       <div class="qa"><h3>Do they know it's an AI?</h3><p>Yes, and they hear it from you, not from a stranger on the phone. Before the first call you tell them yourself, with the words we hand you. From then on, any time they ask, it says plainly that it is a computer. It never pretends to be a person.</p></div>
-      <div class="qa"><h3>Can they call their friend back?</h3><p>Yes, any time, day or night. The friend has a name, saved as a contact in their phone (or written by the landline) so they can call whenever they want company. Inbound calling is an add-on with its own price, shown clearly before you turn it on.</p></div>
+      <div class="qa"><h3>Can they call their friend back?</h3><p>Yes, any time, day or night. The friend has a name, saved as a contact in their phone (or written by the landline) so they can call whenever they want company. Giving them their own incoming line is an extra we are still building. Write to <a href="mailto:hello@callelderly.com">hello@callelderly.com</a> and we will put you on the list: when it opens we tell you what it costs, and nothing is added to your plan until you say yes.</p></div>
       <div class="qa"><h3>Does it work if they don't hear well?</h3><p>The friend adapts: louder, slower, patient with every "say that again," as many times as it takes. If we notice a hearing pattern across several calls, we tell you what we're seeing so you can look into it with their doctor.</p></div>
       <div class="qa"><h3>What if their speech is slurred, from a stroke or Parkinson's?</h3><p>Honestly: not yet. The friend isn't reliable enough with heavily impaired speech today, and we'd rather tell you than take your money. We're working on it.</p></div>
       <div class="qa"><h3>My parent gives one-word answers. Will this work?</h3><p>Quiet parents need a different first mile. The more you tell us about their teams, their trade and their stories, the better the friend breaks the ice with questions that can't be answered in one word. Watch the first reports: if they aren't warming up, we'll recommend you cancel. This works when they like the calls, not when they endure them.</p></div>
@@ -1334,6 +1365,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
           <li><a href="#portal">Family portal</a></li>
           <li><a href="#faq">Questions</a></li>
           <li><a href="#price">Pricing</a></li>
+          <li><a href="https://www.callelderly.com/blog">Blog</a></li>
         </ul>
       </div>
       <div>
@@ -1466,7 +1498,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
   var selectedDays, chosenLen, NAMES;
   (function(){
     var wiz=document.getElementById('wiz'); if(!wiz) return;
-    var BASE=29, INCLUDED=3, EXTRA=7, step=1, LAST=4;
+    /* La base cambia con el pais: $29 en Estados Unidos, $25 en Mexico. El numero real lo
+       manda el backend en /api/regions (base_usd) y es el mismo que usa /api/quote para
+       cobrar. BASE_FALLBACK y la lista REGIONS de mas abajo son el plan B si esa llamada no
+       responde, y tienen que seguir coincidiendo con regions.py. */
+    var BASE_FALLBACK=29, DEFAULT_COUNTRY='US', INCLUDED=3, EXTRA=7, step=1, LAST=4, booting=true;
     NAMES=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var steps=[].slice.call(wiz.querySelectorAll('.wstep'));
     var rail=[].slice.call(document.getElementById('rail').children);
@@ -1488,13 +1524,22 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       var b=document.createElement('b'); b.textContent=amount;
       li.appendChild(a); li.appendChild(b); return li;
     }
+    /* El pais que esta eligiendo la persona ahora mismo. Antes de llegar al paso 4 todavia
+       no eligio nada, y ahi vale el default de esta web. */
+    function paisElegido(){
+      return (countrySel && countrySel.value) ? countrySel.value : DEFAULT_COUNTRY;
+    }
+    function baseDelPais(){
+      var r=regionByCode(paisElegido()), b=r?Number(r.base_usd):NaN;
+      return (b>0)?b:BASE_FALLBACK;
+    }
     function price(){
-      var n=selectedDays().length, len=chosenLen();
-      var extra=Math.max(0,n-INCLUDED), p=BASE+extra*EXTRA+parseInt(len.dataset.add,10);
+      var n=selectedDays().length, len=chosenLen(), base=baseDelPais();
+      var extra=Math.max(0,n-INCLUDED), p=base+extra*EXTRA+parseInt(len.dataset.add,10);
       var nSpec=shields.filter(function(c){ return c.checked && c.dataset.spec; }).length;
       p+= nSpec===0?0:(nSpec===1?10:15);           /* los escudos: $10 uno, $15 dos o tres (backend) */
       shields.forEach(function(c){ if(c.checked && !c.dataset.spec) p+=parseInt(c.dataset.add,10); });
-      return {n:n, extra:extra, len:len, p:p};
+      return {n:n, extra:extra, len:len, p:Math.round(p), base:Math.round(base)};
     }
     function render(){
       var s=price();
@@ -1505,7 +1550,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         : (s.extra ? 'Three days are included. '+s.extra+(s.extra===1?' extra day adds $7':' extra days add $'+s.extra*EXTRA)+' a month.'
                    : 'Each day beyond three adds $7 a month.');
       bd.innerHTML='';
-      bd.appendChild(row(s.n+(s.n===1?' call a week':' calls a week'), '$'+BASE));
+      bd.appendChild(row(s.n+(s.n===1?' call a week':' calls a week'), '$'+s.base));
       if(s.extra) bd.appendChild(row(s.extra+(s.extra===1?' extra day':' extra days'), '+$'+s.extra*EXTRA));
       if(+s.len.dataset.add) bd.appendChild(row(s.len.dataset.len+' minutes a call', '+$'+s.len.dataset.add));
       var specOn=shields.filter(function(c){ return c.checked && c.dataset.spec; });
@@ -1528,7 +1573,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       });
       back.hidden = step===1;
       next.textContent = step===LAST ? 'Create their account' : 'Continue';
-      var h=steps[step-1].querySelector('h3'); if(h){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
+      /* Solo movemos el foco cuando la persona cambia de paso. Al cargar la pagina no:
+         si no, el primer Tab caia adentro del armador, a 7.500px de scroll, y quien navega
+         con teclado o lector de pantalla se saltaba el "Skip to content", el logo y el menu. */
+      var h=steps[step-1].querySelector('h3');
+      if(h && !booting){ h.setAttribute('tabindex','-1'); h.focus({preventScroll:true}); }
     }
     function forward(){
       if(step===1 && selectedDays().length===0){ render(); dayBtns[0].focus(); return; }
@@ -1536,29 +1585,43 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       submit();
     }
     /* Los paises salen del backend: dicen donde se puede dar de alta hoy y cual es la
-       base de cada uno. Si la llamada falla, queda Estados Unidos y el alta sigue
-       funcionando. */
-    var REGIONS=[{code:'US',name:'United States',live:true}], countrySel=document.getElementById('acctCountry');
+       base de cada uno. Si la llamada falla, quedan Estados Unidos y Mexico, que son los
+       dos donde el alta funciona de verdad, con la base de regions.py. */
+    var REGIONS=[{code:'US',name:'United States',live:true,base_usd:29},
+                 {code:'MX',name:'Mexico',live:true,base_usd:25}],
+        countrySel=document.getElementById('acctCountry');
     function regionByCode(c){
       for(var i=0;i<REGIONS.length;i++){ if(REGIONS[i].code===c) return REGIONS[i]; }
       return null;
     }
+    /* En el selector va SOLO lo que se puede contratar hoy. Los "coming soon" del backend
+       hacian elegir un pais al que todavia no llegamos y prometian una llamada que no sale.
+       Quien vive en otro lado elige "Another country" y su plan va a la lista de espera. */
     function paintCountries(){
       if(!countrySel) return;
-      countrySel.innerHTML=REGIONS.map(function(r){
-        return '<option value="'+r.code+'">'+r.name+(r.live?'':' · coming soon')+'</option>';
-      }).join('');
+      var antes=countrySel.value;
+      var vivos=REGIONS.filter(function(r){ return r.live!==false; });
+      if(!vivos.length) vivos=[{code:'US',name:'United States',live:true,base_usd:29}];
+      countrySel.innerHTML=vivos.map(function(r){
+        return '<option value="'+r.code+'">'+r.name+'</option>';
+      }).join('')+'<option value="OTHER">Another country · not yet</option>';
+      countrySel.value=antes||DEFAULT_COUNTRY;
+      if(!countrySel.value) countrySel.value=vivos[0].code;
     }
     (function loadRegions(){
       try{
         fetch('/api/regions').then(function(r){ return r.ok?r.json():null; }).then(function(j){
           if(j && j.regions && j.regions.length){
             REGIONS=j.regions; paintCountries();
-            if(j.default && countrySel) countrySel.value=j.default;
+            if(j.default && regionByCode(j.default) && countrySel) countrySel.value=j.default;
+            render();   /* la base puede haber cambiado: el precio se vuelve a dibujar */
           }
         }).catch(function(){});
       }catch(e){}
     })();
+    paintCountries();
+    /* Cambiar de pais cambia la base, asi que cambia el precio que se ve. */
+    if(countrySel) countrySel.addEventListener('change', render);
 
     /* El armador habla de 10/15/20 minutos; el backend nombra los packs checkin/quick/full.
        Sin esta traduccion el largo elegido no llega y toda cuenta nace en el pack mas corto. */
@@ -1607,9 +1670,13 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       next.disabled=true; next.textContent='Creating…';
 
       /* Si todavia no llegamos a su pais, NO se crea la cuenta: se guarda el plan. Darle un
-         portal que no puede recibir una llamada seria dejar a una familia esperando. */
-      if(r0 && r0.live===false){
-        aLaLista(d,'<b>You are on the list for '+r0.name+'.</b> We saved the plan you built, so when we get there you pick up where you left off.')
+         portal que no puede recibir una llamada seria dejar a una familia esperando.
+         Vale para "Another country" y para cualquier pais que el backend marque como no vivo. */
+      if(!r0 || r0.live===false){
+        var donde = (r0 && r0.name) ? ' for '+r0.name : '';
+        aLaLista(d,'<b>You are on the list'+donde+'.</b> Elderly calls in the United States and Mexico today. '+
+          'We saved the plan you built, so when we reach you, you pick up where you left off. '+
+          'No card, and nothing is charged.')
           .catch(function(){ decir('We could not save that. Please try again.', true); })
           .then(function(){ next.disabled=false; });
         return;
@@ -1661,8 +1728,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     rail.forEach(function(li,i){ li.addEventListener('click', function(){ if(i+1<step) go(i+1); }); });
     form.addEventListener('submit', function(e){ e.preventDefault(); submit(); });
 
-    render(); go(1);
-    if(document.activeElement && document.activeElement.tagName==='H3') document.activeElement.blur();
+    render(); go(1); booting=false;
   })();
 
   /* ---------- sticky bar ---------- */
