@@ -58,6 +58,10 @@
       "destination": "https://web-production-0134d.up.railway.app/app"
     },
     {
+      "source": "/demo",
+      "destination": "https://web-production-0134d.up.railway.app/demo"
+    },
+    {
       "source": "/manage",
       "destination": "https://web-production-0134d.up.railway.app/manage"
     },
@@ -76,7 +80,7 @@
   ],
   "headers": [
     {
-      "source": "/(app|manage|admin|plan)",
+      "source": "/(app|demo|manage|admin|plan)",
       "headers": [
         {
           "key": "Cache-Control",

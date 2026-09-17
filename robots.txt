@@ -11,4 +11,8 @@ Disallow: /portal
 # Plantilla de trabajo con datos inventados. Se lee como un portal real.
 Disallow: /family-portal
 
+# La demo publica del portal (familia de ejemplo). No es privada, pero no se indexa:
+# se entra desde el boton de la home, no desde un buscador.
+Disallow: /demo
+
 Sitemap: https://www.callelderly.com/sitemap.xml
