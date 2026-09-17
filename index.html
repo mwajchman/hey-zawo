@@ -7,6 +7,8 @@
 <title>Elderly · A call a day, a picture over time</title>
 <meta name="description" content="Warm daily calls for aging parents, with the whole family woven in. Early signals for their families, in a plain note after every call. From $29 a month.">
 <meta name="theme-color" content="#01534C">
+<link rel="alternate" hreflang="en" href="https://www.callelderly.com/">
+<link rel="alternate" hreflang="es" href="https://www.callelderly.com/es">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -760,7 +762,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         <li class="hs"><a href="#portal">Family portal</a></li>
         <li class="hs"><a href="#faq">Questions</a></li>
         <li class="hs"><a href="#price">Pricing</a></li>
-        <li class="lang"><a href="#" aria-current="true">EN</a><span style="opacity:.4">/</span><a href="https://www.callelderly.com/" hreflang="es">ES</a></li>
+        <li class="lang"><a href="#" aria-current="true">EN</a><span style="opacity:.4">/</span><a href="https://www.callelderly.com/es" hreflang="es">ES</a></li>
         <li class="hs"><a href="https://www.callelderly.com/ingresar">Log in</a></li>
         <li><a class="btn sm hs" href="#price">Build their plan</a></li>
         <li><button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span></span><span></span><span></span></button></li>
@@ -1244,7 +1246,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       <div class="qa"><h3>What if nobody sends anything one week?</h3><p>They never hear silence. During onboarding you tell us about their people, their stories and their world, and the friend keeps learning from every call after that. There is always something to talk about; your deposits just make the week richer.</p></div>
       <div class="qa"><h3>My parent refuses outside help. Why would they accept this?</h3><p>Because nothing is asked of them: no stranger in the house, nothing to install, no effort. Just the phone ringing, like it always has. You set everything up; they only answer. And inside every call is news from their own family.</p></div>
       <div class="qa"><h3>What language does it speak?</h3><p>English and Spanish at launch, including the way they actually speak it. More coming with our first families.</p></div>
-      <div class="qa"><h3>Can it call outside the US?</h3><p>Not yet. So many families have asked that international calling over WhatsApp, across all of Latin America, is next on our list.</p></div>
+      <div class="qa"><h3>Can it call outside the US?</h3><p>Yes, in Mexico. The rest of Latin America is next. If your parent lives in another country, <a href="https://www.callelderly.com/es#lista">join the waitlist on our Spanish site</a> and we will write as soon as we open there.</p></div>
     </div>
 
     <div class="tpanel" role="tabpanel" id="p-exp" aria-labelledby="t-exp" hidden>
@@ -1693,12 +1695,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     var audio=document.getElementById('callAudio'); if(!audio) return;
     /* Moments in the real recording, in seconds. Edit these to match the call. */
     var MOMENTS=[
-      {t:8,   label:'The safeword, first thing'},
-      {t:62,  label:'Following up on the sore knee'},
-      {t:151, label:'Family news: Emma\u2019s recital'},
-      {t:238, label:'A story, saved with permission'},
-      {t:322, label:'Medications, asked like a friend'},
-      {t:401, label:'Same time tomorrow'}
+      {t:15,  label:'The safe word, first thing'},
+      {t:97,  label:'The whole family, for a birthday'},
+      {t:213, label:'The grandkids got the markers out'},
+      {t:334, label:'\u201CGrandma, I\u2019ll miss you\u201D'},
+      {t:388, label:'The lemon pie that\u2019s never missing'}
     ];
     var pp=document.getElementById('pp'), icon=document.getElementById('ppIcon');
     var cur=document.getElementById('pcur'), durEl=document.getElementById('pdur');
