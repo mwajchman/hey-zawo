@@ -144,6 +144,12 @@ h1 .l2{display:block;color:var(--amber-dp)}
   transition:border-color .2s}
 .field input:focus,.field select:focus{border-color:var(--amber-dp);outline:none}
 .field .hint{margin:.35rem 0 0;font-size:.8rem;color:var(--ink-soft)}
+/* La casilla de los SMS. Se lee entera: un revisor de los operadores la mira a mano. */
+.smsok{display:flex;gap:.65rem;align-items:flex-start;margin:-.2rem 0 1.1rem;cursor:pointer;
+  font-size:.8rem;line-height:1.5;color:var(--ink-soft)}
+.smsok input{flex:none;width:20px;height:20px;margin:.1rem 0 0;accent-color:var(--teal)}
+.smsok b{color:var(--ink);font-weight:800}
+.smsok a{color:inherit;text-decoration:underline}
 .show{position:absolute;right:.45rem;top:50%;transform:translateY(-50%);border:0;background:transparent;
   font:inherit;font-size:.8rem;font-weight:800;color:var(--amber-tx);padding:.45rem .6rem;border-radius:999px;cursor:pointer;min-height:36px}
 .show:hover{background:var(--oat)}
@@ -422,6 +428,10 @@ h1 .l2{display:block;color:var(--amber-dp)}
               <div class="field"><label id="l-phone" for="suPhone">Your mobile</label>
                 <input type="tel" id="suPhone" inputmode="tel" autocomplete="tel" placeholder="+1 385 555 0100">
                 <p class="hint" id="l-phonehint">With the country and area code. This is the number we call first.</p></div>
+              <!-- El si a los SMS. SIN marcar, SIN required y opcional de verdad: el alta sale
+                   igual sin tildarla. Atarlo al alta hizo que los operadores rechazaran la
+                   campana A2P (error 30923, "forced consent"). El texto lo pone applyLang. -->
+              <label class="smsok" for="suSms"><input type="checkbox" id="suSms"><span id="l-sms"></span></label>
               <div class="field"><label id="l-pass2" for="suPass">Password</label>
                 <div class="control has-show"><input type="password" id="suPass" autocomplete="new-password">
                 <button type="button" class="show" data-show="suPass" aria-controls="suPass">Show</button></div></div>
@@ -483,6 +493,7 @@ h1 .l2{display:block;color:var(--amber-dp)}
       email:'Email',pass:'Password',emailPh:'you@family.com',login:'Sign in',name:'Your name',country:'Where do you live?',signup:'Create account',
       phone:'Your mobile',phonePh:'+1 385 555 0100',
       phoneHint:'With the country and area code. This is the number we call first.',
+      sms:'<b>Yes, text me alerts about my family member\'s calls and my verification codes.</b> Optional: leave it unchecked and you can still use Elderly, and we will email you instead. Message frequency varies. No marketing. Message and data rates may apply. Reply STOP to unsubscribe, HELP for help. See our <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="/terms" target="_blank" rel="noopener">Terms</a>.',
       needPhone:'Please add your mobile number, with the country code.',
       forgot:'Forgot your password?',fgIntro:"Enter your email and we'll send you a link to set a new password.",
       fgSend:'Send reset link',backLogin:'Back to sign in',fgSent:'Check your inbox. If that email has an account, a reset link is on its way.',
@@ -530,6 +541,7 @@ h1 .l2{display:block;color:var(--amber-dp)}
       email:'Email',pass:'Contraseña',emailPh:'tu@familia.com',login:'Entrar',name:'Tu nombre',country:'¿Dónde vives?',signup:'Crear cuenta',
       phone:'Tu celular',phonePh:'+52 55 1234 5678',
       phoneHint:'Con el código de país y de área. A ese número te llamamos primero.',
+      sms:'<b>Sí, envíame por SMS los avisos sobre las llamadas de mi familiar y mis códigos de verificación.</b> Es opcional: si no la marcas puedes usar Elderly igual y te escribimos por email. La frecuencia varía. Nada de publicidad. Pueden aplicar cargos de tu operador. Responde STOP para no recibir más y HELP para ayuda. Mira nuestra <a href="/privacy" target="_blank" rel="noopener">Política de privacidad</a> y los <a href="/terms" target="_blank" rel="noopener">Términos</a>.',
       needPhone:'Escribe tu celular, con el código de país.',
       forgot:'¿Olvidaste tu contraseña?',fgIntro:'Escribe tu email y te mandamos un enlace para crear una nueva.',
       fgSend:'Enviar enlace',backLogin:'Volver a entrar',fgSent:'Revisa tu correo. Si ese email tiene una cuenta, el enlace ya va en camino.',
@@ -618,7 +630,7 @@ h1 .l2{display:block;color:var(--amber-dp)}
     el('email').setAttribute('placeholder',S.emailPh);
     txt('gdiv',S.or);
     txt('l-name',S.name); txt('l-country',S.country); txt('l-email2',S.email); txt('l-pass2',S.pass); txt('signupBtn',S.signup);
-    txt('l-phone',S.phone); txt('l-phonehint',S.phoneHint); el('suPhone').setAttribute('placeholder',S.phonePh);
+    txt('l-phone',S.phone); txt('l-phonehint',S.phoneHint); el('l-sms').innerHTML=S.sms; el('suPhone').setAttribute('placeholder',S.phonePh);
     txt('l-emailT',S.email); txt('l-passT',S.pass); txt('teamBtn',S.teamBtn); txt('teamNote',S.teamNote);
     txt('toForgot',S.forgot); txt('fgIntro',S.fgIntro); txt('l-fgEmail',S.email);
     txt('forgotBtn',S.fgSend); txt('toLogin2',S.backLogin);
@@ -753,7 +765,9 @@ h1 .l2{display:block;color:var(--amber-dp)}
     if((el('suPass').value||'').length<8){el('err2').textContent=s().minPass;return}
     var pais=el('suCountry').value, tel=telNormalizar(el('suPhone').value,pais);
     if(!tel){ el('err2').textContent=s().needPhone; return; }
-    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:pais,phone:tel,language:lang},
+    authAndGo("/api/signup",{email:el('suEmail').value.trim(),password:el('suPass').value,full_name:el('suName').value.trim(),country:pais,phone:tel,language:lang,
+      /* El valor REAL de la casilla: sin tildar, el alta sale igual y solo va email. */
+      sms_consent:!!el('suSms').checked},
       "elderly_token","/app",el('err2'),el('signupBtn'),s().signup);
   };
   el('teamBtn').onclick=function(){

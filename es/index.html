@@ -827,6 +827,11 @@ form label.chk{display:flex;gap:.8rem;align-items:flex-start;font-size:.92rem;fo
 form label.chk input{width:22px;height:22px;margin:.1rem 0 0;padding:0;flex:none;accent-color:var(--teal)}
 form label.chk .err{margin-top:.2rem}
 form label.chk.bad span{color:#A8320F}
+/* La casilla de los SMS: letra de texto legal, no de etiqueta. Se tiene que poder leer
+   entera, porque un revisor de los operadores la mira a mano. */
+form label.chk.sms{font-size:.84rem;font-weight:500;line-height:1.5;color:var(--ink-soft);margin:-.1rem 0 1.1rem}
+form label.chk.sms b{color:var(--ink);font-weight:800}
+form label.chk.sms a{color:inherit;text-decoration:underline}
 form label i{font-style:normal;font-weight:700;color:var(--ink-soft);text-transform:none;letter-spacing:0}
 .btn[disabled]{opacity:.6;cursor:progress}
 </style>
@@ -1257,6 +1262,11 @@ form label i{font-style:normal;font-weight:700;color:var(--ink-soft);text-transf
                   <label id="phoneLabel">Tu celular<input name="phone" type="tel" required autocomplete="tel" placeholder="+52 55 1234 5678"><span class="err"></span></label>
                   <label id="pwLabel">Contraseña<input name="password" type="password" autocomplete="new-password" placeholder="Al menos 8 caracteres"><span class="err"></span></label>
                 </div>
+                <!-- El si a los SMS. SIN marcar, SIN required y opcional de verdad: el alta sale igual
+                     sin tildarla. Atarlo al alta hizo que los operadores rechazaran la campana A2P
+                     (error 30923, "forced consent"). Solo se ve cuando se crea una cuenta de verdad
+                     (pais abierto); la de la lista de espera es otra casilla, mas abajo. -->
+                <label class="chk sms" id="smsConsentLabel"><input type="checkbox" id="smsConsent" name="sms_consent"><span><b>Sí, envíame por SMS los avisos sobre las llamadas de mi familiar y mis códigos de verificación.</b> Es opcional: si no la marcas puedes usar Elderly igual y te escribimos por email. La frecuencia varía. Nada de publicidad. Pueden aplicar cargos de tu operador. Responde STOP para no recibir más y HELP para ayuda. Mira nuestra <a href="https://www.callelderly.com/privacy" target="_blank" rel="noopener">Política de privacidad</a> y los <a href="https://www.callelderly.com/terms" target="_blank" rel="noopener">Términos</a>.</span></label>
                 <div class="f2">
                   <label>¿Dónde vives?
                     <select name="country" id="acctCountry"><option value="MX" selected>México</option><option value="US">Estados Unidos</option></select>
@@ -1645,6 +1655,8 @@ form label i{font-style:normal;font-weight:700;color:var(--ink-soft);text-transf
         notLiveNote=document.getElementById('notLiveNote'),
         waitCbLabel=document.getElementById('waitConsentLabel'),
         waitCb=document.getElementById('waitConsent'),
+        smsCbLabel=document.getElementById('smsConsentLabel'),
+        smsCb=document.getElementById('smsConsent'),
         acctFine=document.getElementById('acctFine'),
         wpriceBox=document.getElementById('wpriceBox'),
         wnote=document.getElementById('wnote');
@@ -1670,6 +1682,10 @@ form label i{font-style:normal;font-weight:700;color:var(--ink-soft);text-transf
         if(!vivo) phoneLabel.classList.remove('bad');
       }
       if(waitCbLabel) waitCbLabel.hidden=vivo;
+      /* La del SMS es solo para cuentas de verdad. En la lista de espera no hay cuenta a
+         la que atar el si, y ahi ya esta la otra casilla. */
+      if(smsCbLabel) smsCbLabel.hidden=!vivo;
+      if(!vivo && smsCb) smsCb.checked=false;
       if(notLiveNote){
         notLiveNote.hidden=vivo;
         if(!vivo) notLiveNote.textContent='Todavía no llamamos ahí, así que hoy no se crea ninguna cuenta y no hace falta contraseña. Guardamos el plan que armaste y cómo contactarte, y te escribimos cuando abramos.';
@@ -1866,7 +1882,10 @@ form label i{font-style:normal;font-weight:700;color:var(--ink-soft);text-transf
         relationship:f('who'), country:paisReal()||'MX', elder_name:f('hername'),
         calls_per_week:selectedDays().length, call_length:packDelLargo(),
         specialties:shields.filter(function(c){ return c.checked && c.dataset.spec; }).map(function(c){ return c.dataset.spec; }).join(','), voice_kept:!!document.getElementById('sh-voice').checked,
-        days:selectedDays().map(function(b){ return b.dataset.day; }).sort().join(',')
+        days:selectedDays().map(function(b){ return b.dataset.day; }).sort().join(','),
+        /* El valor REAL de la casilla, nunca un true escrito a mano. Sin tildar el alta
+           sale igual y solo escribimos por email. */
+        sms_consent:!!(smsCb && smsCb.checked && smsCbLabel && !smsCbLabel.hidden)
       };
     }
     function decir(msg, mal){
