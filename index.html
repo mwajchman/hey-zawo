@@ -58,7 +58,7 @@ img{display:block;max-width:100%}
 @media(max-width:800px){.pad{padding:3.6rem 0}body{font-size:18px}}
 .serif{font-family:"Instrument Serif",Georgia,serif;font-weight:400;letter-spacing:-.01em}
 .amb{color:var(--amber)}
-.ter{color:var(--amber-dp)}
+.ter{color:var(--amber-tx)}
 .ter-s{color:var(--amber-tx)}
 .hon{color:var(--honey)}
 
@@ -104,6 +104,11 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 /* EN y ES median 17 y 15 px de ancho. El minimo de toque es 24x24: el alto ya lo daba
    .nav menu a, el ancho lo da este min-width. */
 .lang{display:flex;gap:.15rem;font-size:.78rem}
+/* El "/" heredaba --ink (verde oscuro) sobre el teal del menu: 1.23:1. Es texto. */
+.nav menu .lang .sep{color:var(--cream);opacity:.75}
+/* El idioma activo dejo de ser un <a href="#"> y es un <span>: hay que darle a mano
+   el area de toque y el color que antes ponia la regla de los enlaces. */
+.nav menu .lang .cur{display:inline-flex;align-items:center;justify-content:center;min-width:24px;min-height:24px;color:var(--honey);opacity:1}
 .nav menu .lang a{min-width:24px;justify-content:center}
 /* El selector de idioma: el activo en miel, el otro apagado, como estaba. Va con la
    especificidad de .nav menu (si no, la regla de arriba le gana y apaga el activo).
@@ -123,7 +128,7 @@ hr.hair{border:0;border-top:1px solid var(--rule);margin:0}
 .hero h1 .l2{display:block;color:var(--amber)}
 .hero .sub{font-size:clamp(1rem,1.25vw,1.1rem);color:rgba(247,242,231,.84);max-width:29rem;margin-top:1.2rem}
 .hero .acts{display:flex;gap:.8rem;flex-wrap:wrap;align-items:center;margin-top:1.5rem}
-.hero .fine{font-size:.8rem;color:rgba(247,242,231,.6);margin-top:.9rem;max-width:26rem}
+.hero .fine{font-size:.8rem;color:rgba(247,242,231,.72);margin-top:.9rem;max-width:26rem}
 .cord{position:absolute;left:0;right:0;bottom:-2px;z-index:1;pointer-events:none}
 .cord path{fill:none;stroke:var(--amber);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
 .cord .echo path{stroke:var(--cream);stroke-width:3;opacity:.5}
@@ -346,14 +351,14 @@ audio{width:100%;max-width:34rem;margin-top:1.2rem}
 .rail{list-style:none;display:flex;margin:0;padding:1.2rem 2rem;gap:.2rem;
   border-bottom:1px solid var(--rule);flex-wrap:wrap}
 .rail li{display:flex;align-items:center;gap:.5rem;font-size:.82rem;font-weight:800;color:var(--ink-soft);
-  opacity:.55;padding-right:1.4rem;position:relative}
+  opacity:.9;padding-right:1.4rem;position:relative}
 .rail li::after{content:"";position:absolute;right:.55rem;top:50%;width:.55rem;height:1px;background:var(--rule)}
 .rail li:last-child::after{display:none}
 .rail li i{font-style:normal;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;
   background:rgba(18,48,44,.1);font-size:.76rem;color:var(--ink)}
 .rail li[data-done] i{background:var(--teal);color:var(--cream)}
 .rail li[aria-current]{opacity:1;color:var(--teal)}
-.rail li[aria-current] i{background:var(--amber-dp);color:#fff}
+.rail li[aria-current] i{background:var(--amber-dp);color:#1B1406}
 @media(max-width:620px){.rail li span{display:none}.rail li{padding-right:1rem}}
 
 .wbody{padding:2.2rem 2rem 2rem;min-height:23rem}
@@ -380,8 +385,8 @@ ul.bd li.sum{border-top:2px solid var(--teal);margin-top:.3rem;font-weight:800;c
 .wbar{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
   padding:1.2rem 2rem;border-top:1px solid var(--rule);background:var(--oat)}
 .wprice{margin:0;display:flex;align-items:baseline;flex-wrap:wrap;gap:.25rem;max-width:none}
-.wprice span{font-size:1.1rem;font-weight:900;color:var(--amber-dp)}
-.wprice b{font-size:2.5rem;font-weight:900;letter-spacing:-.05em;color:var(--amber-dp);line-height:1}
+.wprice span{font-size:1.1rem;font-weight:900;color:var(--amber-tx)}
+.wprice b{font-size:2.5rem;font-weight:900;letter-spacing:-.05em;color:var(--amber-tx);line-height:1}
 .wprice small{font-size:.85rem;font-weight:800;color:var(--ink-soft);margin-left:.15rem;white-space:nowrap}
 .wprice em{font-style:normal;font-size:.85rem;font-weight:700;color:var(--ink-soft);margin-left:.9rem}
 @media(max-width:620px){.wprice em{width:100%;margin:.3rem 0 0}}
@@ -473,7 +478,7 @@ footer h4{font-size:.85rem;color:var(--honey);margin-bottom:.8rem}
 footer p{color:rgba(247,242,231,.7)}
 footer a{color:var(--cream);text-decoration:none;opacity:.72}
 /* Los enlaces del pie median 17px de alto. 24 es el minimo de toque. */
-footer li a,footer .end a{display:inline-flex;align-items:center;min-height:24px}
+footer li a,footer .end a,footer p a{display:inline-flex;align-items:center;min-height:24px}
 footer a:hover{opacity:1;text-decoration:underline}
 footer ul{list-style:none;padding:0;margin:0}
 footer li{margin-bottom:.45rem}
@@ -496,7 +501,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .vrow{display:flex;align-items:center;gap:.55rem;padding:.35rem .45rem;border-radius:10px;background:rgba(18,48,44,.05)}
 .av{width:24px;height:24px;border-radius:50%;background:var(--teal);color:var(--cream);font-weight:900;font-size:.7rem;
   display:grid;place-items:center;flex:none}
-.av.h{background:var(--honey);color:#1B1406}.av.a{background:var(--amber-dp)}
+.av.h{background:var(--honey);color:#1B1406}.av.a{background:var(--amber-dp);color:#1B1406}
 .vrow .dur{margin-left:auto;font-weight:800;color:var(--teal);font-variant-numeric:tabular-nums}
 .mwave{display:inline-flex;align-items:center;gap:2px;height:12px}
 .mwave i{display:block;width:3px;border-radius:2px;background:var(--teal);opacity:.6}
@@ -534,11 +539,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .track .tr{position:absolute;left:0;right:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:rgba(247,242,231,.22)}
 .track .fill{position:absolute;left:0;top:50%;height:6px;margin-top:-3px;border-radius:3px;background:var(--amber);width:0}
 .track .knob{position:absolute;top:50%;left:0;width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--cream);box-shadow:0 2px 8px rgba(0,0,0,.3);pointer-events:none}
-.pin{position:absolute;top:0;width:18px;height:18px;margin-left:-9px;padding:0;border:0;background:transparent;cursor:pointer}
-.pin::before{content:"";position:absolute;left:3px;top:0;width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--honey)}
-/* El area de toque del pin: 24x24, el minimo, sin mover ni agrandar el dibujo. El publico
-   pasa los 50 y el pin se veia de 18px. */
-.pin::after{content:"";position:absolute;left:50%;top:50%;width:24px;height:24px;transform:translate(-50%,-50%)}
+.pin{position:absolute;top:0;width:24px;height:24px;margin-left:-12px;padding:0;border:0;background:transparent;cursor:pointer}
+.pin::before{content:"";position:absolute;left:6px;top:0;width:12px;height:12px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--honey)}
+/* El area de toque del pin es el boton mismo: 24x24, el minimo. Antes el boton media
+   18x18 y se le colgaba un ::after de 24: el dibujo crecia, el blanco real no. El
+   ::before mantiene el dibujo de 12px centrado donde estaba. */
 .pin[data-on]::before{background:var(--cream)}
 .moments{list-style:none;margin:.5rem 0 0;padding:0}
 .moments button{display:flex;align-items:baseline;gap:.9rem;width:100%;text-align:left;background:transparent;border:0;
@@ -642,7 +647,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 .hw-tab .n{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:900;
   background:transparent;color:var(--teal);box-shadow:inset 0 0 0 2px var(--teal)}
 .hw-tab .tx{display:flex;flex-direction:column}
-.hw-tab b{font-size:1.12rem;font-weight:800;color:var(--teal);letter-spacing:-.02em;opacity:.6}
+.hw-tab b{font-size:1.12rem;font-weight:800;color:var(--teal);letter-spacing:-.02em;opacity:.82}
 .hw-tab small{font-size:.92rem;color:var(--ink-soft);max-height:0;opacity:0;overflow:hidden;transition:max-height .3s,opacity .3s}
 .hw-tab:hover b{opacity:1}
 .hw-tab[aria-selected="true"]{background:#FFFDF8}
@@ -810,11 +815,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
 <header class="hero">
   <nav class="nav">
     <div class="w">
-      <a class="logo" href="#" aria-label="Elderly home"><svg class="mark" viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg><span>Elderly</span></a>
+      <a class="logo" href="/" aria-label="Elderly home"><svg class="mark" viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg><span>Elderly</span></a>
       <menu>
         <li class="hs"><a href="#how">How it works</a></li>
         <li class="hs"><a href="#price">Pricing</a></li>
-        <li class="lang"><a href="#" aria-current="true">EN</a><span style="opacity:.4">/</span><a href="https://www.callelderly.com/es" hreflang="es">ES</a></li>
+        <li class="lang"><span class="cur" aria-current="true">EN</span><span class="sep" aria-hidden="true">/</span><a href="https://www.callelderly.com/es" hreflang="es">ES</a></li>
         <li class="hs"><a href="https://www.callelderly.com/ingresar">Log in</a></li>
         <li><a class="btn sm hs" href="#price">Build their plan</a></li>
         <li><button class="burger" id="burger" aria-expanded="false" aria-controls="mnav" aria-label="Open menu"><span></span><span></span><span></span></button></li>
@@ -1218,8 +1223,8 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
                   <label>Email<input name="email" type="email" required autocomplete="email"><span class="err"></span></label>
                 </div>
                 <div class="f2" id="rowPhonePw">
-                  <label>Your mobile<input name="phone" type="tel" required autocomplete="tel" placeholder="+1 (555) 000-0000"><span class="err"></span></label>
-                  <label id="pwLabel">Password<input name="password" type="password" required autocomplete="new-password" placeholder="At least 8 characters"><span class="err"></span></label>
+                  <label id="phoneLabel">Your mobile<input name="phone" type="tel" required autocomplete="tel" placeholder="+1 (555) 000-0000"><span class="err"></span></label>
+                  <label id="pwLabel">Password<input name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters"><span class="err"></span></label>
                 </div>
                 <div class="f2">
                   <label>Where do you live?
@@ -1377,7 +1382,7 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
   <div class="w">
     <div class="cols">
       <div>
-        <a class="logo" href="#" style="margin-bottom:1rem" aria-label="Elderly home"><svg class="mark" viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg><span>Elderly</span></a>
+        <a class="logo" href="/" style="margin-bottom:1rem" aria-label="Elderly home"><svg class="mark" viewBox="0 0 1932 1932" aria-hidden="true"><rect width="1932" height="1932" rx="360" fill="#02554D"/><rect x="476" y="533" width="978" height="164" rx="82" fill="#F6F2E7"/><rect x="476" y="884" width="754" height="164" rx="82" fill="#E8843A"/><rect x="476" y="1231" width="978" height="164" rx="82" fill="#F6F2E7"/></svg><span>Elderly</span></a>
         <p style="max-width:24rem">A warm call, and a note for you after each one. Special needs? <a href="mailto:hello@callelderly.com">Write to us</a> and we'll design their friend together.</p>
       </div>
       <div>
@@ -1538,6 +1543,9 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
     var next=document.getElementById('next'), back=document.getElementById('back');
     var form=document.getElementById('acct'), okBox=document.getElementById('acctOk');
     var pwLabel=document.getElementById('pwLabel'),
+        pwInput=document.querySelector('#acct input[name="password"]'),
+        phoneLabel=document.getElementById('phoneLabel'),
+        phoneInput=document.querySelector('#acct input[name="phone"]'),
         otherLabel=document.getElementById('otherLabel'),
         otherInput=document.getElementById('acctOtherCountry'),
         notLiveNote=document.getElementById('notLiveNote'),
@@ -1555,13 +1563,25 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       var otro=paisElegido()==='OTHER';
       if(otherLabel) otherLabel.hidden=!otro;
       if(pwLabel) pwLabel.hidden=!vivo;
+      /* required se prende y se apaga con el pais. Un campo escondido con required es
+         una trampa, y el telefono no puede ser obligatorio en la lista de espera: la
+         politica de privacidad ya promete que es opcional. */
+      if(pwInput) pwInput.required=vivo;
+      /* Sin required el campo ya no pasa por la validacion, asi que un error viejo se
+         quedaria pegado en la etiqueta escondida. Se limpia aca. */
+      if(!vivo && pwLabel) pwLabel.classList.remove('bad');
+      if(phoneInput && phoneLabel){
+        phoneInput.required=vivo;
+        phoneLabel.firstChild.nodeValue = vivo ? 'Your mobile' : 'Your mobile (optional)';
+        if(!vivo) phoneLabel.classList.remove('bad');
+      }
       if(waitCbLabel) waitCbLabel.hidden=vivo;
       if(notLiveNote){
         notLiveNote.hidden=vivo;
         if(!vivo) notLiveNote.textContent='Elderly does not call there yet, so nothing is created today and no password is needed. We keep the plan you built and how to reach you, and we write when we open.';
       }
       if(acctFine) acctFine.innerHTML = vivo ? FINE_LIVE
-        : 'No card, no charge, and no account today. We store your name, email, country and the plan you built, and nothing else. Ask us to delete it any time at <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>. Our <a href="https://www.callelderly.com/privacy">Privacy Policy</a> explains the rest.';
+        : 'No card, no charge, and no account today. We keep your name, email and country, your mobile only if you fill it in, whether you ticked the box below, and the plan you built, which includes their first name and your relationship to them. Ask us to delete it any time at <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>. Our <a href="https://www.callelderly.com/privacy">Privacy Policy</a> explains the rest.';
       if(next && step===LAST) next.textContent = vivo ? 'Create their account' : 'Save my plan';
     }
 
@@ -1766,9 +1786,19 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
       okBox.classList.toggle('bad', !!mal);
       if(okBox.scrollIntoView) okBox.scrollIntoView({block:'nearest', behavior: RM?'auto':'smooth'});
     }
+    /* La columna country guardaba dos cosas distintas: el codigo ("AR") cuando eligen de
+       la lista y el nombre escrito a mano ("France") cuando eligen "Another country".
+       Asi no se puede agrupar. Ahora viaja siempre el codigo, y lo que escribieron va
+       en note, que es el campo que ya usa el otro formulario. */
+    function notaPais(){
+      if(paisElegido()!=='OTHER') return '';
+      var t=(otherInput && otherInput.value.trim()) || '';
+      return t ? ('Country typed: '+t) : '';
+    }
     function aLaLista(d, texto){
       return fetch('/api/waitlist',{method:'POST',headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({name:d.full_name, email:d.email, phone:d.phone, country:d.country,
+        body:JSON.stringify({name:d.full_name, email:d.email, phone:d.phone,
+          country:paisElegido(), note:notaPais(),
           consent:!!(waitCb && waitCb.checked), elder_name:d.elder_name, relationship:d.relationship,
           calls_per_week:d.calls_per_week, call_length:d.call_length,
           specialties:d.specialties, voice_kept:d.voice_kept, days:d.days})
@@ -1782,11 +1812,13 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
           ol.classList.add('bad'); if(oe) oe.textContent='Tell us which country, so we know where to open next.'; bad++;
         } else ol.classList.remove('bad');
       }
-      [].slice.call(form.querySelectorAll('input[required]')).forEach(function(inp){
+      [].slice.call(form.querySelectorAll('input[required],input[type=tel]')).forEach(function(inp){
         var lab=inp.parentNode, err=lab.querySelector('.err'), v=inp.value.trim(), msg='';
         /* Un campo escondido no se valida: en la lista de espera no se crea cuenta, asi
            que la contrasena ni se pide ni se guarda. */
         if(lab.hidden) { lab.classList.remove('bad'); return; }
+        /* Opcional y vacio: se deja pasar. Opcional y escrito: se revisa igual. */
+        if(!inp.required && !v) { lab.classList.remove('bad'); return; }
         if(!v) msg='This one is needed.';
         else if(inp.type==='email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) msg='That email does not look right.';
         else if(inp.type==='password' && v.length<8) msg='Use at least 8 characters.';
@@ -1809,6 +1841,11 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
           'No account was created, no card was asked for, and nothing is charged. '+
           'We do not send a confirmation email, so this message is the receipt: the next time you hear from us at '+
           (d.email||'your address')+' will be the day we open there. '+
+          /* La casilla es opcional (por el rechazo A2P), asi que el texto tiene que
+             decir la verdad: sin casilla marcada, solo email. */
+          ((waitCb && waitCb.checked && d.phone)
+            ? 'Because you ticked the box, we can also reach you by text or WhatsApp. '
+            : 'We will only write to you by email. ')+
           'To be taken off the list, write to <a href="mailto:hello@callelderly.com">hello@callelderly.com</a>.')
           .catch(function(){ decir('We could not save that. Please try again.', true); })
           .then(function(){ next.disabled=false; });
@@ -1824,7 +1861,10 @@ footer .end{border-top:1px solid var(--rule-c);padding-top:1.4rem;font-size:.8re
         /* El alta cerrada devuelve 403. Mandar a la persona de vuelta al sitio donde ya
            esta seria absurdo: cae a la lista con el plan que acaba de armar. */
         if(res.r.status===403){
-          return aLaLista(d,'<b>You are on the list.</b> We are opening slowly. We saved the plan you built and will write as soon as there is room.')
+          return aLaLista(d,'<b>You are on the list.</b> We are opening slowly. We saved the plan you built and will write as soon as there is room. '+
+            ((waitCb && waitCb.checked && d.phone)
+              ? 'Because you ticked the box, we can also reach you by text or WhatsApp.'
+              : 'We will only write to you by email.'))
             .then(function(ok){ if(!ok) decir('We could not save that. Please try again.', true); });
         }
         if(!res.r.ok) throw new Error(res.j.detail || ('http '+res.r.status));
