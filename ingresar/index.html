@@ -160,7 +160,8 @@ h1 .l2{display:block;color:var(--amber-dp)}
 
 .links{margin:1.1rem 0 0;text-align:center;font-size:.92rem;color:var(--ink-soft)}
 .links:empty{display:none}
-.links a{font-weight:800}
+.links a{font-weight:800;display:inline-flex;align-items:center;justify-content:center;
+  min-height:24px;padding:0 .2rem}
 .newhere{margin-top:1.6rem;padding:1rem 1.1rem;border-radius:18px;background:var(--paper);border:1px solid var(--rule);
   display:flex;align-items:center;justify-content:space-between;gap:.6rem 1rem;flex-wrap:wrap}
 .newhere p{margin:0;font-size:.92rem;color:var(--ink-soft)}
@@ -224,7 +225,7 @@ h1 .l2{display:block;color:var(--amber-dp)}
   .seg{margin:.7rem 0}
 }
 /* Un escalon mas: pantallas bajas o angostas de verdad. */
-@media(max-height:900px) and (max-width:1000px),(max-height:820px),(max-width:480px){
+@media(max-height:900px) and (max-width:1000px),(max-height:860px),(max-width:480px){
   h1{font-size:1.6rem}
   .sub{display:none}
   .or{margin:.55rem 0}
@@ -279,6 +280,15 @@ h1 .l2{display:block;color:var(--amber-dp)}
   .seg button{min-height:40px}
 }
 @media(max-height:760px) and (min-width:1001px){ .world .lede{display:none} .note{display:none} }
+/* Pantalla ancha pero baja (una notebook de 1366x700): en espanol el texto ocupa una
+   linea mas que en ingles y sobraban 12px. Se recorta el aire del lado derecho. */
+@media(min-width:1001px) and (max-height:760px){
+  .panel{padding-top:.3rem}
+  .or{margin:.45rem 0}
+  .links{margin-top:.5rem}
+  .newhere{margin-top:.5rem}
+  .legal{padding-top:.45rem;font-size:.74rem}
+}
 @media(max-height:640px) and (min-width:1001px){ .scene{display:none} }
 @media(prefers-reduced-motion:reduce){
   .b{opacity:1;transform:none;transition:none}
